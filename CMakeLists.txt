@@ -1,4 +1,4 @@
-make_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.14)
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" VERSION)
 project(ghostfragment VERSION "${VERSION}" LANGUAGES CXX)
 
@@ -40,7 +40,7 @@ if("${BUILD_TESTING}")
         FIND_TARGET Catch2::Catch2
     )
     cpp_add_tests(
-        test_scf
+        "test_${CMAKE_PROJECT_NAME}"
         SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/tests/${CMAKE_PROJECT_NAME}"
         INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/src/${CMAKE_PROJECT_NAME}"
         DEPENDS Catch2::Catch2 ${CMAKE_PROJECT_NAME}
