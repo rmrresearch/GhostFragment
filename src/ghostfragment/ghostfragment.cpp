@@ -1,5 +1,5 @@
 #include "ghostfragment/load_modules.hpp"
-#include "ghostfragment/modules.hpp"
+#include "modules.hpp"
 
 namespace ghost_fragment {
 

@@ -2,7 +2,7 @@
 #include <memory>
 
 namespace ghostfragment {
-namespace detail _ {
+namespace detail_ {
 class ConnectivityTablePIMPL;
 }
 
@@ -15,21 +15,42 @@ public:
     /// A pointer to a PIMPL instance
     using pimpl_ptr = std::unique_ptr<pimpl_type>;
 
+    /** @brief Creates an empty ConnectivityTable.
+     *
+     *  The instance created with this ctor is capable of holding the
+     *  connectivity information for 0 atoms. Users can call `set_n_atoms` to
+     *  make the instance suitable for more atoms.
+     *
+     *  @throw None No throw guarantee.
+     */
     ConnectivityTable() noexcept;
+
+    /** @brief Creates an instance which can hold connectivity information for
+     *         @p natoms atoms.
+     *
+     *  @param[in] natoms The number of atoms the table will be for.
+     *
+     *  @throw std::bad_alloc if there is not enough memory to allocate the
+     *                        internal state. Strong throw guarantee.
+     */
     ConnectivityTable(size_type natoms);
+
+    /// Default no-throw dtor
     ~ConnectivityTable() noexcept;
 
     /** @brief Sets the number of atoms the connectivity table is for.
      *
-     *  Think of this like std::vector reserve. Basically it will make sure that
-     *  the current instance is capable of holding a connectivity table for at
-     *  least @p natoms.
+     *  This works similar to std::vector reserve. Basically it will make the
+     *  current instance capable of storing connectivity information for
+     *  @p natoms. If @p natoms is not the current the number of atoms that the
+     *  table is for, the table will reallocate, and be in a state which has no
+     *  bonds.
      *
      *  @param[in] natoms The number of atoms the connectivity table should be
      *                    able to hold.
      *
      *  @throw std::bad_alloc if there is insufficient memory to reallocate the
-     *                        backend.
+     *                        backend. Strong throw guarantee.
      */
     void set_n_atoms(size_type natoms);
 
