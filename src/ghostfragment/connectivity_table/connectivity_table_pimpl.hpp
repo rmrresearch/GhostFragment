@@ -1,7 +1,5 @@
 #include "ghostfragment/connectivity_table.hpp"
 #include <algorithm> // for max, min
-#include <array>
-#include <vector>
 
 namespace ghostfragment::detail_ {
 
@@ -17,7 +15,10 @@ public:
     using size_type = typename ConnectivityTable::size_type;
 
     /// Type used for an index pair
-    using pair_type = std::array<size_type, 2>;
+    using pair_type = typename ConnectivityTable::pair_type;
+
+    /// Type used for a list of bonds
+    using bond_list_type = std::vector<pair_type>;
 
     /** @brief Creates an empty PIMPL.
      *
@@ -89,7 +90,37 @@ public:
      */
     void add_bond(size_type i, size_type j);
 
+    /** @brief Determines if two atoms are bonded.
+     *
+     *  This function can be used to inquire into whether two atoms are bonded.
+     *
+     *  @param[in] i the zero-based index of one of the atoms. Must be in the
+     *               range [0, natoms())
+     *  @param[in] j the zero-based index of the other atom. Must be in the
+     *               range [0, natoms()).
+     *
+     *  @return True if atoms @p i and @p j are bonded and false otherwise.
+     *
+     *  @throw std::out_of_range if either @p i and/or @p j is not in the range
+     *                           [0, natoms()). Strong throw guarantee.
+     */
     bool are_bonded(size_type i, size_type j) const;
+
+    /** @brief Returns a list of the bonds in the connectivity table.
+     *
+     *  This function will uses the internal representation of the connectivity
+     *  table to return a list of bonds. Each bond is represented as a pair of
+     *  zero-based indices such that the pair `{i, j}` means that atoms `i` and
+     *  `j` are bonded. Pairs are always such that `i < j`. The final list is
+     *  sorted lexicographically.
+     *
+     *  @return An `nbonds()` long list of the bonds in the table. Bonds are
+     *          sorted in lexicographical order.
+     *
+     *  @throw std::bad_alloc if there is insufficient memory to create the
+     *                        return type. Strong throw guarantee.
+     */
+    bond_list_type bonds() const;
 
 private:
     /// Ensures argument is less than `natoms()` and throws if it is not
@@ -146,6 +177,23 @@ bool ConnectivityTablePIMPL::are_bonded(size_type i, size_type j) const {
 void ConnectivityTablePIMPL::add_bond(size_type i, size_type j) {
     auto [min, max]                       = sanitize_indices_(i, j);
     m_connections_[min * m_natoms_ + max] = true;
+}
+
+typename ConnectivityTablePIMPL::bond_list_type ConnectivityTablePIMPL::bonds()
+  const {
+    const auto n_bonds = nbonds();
+    bond_list_type rv(n_bonds);
+
+    for(size_type i = 0, bonds_found = 0; i < m_natoms_; ++i) {
+        for(size_type j = i + 1; j < m_natoms_; ++j) {
+            if(are_bonded(i, j)) {
+                rv[bonds_found++] = pair_type{i, j};
+                if(bonds_found == n_bonds) return rv;
+            }
+        }
+    }
+    // We can get here if there's actually zero bonds...
+    return rv;
 }
 
 void ConnectivityTablePIMPL::bounds_check_(size_type atom_i) const {
