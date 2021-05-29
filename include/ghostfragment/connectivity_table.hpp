@@ -42,6 +42,23 @@ public:
      */
     ConnectivityTable(size_type natoms);
 
+    /** @brief Makes a deep copy of another ConnectivityTable instance.
+     *
+     *  @param[in] other The instance to copy.
+     *
+     *  @throw std::bad_alloc if there is a problem copying @p other. Strong
+     *                        throw guarantee.
+     */
+    ConnectivityTable(const ConnectivityTable& other);
+
+    /** @brief Takes ownership of another ConnectivityTable instance.
+     *
+     *  @param[in,out] other The instance whose state will be transferred. After
+     *                       the move @p other will be in a default state.
+     * @throw None no throw guarantee.
+     */
+    ConnectivityTable(ConnectivityTable&& other) noexcept;
+
     /// Default no-throw dtor
     ~ConnectivityTable() noexcept;
 
@@ -61,6 +78,41 @@ public:
      */
     void set_n_atoms(size_type natoms);
 
+    /** @brief Adds a bond between atoms @p i and @p j.
+     *
+     *  This function is used to register a bond between atoms @p i and @p j. If
+     *  a bond is already present this is a no-op.
+     *
+     *  @note Regardless of internal storage conventions users can provide the
+     *        arguments @p i and @p j in whatever order, *i.e*, it doesn't
+     *        matter if @p i > @p j or vice versa.
+     *
+     *  @param[in] i the index of the first atom in the bond.
+     *  @param[in] j the index of the second atom in the bond.
+     *
+     *  @throw std::out_of_range if either (or both) of @p i and/or @p j are not
+     *                           in the range [0, natoms()). Strong throw
+     *                           guarantee.
+     *  @throw std::out_of_range if @p i equals @p j. Strong throw guarantee.
+     */
+    void add_bond(size_type i, size_type j);
+
+    /** @brief The number of atoms in this table.
+     *
+     *  @return The number of atoms this table is for.
+     *
+     *  @throw None no throw guarantee.
+     */
+    size_type natoms() const noexcept;
+
+    /** @brief The total number of bonds in this table.
+     *
+     *  @return The number of bonds this table currently holds.
+     *
+     *  @throw None no throw guarantee.
+     */
+    size_type nbonds() const noexcept;
+
     /** @brief Returns a list of the bonds in the connectivity table.
      *
      *  This function will uses the internal representation of the connectivity
@@ -79,37 +131,25 @@ public:
     bond_list_type bonds() const;
 
 private:
-    /** @brief Returns the PIMPL in a read/write state.
+    /** @brief Returns the PIMPL in a read/write state, making a PIMPL if the
+     *         instance does not have one.
      *
-     *  It is rare, but it is possible for a ConnectivityTable instance to have
-     *  no PIMPL (for example if the instance was moved from). This function
-     *  will simply return the PIMPL if one exists. If the instance does not
-     *  currently have a PIMPL, this function will allocate one and then return
-     *  it.
+     *  @return The instance's current PIMPL in a read/write state.
      *
-     *  @return The PIMPL with read/write permissions.
-     *  @throw std::bad_alloc if there is no PIMPL and allocation of a new PIMPL
-     *                        fails. Strong throw guarantee.
+     *  @throw std::bad_alloc if there is a problem allocating the new PIMPL.
+     *                        Strong throw guarantee.
      */
     pimpl_type& pimpl_();
-
-    /** @brief Returns the PIMPL in a read/write state, throwing if one is not
-     *         present.
-     *
-     *  It is rare, but it is possible for a ConnectivityTable instance to have
-     *  no PIMPL (for example if the instance was moved from). This function
-     *  will simply return the PIMPL if one exists. If the instance does not
-     *  currently have a PIMPL, this function will raise an error (it can not
-     *  allocate a PIMPL because the instance is in a read-only state).
-     *
-     *  @return The PIMPL in a read-only state.
-     *
-     *  @throw std::runtime_error if there is no PIMPL. Strong throw guarantee.
-     */
-    const pimpl_type& pimpl_() const;
 
     /// The object which implements the ConnectivityTable
     pimpl_ptr m_pimpl_;
 };
+
+bool operator==(const ConnectivityTable& lhs, const ConnectivityTable& rhs);
+
+inline bool operator!=(const ConnectivityTable& lhs,
+                       const ConnectivityTable& rhs) {
+    return !(lhs == rhs);
+}
 
 } // namespace ghostfragment
