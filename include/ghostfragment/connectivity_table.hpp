@@ -40,7 +40,7 @@ public:
      *  @throw std::bad_alloc if there is not enough memory to allocate the
      *                        internal state. Strong throw guarantee.
      */
-    ConnectivityTable(size_type natoms);
+    explicit ConnectivityTable(size_type natoms);
 
     /** @brief Makes a deep copy of another ConnectivityTable instance.
      *
@@ -143,10 +143,42 @@ private:
 
     /// The object which implements the ConnectivityTable
     pimpl_ptr m_pimpl_;
-};
+}; // class ConnectivityTable
 
+/** @brief Compares two ConnectivityTable instances for equality.
+ *
+ *  @relates ConnectivityTable
+ *
+ *  Two ConnectivityTable instances are equal if they are:
+ *  - for the same number of atoms
+ *  - contain the same number of bonds
+ *  - contain the same bonds
+ *
+ * @param[in] lhs The instance on the left-side of the equality.
+ * @param[in] rhs The instance on the right-side of the equality.
+ *
+ * @return True if @p lhs and @p rhs are equal. False otherwise.
+ *
+ * @throw std::bad_alloc if calling bonds() throws. Strong throw guarantee.
+ */
 bool operator==(const ConnectivityTable& lhs, const ConnectivityTable& rhs);
 
+/** @brief Determines if two ConnectivityTable instances are different.
+ *
+ *  @relates ConnectivityTable
+ *
+ *  Two ConnectivityTable instances are equal if they are:
+ *  - for the same number of atoms
+ *  - contain the same number of bonds
+ *  - contain the same bonds
+ *
+ * @param[in] lhs The instance on the left-side of the inequality.
+ * @param[in] rhs The instance on the right-side of the inequality.
+ *
+ * @return False if @p lhs and @p rhs are equal. True otherwise.
+ *
+ * @throw std::bad_alloc if calling bonds() throws. Strong throw guarantee.
+ */
 inline bool operator!=(const ConnectivityTable& lhs,
                        const ConnectivityTable& rhs) {
     return !(lhs == rhs);

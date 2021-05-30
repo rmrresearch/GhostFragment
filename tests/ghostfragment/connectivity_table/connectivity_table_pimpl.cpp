@@ -39,6 +39,12 @@ TEST_CASE("ConnectivityTablePIMPL") {
     ConnectivityTablePIMPL p2(2);
     ConnectivityTablePIMPL p3(3);
 
+    SECTION("Copy CTor") {
+        ConnectivityTablePIMPL CopyOfP3(p3);
+        REQUIRE(CopyOfP3.natoms() == 3);
+        REQUIRE(CopyOfP3.nbonds() == 0);
+    }
+
     SECTION("set_natoms/natoms") {
         SECTION("Change from defaulted") {
             p0.set_natoms(1);

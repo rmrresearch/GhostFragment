@@ -83,6 +83,22 @@ TEST_CASE("ConnectivityTable") {
         REQUIRE(t3.bonds() == bond_list_type{});
     }
 
+    SECTION("set_n_atoms/natoms") {
+        REQUIRE(t0.natoms() == 0);
+        t0.set_n_atoms(4);
+        REQUIRE(t0.natoms() == 4);
+    }
+
+    SECTION("add_bond/nbonds") {
+        REQUIRE(t3.nbonds() == 0);
+        t3.add_bond(0, 1);
+        REQUIRE(t3.nbonds() == 1);
+
+        SECTION("Throws if out of range") {
+            REQUIRE_THROWS_AS(t3.add_bond(42, 42), std::out_of_range);
+        }
+    }
+
     SECTION("Comparisons") {
         SECTION("LHS == default") {
             SECTION("RHS == default") {

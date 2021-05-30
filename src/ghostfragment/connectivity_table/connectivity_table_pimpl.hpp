@@ -37,7 +37,7 @@ public:
      *  @throw std::bad_alloc if there is not enough memory to allocate the
      *                        internal state. Strong throw guarantee.
      */
-    ConnectivityTablePIMPL(size_type natoms);
+    explicit ConnectivityTablePIMPL(size_type natoms);
 
     /** @brief Sets the number of atoms the connectivity table is for.
      *
@@ -152,7 +152,7 @@ private:
 // ---------------------------- Implementations --------------------------------
 
 ConnectivityTablePIMPL::ConnectivityTablePIMPL(size_type natoms) :
-  m_natoms_(natoms), m_connections_(natoms, false) {}
+  m_natoms_(natoms), m_connections_(natoms * natoms, false) {}
 
 void ConnectivityTablePIMPL::set_natoms(size_type natoms) {
     if(natoms == m_natoms_) return;
