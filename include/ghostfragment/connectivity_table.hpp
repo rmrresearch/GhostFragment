@@ -1,6 +1,8 @@
 #pragma once
 #include <array>
+#include <iostream>
 #include <memory>
+#include <sde/detail_/memoization.hpp>
 #include <vector>
 
 namespace ghostfragment {
@@ -130,6 +132,14 @@ public:
      */
     bond_list_type bonds() const;
 
+    /** @brief Hashes the current ConnectivityTable.
+     *
+     *  @param[in,out] h The hasher instance to use for hashing this instance.
+     *                   After the call @p h will contain a hash of this
+     *                   instance.
+     */
+    void hash(sde::Hasher& h) const;
+
 private:
     /** @brief Returns the PIMPL in a read/write state, making a PIMPL if the
      *         instance does not have one.
@@ -182,6 +192,30 @@ bool operator==(const ConnectivityTable& lhs, const ConnectivityTable& rhs);
 inline bool operator!=(const ConnectivityTable& lhs,
                        const ConnectivityTable& rhs) {
     return !(lhs == rhs);
+}
+
+/** @brief Adds a string representation of a ConnectivityTable to an ostream.
+ *
+ *  @relates ConnectivityTable
+ *
+ *  This function facilitates printing out a ConnectivityTable instance. The
+ *  resulting string representation is simply a list of bonds, one per line.
+ *
+ *  @param[in,out] os The ostream to add the string representation to. After the
+ *                    call @p os will contain the string representation of @p t.
+ *  @param[in] t The ConnectivityTable instance that is getting printed.
+ *
+ *  @return To support operator chaining this function also returns @p os with
+ *          its internal buffer updated to include a string representation of
+ *          @p t.
+ *
+ *  @throw std::bad_alloc if calling bonds() throws. Strong throw guarantee.
+ */
+inline std::ostream& operator<<(std::ostream& os, const ConnectivityTable& t) {
+    for(const auto& [i, j] : t.bonds()) {
+        os << std::to_string(i) << " " << std::to_string(j) << std::endl;
+    }
+    return os;
 }
 
 } // namespace ghostfragment

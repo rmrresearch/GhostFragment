@@ -45,6 +45,11 @@ bond_list_type ConnectivityTable::bonds() const {
     return bond_list_type{};
 }
 
+void ConnectivityTable::hash(sde::Hasher& h) const {
+    h(natoms());
+    h(bonds());
+}
+
 pimpl_type& ConnectivityTable::pimpl_() {
     if(!m_pimpl_) m_pimpl_ = std::make_unique<pimpl_type>();
     return *m_pimpl_;
