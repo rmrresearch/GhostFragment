@@ -1,8 +1,10 @@
 #include "ghostfragment/load_modules.hpp"
 #include "modules.hpp"
 
-namespace ghost_fragment {
+namespace ghostfragment {
 
-void load_modules(sde::ModuleManager& mm) {}
+void load_modules(sde::ModuleManager& mm) {
+    mm.add_module<CovRadii>("Covalent Radius");
+}
 
-} // namespace ghost_fragment
+} // namespace ghostfragment
