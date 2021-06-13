@@ -31,18 +31,19 @@ namespace property_types {
  */
 
 template<typename Type2Partition>
-DECLARE_TEMPLATED_PROPERTY_TYPE(Partitoned, Type2Partition);
+DECLARE_TEMPLATED_PROPERTY_TYPE(Partitioned, Type2Partition);
 
 template<typename Type2Partition>
-PROPERTY_TYPE_INPUTS(Partitoned<Type2Partition>) {
-    return sde::declare_inputs().add_field<Type2Partition>(
+PROPERTY_TYPE_INPUTS(Partitioned<Type2Partition>) {
+    return sde::declare_input().add_field<Type2Partition>(
       "Object to Partition");
 }
 
 template<typename Type2Partition>
 PROPERTY_TYPE_RESULTS(Partitioned<Type2Partition>) {
-    using return_type = std::map<type::tag, Type2Partition>;
-    return sde::declare_results().add_field<return_type>("Partitioned Object");
+    using tag_type    = ghostfragment::type::tag;
+    using return_type = std::map<tag_type, Type2Partition>;
+    return sde::declare_result().add_field<return_type>("Partitioned Object");
 }
 
 } // namespace property_types

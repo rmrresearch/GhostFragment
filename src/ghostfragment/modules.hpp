@@ -4,6 +4,7 @@
 
 namespace ghostfragment {
 
+DECLARE_MODULE(ClusterPartitioner);
 DECLARE_MODULE(CovRadii);
 
-}
+} // namespace ghostfragment
