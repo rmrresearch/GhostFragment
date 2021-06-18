@@ -1,5 +1,6 @@
 #pragma once
 #include "ghostfragment/types.hpp"
+#include "ghostfragment/type_traits.hpp"
 #include <sde/sde.hpp>
 
 namespace property_types {
@@ -41,8 +42,11 @@ PROPERTY_TYPE_INPUTS(Partitioned<Type2Partition>) {
 
 template<typename Type2Partition>
 PROPERTY_TYPE_RESULTS(Partitioned<Type2Partition>) {
-    using tag_type    = ghostfragment::type::tag;
-    using return_type = std::map<tag_type, Type2Partition>;
+    // Fundamental type of the object being partitioned (needed in case
+    // Type2Partition is also a partition)
+    using obj_type = ghostfragment::partitioned_object_t<Type2Partition>;
+
+    using return_type = ghostfragment::type::partition<obj_type>;
     return sde::declare_result().add_field<return_type>("Partitioned Object");
 }
 

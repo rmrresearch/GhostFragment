@@ -7,6 +7,10 @@ namespace ghostfragment::pt {
 
 using connectivity = property_types::Connectivity;
 
+using fragmented_system = property_types::Partitioned<type::chem_system>;
+
 using fragmented_mol = property_types::Partitioned<type::molecule>;
+
+using nmer_maker = property_types::Partitioned<fragmented_mol>;
 
 } // namespace ghostfragment::pt
