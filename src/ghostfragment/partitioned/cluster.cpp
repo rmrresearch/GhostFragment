@@ -69,7 +69,7 @@ MODULE_RUN(ClusterPartitioner) {
     const auto& [mol] = pt::fragmented_mol::unwrap_inputs(inputs);
     const auto natoms = mol.size();
 
-    std::map<type::tag, type::molecule> frags; // Will be the fragments
+    type::fragmented_molecule frags; // Will be the fragments
 
     // Handle zero atom edge-case
     if(natoms == 0) {

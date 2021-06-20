@@ -11,6 +11,6 @@ using fragmented_system = property_types::Partitioned<type::chem_system>;
 
 using fragmented_mol = property_types::Partitioned<type::molecule>;
 
-using nmer_maker = property_types::Partitioned<fragmented_mol>;
+using nmer_maker = property_types::Partitioned<type::fragmented_molecule>;
 
 } // namespace ghostfragment::pt

@@ -23,4 +23,10 @@ using tag = std::string;
 template<typename T>
 using partition = std::map<tag, T>;
 
+/// Type of a partitioned molecule
+using fragmented_molecule = partition<molecule>;
+
+/// Type of a partitioned system
+using fragmented_system = partition<chem_system>;
+
 } // namespace ghostfragment::type
