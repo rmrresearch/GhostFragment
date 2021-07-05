@@ -1,12 +1,12 @@
 #include "../test_ghostfragment.hpp"
 
 using molecule   = ghostfragment::type::molecule;
-using atom       = typename molecule::value_type;
 using my_pt      = ghostfragment::pt::fragmented_mol;
 using connect_pt = ghostfragment::pt::connectivity;
 using connect_t  = ghostfragment::type::connectivity_table;
 using tag_t      = ghostfragment::type::tag;
-using return_t   = std::map<tag_t, molecule>;
+using return_t   = ghostfragment::type::fragmented_molecule;
+using subset_t   = typename return_t::value_type;
 
 TEST_CASE("Cluster Partitioner") {
     auto mm   = testing::initialize();
@@ -14,13 +14,12 @@ TEST_CASE("Cluster Partitioner") {
 
     // Since we are hard-coding the connectivity tables the coordinates don't
     // matter
-    atom H{"H", 1ul};
-    atom He{"He", 2ul};
-    atom O{"O", 8ul};
+    auto [H, He, O] = testing::some_atoms();
+
 
     SECTION("Empty Molecule") {
         const auto& [rv] = mod.run_as<my_pt>(molecule{});
-        return_t corr;
+        return_t corr(molecule{});
         REQUIRE(corr == rv);
     }
 
@@ -33,7 +32,7 @@ TEST_CASE("Cluster Partitioner") {
         };
         mod.change_submod("Connectivity", sde::make_lambda<connect_pt>(l));
         const auto& [rv] = mod.run_as<my_pt>(mol);
-        return_t corr{{"0", mol}};
+        return_t corr(mol, {{0}});
         REQUIRE(corr == rv);
     }
 
@@ -46,7 +45,7 @@ TEST_CASE("Cluster Partitioner") {
         };
         mod.change_submod("Connectivity", sde::make_lambda<connect_pt>(l));
         const auto& [rv] = mod.run_as<my_pt>(mol);
-        return_t corr{{"0", molecule(He)}, {"1", molecule(H)}};
+        return_t corr(mol, {{0}, {1}});
         REQUIRE(corr == rv);
     }
 
@@ -61,7 +60,7 @@ TEST_CASE("Cluster Partitioner") {
         };
         mod.change_submod("Connectivity", sde::make_lambda<connect_pt>(l));
         const auto& [rv] = mod.run_as<my_pt>(mol);
-        return_t corr{{"0", mol}};
+        return_t corr(mol, {{0, 1}});
         REQUIRE(corr == rv);
     }
 
@@ -78,7 +77,7 @@ TEST_CASE("Cluster Partitioner") {
         };
         mod.change_submod("Connectivity", sde::make_lambda<connect_pt>(l));
         const auto& [rv] = mod.run_as<my_pt>(mol);
-        return_t corr{{"0", molecule(H, H, O)}, {"1", molecule(H, H)}};
+        return_t corr(mol, {{0, 1, 2}, {3, 4}});
         REQUIRE(corr == rv);
     }
 
@@ -96,7 +95,7 @@ TEST_CASE("Cluster Partitioner") {
         mod.change_submod("Connectivity", sde::make_lambda<connect_pt>(l));
         const auto& [rv] = mod.run_as<my_pt>(mol);
 
-        return_t corr{{"0", molecule(H, O, H)}, {"1", molecule(H, H)}};
+        return_t corr(mol, {{0, 2, 4}, {1, 3}});
         REQUIRE(corr == rv);
     }
 }

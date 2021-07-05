@@ -14,7 +14,7 @@ namespace ghostfragment {
 void load_modules(sde::ModuleManager& mm) {
     mm.add_module<ClusterPartitioner>("Cluster Partition");
     mm.add_module<CovRadii>("Covalent Radius");
-
+    mm.add_module<NMers>("All nmers");
     set_defaults(mm);
 }
 

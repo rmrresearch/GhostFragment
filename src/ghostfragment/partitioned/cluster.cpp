@@ -66,10 +66,11 @@ MODULE_CTOR(ClusterPartitioner) {
 }
 
 MODULE_RUN(ClusterPartitioner) {
+    using subset_type = typename type::fragmented_molecule::value_type;
     const auto& [mol] = pt::fragmented_mol::unwrap_inputs(inputs);
     const auto natoms = mol.size();
 
-    type::fragmented_molecule frags; // Will be the fragments
+    type::fragmented_molecule frags(mol); // Will be the fragments
 
     // Handle zero atom edge-case
     if(natoms == 0) {
@@ -96,8 +97,9 @@ MODULE_RUN(ClusterPartitioner) {
     }
 
     for(const auto& [tag, atoms] : atom2frag) {
-        auto& new_mol = frags[tag];
-        for(auto i : atoms) new_mol.push_back(mol.at(i));
+        subset_type new_mol(frags.data());
+        for(auto i : atoms) new_mol.insert(i);
+        frags.insert(new_mol);
     }
 
     auto rv = results();

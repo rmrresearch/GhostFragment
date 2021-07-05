@@ -1,5 +1,6 @@
 #pragma once
 #include <libchemist/chemical_system/chemical_system.hpp>
+#include <libchemist/set_theory/set_theory.hpp>
 #include <property_types/types.hpp>
 
 namespace ghostfragment::type {
@@ -21,10 +22,13 @@ using tag = std::string;
 
 /// Type resulting from partitioning an object of type @p T
 template<typename T>
-using partition = std::map<tag, T>;
+using partition = libchemist::set_theory::FamilyOfSets<T>;
 
 /// Type of a partitioned molecule
 using fragmented_molecule = partition<molecule>;
+
+/// Type of the nmers
+using nmers = partition<fragmented_molecule>;
 
 /// Type of a partitioned system
 using fragmented_system = partition<chem_system>;
