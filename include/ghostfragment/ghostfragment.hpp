@@ -8,6 +8,5 @@
  */
 
 #include "ghostfragment/load_modules.hpp"
-#include "ghostfragment/property_types/fragmented.hpp"
 #include "ghostfragment/property_types/property_types.hpp"
 #include "ghostfragment/types.hpp"

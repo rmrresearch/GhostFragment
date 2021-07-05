@@ -12,4 +12,13 @@ inline auto initialize() {
     return mm;
 }
 
+inline auto some_atoms() {
+    using molecule = ghostfragment::type::molecule;
+    using atom     = typename molecule::value_type;
+    atom H{"H", 1ul};
+    atom He{"He", 2ul};
+    atom O{"O", 8ul};
+    return std::make_tuple(H, He, O);
+}
+
 } // namespace testing
