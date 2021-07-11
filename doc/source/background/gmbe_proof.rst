@@ -283,7 +283,12 @@ proof follows.
       \sum_{i=1}^{\mCn{n}}\Den{n}{i} = \sum_{i=1}^{\mCn{n}}\e{\nmer{n}{i}} - 
                                        \sum_{j=1}^{\mCn{n-1}}\e{\nmer{n-1}{j}}
 
-    
+   and the :math:`n`-body approximation becomes:
+   
+   .. math::
+      E \approx \sum_{j=1}^{\mCn{n-1}}\e{\nmer{n-1}{j}} + 
+                 sum_{i=1}^{\mCn{n}}\De{\nmer{n}{i}}
+
 
    Each monomer appears in :math:`m-1` dimers, we partition the monomers such
    that monomer :math:`j` appears with the dimer it first contributes to. This
