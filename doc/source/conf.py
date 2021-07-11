@@ -43,7 +43,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.autosectionlabel',
     'sphinx_togglebutton',
-    'sphinxcontrib.bitex'
+    'sphinxcontrib.bibtex'
 ]
 bibtex_bibfiles = ['refs.bib']
 dir_path = os.path.dirname(os.path.realpath(__file__))
