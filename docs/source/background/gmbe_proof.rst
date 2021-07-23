@@ -5,6 +5,7 @@ Deriving the GMBE
 *****************
 
 .. |m| replace:: :math:`m`
+.. |n| replace:: :math:`n`
 .. |E| replace:: :math:`E`
 
 .. |monomer_i| replace:: :math:`F^{(1)}_{i}`
@@ -25,7 +26,9 @@ Deriving the GMBE
 .. |IJK| replace:: :math:`IJK`
 
 .. |EI| replace:: :math:`E_{I}`
+.. |eI| replace:: :math:`\mathcal{E}_{I}`
 .. |EJ| replace:: :math:`E_{J}`
+.. |eJ| replace:: :math:`\mathcal{E}_{J}`
 .. |EK| replace:: :math:`E_{K}`
 .. |EIJ| replace:: :math:`E_{IJ}`
 .. |EIK| replace:: :math:`E_{IK}`
@@ -53,14 +56,28 @@ scenarios.
 One fragment
 ------------
 
-For a single fragment the GMBE is trivial:
+.. |Enm| replace:: :math:`E^{\left(n\right)}_m`
+.. |DEIJ| replace:: :math:`\Delta E_{IJ}`
+
+For a single fragment, |I|, the GMBE is trivial:
 
 .. math::
-   \newcommand{\En}[1]{E^{\left(#1\right)}}
-   \newcommand{\nmer}[2]{F^{\left(#1\right)}_{#2}}
-   \newcommand{\mi}{\nmer{1}{I}}
+   \newcommand{\Enm}[2]{E^{\left(#1\right)}_{#2}}
+   \newcommand{\Ei}{E_{I}}
 
-   E = \En{1} = E_{\mi}
+   E = \Enm{1}{1} = \Ei
+
+Here, |E| is the energy of the entire system, |Enm| is the |n|-body
+approximation to the energy of the entire system when the system is comprised of
+|m| fragments, and |EI| is the energy of |I|. To make contact with the
+forthcoming equations we define the intersection-corrected energy of |I|, |eI|,
+as:
+
+.. math::
+   \newcommand{\e}[1]{\mathcal{E}_{#1}}
+   \newcommand{\ei}{\e{I}}
+
+   \ei \equiv \Ei
 
 Two fragments
 -------------
@@ -71,89 +88,327 @@ two-body GMBE.
 One-body
 ^^^^^^^^
 
-.. math::
-   \newcommand{\mj}{\nmer{1}{J}}
-   \newcommand{\Iicj}{\nmer{1}{I\cap J}}
+From the IEP we have:
 
-   E \approx \En{1} = E_{\mi} + E_{\mj} - E_{\Iicj}
+.. math::
+   \newcommand{\Ej}{E_{J}}
+   \newcommand{\Eicj}{E_{I\cap J}}
+
+   E \approx \Enm{1}{2} = \Ei + \Ej - \Eicj
+
+Writing this in terms of the one-body, one-fragment approxmation:
+
+.. math::
+   \Enm{1}{2} = \Enm{1}{1} + \Ej - \Eicj
+
+Defining |eJ| as:
+
+.. math::
+   \newcommand{\ej}{\e{J}}
+
+   \ej \equiv \Ej - \Eicj
+
+this becomes:
+
+.. math::
+   \Enm{1}{2} = \Enm{1}{1} + \ej = \ei + \ej
 
 Two-body
 ^^^^^^^^
 
-.. math::
-   \newcommand{\mij}{\nmer{1}{IJ}}
-
-   E = \En{2} = E_{\mij}
-
-The two body interaction of fragments I with J is given by:
+For two fragments, the dimer is the entire system and we trivially have:
 
 .. math::
-   \newcommand{\De}[2]{\Delta\mathcal{E}^{\left(#1\right)}_{#2}}
-   \newcommand{\Deij}{\De{1}{IJ}}
+   \newcommand{\Eij}{E_{IJ}}
 
-   \Deij \equiv \En{2}-\En{1} = E_{\mij} - E_{\mi} - E_{\mj} + E_{\Iicj}
+   E = \Enm{2}{2} = \Eij
 
-Thus we can rewrite the two-body GMBE as:
+The two body interaction of fragments I with J, |DEIJ|, is given by the
+difference in energy between the two-body and one-body approximations:
 
 .. math::
-   E = \En{1} + \Deij
+   \newcommand{\DE}[1]{\Delta E_{#1}}
+   \newcommand{\DEij}{\DE{IJ}}
+
+   \DEij \equiv \Enm{2}{2}-\Enm{1}{2} = \Eij - \ei - \ej
+
+Using |DEIJ|, we can rewrite the two-body GMBE as:
+
+.. math::
+   E = \Enm{1}{2} + \DEij = \ei + \ej + \DEij
+
+Again to make-contact with the forthcoming equations we define an intersection-
+corrected two-body energy and an intersection-corrected two-body interaction, |DeIJ|:
+
+.. math::
+   \newcommand{\De}[1]{\Delta\mathcal{E}_{#1}}
+   \newcommand{\Deij}{\De{IJ}}
+
+   \eij \equiv& \Eij\\
+   \Deij \equiv& \DEij
+
+and the final two-body, two-fragment GMBE is:
+
+.. math::
+   E = \ei + \ej + \Deij
 
 Three fragments
 ---------------
 
+For three fragments we now have one, two, and three-body approximations.
+
 One-body
 ^^^^^^^^
 
-.. math::
-   \newcommand{\mk}{\nmer{1}{K}}
-   \newcommand{\Iick}{\nmer{1}{I\cap K}}
-   \newcommand{\Ijck}{\nmer{1}{J\cap K}}
-   \newcommand{\Iicjck}{\nmer{1}{I\cap J\cap K}}
+From the IEP we have:
 
-   E \approx \En{1} = E_{\mi} + E_{\mj} + E_{\mk} -
-                      E_{\Iicj} - E_{\Iick} - E_{\Ijck} + E_{\Iicjck}
+.. math::
+   \newcommand{\Ek}{E_{K}}
+   \newcommand{\Eick}{E_{I\cap K}}
+   \newcommand{\Ejck}{E_{J\cap K}}
+   \newcommand{\Eicjck}{E_{I\cap J\cap K}}
+
+   E \approx \Enm{1}{3} = \Ei + \Ej + \Ek - \Eicj - \Eick - \Ejck + \Eicjck
+
+In terms of the one-body, two-fragment approximation this becomes:
+
+.. math::
+   \Enm{1}{3} = \Enm{1}{2} + \Ek - \Eick - \Ejck + \Eicjck
+
+Defining:
+
+.. math::
+   \newcommand{\ek}{\e{K}}
+
+   \ek \equiv \Ek - \Eick - \Ejck + \Eicjck
+
+
+yields:
+
+.. math::
+   \Enm{1}{3} = \Enm{1}{2} + \ek = \ei + \ej + \ek
 
 Two-body
 ^^^^^^^^
 
-.. math::
-   \newcommand{\mik}{\nmer{1}{IK}}
-   \newcommand{\mjk}{\nmer{1}{JK}}
-   \newcommand{\Iijcik}{\nmer{1}{IJ\cap IK}}
-   \newcommand{\Iijcjk}{\nmer{1}{IJ\cap JK}}
-   \newcommand{\Iikcjk}{\nmer{1}{IK\cap JK}}
-   \newcommand{\Iijcikcjk}{\nmer{1}{IJ\cap IK\cap JK}}
+Using the IEP we get:
 
-   E\approx \En{2} = E_{\mij} + E_{\mik} + E_{\mjk} -
-                     E_{\Iijcik} - E_{\Iijcjk} - E_{\Iikcjk} + E_{\Iijcikcjk}
+.. math::
+   \newcommand{\Eik}{E_{IK}}
+   \newcommand{\Ejk}{E_{JK}}
+   \newcommand{\Eijcik}{E_{IJ\cap IK}}
+   \newcommand{\Eijcjk}{E_{IJ\cap JK}}
+   \newcommand{\Eikcjk}{E_{IK\cap JK}}
+   \newcommand{\Eijcikcjk}{E_{IJ\cap IK\cap JK}}
+
+   E\approx \Enm{2}{3} = \Eij + \Eik + \Ejk -
+                         \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk
 
 The sum of the two-body interactions are given by the difference between the
-two-body and one-body approximation:
+two-body and one-body approximations:
+
+.. math::
+   \En{2}{3}-\En{1}{3} =& \Eij + \Eik + \Ejk -
+                         \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk -
+                         \left(\ei + \ej + \ek\right)
+                       =& \En{2}{2}  + \Eik + \Ejk -
+                         \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk - \ek
+
+At this point it is tempting to try to define intersection-corrected dimer
+energies according to:
+
+.. math::
+   \newcommand{\eij}{\e{IJ}}
+   \newcommand{\eik}{\e{IK}}
+   \newcommand{\ejk}{\e{JK}}
+
+   \eik \equiv& \Eik - \Eijcik\\
+   \ejk \equiv& \Ejk - \Eijcjk - \Eikcjk + \Eijcikcjk
+
+if we do this we get:
+
+.. math::
+   \En{2}{3} =& \En{1}{3}  + \En{2}{2} + \eik + \ejk - \ek\\
+             =& -\En{1}{3} + \En{2}{2} + \Deik + \ Dejk + \ei + \ej + \ek
+
+The appearance of the intersection-corrected monomer energies is at first
+unexpected; however, note that for disjoint fragments:
+
+.. math::
+   \eij - \ei - \ej =& \Eij - \Ei - \Ej
+   \eik - \ei - \ej =& \Eik - \Ei - \Ei -\Ek\\
+   \ejk - \ej - \ek =& \Ejk - \Ej - \Ek - \Ej - \Ek
+
+and we see that the definitions of our intersection-corrected dimer energies
+leads to two-body interactions which have subtracted out the energy of each
+monomer one too many times. We instead propose the following
+intersection-corrected interactions:
+
+.. math::
+
+   \Deij =& \Eij - \ei - \ej\\
+   \Deik =& \Eik - \Eijcik - \ek\\
+   \Dejk =& \Ejk - \Eijcjk - \Eikcjk + \Eijcikcjk
+
+which for disjoint fragments reduce to:
+
+.. math::
+   \Eij - \ei - \ej =& \Eij - \Ei - \Ej
+   \Eik - \ei - \ej =& \Eik - \Ei - \Ek\\
+   \Ejk - \ej - \ek =& \Ejk - \Ej - \Ek
+
+with these defitions we get:
+
+.. math::
+   \En{2}{3} =& \En{1}{3} + \En{2}{2} + \Deik + \ Dejk\\
+             =& \ei + \ej + \ek + \Deij + \Deik + \Dejk
+
+Three-body
+^^^^^^^^^^
+
+For three fragments we again obtain a trivial equation for the GMBE:
+
+.. math::
+   \newcommand{\Eijk}{E_{IJK}}
+
+   E = \Emn{3}{3} = \Eijk
+
+defining the three-body interaction as:
+
+.. math::
+   \newcommand{\Deijk}{\De{IJK}}
+
+   \Deijk = \Eijk - \left(\ei + \ej + \ek + \Deij + \Deik + \Dejk\right)
+
+we can write:
+.. math::
+   E = \ei + \ej + \ek + \Deij + \Deik + \Dejk + \Deijk
+
+Four Fragments
+--------------
+
+One-body
+^^^^^^^^
+
+Following the IEP we have:
+
+.. math::
+   \newcommand{\El}{E_L}
+   \newcommand{\Eicl}{E_{I\cap L}}
+   \newcommand{\Ejcl}{E_{J\cap L}}
+   \newcommand{\Ekcl}{E_{K\cap L}}
+   \newcommand{\Eicjcl}{E_{I\cap J\cap L}}
+   \newcommand{\Eickcl}{E_{I\cap K\cap L}}
+   \newcommand{\Ejckcl}{E_{J\cap K\cap L}}
+   \newcommand{\Eicjckcl}{E_{I\cap J\cap K\cap L}}
+   \newcommand{\el}{\e{L}}
+
+   \Emn{1}{4} = \Ei + \Ej + \Ek + \El
+                - \Eicj - \Eick - \Eicl - \Ejck - \Ejcl - \Ekcl +
+                \Eicjck + \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl
+
+In terms of the one-body, three-fragment approximation:
+
+.. math::
+   \Emn{1}{4} = \Emn{1}{3} + \El - \Eicl - \Ejcl - \Ekcl +
+                \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl
+
+Defining:
+
+.. math::
+   \el = \El - \Eicl - \Ejcl - \Ekcl + \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl
+
+We get:
+
+.. math::
+  \Emn{1}{4} = \Emn{1}{3} + \el = \ei + \ej + \ek + \el
+
+Two-body
+^^^^^^^^
+
+Following the IECP
+
 
 .. math::
    \newcommand{\Iijck}{\nmer{1}{I\left(J\cap K\right)}}
    \newcommand{\Ijick}{\nmer{1}{J\left(I\cap K\right)}}
    \newcommand{\Ikicj}{\nmer{1}{K\left(I\cap J\right)}}
    \newcommand{\Iicjickjck}{\nmer{1}{\left(I\cap J\right)\left(I\cap K\right)\left(J\cap K\right)}}
+   \newcommand{\Deik}{\De{1}{IK}}
+   \newcommand{\Dejk}{\De{1}{JK}}
+   \newcommand{\Deijck}{\De{1}{I\left(J\cap K\right)}}
+   \newcommand{\Dejick}{\De{1}{J\left(I\cap K\right)}}
+   \newcommand{\Dekicj}{\De{1}{K\left(I\cap J\right)}}
+   \newcommand{\Deicjickjck}{\De{1}{\left(I\cap J\right)\left(I\cap K\right)\left(J\cap K\right)}}
 
    \En{2} -\En{1} =& E_{\mij} + E_{\mik} + E_{\mjk} -
-                     E_{\Iijcik} - E_{\Iijcjk} - E_{\Iikcjk} + E_{\Iijcikcjk} -
-                    \left( E_{\mi} + E_{\mj} + E_{\mk} -
-                      E_{\Iicj} - E_{\Iick} - E_{\Ijck} + E_{\Iicjck}\right)\\
+                     E_{\Iijcik} - E_{\Iijcjk} - E_{\Iikcjk} +
+                     E_{\Iijcikcjk} -\\
+                     &\left( E_{\mi} + E_{\mj} + E_{\mk} -
+                             E_{\Iicj} - E_{\Iick} - E_{\Ijck} +
+                             E_{\Iicjck}\right)\\
                   =& \left(E_{\mij} -E_{\mi} - E_{\mj} + E_{\Iicj}\right) +
-                     \left(E_{\mik} -E_{\mi} - E_{\mk} + E_{\Iick}\right) +
-                     \left(E_{\mjk} -E_{\mj} - E_{\mk} + E_{\Ijck}\right)
-                     + E_{\mi} + E_{\mj} + E_{\mk} -
-                    E_{\Iijcik} - E_{\Iijcjk} - E_{\Iikcjk} + E_{\Iijcikcjk} -
-                    E_{\Iicjck}\\
-                  =& \left(E_{\mij} -E_{\mi} - E_{\mj} + E_{\Iicj}\right) +
-                     \left(E_{\mik} -E_{\mi} - E_{\mk} + E_{\Iick}\right) +
-                     \left(E_{\mjk} -E_{\mj} - E_{\mk} + E_{\Ijck}\right) -
-                     \left(E_{\Iijck} - E_{\mi} - E_{\Ijck} + E_{\Iicjck} \right) -
-                     \left(E_{\Ijick} - E_{\mj} - E_{\Iick} + E_{\Iicjck}\right) -
-                     \left(E_{\Ikicj} - E_{\mk} - E_{\Iicj} + E_{\Iicjck}\right) +
-                     \left(E_{\Iicjickjck} - E_{\Iicj} - E_{\Iick} - E_{Ijck} +
-                      2E_{\Iicjck}
+                     \left(E_{\mik} -E_{\mi} - E_{\mk} + E_{\Iick}\right) + \\
+                   & \left(E_{\mjk} -E_{\mj} - E_{\mk} + E_{\Ijck}\right) +
+                     E_{\mi} + E_{\mj} + E_{\mk} - E_{\Iijcik} - E_{\Iijcjk} -\\
+                   & E_{\Iikcjk} + E_{\Iijcikcjk} - E_{\Iicjck}\\
+                  =& \Deij + \Deik + \Dejk  -
+                     \left(E_{\Iijck} - E_{\mi} - E_{\Ijck} + E_{\Iicjck}\right) -\\
+                   & \left(E_{\Ijick} - E_{\mj} - E_{\Iick} + E_{\Iicjck}\right) -
+                     \left(E_{\Ikicj} - E_{\mk} - E_{\Iicj} + E_{\Iicjck}\right) + \\
+                   & \left(E_{\Iicjickjck} - E_{\Iicj} - E_{\Iick} - E_{\Ijck} +
+                      2E_{\Iicjck}\right)\\
+                  =& \Deij + \Deik + \Dejk  - \Deijck - \Dejick - \Dekicj +
+                     \Deicjickjck
+
+The form of the two-body interactions are perhaps unexpected; however, the
+interpretation is straightforward. An intersection-corrected two-body
+interaction like :math:`\Delta\mathcal{E}_{F^{(1)}_{IJ}}` only corrects for the
+intersections of the monomers in the two-body interaction it doesn't correct for
+the overcounting in the sum of two-body interactions. For example, since |I|
+appears in both :math:`\Delta\mathcal{E}_{F^{(1)}_{IJ}}` and
+:math:`\Delta\mathcal{E}_{F^{(1)}_{IK}}`, the interaction of |I| with
+:math:`J\cap K` is counted twice. Similar analysis gives rise to the other two
+monomer-intersection interactions. The last term arises from the fact that our
+subtraction took out the interaction of the three intersections one too many
+times.
+
+Three-body
+^^^^^^^^^^
+
+The three-body energy is given by:
+
+.. math::
+   \newcommand{\mijk}{\nmer{1}{IJK}}
+
+   E = \En{3} = E_{\mijk}
+
+Defining a three-body interaction:
+
+.. math::
+   \newcommand{\Deijk}{\De{1}{IJK}}
+
+   \Deijk = E_{\mijk} - \left(\Deij + \Deik + \Dejk  - \Deijck - \Dejick -
+            \Dekicj + \Deicjickjck\right) - \left(E_{\mi} + E_{\mj} + E_{\mk} -
+                      E_{\Iicj} - E_{\Iick} - E_{\Ijck} + E_{\Iicjck}
+            \right)
+
+The total energy can be written as:
+
+.. math::
+   E = \En{1} + \left(\Deij + \Deik + \Dejk  - \Deijck - \Dejick -
+            \Dekicj + \Deicjickjck\right) + \Deijk
+
+Four fragments
+--------------
+
+Two-body
+^^^^^^^^
+
+E_{\mi}
+
+
+
 The Basic Form
 ===============
 
