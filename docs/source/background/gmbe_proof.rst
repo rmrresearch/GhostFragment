@@ -9,7 +9,7 @@ Deriving the GMBE
 .. |E| replace:: :math:`E`
 
 .. |monomer_i| replace:: :math:`F^{(1)}_{i}`
-.. |dimer_i| replace:: :math:`F^{(2)}_{j}`
+.. |dimer_i| replace:: :math:`F^{(2)}_{I}`
 .. |nmer_i| replace:: :math:`F^{(2)}_{j}`
 .. |m_int| replace:: :math:`\Delta\mathcal{E}_{F^{(m)}_1}`
 
@@ -138,16 +138,15 @@ Using |DEIJ|, we can rewrite the two-body GMBE as:
    E = \Enm{1}{2} + \DEij = \ei + \ej + \DEij
 
 Again to make-contact with the forthcoming equations we define an intersection-
-corrected two-body energy and an intersection-corrected two-body interaction, |DeIJ|:
+corrected two-body interaction, |DeIJ|:
 
 .. math::
    \newcommand{\De}[1]{\Delta\mathcal{E}_{#1}}
    \newcommand{\Deij}{\De{IJ}}
 
-   \eij \equiv& \Eij\\
-   \Deij \equiv& \DEij
+   \Deij \equiv \DEij
 
-and the final two-body, two-fragment GMBE is:
+with which the final two-body, two-fragment GMBE is:
 
 .. math::
    E = \ei + \ej + \Deij
@@ -208,14 +207,13 @@ The sum of the two-body interactions are given by the difference between the
 two-body and one-body approximations:
 
 .. math::
-   \En{2}{3}-\En{1}{3} =& \Eij + \Eik + \Ejk -
+   \Enm{2}{3}-\Enm{1}{3} =& \Eij + \Eik + \Ejk -
                          \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk -
-                         \left(\ei + \ej + \ek\right)
-                       =& \En{2}{2}  + \Eik + \Ejk -
+                         \left(\ei + \ej + \ek\right)\\
+                         =& \Enm{2}{2}  + \Eik + \Ejk -
                          \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk - \ek
 
-At this point it is tempting to try to define intersection-corrected dimer
-energies according to:
+At this point we define intersection-corrected dimer energies according to:
 
 .. math::
    \newcommand{\eij}{\e{IJ}}
@@ -225,42 +223,41 @@ energies according to:
    \eik \equiv& \Eik - \Eijcik\\
    \ejk \equiv& \Ejk - \Eijcjk - \Eikcjk + \Eijcikcjk
 
-if we do this we get:
+if we do this and try to write the two-body interactions in the "usual way" we
+get:
 
 .. math::
-   \En{2}{3} =& \En{1}{3}  + \En{2}{2} + \eik + \ejk - \ek\\
-             =& -\En{1}{3} + \En{2}{2} + \Deik + \ Dejk + \ei + \ej + \ek
+   \Enm{2}{3} =& \Enm{1}{3} + \Enm{2}{2} + \eik + \ejk - \ek\\
+              =& \Enm{1}{3} + \Enm{2}{2} + \left(\eik - \ei - \ek\right) +
+                 \left(\ejk - \ej -\ek\right) + \ei + \ej + \ek
 
 The appearance of the intersection-corrected monomer energies is at first
 unexpected; however, note that for disjoint fragments:
 
 .. math::
-   \eij - \ei - \ej =& \Eij - \Ei - \Ej
-   \eik - \ei - \ej =& \Eik - \Ei - \Ei -\Ek\\
-   \ejk - \ej - \ek =& \Ejk - \Ej - \Ek - \Ej - \Ek
+   \eij - \ei - \ej =& \Eij - \Ei - \Ej\\
+   \eik - \ei - \ek =& \left(\Eik - \Ei\right) - \Ei -\Ek\\
+   \ejk - \ej - \ek =& \left(\Ejk - \Ej - \Ek\right) - \Ej - \Ek
 
-and we see that the definitions of our intersection-corrected dimer energies
-leads to two-body interactions which have subtracted out the energy of each
-monomer one too many times. We instead propose the following
-intersection-corrected interactions:
-
-.. math::
-
-   \Deij =& \Eij - \ei - \ej\\
-   \Deik =& \Eik - \Eijcik - \ek\\
-   \Dejk =& \Ejk - \Eijcjk - \Eikcjk + \Eijcikcjk
-
-which for disjoint fragments reduce to:
+That is to say, the intersection-corrected dimer energies already remove the 
+energies of the previously seen monomers(i.e., with our ordering IJ is first, so
+when we consider IK, the intersection-correction removes the energy of I, 
+similarly for JK, the intersection-correction removes the energies of J and K). 
+We instead propose the following intersection-corrected interactions:
 
 .. math::
-   \Eij - \ei - \ej =& \Eij - \Ei - \Ej
-   \Eik - \ei - \ej =& \Eik - \Ei - \Ek\\
-   \Ejk - \ej - \ek =& \Ejk - \Ej - \Ek
+   \newcommand{\Deik}{\De{IK}}
+   \newcommand{\Dejk}{\De{JK}}
 
-with these defitions we get:
+   \Deij =& \eij - \ei - \ej\\
+   \Deik =& \eik - \ek\\
+   \Dejk =& \ejk
+
+which for disjoint fragments reduce to the usual two-body interactions. With 
+these defitions we get:
 
 .. math::
-   \En{2}{3} =& \En{1}{3} + \En{2}{2} + \Deik + \ Dejk\\
+   \Enm{2}{3} =& \Enm{1}{3} + \Enm{2}{2} + \Deik + \ Dejk\\
              =& \ei + \ej + \ek + \Deij + \Deik + \Dejk
 
 Three-body
@@ -271,16 +268,19 @@ For three fragments we again obtain a trivial equation for the GMBE:
 .. math::
    \newcommand{\Eijk}{E_{IJK}}
 
-   E = \Emn{3}{3} = \Eijk
+   E = \Enm{3}{3} = \Eijk
 
-defining the three-body interaction as:
+defining the three-body interaction as the difference in the three-body 
+approximation and the two-body approximation we get:
 
 .. math::
    \newcommand{\Deijk}{\De{IJK}}
 
-   \Deijk = \Eijk - \left(\ei + \ej + \ek + \Deij + \Deik + \Dejk\right)
+   \Deijk \equiv \Enm{3}{3} - \Enm{2}{3} = 
+              \Eijk - \left(\ei + \ej + \ek + \Deij + \Deik + \Dejk\right)
 
-we can write:
+with which we can write the full GMBE as:
+
 .. math::
    E = \ei + \ej + \ek + \Deij + \Deik + \Dejk + \Deijk
 
@@ -303,14 +303,14 @@ Following the IEP we have:
    \newcommand{\Eicjckcl}{E_{I\cap J\cap K\cap L}}
    \newcommand{\el}{\e{L}}
 
-   \Emn{1}{4} = \Ei + \Ej + \Ek + \El
-                - \Eicj - \Eick - \Eicl - \Ejck - \Ejcl - \Ekcl +
-                \Eicjck + \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl
+   \Enm{1}{4} =& \Ei + \Ej + \Ek + \El-\\
+               & \Eicj - \Eick - \Eicl - \Ejck - \Ejcl - \Ekcl +\\
+               & \Eicjck + \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl
 
 In terms of the one-body, three-fragment approximation:
 
 .. math::
-   \Emn{1}{4} = \Emn{1}{3} + \El - \Eicl - \Ejcl - \Ekcl +
+   \Enm{1}{4} = \Enm{1}{3} + \El - \Eicl - \Ejcl - \Ekcl +
                 \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl
 
 Defining:
@@ -321,381 +321,67 @@ Defining:
 We get:
 
 .. math::
-  \Emn{1}{4} = \Emn{1}{3} + \el = \ei + \ej + \ek + \el
+  \Enm{1}{4} = \Enm{1}{3} + \el = \ei + \ej + \ek + \el
 
 Two-body
 ^^^^^^^^
 
-Following the IECP
-
-
-.. math::
-   \newcommand{\Iijck}{\nmer{1}{I\left(J\cap K\right)}}
-   \newcommand{\Ijick}{\nmer{1}{J\left(I\cap K\right)}}
-   \newcommand{\Ikicj}{\nmer{1}{K\left(I\cap J\right)}}
-   \newcommand{\Iicjickjck}{\nmer{1}{\left(I\cap J\right)\left(I\cap K\right)\left(J\cap K\right)}}
-   \newcommand{\Deik}{\De{1}{IK}}
-   \newcommand{\Dejk}{\De{1}{JK}}
-   \newcommand{\Deijck}{\De{1}{I\left(J\cap K\right)}}
-   \newcommand{\Dejick}{\De{1}{J\left(I\cap K\right)}}
-   \newcommand{\Dekicj}{\De{1}{K\left(I\cap J\right)}}
-   \newcommand{\Deicjickjck}{\De{1}{\left(I\cap J\right)\left(I\cap K\right)\left(J\cap K\right)}}
-
-   \En{2} -\En{1} =& E_{\mij} + E_{\mik} + E_{\mjk} -
-                     E_{\Iijcik} - E_{\Iijcjk} - E_{\Iikcjk} +
-                     E_{\Iijcikcjk} -\\
-                     &\left( E_{\mi} + E_{\mj} + E_{\mk} -
-                             E_{\Iicj} - E_{\Iick} - E_{\Ijck} +
-                             E_{\Iicjck}\right)\\
-                  =& \left(E_{\mij} -E_{\mi} - E_{\mj} + E_{\Iicj}\right) +
-                     \left(E_{\mik} -E_{\mi} - E_{\mk} + E_{\Iick}\right) + \\
-                   & \left(E_{\mjk} -E_{\mj} - E_{\mk} + E_{\Ijck}\right) +
-                     E_{\mi} + E_{\mj} + E_{\mk} - E_{\Iijcik} - E_{\Iijcjk} -\\
-                   & E_{\Iikcjk} + E_{\Iijcikcjk} - E_{\Iicjck}\\
-                  =& \Deij + \Deik + \Dejk  -
-                     \left(E_{\Iijck} - E_{\mi} - E_{\Ijck} + E_{\Iicjck}\right) -\\
-                   & \left(E_{\Ijick} - E_{\mj} - E_{\Iick} + E_{\Iicjck}\right) -
-                     \left(E_{\Ikicj} - E_{\mk} - E_{\Iicj} + E_{\Iicjck}\right) + \\
-                   & \left(E_{\Iicjickjck} - E_{\Iicj} - E_{\Iick} - E_{\Ijck} +
-                      2E_{\Iicjck}\right)\\
-                  =& \Deij + \Deik + \Dejk  - \Deijck - \Dejick - \Dekicj +
-                     \Deicjickjck
-
-The form of the two-body interactions are perhaps unexpected; however, the
-interpretation is straightforward. An intersection-corrected two-body
-interaction like :math:`\Delta\mathcal{E}_{F^{(1)}_{IJ}}` only corrects for the
-intersections of the monomers in the two-body interaction it doesn't correct for
-the overcounting in the sum of two-body interactions. For example, since |I|
-appears in both :math:`\Delta\mathcal{E}_{F^{(1)}_{IJ}}` and
-:math:`\Delta\mathcal{E}_{F^{(1)}_{IK}}`, the interaction of |I| with
-:math:`J\cap K` is counted twice. Similar analysis gives rise to the other two
-monomer-intersection interactions. The last term arises from the fact that our
-subtraction took out the interaction of the three intersections one too many
-times.
-
-Three-body
-^^^^^^^^^^
-
-The three-body energy is given by:
+We now have six dimers, so the two-body approximation has 63 terms and explicity
+enumerating them all is too cumbersome. Instead we assume that the dimers are
+ordered in some manner and we define |dimer_i| as the |I|-th dimer. With this
+notation we have:
 
 .. math::
-   \newcommand{\mijk}{\nmer{1}{IJK}}
+   \newcommand{\nmer}[2]{F^{\left(#1\right)}_{#2}}
+   \newcommand{\di}{\nmer{2}{I}}
+   \newcommand{\dj}{\nmer{2}{J}}
+   \newcommand{\dk}{\nmer{2}{K}}
+   \newcommand{\dl}{\nmer{2}{L}}
+   \newcommand{\dm}{\nmer{2}{M}}
+   \newcommand{\dn}{\nmer{2}{N}}
+   
+   \Enm{2}{4} =& \sum_{I=1}^{6} E_{\di} - 
+                 \sum_{I=2}^{6}\sum_{J=1}^{I-1}E_{\dj\cap\di} +
+                 \sum_{I=3}^{6}\sum_{J=1}^{I-2}\sum_{K=J+1}^{I-1}
+                   E_{\dj\cap\dk\cap\di} -\\
+               &  \sum_{I=4}^{6}\sum_{J=1}^{I-3}\sum_{K=J+1}^{I-2}
+                   \sum_{L=K+1}^{I-1} E_{\dj\cap\dk\cap\dl\cap\di} +\\
+                &\sum_{I=5}^{6}\sum_{J=1}^{I-4}\sum_{K=J+1}^{I-3}
+                 \sum_{L=J+1}^{I-2}\sum_{M=L+1}^{I-1} 
+                 E_{\dj\cap\dk\cap\dl\cap\dm\cap\di} -\\
+               & \sum_{I=6}^{6}\sum_{J=1}^{I-5}\sum_{K=J+1}^{I-4}
+                 \sum_{L=J+1}^{I-3}\sum_{M=L+1}^{I-2}\sum_{N=M+1}^{I-1}
+                 E_{\dj\cap\dk\cap\dl\cap\dm\cap\dn\cap\di}
 
-   E = \En{3} = E_{\mijk}
-
-Defining a three-body interaction:
-
-.. math::
-   \newcommand{\Deijk}{\De{1}{IJK}}
-
-   \Deijk = E_{\mijk} - \left(\Deij + \Deik + \Dejk  - \Deijck - \Dejick -
-            \Dekicj + \Deicjickjck\right) - \left(E_{\mi} + E_{\mj} + E_{\mk} -
-                      E_{\Iicj} - E_{\Iick} - E_{\Ijck} + E_{\Iicjck}
-            \right)
-
-The total energy can be written as:
-
-.. math::
-   E = \En{1} + \left(\Deij + \Deik + \Dejk  - \Deijck - \Dejick -
-            \Dekicj + \Deicjickjck\right) + \Deijk
-
-Four fragments
---------------
-
-Two-body
-^^^^^^^^
-
-E_{\mi}
-
-
-
-The Basic Form
-===============
-
-We start by showing that the |E| can be expressed exactly in the form of the
-GMBE:
+where the summations have been manipulated so that the dimers in the 
+intersections are indexed lexicographically, the indices are driven by |I|, and 
+|I| is always the largest index (this facilitates defining the 
+intersection-corrected dimer energies). This is still a cumbersome notation. 
+The spirit of what is going on here is that for an intersection involving 
+|dimer_i| and |n| other dimers, we are iterating over all combinations of |n| 
+dimers that can be formed from the :math:`I-1` dimers proceeding |I|. Let 
+:math:`\mathbb{F}^{(n, m)}` be the ordered set of |n|-mers which can be made 
+from |m| monomers; furthermore let :math:`\mathbb{F}^{(n,m)}_{I}` be the subset
+of :math:`\mathbb{F}^{(n, m)}` consisting of the first |I|, |n|-mers. Next we
+define :math:`\mathbb{P}^{(k)}\left(\mathbb{X}\right)` to be the set of 
+:math:`k`-element combinations which can be formed from the set 
+:math:`\mathbb{X}`. Finally we define a quantity 
+:math:`X\left(\mathbb{a}\right)` which is the intersection of each element in a 
+set :math:`\mathbb{a}` according to:
 
 .. math::
 
+   X\left(\mathbb{a}\right) = \bigcap_{b\in \mathbb{a}} b
 
-   \newcommand{\mCn}[2]{{_{#1}}C_{#2}}
-   \newcommand{\e}[1]{\mathcal{E}_{#1}}
-   \newcommand{\De}[1]{\Delta\mathcal{E}_{#1}}
-
-    E = \sum_{i=1}^{n}\e{\nmer{1}{i}} +
-         \sum_{i=1}^{\mCn{m}{2}}\De{\nmer{2}{i}} +
-         \cdots + \De{\nmer{m}{1}}
-
-if we define |m_int| in terms of the :math:`l<m`-body intersection-corrected
-interactions as:
+Then the two-body energy can be written much more compactly as:
 
 .. math::
+   \newcommand{\nmerset}[3]{\mathbb{F}^{\left(#1, #2\right)}_{#3}}
+   \newcommand{\powerset}[2]{\mathbb{P}^{\left(#1\right)}\left({#2}\right)}
 
-   \De{\nmer{m}{1}} =
-     E - \sum_{l=1}^{m-1} \sum_{i=1}^{\mCn{m}{l}}\De{\nmer{l}{i}}
+   \Enm{2}{4} = \sum_{I=1}^{6}\left[\sum_{n=0}^5\left(-1\right)^{n}
+                \sum_{p\in\powerset{n}{\nmerset{2}{4}{I-1}}}
+                  E_{X\left(p\right)\cap\di}\right]
 
-Here :math:`\mathcal{E}_{F^{(1)}_i}` is the intersection-corrected energy of
-|monomer_i| and the various :math:`\Delta\mathcal{E}_{F^{(n)}_i}`` are the
-intersection-corrected |n|-body interactions arising from nmer :math:`i`. It is
-easily proved that equality holds for any definition of the :math:`l<m`-body
-intersection-corrected interactions.
-
-.. admonition:: Proof of Exact Equality
-   :class: dropdown, note
-
-   Separating off the last term of the GMBE we have:
-
-   .. math::
-      E = \De{\nmer{m}{1}} +
-            \sum_{l=1}^{m-1} \sum_{i=1}^{\mCn{m}{l}}\De{\nmer{l}{i}}
-
-   Inserting the defition of |m_int|:
-
-   .. math::
-      E =& \left(E -
-             \sum_{l=1}^{m-1} \sum_{i=1}^{\mCn{m}{l}}\De{\nmer{l}{i}}
-           \right) +
-           \sum_{l=1}^{m-1} \sum_{i=1}^{\mCn{m}{l}}\De{\nmer{n}{i}}\\
-        =&E
-
-   proving that this form is exact for any definition of the :math:`l<m`-body
-   intersection-corrected interactions.
-
-We now choose to define the intersection-corrected nmer energy as:
-
-.. math::
-   \e{\nmer{n}{i}}
-     \equiv E_{\nmer{n}{i}} -
-            \sum_{j=1}^{i-1}E_{\nmer{n}{j}\cap\nmer{n}{i}} +
-            \cdots +
-            \left(-1\right)^{i-1}
-             E_{\nmer{n}{2}\cap\nmer{n}{2}\cap\cdots\cap\nmer{n}{i}}
-
-Here Roman "E"s (as opposed to caligraphy "E"s) denote energies of nmers, and
-intersections of nmers, which have **not** been corrected for over-/under-
-counting.
-
-.. admonition:: Motivating the Form of the Intersection-Corrected NMer Energy
-   :class: dropdown, note
-
-   If we truncate the GMBE at order 1 we get:
-
-   .. math::
-      \newcommand{\E}[1]{E^{(#1)}}
-      \E{1} = \sum_{i=1}^{m}\e{\nmer{1}{i}}
-
-   By analogy to the normal MBE we would like :math:`E^{(1)}` to be a one-body
-   approximation to the energy of the system. The
-   inclusion-exclusion principle (IEP) tells us:
-
-   .. math::
-      \E{1} = \sum_{i=1}^{m}E_{\nmer{1}{i}} -
-              \sum_{i=1}^{m}\sum_{j=1}^{i-1}E_{\nmer{1}{j}\cap\nmer{1}{i}} +
-              \cdots +
-              \left(-1\right)^{m-1}
-                E_{\nmer{1}{1}\cap\nmer{1}{2}\cap\cdots\cap\nmer{1}{m}}
-
-   The form of this equation suggests (and we adopt) the intersection-corrected
-   energy definition:
-
-   .. math::
-      \e{\nmer{1}{i}}
-        \equiv E_{\nmer{1}{i}} -
-               \sum_{j=1}^{i-1}E_{\nmer{1}{j}\cap\nmer{1}{i}} +
-               \cdots +
-               \left(-1\right)^{i-1}
-                 E_{\nmer{1}{1}\cap\nmer{1}{2}\cap\cdots\cap\nmer{1}{i}}
-
-   With this partioning of the energies, the first three intersection-corrected
-   energies look like:
-
-   .. math::
-      \e{\nmer{1}{1}} =& E_{\nmer{1}{1}}\\
-      \e{\nmer{1}{2}} =& E_{\nmer{1}{2}} - E_{\nmer{1}{1}\cap\nmer{1}{2}}\\
-      \e{\nmer{1}{3}} =& E_{\nmer{1}{3}} - E_{\nmer{1}{1}\cap\nmer{1}{3}} -
-                         E_{\nmer{1}{2}\cap\nmer{1}{3}} +
-                         E_{\nmer{1}{1}\cap\nmer{1}{2}\cap\nmer{1}{3}}
-
-   that is the intersection-corrected energies work analogous to Gram-Schmidt
-   orthogonalization, namely for each new monomer we apply the IEP to it and the
-   monomers that came before it.
-
-   Applying the IEP to the set of dimers, we get the two-body approximation to
-   the energy:
-
-   .. math::
-      \E{2} = \sum_{i=1}^{\mCn{m}{2}}E_{\nmer{2}{i}} -
-              \sum_{i=1}^{\mCn{m}{2}}\sum_{j=1}^{i-1}
-                E_{\nmer{2}{j}\cap\nmer{2}{i}} +
-              \cdots +
-              \left(-1\right)^{\mCn{m}{n}-1}
-                E_{\nmer{2}{1}\cap\nmer{2}{2}\cap\cdots\cap\nmer{2}{\mCn{m}{2}}}
-
-   and we define the intersection-corrected dimer energies:
-
-   .. math::
-      \e{\nmer{2}{i}}
-        \equiv E_{\nmer{2}{i}} -
-               \sum_{j=1}^{i-1}E_{\nmer{2}{j}\cap\nmer{2}{i}} +
-               \cdots +
-               \left(-1\right)^{i-1}
-                E_{\nmer{1}{2}\cap\nmer{2}{2}\cap\cdots\cap\nmer{2}{i}}
-
-   The generalization from dimers to nmers is now apparant.
-
-
-This definition is such that the |n|-body approximation to the system's energy,
-:math:`E^{(n)}` is given by:
-
-.. math::
-   \E{n} = \sum_{i=1}^{\mCn{m}{n}}\e{\nmer{n}{i}}
-
-.. admonition:: Proof
-   :class: dropdown, note
-
-   Inserting the definition of the intersection-corrected nmer energy gives:
-
-   .. math::
-     \E{n} = \sum_{i=1}^{\mCn{m}{n}}E_{\nmer{n}{i}} -
-             \sum_{i=1}^{\mCn{m}{n}}\sum_{j=1}^{i-1}
-               E_{\nmer{n}{j}\cap\nmer{n}{i}} +
-             \cdots +
-             \sum_{i=1}^{\mCn{m}{n}}\left(-1\right)^{i-1}
-               E_{\nmer{n}{2}\cap\nmer{n}{2}\cap\cdots\cap\nmer{n}{i}}
-
-   This is simply the IEP.
-
-
-We choose to define the :math:`n<m`-body intersection-corrected interactions as:
-
-.. math::
-   \newcommand{\Sni}[2]{\mathbb{S}^{(#1)}_{#2}}
-   \newcommand{\En}[2]{E^{(#1)}_{#2}}
-
-   \Den{n}{i} = \en{n}{i}
-
-
-.. admonition:: Motivating the Form of the Intersection-corrected Interactions
-   :class: dropdown, note
-
-   The sum of all of the two-body interactions in the system is the difference
-   between the two-body approximation to the energy and one-body approximation:
-
-   .. math::
-      \sum_{i=1}^{\mCn{m}{2}}\De{\nmer{2}{i}}
-        =& \E{2} - \E{1}\\
-        =& \sum_{i=1}^{\mCn{m}{2}}\e{\nmer{2}{i}} -
-           \sum_{j=1}^{m}\e{\nmer{1}{j}}
-
-   Each of the monomers appears in |m|-1 dimers. We choose to partition them so
-   that monomer :math:`j` appears with the first dimer that contains it.
-   Unfortunately our notation obscures which monomers contribute to a dimer. If
-   we further assume that the dimers are ordered lexicographically, that is:
-
-   .. math::
-      \nmer{2}{1} =& \nmer{1}{1}\cup\nmer{1}{2}\\
-      \nmer{2}{2} =& \nmer{1}{1}\cup\nmer{1}{3}\\
-      \cdots      =& \cdots\\
-      \nmer{2}{m-1} = & \nmer{1}{1}\cup\nmer{1}{m}\\
-      \nmer{2}{m} = & \nmer{1}{2}\cup\nmer{1}{3}\\
-      \cdots =& \cdots\\
-      \nmer{2}{\mCn{m}{2}} =& \nmer{1}{m-1}\nmer{1}{m}
-
-   then for the first intersection-corrected two-body interactions we get:
-
-   .. math::
-      \De{\nmer{2}{1}} = \e{\nmer{2}{1}} - \e{\nmer{1}{1}} - \e{\nmer{1}{2}}
-
-   for the next |m|- 2 intersection corrected two-body interactions we get:
-
-   .. math::
-      \begin{align*}
-      \De{\nmer{2}{i}} = \e{\nmer{2}{i}} - \e{\nmer{1}{i+1}} && (1 < i < m)
-      \end{align*}
-
-   and the remaining two-body interactions are given by:
-
-   .. math::
-      \begin{align*}
-      \De{\nmer{2}{j}} = \e{\nmer{2}{j}} && (j >= m)
-      \end{align*}
-
-   Writing out the first intersection-corrected two-body interaction:
-
-   .. math::
-
-      \De{\nmer{2}{1}} =& E_{\nmer{1}{1}\cup\nmer{1}{2}} -
-                          \e{\nmer{1}{1}} - \e{\nmer{1}{2}}\\
-                       =& E_{\nmer{1}{1}\cup\nmer{1}{2}} -
-                          E_{\nmer{1}{1}} - E_{\nmer{1}{2}} +
-                          E_{\nmer{1}{1}\cap\nmer{1}{2}}
-
-   The second:
-
-   .. math::
-      \De{\nmer{2}{2}} =&
-        E_{\nmer{1}{1}\cup\nmer{1}{3}} -
-        E_{\nmer{1}{1}\cup\left(\nmer{1}{2}\cap\nmer{1}{3}\right)} -
-        \e{\nmer{1}{3}}\\
-      =& E_{\nmer{1}{1}\cup\nmer{1}{3}} -
-         E_{\nmer{1}{1}\cup\left(\nmer{1}{2}\cap\nmer{1}{3}\right)} -
-         \left(E_{\nmer{1}{3}} -
-               E_{\nmer{1}{1}\cap\nmer{1}{3}} -
-               E_{\nmer{1}{2}\cap\nmer{1}{3}} +
-               E_{\nmer{1}{1}\cap\nmer{1}{2}\cap\nmer{1}{3}}
-         \right)\\
-      =& \left(E_{\nmer{1}{1}\cup\nmer{1}{3}} -
-               E_{\nmer{1}{1}} - E_{\nmer{1}{3}} +
-               E_{\nmer{1}{1}\cap\nmer{1}{3}}\right) -
-         \left[E_{\nmer{1}{1}\cup\left(\nmer{1}{2}\cap\nmer{1}{3}\right)} -
-               E_{\nmer{1}{1}} - E_{\nmer{1}{2}\cap\nmer{1}{3}} +
-               E_{\nmer{1}{1}\cap\nmer{1}{2}\cap\nmer{1}{3}}\right]
-
-   where we used:
-
-   .. math::
-      \nmer{1}{1}\cup\left(\nmer{1}{2}\cap\nmer{1}{3}\right) =
-      \left(\nmer{1}{1}\cup\nmer{1}{2}\right)\cap
-      \left(\nmer{1}{1}\cup\nmer{1}{3}\right)
-
-   This looks like the 1-3 interaction less the interaction of 1 with the
-   intersection of 2 and 3. The third:
-
-   .. math::
-      \De{\nmer{2}{3}}
-      =& E_{\nmer{1}{1}\cup\nmer{1}{4}} -
-         E_{\nmer{1}{1}\cup\left(\nmer{1}{2}\cap\nmer{1}{4}\right)} -
-         E_{\nmer{1}{1}\cup\left(\nmer{1}{3}\cap\nmer{1}{4}\right)} +
-         E_{\nmer{1}{1}\cup
-            \left(\nmer{1}{2}\cap\nmer{1}{3}\cap\nmer{1}{4}\right)} -
-        \e{\nmer{1}{4}}\\
-      =&  E_{\nmer{1}{1}\cup\nmer{1}{4}} -
-         E_{\nmer{1}{1}\cup\left(\nmer{1}{2}\cap\nmer{1}{4}\right)} -
-         E_{\nmer{1}{1}\cup\left(\nmer{1}{3}\cap\nmer{1}{4}\right)} +
-         E_{\nmer{1}{1}\cup
-            \left(\nmer{1}{2}\cap\nmer{1}{3}\cap\nmer{1}{4}\right)} -
-        \left(E_{\nmer{1}{4}} - E_{\nmer{1}{1}\cap\nmer{1}{4}} -
-              E_{\nmer{1}{2}\cap\nmer{1}{4}} - E_{\nmer{1}{3}\cap\nmer{1}{4}} +
-              E_{\nmer{1}{1}\cap\nmer{1}{2}\cap\nmer{1}{4}} +
-              E_{\nmer{1}{1}\cap\nmer{1}{3}\cap\nmer{1}{4}} +
-              E_{\nmer{1}{2}\cap\nmer{1}{3}\cap\nmer{1}{4}} -
-              E_{\nmer{1}{1}\cap\nmer{1}{2}\cap\nmer{1}{3}\cap\nmer{1}{4}}
-        \right)\\
-      =&\left(E_{\nmer{1}{1}\cup\nmer{1}{4}} -
-              E_{\nmer{1}{1}} - E_{\nmer{1}{4}} +
-              E_{\nmer{1}{1}\cap\nmer{1}{4}} \right) -
-         \left(E_{\nmer{1}{1}\cup\left(\nmer{1}{2}\cap\nmer{1}{4}\right)} -
-               E_{\nmer{1}{1}} - E_{\nmer{1}{2}\cap\nmer{1}{4}} +
-               E_{\nmer{1}{1}\cap\nmer{1}{2}\cap{1}{4}}\right) -
-         \left(E_{\nmer{1}{1}\cup\left(\nmer{1}{3}\cap\nmer{1}{4}\right)} -
-               E_{\nmer{1}{1}} - E_{\nmer{1}{3}\cap\nmer{1}{4}} +
-               E_{\nmer{1}{1}\cap\nmer{1}{3}\cap{1}{4}}\right) +
-         \left(E_{\nmer{1}{1}\cup
-                   \left(\nmer{1}{2}\cap\nmer{1}{3}\cap\nmer{1}{4}\right)} -
-               E_{\nmer{1}{1}} - E_{\nmer{1}{2}\cap\nmer{1}{3}\cap{1}{4}} +
-               E_{\nmer{1}{1}\cap\nmer{1}{2}\cap\nmer{1}{3}\cap\nmer{1}{4}}
-         \right)
-
-   This looks like the 1-4 interaction less the interaction of 1 with the
-   intersection of 2 and 4, less the interaction of 1 with intersection 3 and 4,
-   plus the interaction of 1 with the intersection of 2, 3, and 4.
+where the quantity in square brackets defines the intersection-corrected dimer
+energy.                  
