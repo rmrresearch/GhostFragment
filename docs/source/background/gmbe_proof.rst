@@ -239,10 +239,10 @@ unexpected; however, note that for disjoint fragments:
    \eik - \ei - \ek =& \left(\Eik - \Ei\right) - \Ei -\Ek\\
    \ejk - \ej - \ek =& \left(\Ejk - \Ej - \Ek\right) - \Ej - \Ek
 
-That is to say, the intersection-corrected dimer energies already remove the 
+That is to say, the intersection-corrected dimer energies already remove the
 energies of the previously seen monomers(i.e., with our ordering IJ is first, so
-when we consider IK, the intersection-correction removes the energy of I, 
-similarly for JK, the intersection-correction removes the energies of J and K). 
+when we consider IK, the intersection-correction removes the energy of I,
+similarly for JK, the intersection-correction removes the energies of J and K).
 We instead propose the following intersection-corrected interactions:
 
 .. math::
@@ -253,7 +253,7 @@ We instead propose the following intersection-corrected interactions:
    \Deik =& \eik - \ek\\
    \Dejk =& \ejk
 
-which for disjoint fragments reduce to the usual two-body interactions. With 
+which for disjoint fragments reduce to the usual two-body interactions. With
 these defitions we get:
 
 .. math::
@@ -270,13 +270,13 @@ For three fragments we again obtain a trivial equation for the GMBE:
 
    E = \Enm{3}{3} = \Eijk
 
-defining the three-body interaction as the difference in the three-body 
+defining the three-body interaction as the difference in the three-body
 approximation and the two-body approximation we get:
 
 .. math::
    \newcommand{\Deijk}{\De{IJK}}
 
-   \Deijk \equiv \Enm{3}{3} - \Enm{2}{3} = 
+   \Deijk \equiv \Enm{3}{3} - \Enm{2}{3} =
               \Eijk - \left(\ei + \ej + \ek + \Deij + \Deik + \Dejk\right)
 
 with which we can write the full GMBE as:
@@ -326,62 +326,211 @@ We get:
 Two-body
 ^^^^^^^^
 
-We now have six dimers, so the two-body approximation has 63 terms and explicity
-enumerating them all is too cumbersome. Instead we assume that the dimers are
-ordered in some manner and we define |dimer_i| as the |I|-th dimer. With this
-notation we have:
+We now have six dimers, so the IEP for two-body approximation has 63 terms. We
+jump right to the intersection-corrected dimer energies:
 
 .. math::
-   \newcommand{\nmer}[2]{F^{\left(#1\right)}_{#2}}
-   \newcommand{\di}{\nmer{2}{I}}
-   \newcommand{\dj}{\nmer{2}{J}}
-   \newcommand{\dk}{\nmer{2}{K}}
-   \newcommand{\dl}{\nmer{2}{L}}
-   \newcommand{\dm}{\nmer{2}{M}}
-   \newcommand{\dn}{\nmer{2}{N}}
-   
-   \Enm{2}{4} =& \sum_{I=1}^{6} E_{\di} - 
-                 \sum_{I=2}^{6}\sum_{J=1}^{I-1}E_{\dj\cap\di} +
-                 \sum_{I=3}^{6}\sum_{J=1}^{I-2}\sum_{K=J+1}^{I-1}
-                   E_{\dj\cap\dk\cap\di} -\\
-               &  \sum_{I=4}^{6}\sum_{J=1}^{I-3}\sum_{K=J+1}^{I-2}
-                   \sum_{L=K+1}^{I-1} E_{\dj\cap\dk\cap\dl\cap\di} +\\
-                &\sum_{I=5}^{6}\sum_{J=1}^{I-4}\sum_{K=J+1}^{I-3}
-                 \sum_{L=J+1}^{I-2}\sum_{M=L+1}^{I-1} 
-                 E_{\dj\cap\dk\cap\dl\cap\dm\cap\di} -\\
-               & \sum_{I=6}^{6}\sum_{J=1}^{I-5}\sum_{K=J+1}^{I-4}
-                 \sum_{L=J+1}^{I-3}\sum_{M=L+1}^{I-2}\sum_{N=M+1}^{I-1}
-                 E_{\dj\cap\dk\cap\dl\cap\dm\cap\dn\cap\di}
+   \newcommand{\Eil}{E_{IL}}
+   \newcommand{\Ejl}{E_{JL}}
+   \newcommand{\Ekl}{E_{KL}}
+   \newcommand{\eil}{\e{IL}}
+   \newcommand{\ejl}{\e{JL}}
+   \newcommand{\ekl}{\e{KL}}
+   \newcommand{\Eijcil}{E_{IJ\cap IL}}
+   \newcommand{\Eikcil}{E_{IK\cap IL}}
+   \newcommand{\Ejkcil}{E_{JK\cap IL}}
+   \newcommand{\Eijcikcil}{E_{IJ\cap IK\cap IL}}
+   \newcommand{\Eijcjkcil}{E_{IJ\cap JK\cap IL}}
+   \newcommand{\Eikcjkcil}{E_{IK\cap JK\cap IL}}
+   \newcommand{\Eijcikcjkcil}{E_{IJ\cap IK\cap JK\cap IL}}
+   \newcommand{\Eijcjl}{E_{IJ\cap JL}}
+   \newcommand{\Eikcjl}{E_{IK\cap JL}}
+   \newcommand{\Ejkcjl}{E_{JK\cap JL}}
+   \newcommand{\Eilcjl}{E_{IL\cap JL}}
+   \newcommand{\Eijcikcjl}{E_{IJ\cap IK\cap JL}}
+   \newcommand{\Eijcjkcjl}{E_{IJ\cap JK\cap JL}}
+   \newcommand{\Eijcilcjl}{E_{IJ\cap IL\cap JL}}
+   \newcommand{\Eikcjkcjl}{E_{IK\cap JK\cap JL}}
+   \newcommand{\Eikcilcjl}{E_{IK\cap IL\cap JL}}
+   \newcommand{\Ejkcilcjl}{E_{JK\cap IL\cap JL}}
+   \newcommand{\Eijcikcjkcjl}{E_{IJ\cap IK\cap JK\cap JL}}
+   \newcommand{\Eijcikcjkcil}{E_{IJ\cap IK\cap IL\cap JL}}
+   \newcommand{\Eijcjkcilcjl}{E_{IJ\cap JK\cap IL\cap JL}}
+   \newcommand{\Eikcijcilcjl}{E_{IK\cap IJ\cap IL\cap JL}}
+   \newcommand{\Eijcikcjkcilcjl}{E_{IJ\cap IK\cap JK\cap IL\cap JL}}
+   \newcommand{\Eijckl}{E_{IJ\cap KL}}
+   \newcommand{\Eikckl}{E_{IK\cap KL}}
+   \newcommand{\Ejkckl}{E_{JK\cap KL}}
+   \newcommand{\Eilckl}{E_{IL\cap KL}}
+   \newcommand{\Ejlckl}{E_{JL\cap KL}}
+   \newcommand{\Eijcikckl}{E_{IJ\cap IK\cap KL}}
+   \newcommand{\Eijcjkckl}{E_{IJ\cap JK\cap KL}}
+   \newcommand{\Eijcilckl}{E_{IJ\cap IL\cap KL}}
+   \newcommand{\Eijcjlckl}{E_{IJ\cap JL\cap KL}}
+   \newcommand{\Eikcjkckl}{E_{IK\cap JK\cap KL}}
+   \newcommand{\Eikcilckl}{E_{IK\cap IL\cap KL}}
+   \newcommand{\Eikcjlckl}{E_{IK\cap JL\cap KL}}
+   \newcommand{\Ejkcilckl}{E_{JK\cap IL\cap KL}}
+   \newcommand{\Ejkcjlckl}{E_{JK\cap JL\cap KL}}
+   \newcommand{\Eilcjlckl}{E_{IL\cap JL\cap KL}}
+   \newcommand{\Eijcikcjkckl}{E_{IJ\cap IK\cap JK\cap KL}}
+   \newcommand{\Eijcikcilckl}{E_{IJ\cap IK\cap IL\cap KL}}
+   \newcommand{\Eijcikcjlckl}{E_{IJ\cap IK\cap JL\cap KL}}
+   \newcommand{\Eijcjkcilckl}{E_{IJ\cap JK\cap IL\cap KL}}
+   \newcommand{\Eijcjkcjlckl}{E_{IJ\cap JK\cap IL\cap KL}}
+   \newcommand{\Eijcilcjlckl}{E_{IJ\cap IL\cap JL\cap KL}}
+   \newcommand{\Eikcjkcilckl}{E_{IK\cap JK\cap IL\cap KL}}
+   \newcommand{\Eikcjkcjlckl}{E_{IK\cap JK\cap JL\cap KL}}
+   \newcommand{\Eikcilcjlckl}{E_{IK\cap IL\cap JL\cap KL}}
+   \newcommand{\Ejkcilcjlckl}{E_{JK\cap IL\cap JL\cap KL}}
+   \newcommand{\Eijcikcjkcilckl}{E_{IJ\cap IK\cap JK\cap IL\cap KL}}
+   \newcommand{\Eijcikcjkcjlckl}{E_{IJ\cap IK\cap JK\cap JL\cap KL}}
+   \newcommand{\Eijcikcilcjlckl}{E_{IJ\cap IK\cap IL\cap JL\cap KL}}
+   \newcommand{\Eijcjkcilcjlckl}{E_{IJ\cap JK\cap IL\cap JL\cap KL}}
+   \newcommand{\Eikcjkcilcjlckl}{E_{IK\cap JK\cap IL\cap JL\cap KL}}
+   \newcommand{\Eijcikcjkcilcjlckl}{E_{IJ\cap IK\cap JK\cap IL\cap JL\cap KL}}
 
-where the summations have been manipulated so that the dimers in the 
-intersections are indexed lexicographically, the indices are driven by |I|, and 
-|I| is always the largest index (this facilitates defining the 
-intersection-corrected dimer energies). This is still a cumbersome notation. 
-The spirit of what is going on here is that for an intersection involving 
-|dimer_i| and |n| other dimers, we are iterating over all combinations of |n| 
-dimers that can be formed from the :math:`I-1` dimers proceeding |I|. Let 
-:math:`\mathbb{F}^{(n, m)}` be the ordered set of |n|-mers which can be made 
-from |m| monomers; furthermore let :math:`\mathbb{F}^{(n,m)}_{I}` be the subset
-of :math:`\mathbb{F}^{(n, m)}` consisting of the first |I|, |n|-mers. Next we
-define :math:`\mathbb{P}^{(k)}\left(\mathbb{X}\right)` to be the set of 
-:math:`k`-element combinations which can be formed from the set 
-:math:`\mathbb{X}`. Finally we define a quantity 
-:math:`X\left(\mathbb{a}\right)` which is the intersection of each element in a 
-set :math:`\mathbb{a}` according to:
+   \eij =& \Eij\\
+   \eik =& \Eik - \Eijcik\\
+   \ejk =& \Ejk -
+           \Eijcjk - \Eikcjk +
+           \Eijcikcjk\\
+   \eil =& \Eil -
+           \Eijcil - \Eikcil - \Ejkcil +
+           \Eijcikcil + \Eijcjkcil + \Eikcjkcil-\\
+         &  \Eijcikcjkcil\\
+   \ejl =& \Ejl -
+           \Eijcjl - \Eikcjl - \Ejkcjl - \Eilcjl +
+           \Eijcikcjl + \Eijcjkcjl + \Eijcilcjl +\\
+         &   \Eikcjkcjl + \Eikcilcjl + \Ejkcilcjl -
+           \Eijcikcjkcjl - \Eijcikcjkcjl - \Eijcjkcilcjl -\\
+         &   \Eikcijcilcjl +
+           \Eijcikcjkcilcjl\\
+   \ekl =& \Ekl -
+           \Eijckl - \Eikckl - \Ejkckl - \Eilckl - \Ejlckl +
+           \Eijcikckl + \Eijcjkckl + \\
+         &   \Eijcilckl + \Eijcjlckl + \Eikcjkckl + \Eikcilckl + \Eikcjlckl +
+             \Ejkcilckl + \\
+         &   \Ejkcjlckl+ \Eilcjlckl -
+           \Eijcikcjkckl - \Eijcikcilckl - \Eijcikcjlckl - \\
+         &   \Eijcjkcilckl -\Eijcjkcjlckl - \Eijcilcjlckl -
+             \Eikcjkcilckl - \Eikcjkcjlckl - \\
+         &   \Eikcilcjlckl - \Ejkcilcjlckl +
+           \Eijcikcjkcilckl + \Eijcikcjkcjlckl + \\
+         &   \Eijcikcilcjlckl + \Eijcjkcilcjlckl + \Eikcjkcilcjlckl -
+           \Eijcikcjkcilcjlckl
+
+From which we define the intersection-corrected two-body interactions:
+
+.. math::
+   \newcommand{\Deil}{\De{IL}}
+   \newcommand{\Dejl}{\De{JL}}
+   \newcommand{\Dekl}{\De{KL}}
+
+   \Deij =& \eij - \ei -\ej\\
+   \Deik =& \eik - \ek\\
+   \Deil =& \eil - \el\\
+   \Dejk =& \ejk\\
+   \Dejl =& \ejl\\
+   \Dekl =& \ekl
+
+If the monomers are disjoint we get:
 
 .. math::
 
-   X\left(\mathbb{a}\right) = \bigcap_{b\in \mathbb{a}} b
 
-Then the two-body energy can be written much more compactly as:
+   \Deij =& \left(\Eij\right) - \Ei - \Ej\\
+   \Deik =& \left(\Eik - \Ei\right) - \Ek\\
+   \Deil =& \left(\Eil - \Ei - \Ei + \Ei\right) - \El\\
+   \Dejk =& \left(\Ejk - \Ej - \Ek\right)\\
+   \Dejl =& \left(\Ejl - \Ej - \Ej - \El + \Ej\right)\\
+   \Dekl =& \left(\Ekl - \Ek - \Ek - \El - \El + \Ek + \El\right)
+
+
+where we use parenthesis to show which terms arise from the
+intersection-corrected dimer energy as opposed to which terms arise from
+subtracting out the one-body approximation.
+
+Three-Body
+^^^^^^^^^^
+
+There are four possible trimers, so compared to the two-body case the equation
+is far simpler.
 
 .. math::
-   \newcommand{\nmerset}[3]{\mathbb{F}^{\left(#1, #2\right)}_{#3}}
-   \newcommand{\powerset}[2]{\mathbb{P}^{\left(#1\right)}\left({#2}\right)}
+   \newcommand{\Eijl}{E_{IJL}}
+   \newcommand{\Eikl}{E_{IKL}}
+   \newcommand{\Ejkl}{E_{JKL}}
+   \newcommand{\Eijkcijl}{E_{IJK\cap IJL}}
+   \newcommand{\Eijkcikl}{E_{IJK\cap IKL}}
+   \newcommand{\Eijlcikl}{E_{IJL\cap IKL}}
+   \newcommand{\Eijkcjkl}{E_{IJK\cap JKL}}
+   \newcommand{\Eijlcjkl}{E_{IJL\cap JKL}}
+   \newcommand{\Eiklcjkl}{E_{IKL\cap JKL}}
+   \newcommand{\Eijkcijlcikl}{E_{IJK\cap IJL\cap IKL}}
+   \newcommand{\Eijkcijlcjkl}{E_{IJK\cap IJL\cap JKL}}
+   \newcommand{\Eijkciklcjkl}{E_{IJK\cap IKL\cap JKL}}
+   \newcommand{\Eijlciklcjkl}{E_{IJL\cap IKL\cap JKL}}
+   \newcommand{\Eijkcijlciklcjkl}{E_{IJK\cap IJL\cap IKL\cap JKL}}
 
-   \Enm{2}{4} = \sum_{I=1}^{6}\left[\sum_{n=0}^5\left(-1\right)^{n}
-                \sum_{p\in\powerset{n}{\nmerset{2}{4}{I-1}}}
-                  E_{X\left(p\right)\cap\di}\right]
+   \Enm{3}{4} =& \Eijk + \Eijl + \Eikl + \Ejkl -
+                 \Eijkcijl - \Eijkcikl - \Eijkcjkl - \Eijlcikl - \\
+               &   \Eijlcjkl - \Eiklcjkl +
+                 \Eijkcijlcikl + \Eijkcijlcjkl + \Eijkciklcjkl + \\
+               &   \Eijlciklcjkl -
+                 \Eijkcijlciklcjkl
 
-where the quantity in square brackets defines the intersection-corrected dimer
-energy.                  
+Defining intersection-corrected trimer energies:
+
+.. math::
+   \newcommand{\eijk}{\e{IJK}}
+   \newcommand{\eikl}{\e{IKL}}
+   \newcommand{\ejkl}{\e{JKL}}
+   \newcommand{\eijl}{\e{IJL}}
+
+   \eijk =& \Eijk\\
+   \eijl =& \Eijl - \Eijkcijl\\
+   \eikl =& \Eikl - \Eijkcikl - \Eijlcikl + \Eijkcijlcikl\\
+   \ejkl =& \Ejkl - \Eijkcjkl - \Eijlcjkl - \Eiklcjkl + \Eijkcijlcjkl +
+              \Eijkciklcjkl + \\
+          & \Eijlciklcjkl - \Eijkcijlciklcjkl
+
+.. math::
+   \newcommand{\Deijl}{\De{IJL}}
+   \newcommand{\Deikl}{\De{IKL}}
+   \newcommand{\Dejkl}{\De{JKL}}
+
+   \Deijk =& \eijk - \Deij - \Deik - \Dejk - \ei - \ej -\ek\\
+   \Deijl =& \eijl - \Deil - \Dejl - \el\\
+   \Deikl =& \eikl - \Dekl\\
+   \Dejkl =& \ejkl
+
+For disjoint-fragments:
+
+.. math::
+   \Deijk =& \left[\Eijk\right] -
+             \left(\Eij - \Ei -\Ej\right) -
+             \left(\Eik - \Ei -\Ek\right) -
+             \left(\Ejk - \Ej -\Ek\right) - \Ei - \Ej - \Ek\\
+          =& \Eijk - \Eij - \Eik - \Ejk + \Ei + \Ej + \Ek\\
+   \Deijl =& \left[\Eijl - \Eij\right] -
+             \left(\Eil - \Ei - \El\right) -
+             \left(\Ejl - \Ej - \El\right) - \El\\
+          =& \Eijl - \Eij - \Eil - \Ejl + \Ei + \Ej + \El\\
+   \Deikl =& \left[\Eikl - \Eik - \Eil + \Ei\right] -
+              \left(\Ekl - \Ek - \El\right) \\
+          =& \Eikl - \Eik - \Eil - \Ekl + \Ei + \Ek + \El\\
+   \Dejkl =& \left[\Ejkl - \Ejk - \Ejl - \Ekl + \Ej + \Ek + \El\right]
+
+where we have used square-brackets to show which terms came form the
+intersection-corrected trimer energies and parenthesis to show which come from
+the intersection-corrected dimer energies. These are the usual (cleaned-up)
+three-body expressions.
+
+Four-Body
+^^^^^^^^^
+
+.. math::
+   \newcommand{\Eijkl}{E_{IJKL}}
+
+   \Enm{4}{4} = \E_{IJKL}
