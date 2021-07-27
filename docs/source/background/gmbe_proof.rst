@@ -533,4 +533,27 @@ Four-Body
 .. math::
    \newcommand{\Eijkl}{E_{IJKL}}
 
-   \Enm{4}{4} = \E_{IJKL}
+   E = \Enm{4}{4} = \E_{IJKL}
+
+Defining the four-body interaction:
+
+.. math::
+   \newcommand{\Deijkl}{\De{IJKL}}
+
+   \Deijkl = E_{IJKL} - \Deijk - \Deijl - \Deikl - \Dejkl -
+             \Deij - \Deik - \Deil - \Dejk - \Dejl - \Dek -
+             \ei - \ej - \ek - \el
+
+we arrive at the GMBE for four fragments:
+
+.. math::
+   E = \ei + \ej + \ek + \el + \Deij + \Deik + \Deil + \Dejk + \Dejl + \Dekl +
+       \Deijk + \Deijl + \Deikl + \Dejkl + \Deijkl
+
+Notation
+========
+
+
+
+The Induction Hypothesis
+========================
