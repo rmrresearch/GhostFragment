@@ -9,4 +9,4 @@ to the topics of basis-set superposition error and fragment-based methods.
     :maxdepth: 2
     :caption: Contents:
 
-    gmbe
+    gmbe/index

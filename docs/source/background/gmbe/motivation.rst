@@ -1,8 +1,5 @@
-.. _gmbe_proof:
-
-*****************
-Deriving the GMBE
-*****************
+Motivating the Induction Hypothesis
+===================================
 
 .. |m| replace:: :math:`m`
 .. |n| replace:: :math:`n`
@@ -36,22 +33,16 @@ Deriving the GMBE
 .. |EIJK| replace:: :math:`E_{IJK}`
 .. |EI_J| replace:: :math:`E_{I\cap J}`
 
-This page derives the GMBE. Following the main GMBE page, we adopt the notation:
+This page motivates the induction hypothesis for the GMBE by writing out the
+first several scenarios, *i.e.*:
 
-- |E| is the energy of the system
-- |m| is the total number of monomers we divided our system into
-- |monomer_i| is the :math:`i`-th monomer,
-- |dimer_i| is the :math:`i`-th dimer, (*i.e.*, the union of two monomers)
-- |nmer_i| is the :math:`i`-th nmer (generalization of monomer, dimer, etc. to
-  the union of :math:`n` monomers)
-- :math:`{_m}C_n` is the binomial coefficient "|m| choose :math:`n`",
-  *i.e.*, the number of nmers that can be formed from |m| monomers.
-
-Motivating the Induction Hypothesis
-===================================
-
-To motivate the induction hypothesis we explicitly write out the first several
-scenarios.
+- one-body expansion with one fragment, 
+- one- and two-body expansions with two fragments, 
+- one-, two-, and three-body expansions with three fragments, and
+- one-, two-, three-, and four-body expansions with four fragments. 
+ 
+Following the notation adopted throughout this documentation, |E| is the energy 
+of the system we are attempting to approximate with the GMBE.
 
 One fragment
 ------------
@@ -533,7 +524,7 @@ Four-Body
 .. math::
    \newcommand{\Eijkl}{E_{IJKL}}
 
-   E = \Enm{4}{4} = \E_{IJKL}
+   E = \Enm{4}{4} = \Eijkl
 
 Defining the four-body interaction:
 
@@ -541,7 +532,7 @@ Defining the four-body interaction:
    \newcommand{\Deijkl}{\De{IJKL}}
 
    \Deijkl = E_{IJKL} - \Deijk - \Deijl - \Deikl - \Dejkl -
-             \Deij - \Deik - \Deil - \Dejk - \Dejl - \Dek -
+             \Deij - \Deik - \Deil - \Dejk - \Dejl - \Dekl -
              \ei - \ej - \ek - \el
 
 we arrive at the GMBE for four fragments:
@@ -549,11 +540,3 @@ we arrive at the GMBE for four fragments:
 .. math::
    E = \ei + \ej + \ek + \el + \Deij + \Deik + \Deil + \Dejk + \Dejl + \Dekl +
        \Deijk + \Deijl + \Deikl + \Dejkl + \Deijkl
-
-Notation
-========
-
-
-
-The Induction Hypothesis
-========================
