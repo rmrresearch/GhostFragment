@@ -18,7 +18,7 @@ mimic a corresponding MBE via:
    \newcommand{\e}[1]{\mathcal{E}_{#1}}
    \newcommand{\De}[1]{\Delta\e{#1}} 
    \newcommand{\mCk}[2]{_{#1}C_{#2}}
-   \newcommand{\kmers}[1]{\mathbb{F}^{\left(#1\right)}}
+   \newcommand{\kmers}[1]{\mathbb{F}^{\left(m, #1\right)}}
    \newcommand{\kmeri}[2]{F^{\left(#1\right)}_{#2}}
    \newcommand{\ei}{\e{I}}
    \newcommand{\Deij}{\De{IJ}}
@@ -138,7 +138,7 @@ Proof that Intersection-Corrected Energies Do Not Double Count
 The exactness proof only relies on the fact that:
 
 .. math::
-   E = \e{kmeri{m}{1}} = E_{\kmeri{m}{1}}
+   E = \e{\kmeri{m}{1}} = E_{\kmeri{m}{1}}
    
 and:
 
@@ -179,19 +179,55 @@ Hence:
     E^{(1,1)} =& E_{\kmeri{1}{1}} + 
                 \sum_{k=1}^{I-1}\sum_{x\in\powersetk{k}{\nmersuptoi}}
                 (-1)^k E_{\left(\bigcap x\right)\cap \nmeri}\\
-              =& \e{\kermi{1}{1}}  
+              =& \e{\kmeri{1}{1}}  
  
 Proving it for the base case.
 
 Proof By Induction
 ------------------
 
+.. |Fm| replace:: :math:`\mathbb{F}^{\left(m\right)}`
+.. |Fm1| replace:: :math:`\mathbb{F}^{\left(m-1\right)}`
+
 We now assume that for :math:`m-1` fragments the following is true:
 
 .. math::
-   E^{(m-1,1)} = \sum_{I=1}^{n-1}\e{\kermi{1}{I}}
+   E^{(m-1,1)} = \sum_{I=1}^{m-1}\e{\kmeri{1}{I}}
    
-   
+and create the ordered set |Fm| by appending the |m|-th fragment to the ordered 
+set |Fm1|. The approximate one-body energy is then given by IEP. We choose to
+write the IEP as the sum of the
+:math:`m-1` approximate energy (which is intersection corrected by assumption)
+plus the energy of the |m|-th fragment, corrected for the intersections of the
+|m|-th fragment with the proceeding :math:`m-1` fragments:
+
+.. math::
+   E^{(m, 1)} =& E^{(m-1, 1)} + E_{\kmeri{1}{m}} - 
+                 \sum_{I=1}^{m-1} E_{\kmeri{1}{I}\cap\kmeri{1}{m}} +
+                 \sum_{I=1}^{m-2}\sum_{J=I+1}^{m-1} 
+                   E_{\kmeri{1}{I}\cap\kmeri{1}{J}\cap\kmeri{1}{m}} - \cdots\\
+              =& E^{(m-1, 1)} + E_{\kmeri{1}{m}} -  
+                 \sum_{k=1}^{m-1}\sum_{\kmeri{k}{I}\in\mathbb{F}^{(m-1, k)}}
+                    (-1)^k E_{\left(\bigcap \kmeri{k}{I}\right)\cap\kmeri{1}{m}}         
+
+Using:
+
+.. math::
+   \mathbb{F}^{\left(m-1, k\right)} = 
+    \powersetk{k}{\mathbb{F}^{\left(m,1\right)}[1:m-1]}
+
+we have:
+
+.. math::
+    E^{(m, 1)}=& E^{(m-1, 1)} + E_{\kmeri{1}{m}} -  
+                 \sum_{k=1}^{m-1}\sum_{\kmeri{k}{I}\in
+                    \powersetk{k}{\mathbb{F}^{\left(m,1\right)}[1:m-1]}}
+                    (-1)^k E_{\left(\bigcap \kmeri{k}{I}\right)\cap\kmeri{1}{m}}\\
+               =& E^{(m-1, 1)} + \e{\kmeri{1}{m}}\\
+               = \sum_{I=1}^{m}\e{\kmeri{1}{I}}
+
+Proving it for :math:`m` fragments.
+
 Subject to the caveat that equality with :math:`E^{(m,n)}` is only achieved when
 the summation runs over all |m| choose |n| intersection-corrected energies, the
 above proof can be replicated with minor modifications to also prove this 
