@@ -194,6 +194,9 @@ Using the IEP we get:
    E\approx \Enm{2}{3} = \Eij + \Eik + \Ejk -
                          \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk
 
+.. math::
+   +E_{JI}+E_{KI}+E_{JK}-E_{\left(\left(\left(J\cap I\right)\cup I\right)\cup \left(\left(J\cap K\right)\cup \left(K\cap I\right)\right)\right)}-E_{\left(\left(\left(J\cap K\right)\cup \left(K\cap I\right)\right)\cup \left(J\cup \left(J\cap I\right)\right)\right)}-E_{\left(\left(\left(K\cap I\right)\cup \left(J\cap I\right)\right)\cup \left(\left(J\cap K\right)\cup K\right)\right)}+E_{\left(\left(\left(J\cap I\right)\cup I\right)\cup \left(\left(K\cap I\right)\cup \left(J\cap K\right)\right)\right)}
+
 The sum of the two-body interactions are given by the difference between the
 two-body and one-body approximations:
 
@@ -212,7 +215,12 @@ At this point we define intersection-corrected dimer energies according to:
    \newcommand{\ejk}{\e{JK}}
 
    \eik \equiv& \Eik - \Eijcik\\
-   \ejk \equiv& \Ejk - \Eijcjk - \Eikcjk + \Eijcikcjk
+             =& \Eik - E_{I\cup\left(J\cap K\right)}\\
+   \ejk \equiv& \Ejk - \Eijcjk - \Eikcjk + \Eijcikcjk\\
+             =& \Ejk - E_{J\cup\left(I\cap K\right)} 
+                     - E_{K\cup\left(I\cap J\right)} 
+                     + E_{I\cap J\cap K}
+
 
 if we do this and try to write the two-body interactions in the "usual way" we
 get:
@@ -250,6 +258,14 @@ these defitions we get:
 .. math::
    \Enm{2}{3} =& \Enm{1}{3} + \Enm{2}{2} + \Deik + \ Dejk\\
              =& \ei + \ej + \ek + \Deij + \Deik + \Dejk
+
+or in cleaned up form (no duplicate computations):
+
+.. math::
+   \Enm{2}{3} = \Eij + \Eik + \Ejk - E_{I\cup\left(J\cap K\right)} 
+                 - E_{J\cup\left(I\cap K\right)} 
+                 - E_{K\cup\left(I\cap J\right)} 
+                 + E_{I\cap J\cap K}
 
 Three-body
 ^^^^^^^^^^
@@ -383,20 +399,33 @@ jump right to the intersection-corrected dimer energies:
 
    \eij =& \Eij\\
    \eik =& \Eik - \Eijcik\\
+        =& \Eik - E_{I\cup\left(J\cap K\right)}\\
    \ejk =& \Ejk -
            \Eijcjk - \Eikcjk +
            \Eijcikcjk\\
+        =& \Ejk - E_{J\cup\left(I\cap K\right)} - E_{K\cup\left(I\cap J\right)}
+           + E_{I\cap J\cap K}\\   
    \eil =& \Eil -
            \Eijcil - \Eikcil - \Ejkcil +
            \Eijcikcil + \Eijcjkcil + \Eikcjkcil-\\
          &  \Eijcikcjkcil\\
+        =& \Eil - E_{I\cup\left(J\cap L\right)} - E_{I\cup\left(K\cap L\right)}
+           - \Ejkcil + E_{I\cup\left(J\cap K\cap L\right)} 
+           + E_{\left(I\cap J\right)\cup\left(I\cap K\right)
+                \cup\left(J\cap L\right)}\\ 
+         & + E_{\left(I\cap J\right)\cup\left(I\cap K\right)
+                \cup\left(K\cap L\right)} 
+           - E_{\left(I\cap J\right)\cup\left(I\cap L\right)\cup
+                \left(J\cap K \cap L\right)}\\                   
    \ejl =& \Ejl -
            \Eijcjl - \Eikcjl - \Ejkcjl - \Eilcjl +
            \Eijcikcjl + \Eijcjkcjl + \Eijcilcjl +\\
          &   \Eikcjkcjl + \Eikcilcjl + \Ejkcilcjl -
-           \Eijcikcjkcjl - \Eijcikcjkcjl - \Eijcjkcilcjl -\\
-         &   \Eikcijcilcjl +
-           \Eijcikcjkcilcjl\\
+           \Eijcikcjkcjl - \Eijcikcjkcjl - \\ 
+         & \Eijcjkcilcjl - \Eikcijcilcjl + \Eijcikcjkcilcjl\\
+        =& \Ejl - E_{J\cup\left(I\cap L\right)} - E_{J\cup\left(K\cap L\right)}
+                - E_{L\cup\left(I\cap J\right)} + \\
+            
    \ekl =& \Ekl -
            \Eijckl - \Eikckl - \Ejkckl - \Eilckl - \Ejlckl +
            \Eijcikckl + \Eijcjkckl + \\

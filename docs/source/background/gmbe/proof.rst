@@ -1,5 +1,6 @@
 .. |m| replace:: :math:`m`
 .. |n| replace:: :math:`n`
+.. |l| replace:: :math:`\ell`
 .. |I| replace:: :math:`I`
 .. |k| replace:: :math:`k`
 
@@ -132,8 +133,8 @@ which with the last line follows from the definition of the
 intersection-corrected |m|-mer energy. Basically this proof shows that, like the
 normal MBE, the GMBE is just a very creative way of adding zero.
 
-Proof that Intersection-Corrected Energies Do Not Double Count
-==============================================================
+Exactness of the Intersection-Corrected Energies
+================================================
 
 The exactness proof only relies on the fact that:
 
@@ -161,76 +162,129 @@ to the energy of the supersystem is given by:
 The base case
 -------------
 
-For a single fragment we have:
+For a system comprsied of a single |n|-mer we have:
 
 .. math::
-   E^{(1,1)} = E_{\kmeri{1}{1}}
+   E^{(1,n)} = E_{\kmeri{n}{1}}
 
-For arbitrary |n| (inlcuding :math:`n=1`), it is always true that for the 
-:math:`I=1`-th |n|-mer:
+For arbitrary |n|, it is always true that for the :math:`I=1`-th |n|-mer:
 
    .. math::
-      \sum_{k=1}^{I-1}\sum_{x\in\powersetk{k}{\nmersuptoi}}
-        (-1)^k E_{\left(\bigcap x\right)\cap \nmeri} = 0
+      \sum_{k=1}^{I-1}\sum_{\kmeri{k}{J}\in\powersetk{k}{\nmersuptoi}}
+        (-1)^k E_{\left(\bigcap \kmeri{k}{J}\right)\cap \nmeri} = 0
 
 Hence:
 
 .. math::
-    E^{(1,1)} =& E_{\kmeri{1}{1}} + 
-                \sum_{k=1}^{I-1}\sum_{x\in\powersetk{k}{\nmersuptoi}}
-                (-1)^k E_{\left(\bigcap x\right)\cap \nmeri}\\
-              =& \e{\kmeri{1}{1}}  
+    E^{(1,n)} =& E_{\kmeri{n}{1}} + 
+                \sum_{k=1}^{I-1}\sum_{\kmeri{k}{J}\in\powersetk{k}{\nmersuptoi}}
+                (-1)^k E_{\left(\bigcap \kmeri{k}{J}\right)\cap \nmeri}\\
+              =& \e{\kmeri{n}{1}}  
  
-Proving it for the base case.
+Proving that the proposed intersection-corrected energy formula does not
+under/overcount a system comprised of a single |n|-mer. In the next section we
+use induction to prove that this is true for an arbitrary number of |n|-mers.
 
 Proof By Induction
 ------------------
 
-.. |Fm| replace:: :math:`\mathbb{F}^{\left(m\right)}`
-.. |Fm1| replace:: :math:`\mathbb{F}^{\left(m-1\right)}`
+.. |Fl| replace:: :math:`\mathbb{F}^{\left(m,n\right)}[1:\ell]`
+.. |Fl1| replace:: :math:`\mathbb{F}^{\left(m,n\right)}[1:\ell-1]`
 
-We now assume that for :math:`m-1` fragments the following is true:
-
-.. math::
-   E^{(m-1,1)} = \sum_{I=1}^{m-1}\e{\kmeri{1}{I}}
-   
-and create the ordered set |Fm| by appending the |m|-th fragment to the ordered 
-set |Fm1|. The approximate one-body energy is then given by IEP. We choose to
-write the IEP as the sum of the
-:math:`m-1` approximate energy (which is intersection corrected by assumption)
-plus the energy of the |m|-th fragment, corrected for the intersections of the
-|m|-th fragment with the proceeding :math:`m-1` fragments:
+We now assume that for :math:`\ell - 1` |n|-mers the following is true:
 
 .. math::
-   E^{(m, 1)} =& E^{(m-1, 1)} + E_{\kmeri{1}{m}} - 
-                 \sum_{I=1}^{m-1} E_{\kmeri{1}{I}\cap\kmeri{1}{m}} +
-                 \sum_{I=1}^{m-2}\sum_{J=I+1}^{m-1} 
-                   E_{\kmeri{1}{I}\cap\kmeri{1}{J}\cap\kmeri{1}{m}} - \cdots\\
-              =& E^{(m-1, 1)} + E_{\kmeri{1}{m}} -  
-                 \sum_{k=1}^{m-1}\sum_{\kmeri{k}{I}\in\mathbb{F}^{(m-1, k)}}
-                    (-1)^k E_{\left(\bigcap \kmeri{k}{I}\right)\cap\kmeri{1}{m}}         
+   E^{(\ell - 1,n)} = \sum_{I=1}^{\ell - 1}\e{\kmeri{n}{I}}
 
-Using:
+It is perhaps a somewhat esoteric point, but the above equation simply states 
+that :math:`E^{(\ell - 1, n)}` is the under-/over-counting free approximation 
+to the system's energy resulting from using :math:`\ell - 1` |n|-mers. It is
+not clamining that this is a good approximation to the system's energy, nor does
+it have to be for our current purposes. For example, and simplicity, let |m| be 
+2, |l| be 2, and |n|  be 1. In this example, unless the first fragment 
+is actually the  entire system, :math:`E^{(\ell - 1, n)}` will be missing 
+energies of entire atoms  (specifically the atoms that appear in the second 
+fragment, but not the first),  making it a very poor approximation to the 
+system's energy. In practice, the only |l| we care about is when |l| equals
+"|m| choose |n|"; this proof shows that the route we take to get to "|m| choose
+|n|" is under-/over-counting free.
+
+Esoteric point aside, we proceed by creating the ordered set |Fl| by appending 
+the |l|-th |n|-mer onto to the ordered set |Fl1|. The approximate energy is 
+then given by IEP. We choose to write the IEP as the sum of the :math:`\ell-1` 
+approximate energy (which is intersection corrected by assumption) plus the 
+energy of the |l|-th |n|-mer, corrected for the intersections of the |l|-th 
+|n|-mer with the proceeding :math:`\ell-1` fragments:
 
 .. math::
-   \mathbb{F}^{\left(m-1, k\right)} = 
-    \powersetk{k}{\mathbb{F}^{\left(m,1\right)}[1:m-1]}
+   E^{(\ell, n)} =& E^{(\ell - 1, n)} + E_{\kmeri{n}{\ell}} - 
+                 \sum_{I=1}^{\ell-1} E_{\kmeri{n}{I}\cap\kmeri{n}{\ell}} +
+                 \sum_{I=1}^{\ell-2}\sum_{J=I+1}^{\ell-1} 
+                   E_{\kmeri{n}{I}\cap\kmeri{n}{J}\cap\kmeri{n}{\ell}} - 
+                 \cdots\\
+              =& E^{(\ell-1, n)} + E_{\kmeri{n}{\ell}} -  
+                 \sum_{k=1}^{\ell-1}
+                 \sum_{\kmeri{k}{I}\in
+                       \powersetk{k}{\mathbb{F}^{\left(m,n\right)}[1:\ell - 1]}}
+                    (-1)^k 
+                    E_{\left(\bigcap \kmeri{k}{I}\right)\cap\kmeri{n}{\ell}}\\
+              =& E^{(\ell-1, n)} + \e{\kmeri{n}{\ell}}\\              
+              =& \sum_{I=1}^{\ell}\e{\kmeri{n}{I}}
 
-we have:
+Proving it for |l| |n|-mers. 
+
+Exactness of the Many-Body Interactions
+=======================================
+
+The next step in the proof is to show that the when the GMBE is truncated at an
+|n| not equal to |m| (we already showed |n| equal to |m|) the 
+intersection-corrected many-body interactions also do not over-/under-count 
+interactions. Truncated at order |n| the GMBE reads:
 
 .. math::
-    E^{(m, 1)}=& E^{(m-1, 1)} + E_{\kmeri{1}{m}} -  
-                 \sum_{k=1}^{m-1}\sum_{\kmeri{k}{I}\in
-                    \powersetk{k}{\mathbb{F}^{\left(m,1\right)}[1:m-1]}}
-                    (-1)^k E_{\left(\bigcap \kmeri{k}{I}\right)\cap\kmeri{1}{m}}\\
-               =& E^{(m-1, 1)} + \e{\kmeri{1}{m}}\\
-               = \sum_{I=1}^{m}\e{\kmeri{1}{I}}
+   E^{(m,n)} =  \sum_{\kmeri{1}{I}\in\kmers{1}} \e{\kmeri{1}{I}} + 
+   \sum_{\ell=2}^{n}\sum_{\kmeri{\ell}{J}\in\kmers{\ell}}^{\mCk{m}{\ell}} 
+     \De{\kmeri{\ell}{J}}
 
-Proving it for :math:`m` fragments.
+Expanding the the |n|-body intersection-corrected interaction:
 
-Subject to the caveat that equality with :math:`E^{(m,n)}` is only achieved when
-the summation runs over all |m| choose |n| intersection-corrected energies, the
-above proof can be replicated with minor modifications to also prove this 
-for arbitrary |n|. In other words the definition of the intersection-corrected
-energies are simply a partitioning of the IEP, and work regardless of |n| or 
-|m|.
+.. math::
+   E^{(m, n)} =& 
+     \sum_{\kmeri{1}{I}\in\kmers{1}} \e{\kmeri{1}{I}} + 
+     \sum_{\ell=2}^{n-1}
+       \sum_{\kmeri{\ell}{J}\in\kmers{\ell}}^{\mCk{m}{\ell}} 
+          \De{\kmeri{\ell}{J}} + \\
+     & \sum_{\kmeri{n}{J}\in\kmers{n}}^{\mCn}
+        \left[
+          \e{\kmeri{n}{J}} - 
+          \sum_{\ell=2}^{n-1}
+          \sum_{\kmeri{\ell}{K}\in\psetp{\ell}{\kmeri{n}{J}}} 
+            \De{\kmeri{\ell}{K}} - 
+          \sum_{\kmeri{1}{\ell}\in\psetp{1}{\kmeri{n}{J}}}
+          \e{\kmeri{1}{\ell}}       
+        \right]
+
+Assuming every fragment shows up in at least one |n|-mer, we have:
+
+.. math::
+   \sum_{\kmeri{n}{J}\in\kmers{n}}^{\mCn}
+   \sum_{\ell=2}^{n-1}
+   \sum_{\kmeri{\ell}{K}\in\psetp{\ell}{\kmeri{n}{J}}} 
+     \De{\kmeri{\ell}{K}} =
+   \sum_{\ell=2}^{n-1}
+   \sum_{\kmeri{\ell}{K}\in\kmers{\ell}}^{\mCk{m}{\ell}} \De{\kmeri{\ell}{K}}
+
+Similarly:
+
+.. math::
+   \sum_{\kmeri{n}{J}\in\kmers{n}}^{\mCn}
+   \sum_{\kmeri{1}{\ell}\in\psetp{1}{\kmeri{n}{J}}}
+     \e{\kmeri{1}{\ell}}  =
+   \sum_{\kmeri{1}{\ell}\in\kmers{1}}\e{\kmeri{1}{\ell}}  
+
+and we have:
+
+.. math::
+   E^{(m, n)} = \sum_{\kmeri{n}{J}\in\kmers{n}}^{\mCn} \e{\kmeri{n}{J}}
+
+which is just the IEP for |n|-mers.   
