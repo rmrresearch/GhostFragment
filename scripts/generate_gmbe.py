@@ -1,23 +1,6 @@
 from itertools import combinations
 from typing import Set
 
-class SetTheoryBase:
-    def __init__(self, lhs, rhs = None):
-        self.terms = [lhs]
-        if rhs:
-            self.terms.append(rhs)
-
-    def indices(self):
-        idxs = {}
-        for x in self.terms:
-            if type(x) == str:
-                idxs += {x, }
-            else:
-                idxs += x.indices()
-        return idxs
-
-    def __repr__(self):
-        return str(self)
 
 
 class Union(SetTheoryBase):
@@ -38,7 +21,23 @@ class Union(SetTheoryBase):
                 temp += x
 
         return [temp]
-    
+
+    def clean_up(self):
+        if len(self.terms) <2:
+            return self
+
+        if type(self.terms[0]) == str and type(self.terms[1]) == str:
+            return Union(self.terms[0] + self.terms[1])
+        elif type(self.terms[0]) == str or type(self.terms) == str:
+            return self
+
+        if self.terms[0].indices().issubset(self.terms[1].indices()):
+            return self.terms[0]
+        if self.terms[1].indices().issubset(self.terms[0].indices()):
+            return self.terms[1]
+        return self
+
+
     def __str__(self):
         flat_terms = self.flatten()
 
@@ -50,7 +49,7 @@ class Union(SetTheoryBase):
         for x in flat_terms[1:]:
             rv += "\\cup " + str(x)
         rv += "\\right)"
-        return rv  
+        return rv
 
 class Intersection(SetTheoryBase):
     def flatten(self):
@@ -63,8 +62,18 @@ class Intersection(SetTheoryBase):
                 rv.append(termi)
         return rv
 
-    
     def clean_up(self):
+        if len(self.terms) < 2:
+            return self
+
+        if type(self.terms[0]) == Union and len(self.terms[0].terms) == 2:
+            new_lhs = Intersection(self.terms[0].terms[0], self.terms[1]).clean_up()
+            new_rhs = Intersection(self.terms[0].terms[1], self.terms[1]).clean_up()
+            return Union(new_lhs, new_rhs).clean_up()
+        if type(self.terms[1]) == Union and len(self.terms[1].terms) == 2:
+            new_lhs = Intersection(self.terms[0], self.terms[1].terms[0]).clean_up()
+            new_rhs = Intersection(self.terms[0], self.terms[1].terms[1]).clean_up()
+            return Union(new_lhs, new_rhs).clean_up()
         return self
 
     def __str__(self):
@@ -78,7 +87,7 @@ class Intersection(SetTheoryBase):
         for x in flat_terms[1:]:
             rv += "\\cap " + str(x)
         rv += "\\right)"
-        return rv  
+        return rv
 
 class Term:
     def __init__(self, sign, value):
@@ -88,7 +97,8 @@ class Term:
     def clean_up(self):
         if type(self.value) == Intersection:
             return Term(self.sign, self.value.clean_up())
-        return self.value
+        else:
+            return self.value
 
     def __repr__(self):
         return str(self)
@@ -96,7 +106,7 @@ class Term:
     def __str__(self):
         lb = "{"
         rb = "}"
-        return str(self.sign) + 'E_' + lb + str(self.value) + rb    
+        return str(self.sign) + 'E_' + lb + str(self.value) + rb
 
 
 def make_fragments(n_fragments):
@@ -130,7 +140,7 @@ def make_intersections(nmers):
             temp = Intersection(ovp[0].value, ovp[1].value)
             for i in range(2, order):
                 temp = Intersection(temp, ovp[i].value)
-            if order % 2 == 0:                
+            if order % 2 == 0:
                 ovps.append(Term('-', temp))
             else:
                 ovps.append(Term('+', temp))
@@ -142,7 +152,7 @@ def print_equation(nmers, ovps):
     for nmer in nmers:
         rv += str(nmer)
     for ovp in ovps:
-        rv += str(ovp.clean_up())
+        rv += str(ovp)#.clean_up())
     return rv
 
 if __name__ == "__main__":
@@ -151,6 +161,5 @@ if __name__ == "__main__":
     frags = make_fragments(n_fragments)
     nmers = make_nmers(trunc_order, frags)
     ovps  = make_intersections(nmers)
-    #print(ovps[0].clean_up())
+    print(ovps[0].clean_up())
     print(print_equation(nmers, ovps))
-
