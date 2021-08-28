@@ -12,6 +12,9 @@
 *.autosave
 *.bak
 
+# Python temporaries
+__pycache__
+
 # These are directories used by IDEs for storing settings
 .idea/
 .vscode/

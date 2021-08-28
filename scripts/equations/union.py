@@ -2,6 +2,8 @@ class Union:
     """ Class representing a symbolic union of indices.
     """
     def __init__(self, lhs, rhs = None):
+        """ Creates a Union between one or two things
+        """
         self.terms = [lhs]
         if rhs and lhs != rhs:
             self.terms.append(rhs)
@@ -25,7 +27,7 @@ class Union:
             else:
                 idxs = idxs.union(x.indices())
         return idxs
-
+ 
     def print(self, sym):
         as_str0 = str(self.terms[0])
         if len(self.terms) == 1:
