@@ -1,53 +1,79 @@
+from index import Index
 class Union:
     """ Class representing a symbolic union of indices.
     """
-    def __init__(self, lhs, rhs = None):
-        """ Creates a Union between one or two things
+    def __init__(self, *args):
+        """ Creates a Union between two indices
         """
-        self.terms = [lhs]
-        if rhs and lhs != rhs:
-            self.terms.append(rhs)
+        self.terms = args
 
-    def is_simple(self):
+    def print_type(self):
+        rv = "Union("
         for x in self.terms:
-            is_str   = type(x) == str
-            is_union = type(x) == Union
-            if is_union:
-                if not x.is_simple():
-                    return False
-            elif not is_str:
-                return False
+            rv += x.print_type() + ","
+        return rv + ")"
+
+    def is_union(self):
         return True
 
-    def indices(self):
-        idxs = set()
-        for x in self.terms:
-            if type(x) == str:
-                idxs = idxs.union({x})
+    def is_intersection(self):
+        return False
+
+    def is_index(self):
+        return False
+
+    def clean_up(self):
+        all_idx
+        for x in terms.self:
+
+        return self
+
+    def associate(self):
+        new_terms = []
+        for i in range(len(self.terms)):
+            new_term = self.terms[i].associate()
+            if new_term.is_union():
+                for x in new_term:
+                    new_terms.append(x)
             else:
-                idxs = idxs.union(x.indices())
-        return idxs
- 
-    def print(self, sym):
-        as_str0 = str(self.terms[0])
-        if len(self.terms) == 1:
-            return as_str0
+                new_terms.append(new_term)
+        return Union(*new_terms)
 
-        as_str1 = str(self.terms[1])
-
-        if self.is_simple():
-            return as_str0 + as_str1
-
-        return "(" + as_str0 + ")" + sym + "(" + as_str1 + ")"
-
+    def distribute(self):
+        new_me = self.associate()
+        new_terms = []
+        for x in new_me.terms:
+            new_terms.append(x.distribute())
+        return Union(*new_terms).associate()
 
     def __repr__(self):
         return str(self)
 
+    def __getitem__(self, idx):
+        return self.terms[idx]
+
     def __str__(self):
-        return self.print("U")
+        sym = "U"
+
+        rv = ""
+        for i in range(len(self.terms)):
+            x_str = str(self.terms[i])
+            
+            if self.terms[i].is_intersection():
+               x_str = "(" + x_str + ")"
+
+            if i == 0:
+                rv = x_str
+                continue
+
+            rv += sym + x_str
+        return rv
 
     def __eq__(self, rhs):
-        if type(rhs) == str:
-            return False
-        return self.terms == rhs.terms
+        if type(rhs) == Union:
+            return self.terms == rhs.terms
+        return False
+        
+
+
+

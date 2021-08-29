@@ -259,14 +259,6 @@ these defitions we get:
    \Enm{2}{3} =& \Enm{1}{3} + \Enm{2}{2} + \Deik + \ Dejk\\
              =& \ei + \ej + \ek + \Deij + \Deik + \Dejk
 
-or in cleaned up form (no duplicate computations):
-
-.. math::
-   \Enm{2}{3} = \Eij + \Eik + \Ejk - E_{I\cup\left(J\cap K\right)} 
-                 - E_{J\cup\left(I\cap K\right)} 
-                 - E_{K\cup\left(I\cap J\right)} 
-                 + E_{I\cap J\cap K}
-
 Three-body
 ^^^^^^^^^^
 
@@ -408,24 +400,13 @@ jump right to the intersection-corrected dimer energies:
    \eil =& \Eil -
            \Eijcil - \Eikcil - \Ejkcil +
            \Eijcikcil + \Eijcjkcil + \Eikcjkcil-\\
-         &  \Eijcikcjkcil\\
-        =& \Eil - E_{I\cup\left(J\cap L\right)} - E_{I\cup\left(K\cap L\right)}
-           - \Ejkcil + E_{I\cup\left(J\cap K\cap L\right)} 
-           + E_{\left(I\cap J\right)\cup\left(I\cap K\right)
-                \cup\left(J\cap L\right)}\\ 
-         & + E_{\left(I\cap J\right)\cup\left(I\cap K\right)
-                \cup\left(K\cap L\right)} 
-           - E_{\left(I\cap J\right)\cup\left(I\cap L\right)\cup
-                \left(J\cap K \cap L\right)}\\                   
+         &  \Eijcikcjkcil\\                
    \ejl =& \Ejl -
            \Eijcjl - \Eikcjl - \Ejkcjl - \Eilcjl +
            \Eijcikcjl + \Eijcjkcjl + \Eijcilcjl +\\
          &   \Eikcjkcjl + \Eikcilcjl + \Ejkcilcjl -
            \Eijcikcjkcjl - \Eijcikcjkcjl - \\ 
-         & \Eijcjkcilcjl - \Eikcijcilcjl + \Eijcikcjkcilcjl\\
-        =& \Ejl - E_{J\cup\left(I\cap L\right)} - E_{J\cup\left(K\cap L\right)}
-                - E_{L\cup\left(I\cap J\right)} + \\
-            
+         & \Eijcjkcilcjl - \Eikcijcilcjl + \Eijcikcjkcilcjl\\           
    \ekl =& \Ekl -
            \Eijckl - \Eikckl - \Ejkckl - \Eilckl - \Ejlckl +
            \Eijcikckl + \Eijcjkckl + \\
