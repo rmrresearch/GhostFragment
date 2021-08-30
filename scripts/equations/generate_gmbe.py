@@ -10,10 +10,7 @@ class Term:
         self.value = value
 
     def clean_up(self):
-        if type(self.value) == Intersection:
-            return Term(self.coeff, self.value.distribute())
-        else:
-            return self.value
+        return Term(self.coeff, self.value.distribute().clean_up())
 
     def __repr__(self):
         return str(self)
@@ -77,7 +74,7 @@ def print_equation(nmers, ovps, clean_up = False):
     return rv
 
 if __name__ == "__main__":
-    n_fragments = 3
+    n_fragments = 4
     trunc_order = 2
     frags = make_fragments(n_fragments)
     nmers = make_nmers(trunc_order, frags)

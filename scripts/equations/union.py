@@ -1,12 +1,8 @@
-from index import Index
-class Union:
-    """ Class representing a symbolic union of indices.
+from set_base import SetBase
+class Union(SetBase):
+    """ Class representing a set which has been formed by taking the symbolic
+        union of one or more objects.
     """
-    def __init__(self, *args):
-        """ Creates a Union between two indices
-        """
-        self.terms = args
-
     def print_type(self):
         rv = "Union("
         for x in self.terms:
@@ -16,17 +12,51 @@ class Union:
     def is_union(self):
         return True
 
-    def is_intersection(self):
+    def is_proper_subset(self, rhs):
+        """ Determines if the current Union instance is a proper subset of `rhs`
+
+        Unions can only be proper subsets of other unions. An index is
+        essentially a single element union; since we don't have any empty sets,
+        it is not possible for a Union instance to contain less elements than
+        an index. Similar logic applies to intersections containing one index.
+        If an intersection contains more than one index, it is necessarilly a
+        proper subset of anything containing any of the indices in the
+        intersection.
+        """
+        if rhs.is_union():
+            # rhs must contain more elements
+            if len(rhs) <= len(self):
+                return False
+
+            # Every element in this union must be in rhs
+            for x in self.terms:
+                if rhs.count(x) == 0:
+                    return False
+            return True
+
+        # Getting here means we have an index or an intersection
         return False
 
-    def is_index(self):
-        return False
 
     def clean_up(self):
-        all_idx
-        for x in terms.self:
-
-        return self
+        new_terms = [x.clean_up() for x in self.terms]
+        final_terms = []
+        nterms = len(new_terms)
+        for i in range(nterms):
+            termi = self.terms[i]
+            is_good = True
+            for j in range(nterms):
+                if i == j:
+                    continue
+                termj = self.terms[j]
+                if termi.is_proper_subset(termj):
+                    is_good = False
+                    break
+            if is_good:
+                final_terms.append(termi)
+        if len(final_terms) == 1:
+            return final_terms[0]
+        return Union(*final_terms)
 
     def associate(self):
         new_terms = []
@@ -46,11 +76,6 @@ class Union:
             new_terms.append(x.distribute())
         return Union(*new_terms).associate()
 
-    def __repr__(self):
-        return str(self)
-
-    def __getitem__(self, idx):
-        return self.terms[idx]
 
     def __str__(self):
         sym = "U"
@@ -58,7 +83,7 @@ class Union:
         rv = ""
         for i in range(len(self.terms)):
             x_str = str(self.terms[i])
-            
+
             if self.terms[i].is_intersection():
                x_str = "(" + x_str + ")"
 
@@ -71,9 +96,12 @@ class Union:
 
     def __eq__(self, rhs):
         if type(rhs) == Union:
-            return self.terms == rhs.terms
+            if len(rhs.terms) != len(self.terms):
+                return False
+
+            # Order doesn't matter
+            for x in self.terms:
+                if rhs.count(x) == 0:
+                    return False
+            return True
         return False
-        
-
-
-
