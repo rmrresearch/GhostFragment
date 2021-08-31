@@ -15,6 +15,9 @@ class Term:
     def __repr__(self):
         return str(self)
 
+    def __eq__(self, rhs):
+        return (self.coeff == rhs.coeff) and (self.value == rhs.value)
+
     def __str__(self):
         lb = "{"
         rb = "}"
@@ -79,6 +82,6 @@ if __name__ == "__main__":
     frags = make_fragments(n_fragments)
     nmers = make_nmers(trunc_order, frags)
     ovps  = make_intersections(nmers)
-    print(print_equation(nmers, ovps))
-    print("***")
+    #print(print_equation(nmers, ovps))
+    #print("***")
     print(print_equation(nmers, ovps, True))

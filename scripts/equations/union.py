@@ -77,6 +77,16 @@ class Union(SetBase):
         return Union(*new_terms).associate()
 
 
+    def __lt__(self, rhs):
+        if rhs.is_index(): 
+            return False
+        elif rhs.is_intersection():
+            return True
+        else:
+            if len(self.terms) < len(rhs.terms):
+                return True
+            return self.terms < rhs.terms
+
     def __str__(self):
         sym = "U"
 

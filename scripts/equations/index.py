@@ -61,6 +61,11 @@ class Index:
     def distribute(self):
         return self
 
+    def __lt__(self, rhs):
+        if rhs.is_index():
+            return self.value < rhs.value
+        return True
+
     def __len__(self):
         return 1
 

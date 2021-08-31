@@ -11,6 +11,7 @@ class SetBase:
                     break
             if is_good:
                 self.terms.append(x)
+        self.terms.sort()
 
     def count(self, elem):
         # This exploits that only unique elements are stored

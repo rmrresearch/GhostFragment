@@ -74,6 +74,12 @@ class Intersection(SetBase):
             rv.append(newi)
         return Intersection(*rv).associate()
 
+    def __lt__(self, rhs):
+        if rhs.is_intersection():
+            if len(self.terms) < len(rhs.terms):
+                return True
+            return self.terms < rhs.terms
+        return False
 
     def __str__(self):
         sym = "^"
