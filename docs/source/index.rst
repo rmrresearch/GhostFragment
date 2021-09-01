@@ -10,3 +10,5 @@ pertaining to basis-set superposition corrections and fragment-based methods.
    :caption: Contents:
 
    background/index
+   frag_methods/index
+   references
