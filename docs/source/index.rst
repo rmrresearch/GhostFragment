@@ -11,4 +11,5 @@ pertaining to basis-set superposition corrections and fragment-based methods.
 
    background/index
    frag_methods/index
+   embed_methods/index
    references

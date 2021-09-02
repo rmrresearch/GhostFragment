@@ -12,3 +12,4 @@ to the topics of basis-set superposition error and fragment-based methods.
     mbe/index
     gmbe/index
     bsse/index
+    established_methods/index
