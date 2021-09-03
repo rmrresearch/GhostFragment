@@ -18,4 +18,8 @@ of the electron density and nuclei of fragment |J|. Mathematically this is:
 where :math:`i` runs over the :math:`n_I` electrons in fragment |I|, 
 :math:`A` runs over the :math:`N_A` nuclei in fragment |J|, and
 :math:`\rho_J(r)` is the electron density of fragment |J| evaluated at 
-:math:`r`.
+:math:`r`. Since the Hamiltoniann for each fragment depends on the densities of
+the remaining fragments, the densities must be solved for iteratively.
+
+For embedding higher-order :math:`n`-mers, one typically uses the converged
+fragment densities and does not iterate using the :math:`n`-mer Hamiltonians.
