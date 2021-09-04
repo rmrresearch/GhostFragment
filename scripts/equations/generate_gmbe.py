@@ -65,6 +65,12 @@ def make_intersections(nmers):
 
     return ovps
 
+def diff_ovps(old_nmers, new_nmer):
+    old_ovps = make_intersections(old_nmers)
+    new_nmers = old_nmers + [new_nmer]
+    new_ovps = make_intersections(new_nmers)
+    return [x for x in new_ovps if x not in old_ovps]
+
 def print_equation(nmers, ovps, clean_up = False):
     rv = ""
     for nmer in nmers:
@@ -80,8 +86,11 @@ if __name__ == "__main__":
     n_fragments = 4
     trunc_order = 2
     frags = make_fragments(n_fragments)
-    nmers = make_nmers(trunc_order, frags)
-    ovps  = make_intersections(nmers)
-    #print(print_equation(nmers, ovps))
-    #print("***")
-    print(print_equation(nmers, ovps, True))
+    #nmers = make_nmers(trunc_order, frags)
+    nmers = [Term(1.0, Union(Index("I"), Index("J"))),
+             Term(1.0, Union(Index("I"), Index("K"))),
+             Term(1.0, Union(Index("J"), Index("K"))),
+             Term(1.0, Union(Index("I"), Index("L"))),
+             Term(1.0, Union(Index("J"), Index("L")))]
+    diff = diff_ovps(nmers, Term(1.0, Union(Index("K"), Index("L"))))
+    print(print_equation(nmers, diff, True))
