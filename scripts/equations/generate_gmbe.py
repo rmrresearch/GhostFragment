@@ -40,10 +40,7 @@ def make_nmers(trunc_order, frags):
         return [Term(1.0, x) for x in frags]
 
     for nmer in combinations(frags, trunc_order):
-        temp = Union(nmer[0], nmer[1])
-        for i in range(2, len(nmer)):
-            temp = Union(temp, nmer[i])
-        nmers.append(Term(1.0, temp))
+        nmers.append(Term(1.0, Union(*nmer)))
     return nmers
 
 
@@ -86,11 +83,16 @@ if __name__ == "__main__":
     n_fragments = 4
     trunc_order = 2
     frags = make_fragments(n_fragments)
-    #nmers = make_nmers(trunc_order, frags)
+    nmers = make_nmers(trunc_order, frags)
+    ovps  = make_intersections(nmers)
+    for x in ovps:
+        if len(x.value.associate()) == 3:
+            print(x, x.clean_up())
+    #print(print_equation(nmers, ovps, True))
     nmers = [Term(1.0, Union(Index("I"), Index("J"))),
              Term(1.0, Union(Index("I"), Index("K"))),
              Term(1.0, Union(Index("J"), Index("K"))),
              Term(1.0, Union(Index("I"), Index("L"))),
              Term(1.0, Union(Index("J"), Index("L")))]
     diff = diff_ovps(nmers, Term(1.0, Union(Index("K"), Index("L"))))
-    print(print_equation(nmers, diff, True))
+    #print(print_equation(nmers, diff, True))

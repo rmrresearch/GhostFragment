@@ -58,8 +58,8 @@ If we add a fourth fragment:
              
              + E_{(K)U(I^J^L)} + E_{LU(I^J^K)} 
              
-             - E_{(I^L)U(J^K)} 
              - E_{(I^K)U(J^L)} 
+             - E_{(I^L)U(J^K)} 
 
              + E_{(I^K)U(I^L)U(J^K)} 
              + E_{(I^K)U(J^K)U(J^L)} 
@@ -103,60 +103,24 @@ which shows that for each dimer XY we get:
   - you get a Y\cup(I\cap J\cap X) term for every I and J less than X 
     (skipping Y)
 - etc. up to X\cup(I\cap J\cap ...\cap N-2 \cap Y)
+- dimers of idimers like (I\cap X)\cup(J\cap Y) and (I\cap Y)\cup(J\cap X)
+  - (I\cap X)\cup(J\cap Y) for every IJ where J < Y
+  - (I\cap Y)\cup(J\cap X) for every IJ where J < X
+- dimers of an idimer and an itrimer etc.   
+- trimer of idimers 
+- trimer of two idimers and one itrimer
+- trimer of one idimer and two itrimers
 
+pairwise intersections of dimers IX and IY generate: 
+- I\cup (X\cap Y) and 
+pairwise intersections of dimers IJ and XY generate:
+- (I^X)(I^Y)(X^J)(Y^J)
+three-way intersections of dimers IX, IY, IZ
+- I\cup (X\cap Y\cap Z)
+three-way intersection of dimers IX, IY, WZ
+- (I^X)U(I^Y)U(W^Z)
+three-way intersection of dimers IJ, KL, XY
 
-For a four fragment system, trucnating the GMBE at dimers we get:
-
-.. math::
-   E^{(4,2)} = E_{IJ} + E_{IK} + E_{IL} + E_{JK} + E_{JL} + E_{KL}
-               - E_{IU(J^K)} - E_{IU(J^L)} - E_{IU(K^L)}
-               - E_{JU(I^K)} - E_{JU(I^L)} - E_{JU(K^L)}
-               - E_{KU(I^J)} - E_{KU(I^L)} - E_{KU(J^L)}
-               - E_{LU(I^J)} - E_{LU(I^K)} - E_{LU(J^K)}
-
-               + E_{IU(J^K^L)} + E_{JU(I^K^L)} + E_{KU(I^J^L)} + E_{LU(I^J^K)}
-
-               -E_{(I^J)U(K^L)} - E_{(I^K)U(J^L)} - E_{(I^L)U(J^K)}
-
-               + E_{(I^J)U(I^K)U(J^K)} + E_{(I^J)U(I^K)U(J^L)} + E_{(I^J)U(I^K)U(K^L)} 
-               + E_{(I^J)U(I^L)U(J^K)} + E_{(I^J)U(I^L)U(J^L)} + E_{(I^J)U(I^L)U(K^L)} 
-               + E_{(I^J)U(J^K)U(K^L)} 
-               + E_{(I^J)U(J^L)U(K^L)}                
-               + E_{(I^K)U(I^L)U(J^K)} + E_{(I^K)U(I^L)U(J^L)} + E_{(I^K)U(I^L)U(K^L)}
-               + E_{(I^K)U(J^K)U(J^L)} 
-               + E_{(I^K)U(J^L)U(K^L)}
-               + E_{(I^L)U(J^K)U(J^L)} + E_{(I^L)U(J^K)U(K^L)} 
-               + E_{(J^K)U(J^L)U(K^L)}
-
-
-               - E_{(I^J)U(I^K)U(J^K^L)}
-               - E_{(I^J)U(I^L)U(J^K^L)}
-               - E_{(I^J)U(J^K)U(I^K^L)}
-               - E_{(I^J)U(J^L)U(I^K^L)}
-               - E_{(I^K)U(I^L)U(J^K^L)}
-               - E_{(I^K)U(J^K)U(I^J^L)}
-               - E_{(I^K)U(K^L)U(I^J^L)} 
-               - E_{(I^L)U(J^L)U(I^J^K)}
-               - E_{(I^L)U(K^L)U(I^J^K)} 
-               - E_{(J^K)U(J^L)U(I^K^L)}
-               - E_{(J^K)U(K^L)U(I^J^L)} 
-               - E_{(J^L)U(K^L)U(I^J^K)}
-
-               + 1.0E_{(I^J)U(I^K^L)U(J^K^L)} 
-               + 1.0E_{(I^K)U(I^J^L)U(J^K^L)} 
-               + 1.0E_{(I^L)U(I^J^K)U(J^K^L)} 
-               + 1.0E_{(J^K)U(I^J^L)U(I^K^L)}
-               + 1.0E_{(J^L)U(I^J^K)U(I^K^L)}
-               + 1.0E_{(K^L)U(I^J^K)U(I^J^L)}
-
-               -1.0E_{(I^J)U(I^K)U(J^L)U(K^L)}
-               -1.0E_{(I^J)U(I^L)U(J^K)U(K^L)}
-               -1.0E_{(I^K)U(I^L)U(J^K)U(J^L)}
-
-               - 1.0E_{(I^J^K)U(I^J^L)U(I^K^L)U(J^K^L)}
-
-
-.. math::
-   \sum_{I = 1}^{N-1}\sum_{J = I + 1}^N E_{IJ} -
-   \sum_{I = 1}^N\sum_{J< K} E_{I\cup (J\cap K)} +
-   \sum_{I = 1}^N\sum_{J<K<L} E_{I\cup (J\cap K\cap L)}
+It bears mentioning that the "less than" criteria is specifically tied to our
+particular ordering scheme, *i.e.*, if you choose a different ordering scheme
+you're going to have different criteria.

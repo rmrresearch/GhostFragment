@@ -1,7 +1,6 @@
 class SetBase:
     def __init__(self, *args):
         self.terms = []
-
         # This makes sure we only add unique elements
         for x in args:
             is_good = True
