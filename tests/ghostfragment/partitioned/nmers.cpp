@@ -2,8 +2,8 @@
 
 using frags_type = ghostfragment::type::fragmented_molecule;
 using nmers_type = ghostfragment::type::nmers;
-using molecule   = ghostfragment::type::molecule;
-using my_pt      = ghostfragment::pt::nmer_maker;
+using molecule   = simde::type::molecule;
+using my_pt      = simde::NMers;
 
 TEST_CASE("NMers") {
     auto mm   = testing::initialize();
@@ -14,7 +14,7 @@ TEST_CASE("NMers") {
     // Here n is the order of nmers we are making and N is the total number
     // of fragments
     SECTION("N = 1") {
-        molecule water(H, H, O);
+        molecule water{H, H, O};
         frags_type frags(water, {{0ul, 1ul, 2ul}});
         SECTION("n = 1") {
             nmers_type corr(frags, {{0ul}});
@@ -30,7 +30,7 @@ TEST_CASE("NMers") {
     }
 
     SECTION("Disjoint N = 2") {
-        molecule water(H, H, O, H, H, O);
+        molecule water{H, H, O, H, H, O};
         frags_type frags(water, {{0ul, 1ul, 2ul}, {3ul, 4ul, 5ul}});
         SECTION("n = 1") {
             nmers_type corr(frags, {{0ul}, {1ul}});
@@ -53,7 +53,7 @@ TEST_CASE("NMers") {
     }
 
     SECTION("Non-disjoint N = 2") {
-        molecule water(He, He, He);
+        molecule water{He, He, He};
         frags_type frags(water, {{0ul, 1ul}, {1ul, 2ul}});
         SECTION("n = 1") {
             nmers_type corr(frags, {{0ul}, {1ul}});
@@ -76,7 +76,7 @@ TEST_CASE("NMers") {
     }
 
     SECTION("Disjoint N = 3") {
-        molecule water(H, H, O, H, H, O, H, H, O);
+        molecule water{H, H, O, H, H, O, H, H, O};
         frags_type frags(water,
                          {{0ul, 1ul, 2ul}, {3ul, 4ul, 5ul}, {6ul, 7ul, 8ul}});
         SECTION("n = 1") {
@@ -114,7 +114,7 @@ TEST_CASE("NMers") {
     }
 
     SECTION("Non-disjoint N = 3") {
-        molecule water(He, He, He);
+        molecule water{He, He, He};
         frags_type frags(water, {{0ul, 1ul}, {0ul, 2ul}, {1ul, 2ul}});
         SECTION("n = 1") {
             nmers_type corr(frags, {{0ul}, {1ul}, {2ul}});

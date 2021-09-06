@@ -3,7 +3,7 @@
 
 namespace {
 
-void set_defaults(sde::ModuleManager& mm) {
+void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Cluster Partition", "Connectivity", "Covalent Radius");
 }
 
@@ -11,7 +11,7 @@ void set_defaults(sde::ModuleManager& mm) {
 
 namespace ghostfragment {
 
-void load_modules(sde::ModuleManager& mm) {
+void load_modules(pluginplay::ModuleManager& mm) {
     mm.add_module<ClusterPartitioner>("Cluster Partition");
     mm.add_module<CovRadii>("Covalent Radius");
     mm.add_module<NMers>("All nmers");

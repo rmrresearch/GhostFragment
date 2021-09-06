@@ -1,6 +1,6 @@
 #include "../modules.hpp"
 #include "distance.hpp"
-#include "ghostfragment/property_types/property_types.hpp"
+#include <simde/simde.hpp>
 #include <utilities/iter_tools/combinations.hpp>
 
 namespace ghostfragment {
@@ -52,16 +52,16 @@ How much larger the actual distance can be compared to the predicted distance
 
 MODULE_CTOR(CovRadii) {
     description(mod_desc);
-    satisfies_property_type<pt::connectivity>();
+    satisfies_property_type<simde::Connectivity>();
     add_input<double>("tau").set_description(tau_desc).set_default(0.10);
 }
 
 MODULE_RUN(CovRadii) {
-    const auto& [mol]     = pt::connectivity::unwrap_inputs(inputs);
+    const auto& [mol]     = simde::Connectivity::unwrap_inputs(inputs);
     const auto tau        = inputs.at("tau").value<double>();
     const auto tau_plus_1 = tau + 1.0;
     const auto natoms     = mol.size();
-    property_types::type::connectivity_table ct(mol.size());
+    simde::type::connectivity_table ct(mol.size());
 
     using size_type = typename std::decay_t<decltype(mol)>::size_type;
     for(size_type i = 0; i < natoms; ++i) {
@@ -77,7 +77,7 @@ MODULE_RUN(CovRadii) {
     }
 
     auto rv = results();
-    return pt::connectivity::wrap_results(rv, ct);
+    return simde::Connectivity::wrap_results(rv, ct);
 }
 
 } // namespace ghostfragment

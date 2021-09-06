@@ -1,10 +1,11 @@
 #include "../modules.hpp"
-#include "ghostfragment/property_types/property_types.hpp"
+#include "ghostfragment/types.hpp"
+#include <simde/simde.hpp>
 
 namespace ghostfragment {
 namespace detail_ {
 
-using bond_list_t = typename type::connectivity_table::bond_list_type;
+using bond_list_t = typename simde::type::connectivity_table::bond_list_type;
 using atom_t      = typename bond_list_t::size_type;
 
 /* The top call to this function provides us with a set `{x}`. Where `x` is one
@@ -57,17 +58,19 @@ Atoms are assigned to partitions in input order. Meaning within a partition atom
 before atom ``j``.
 )";
 
+using pt = simde::FragmentedMolecule;
+
 MODULE_CTOR(ClusterPartitioner) {
     description(mod_desc);
-    satisfies_property_type<pt::fragmented_mol>();
+    satisfies_property_type<pt>();
 
-    add_submodule<pt::connectivity>("Connectivity")
+    add_submodule<simde::Connectivity>("Connectivity")
       .set_description("Determines the input system's connectivity.");
 }
 
 MODULE_RUN(ClusterPartitioner) {
     using subset_type = typename type::fragmented_molecule::value_type;
-    const auto& [mol] = pt::fragmented_mol::unwrap_inputs(inputs);
+    const auto& [mol] = pt::unwrap_inputs(inputs);
     const auto natoms = mol.size();
 
     type::fragmented_molecule frags(mol); // Will be the fragments
@@ -75,11 +78,11 @@ MODULE_RUN(ClusterPartitioner) {
     // Handle zero atom edge-case
     if(natoms == 0) {
         auto rv = results();
-        return pt::fragmented_mol::wrap_results(rv, frags);
+        return pt::wrap_results(rv, frags);
     }
 
     auto& ctable_mod     = submods.at("Connectivity");
-    const auto& [ctable] = ctable_mod.run_as<pt::connectivity>(mol);
+    const auto& [ctable] = ctable_mod.run_as<simde::Connectivity>(mol);
 
     using size_type = typename std::decay_t<decltype(ctable)>::size_type;
     std::map<type::tag, std::set<size_type>> atom2frag;
@@ -103,7 +106,7 @@ MODULE_RUN(ClusterPartitioner) {
     }
 
     auto rv = results();
-    return pt::fragmented_mol::wrap_results(rv, frags);
+    return pt::wrap_results(rv, frags);
 }
 
 } // namespace ghostfragment

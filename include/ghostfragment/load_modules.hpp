@@ -1,8 +1,8 @@
 #pragma once
-#include <sde/sde.hpp>
+#include <simde/simde.hpp>
 
 namespace ghostfragment {
 
-void load_modules(sde::ModuleManager& mm);
+void load_modules(pluginplay::ModuleManager& mm);
 
 }

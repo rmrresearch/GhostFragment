@@ -1,5 +1,6 @@
 #include "../modules.hpp"
-#include "ghostfragment/property_types/property_types.hpp"
+#include "ghostfragment/types.hpp"
+#include <simde/simde.hpp>
 #include <utilities/iter_tools/combinations.hpp>
 
 namespace ghostfragment {
@@ -19,9 +20,11 @@ disjoint and intersecting fragments; however, for non-disjoint fragments the
 nmers may not be unique.
 )";
 
+using pt = simde::NMers;
+
 MODULE_CTOR(NMers) {
     description(mod_desc);
-    satisfies_property_type<pt::nmer_maker>();
+    satisfies_property_type<pt>();
 
     add_input<n_type>("n").set_description("The maximum n-mer size");
 }
@@ -30,7 +33,7 @@ MODULE_RUN(NMers) {
     using nmer_type = typename type::nmers::value_type;
 
     // Unpack inputs
-    const auto& [frags] = pt::nmer_maker::unwrap_inputs(inputs);
+    const auto& [frags] = pt::unwrap_inputs(inputs);
     auto n              = inputs.at("n").value<n_type>();
     if(n > frags.size())
         throw std::runtime_error("Cannot make " + std::to_string(n) +
@@ -52,7 +55,7 @@ MODULE_RUN(NMers) {
     }
 
     auto rv = results();
-    return pt::nmer_maker::wrap_results(rv, nmers);
+    return pt::wrap_results(rv, nmers);
 }
 
 } // namespace ghostfragment

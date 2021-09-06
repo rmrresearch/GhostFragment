@@ -1,19 +1,18 @@
 #pragma once
-#include "ghostfragment/load_modules.hpp"
-#include "ghostfragment/property_types/property_types.hpp"
+#include "ghostfragment/ghostfragment.hpp"
 #include <catch2/catch.hpp>
-#include <sde/sde.hpp>
+#include <simde/simde.hpp>
 
 namespace testing {
 
 inline auto initialize() {
-    sde::ModuleManager mm;
+    pluginplay::ModuleManager mm;
     ghostfragment::load_modules(mm);
     return mm;
 }
 
 inline auto some_atoms() {
-    using molecule = ghostfragment::type::molecule;
+    using molecule = simde::type::molecule;
     using atom     = typename molecule::value_type;
     atom H{"H", 1ul};
     atom He{"He", 2ul};

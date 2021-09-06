@@ -1,6 +1,5 @@
 #pragma once
-#include <property_types/connectivity.hpp>
-#include <sde/sde.hpp>
+#include <pluginplay/pluginplay.hpp>
 
 namespace ghostfragment {
 
