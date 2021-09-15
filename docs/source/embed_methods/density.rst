@@ -23,3 +23,32 @@ the remaining fragments, the densities must be solved for iteratively.
 
 For embedding higher-order :math:`n`-mers, one typically uses the converged
 fragment densities and does not iterate using the :math:`n`-mer Hamiltonians.
+
+
+
+***************
+FMO02 Embedding
+***************
+
+The FMO02 embedding method :cite:t:`Nakano2002`: introduces two approximations
+into traditional density embedding based on the separation between |I| and |J|. 
+For moderately separated |I| and |J|:
+
+.. math::
+
+   V^{IJ}_{\mu\nu} = \sum_{\lambda\in J}
+                     \left(\mathbf{P}^{J}\mathbf{S}\right)_{\lambda\lambda}
+                     \left(\mu\nu \middle| \lambda\lambda\right)
+
+for :math:`\mu,\nu\in I`. The quantity 
+:math:`\left(\mathbf{P}^{J}\mathbf{S}\right)_{\lambda\lambda}` is the Mulliken
+population of orbital :math:`\lambda`. \For distant |I| and |J|:                  
+
+.. math::
+
+   V^{IJ}_{\mu\nu} \approx \sum_{A\in J}
+                    \mel{\mu}{\frac{Q_A}{| r_i - r_A|}}{\nu}
+               
+
+where :math:`A` indexes atoms, and :math:`Q_A` is the Mulliken charge of atom
+:math:`A` (the sum of the Mulliken populations on atom :math:`A`).
