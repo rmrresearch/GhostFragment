@@ -2,6 +2,14 @@
 FMO Capping Method
 ##################
 
+.. note::
+
+   The information in this section is my interpretation of the cited references.
+   In many cases the descriptions of the algorithms provided in the literature
+   are somewhat vague. Thus what is in this section may not accurately reflect 
+   how the underlying implementations actually work. Please feel free to
+   contribute and make this section more accurate.
+
 In FMO calculations caps in the traditional sense are not used.
 
 .. |I| replace:: :math:`I`
@@ -35,24 +43,51 @@ fragment |I| is obtained by:
 FMO00 Capping
 *************
 
+.. note::
+
+   The language describing the FMO00 method :cite:t:`Nakano_2000` uses is: 
+   "core" and "valence" orbitals; however, based on subsequent publications, 
+   such as :cite:t:`Fedorov_2004`, I believe what they are actually referring to
+   would typically be termed "occupied" and "virtual" orbitals, respectively. 
+   The language in this section reflects this assumption.
+
 A new capping method was proposed in a subsequent paper :cite:t:`Nakano_2000`,
 here denoted FMO00. In this method, for a bond :math:`a-b`, the bonding 
 electrons are assigned to one of the two atoms in the bond, say |a|. For 
 clarity, we refer to the fragment which gets atom |a| as |A|, and that which 
 gets |b| as |B|. |B|'s initial density is computed using the normal AO basis set 
 for |B|, with the usual equations. However, |A|'s initial density is computed 
-using |A|'s usual basis set augmented with the valence orbitals from |b|. To 
-extract the valence orbitals of |b|, a modified version of |A|'s Fock operator 
+using |A|'s usual basis set augmented with the virtual orbitals from |b|. To 
+extract the virtual orbitals of |b|, a modified version of |A|'s Fock operator 
 is used:
 
 .. math::
 
    \widehat{F}'_A = \widehat{F}_A  + 
-                    \sum_{c\in b} \gamma_c\left\mid \mu_c\middle\rangle
-                           \middle\langle\mu_c\right\mid
+                    \sum_{i\in b} \gamma_i\Ket{i}\Bra{i}
 
 
-where :math:`widehat{F}_A` is the original Fock operator, :math:`c` runs over
-the core orbitals of |b|, :math:`\gamma_c` is a large positive coefficient (
-default value is between 10$^6$ and 10$^8$), and
-:math:`\mu_c` is the :math:`c`-th atomic core orbital of |b|.
+where :math:`widehat{F}_A` is the original Fock operator, :math:`i` runs over
+the occupied orbitals of |b|, :math:`\gamma_i` is a large positive coefficient (
+default value is between 10$^6$ and 10$^8$), and :math:`\Ket{i}` is the 
+:math:`i`-th occupied orbital of |b|. In practice orbital :math:`\Ket{i}` is 
+only decribed by the AOs on the |b|, which is to say, that after localizing 
+:math:`\ket{i}` only the matrix elements :math:`C_{\mu i}` where :math:`\mu` is
+on |b| are kept.
+
+
+*************
+FMO04 Capping
+*************
+
+In describing a three-body FMO method :cite:t:`Fedorov_2004`, a new capping 
+method was pitched which is effectively a combination of :ref:`FMO99 Capping`
+and :ref:`FMO00 Capping`. In this study all severed bonds were carbon-carbon 
+bonds. Thus the decision was made to use the occupied orbitals of a methane 
+molecule instead of the actual occupied orbitals. The methane orbitals were 
+split so that one atom, call it |a|, gets one of the :math:`sp^3` orbitals 
+(specifically the :math:`sp^3` orbital along the bond) and the other atom, call 
+it |b|, gets the remaining four occupied orbitals. For a given bond, the 
+decision of which atom is |a| versus which atom is |b| was made so that |a| went 
+to the fragment with the smaller ordinal number (presumably the ordinal number 
+was assigned based on user input, but this point was not clarified).

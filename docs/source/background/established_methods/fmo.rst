@@ -104,6 +104,15 @@ using the HF/STO-3G method. Errors, were similar to the FMO00 method, but
 results were obtained significantly faster.
 
 
+FMO04 (Three-Body FMO)
+======================
+
+The next development in FMO was an extension capable of handeling three-body
+terms :cite:t:`Fedorov_2004`. This required introducing a screening method for
+three body terms, *i.e.*, :ref:`FMO04 Screening`, and also introduced a new
+capping method, :ref:`FMO04 Capping`, which is essentially a combination of the
+:ref:`FMO99 Capping` and :ref:`FMO00 Capping` methods.
+
 
 *******
 Summary
@@ -121,6 +130,8 @@ Summary
 +-------+-----------+-------------------+-------+-----------+
 | FMO02 | N/A       | FMO02             | FMO00 | FMO00     |
 +-------+-----------+-------------------+-------+-----------+
+| FMO04 | N/A       | FMO02             | FMO04 | FMO04     |
++-------+-----------+-------------------+-------+-----------+
 
 *********************
 Other FMO Development
@@ -130,3 +141,10 @@ Initial, approximate gradients for the FMO00 method were published in 2001
 :cite:t:`Kitaura_2001`. This formulation neglected the coupled-perturbed 
 Hartree-Fock contribution to the gradient, which is necessary because the 
 densities are not obtained variationally.
+
+:cite:t:`Inadomi_2002` detailed a mechanism for retrieving orbital energies and
+densities from FMO.
+
+:cite:t:`Fedorov2004` discussions about distributed computing of FMO with 
+GAMESS. Presensts some SCF/6-31G* and SCF/STO-3G calculations of large water
+clusters.

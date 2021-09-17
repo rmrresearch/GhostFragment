@@ -126,7 +126,7 @@ latex_elements = {
 
     # Additional stuff for the LaTeX preamble.
     #
-    'preamble': r'\usepackage{physics}',
+    'preamble': r'\usepackage{braket}',
 
     # Latex figure (float) alignment
     #

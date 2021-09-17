@@ -47,7 +47,7 @@ population of orbital :math:`\lambda`. \For distant |I| and |J|:
 .. math::
 
    V^{IJ}_{\mu\nu} \approx \sum_{A\in J}
-                    \mel{\mu}{\frac{Q_A}{| r_i - r_A|}}{\nu}
+                    \Braket{\mu | \frac{Q_A}{\mid r_i - r_A\mid} | \nu}
                
 
 where :math:`A` indexes atoms, and :math:`Q_A` is the Mulliken charge of atom
