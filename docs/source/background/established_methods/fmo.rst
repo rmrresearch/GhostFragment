@@ -3,7 +3,8 @@ Fragment Molecular Orbital Method
 #################################
 
 The fragment molecular orbital (FMO) method is arguably one of the most 
-established methods in the field of fragment-based methods.
+established methods in the field of fragment-based methods. The main purpose of
+this page is to describe the FMO method, and how the method has developed. 
 
 *******
 Origins
@@ -111,7 +112,12 @@ The next development in FMO was an extension capable of handeling three-body
 terms :cite:t:`Fedorov_2004`. This required introducing a screening method for
 three body terms, *i.e.*, :ref:`FMO04 Screening`, and also introduced a new
 capping method, :ref:`FMO04 Capping`, which is essentially a combination of the
-:ref:`FMO99 Capping` and :ref:`FMO00 Capping` methods.
+:ref:`FMO99 Capping` and :ref:`FMO00 Capping` methods. Three-body results 
+focused on water clusters and peptides with the SCF method and the STO-3G, 
+3-21G, 6-31G\*, and 6-31++G\*\* basis sets. Notably this study was one of the
+first to show that FMO performs best with small basis sets, postulating that
+this is because of the lack of exchange and intramolecular basis set 
+superposition error.
 
 
 *******
@@ -145,6 +151,12 @@ densities are not obtained variationally.
 :cite:t:`Inadomi_2002` detailed a mechanism for retrieving orbital energies and
 densities from FMO.
 
-:cite:t:`Fedorov2004` discussions about distributed computing of FMO with 
+:cite:t:`Sekino2003` used FMO to approximate a DFT calculation, PW91/STO-3G.
+Also considered were the HOMO/LUMO energies, dipole moment, and quadrupole 
+moment of the systems. Systems considered were water-ammonia clusters and DNA. 
+Errors in energies were on the order of a millihartree, multipole moments 
+matched to within a few tenths (units were not specified).
+
+:cite:t:`Fedorov2004b` discussions about distributed computing of FMO with 
 GAMESS. Presensts some SCF/6-31G* and SCF/STO-3G calculations of large water
 clusters.
