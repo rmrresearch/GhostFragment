@@ -80,7 +80,7 @@ on |b| are kept.
 FMO04 Capping
 *************
 
-In describing a three-body FMO method :cite:t:`Fedorov_2004`, a new capping 
+In describing a three-body FMO method :cite:t:`Fedorov2004a`, a new capping 
 method was pitched which is effectively a combination of :ref:`FMO99 Capping`
 and :ref:`FMO00 Capping`. In this study all severed bonds were carbon-carbon 
 bonds. Thus the decision was made to use the occupied orbitals of a methane 

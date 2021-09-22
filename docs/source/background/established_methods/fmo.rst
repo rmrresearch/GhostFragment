@@ -109,7 +109,7 @@ FMO04 (Three-Body FMO)
 ======================
 
 The next development in FMO was an extension capable of handeling three-body
-terms :cite:t:`Fedorov_2004`. This required introducing a screening method for
+terms :cite:t:`Fedorov2004a`. This required introducing a screening method for
 three body terms, *i.e.*, :ref:`FMO04 Screening`, and also introduced a new
 capping method, :ref:`FMO04 Capping`, which is essentially a combination of the
 :ref:`FMO99 Capping` and :ref:`FMO00 Capping` methods. Three-body results 
@@ -155,8 +155,15 @@ densities from FMO.
 Also considered were the HOMO/LUMO energies, dipole moment, and quadrupole 
 moment of the systems. Systems considered were water-ammonia clusters and DNA. 
 Errors in energies were on the order of a millihartree, multipole moments 
-matched to within a few tenths (units were not specified).
+matched to within a few tenths (units were not specified). A follow up paper
+:cite:t:`Sugiki_2003` used DIIS to accelerate the convergence of the iterative
+charge procedure.
 
 :cite:t:`Fedorov2004b` discussions about distributed computing of FMO with 
 GAMESS. Presensts some SCF/6-31G* and SCF/STO-3G calculations of large water
 clusters.
+
+:cite:t`Mochizuki2004` used the SCF orbitals from an FMO calculation to do MP2.
+Also considered in this study were MP2 densities and partially renormalized MP2.
+Calculations used the 6-31G basis set and focused on a large water cluster and
+several proteins.
