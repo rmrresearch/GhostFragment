@@ -47,7 +47,7 @@ FMO00 Capping
 
    The language describing the FMO00 method :cite:t:`Nakano_2000` uses is: 
    "core" and "valence" orbitals; however, based on subsequent publications, 
-   such as :cite:t:`Fedorov_2004`, I believe what they are actually referring to
+   such as :cite:t:`Fedorov2004a`, I believe what they are actually referring to
    would typically be termed "occupied" and "virtual" orbitals, respectively. 
    The language in this section reflects this assumption.
 

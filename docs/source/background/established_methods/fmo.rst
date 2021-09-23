@@ -159,11 +159,14 @@ matched to within a few tenths (units were not specified). A follow up paper
 :cite:t:`Sugiki_2003` used DIIS to accelerate the convergence of the iterative
 charge procedure.
 
+:cite:t:`Komeiji2003` used FMO to perform a molecular dynamics simulation of a
+peptide at the HF/STO-3G level of theory.
+
 :cite:t:`Fedorov2004b` discussions about distributed computing of FMO with 
 GAMESS. Presensts some SCF/6-31G* and SCF/STO-3G calculations of large water
 clusters.
 
-:cite:t`Mochizuki2004` used the SCF orbitals from an FMO calculation to do MP2.
+:cite:t:`Mochizuki2004` used the SCF orbitals from an FMO calculation to do MP2.
 Also considered in this study were MP2 densities and partially renormalized MP2.
 Calculations used the 6-31G basis set and focused on a large water cluster and
 several proteins.
