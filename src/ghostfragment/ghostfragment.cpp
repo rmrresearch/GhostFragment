@@ -1,6 +1,6 @@
 #include "ghostfragment/load_modules.hpp"
 #include "modules.hpp"
-
+#include "partitioned/partitioned.hpp"
 namespace {
 
 void set_defaults(pluginplay::ModuleManager& mm) {
@@ -12,9 +12,8 @@ void set_defaults(pluginplay::ModuleManager& mm) {
 namespace ghostfragment {
 
 void load_modules(pluginplay::ModuleManager& mm) {
-    mm.add_module<ClusterPartitioner>("Cluster Partition");
+    partitioned::load_modules(mm);
     mm.add_module<CovRadii>("Covalent Radius");
-    mm.add_module<NMers>("All nmers");
     set_defaults(mm);
 }
 

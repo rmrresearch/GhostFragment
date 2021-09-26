@@ -1,8 +1,8 @@
-#include "../modules.hpp"
 #include "ghostfragment/types.hpp"
+#include "partitioned.hpp"
 #include <simde/simde.hpp>
 
-namespace ghostfragment {
+namespace ghostfragment::partitioned {
 namespace detail_ {
 
 using bond_list_t = typename simde::type::connectivity_table::bond_list_type;
@@ -60,7 +60,7 @@ before atom ``j``.
 
 using pt = simde::FragmentedMolecule;
 
-MODULE_CTOR(ClusterPartitioner) {
+MODULE_CTOR(Cluster) {
     description(mod_desc);
     satisfies_property_type<pt>();
 
@@ -68,7 +68,7 @@ MODULE_CTOR(ClusterPartitioner) {
       .set_description("Determines the input system's connectivity.");
 }
 
-MODULE_RUN(ClusterPartitioner) {
+MODULE_RUN(Cluster) {
     using subset_type = typename type::fragmented_molecule::value_type;
     const auto& [mol] = pt::unwrap_inputs(inputs);
     const auto natoms = mol.size();
@@ -109,4 +109,4 @@ MODULE_RUN(ClusterPartitioner) {
     return pt::wrap_results(rv, frags);
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::partitioned

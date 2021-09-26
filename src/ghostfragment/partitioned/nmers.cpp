@@ -1,9 +1,9 @@
-#include "../modules.hpp"
 #include "ghostfragment/types.hpp"
+#include "partitioned.hpp"
 #include <simde/simde.hpp>
 #include <utilities/iter_tools/combinations.hpp>
 
-namespace ghostfragment {
+namespace ghostfragment::partitioned {
 
 using n_type = std::size_t;
 
@@ -58,4 +58,4 @@ MODULE_RUN(NMers) {
     return pt::wrap_results(rv, nmers);
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::partitioned

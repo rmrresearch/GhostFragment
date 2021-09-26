@@ -23,8 +23,9 @@ MODULE_RUN(MBE) {
     auto [aos, sys] = pt::unwrap_inputs(inputs);
 
     auto [frags] = submods.at("Fragmenter").run_as<frag_pt>(sys.molecule());
-    auto [nmers] = submods.at("NMers").run_as<nmer_ptr>(frags);
     // auto [frag2aos] =;
+    auto [nmers] = submods.at("NMers").run_as<nmer_pt>(frags);
+
     // auto [sys_aos]
 
     double E = 0.0;
