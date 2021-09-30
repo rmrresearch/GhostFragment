@@ -46,6 +46,9 @@ extensions = [
     'sphinxcontrib.bibtex'
 ]
 bibtex_bibfiles = ['refs.bib']
+bibtex_reference_style = "super"
+bibtex_default_style = 'plain'
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 doc_path = os.path.dirname(dir_path)
 root_path = os.path.dirname(doc_path)

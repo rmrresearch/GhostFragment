@@ -1,9 +1,9 @@
 #################################
 Timeline of Fragmentation Methods
-##################################
+#################################
 
-The following subsections list the fragment-based methods which came out that
-year.
+The following subsections attempt to provide a chronological timeline of the
+history of fragment-based methods. 
 
 ****
 1999
