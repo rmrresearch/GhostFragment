@@ -13,6 +13,7 @@ exahustive; particularly for the more popular methods.
    :caption: Contents:
 
    timeline
+   mta
    fmo
    mfcc
    gebf
