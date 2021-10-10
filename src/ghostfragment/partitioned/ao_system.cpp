@@ -3,8 +3,9 @@
 
 namespace ghostfragment::partitioned {
 
-using my_pt   = simde::FragmentedAOSystem;
-using frag_pt = simde::FragmentedMolecule;
+using my_pt          = simde::FragmentedAOSystem;
+using frag_pt        = simde::FragmentedMolecule;
+using atom2center_pt = simde::AtomToCenter;
 
 const auto mod_desc = R"(
 AOSpace/Molecule Partitioner
@@ -18,6 +19,7 @@ MODULE_CTOR(AOSystem) {
     satisfies_property_type<my_pt>();
 
     add_submodule<frag_pt>("Fragmenter");
+    add_submodule<atom2center_pt>("Atom to Center");
 }
 
 MODULE_RUN(AOSystem) {
@@ -30,6 +32,11 @@ MODULE_RUN(AOSystem) {
     // Step 1: Fragments
     const auto& [frags] = submods.at("Fragmenter").run_as<frag_pt>(mol);
 
+    // Step 2: Map atoms to AOs
+    const auto& [atom_ao] =
+      submods.at("AO to Center").run_as<atom2center_pt>(mol, aos);
+
+    // Step 3: Apply basis functions to fragments
     return_type frags_and_aos(mol_ao_pair);
 
     auto rv = results();
