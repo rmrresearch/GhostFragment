@@ -10,5 +10,6 @@ algorithms for automatically defining fragments have been proposed.
    :maxdepth: 2
    :caption: Contents:
 
+   mta
    gebf
    other
