@@ -6,45 +6,44 @@ Generalized Energy Based Fragmentation (GEBF)
 .. |g| replace:: :math:t:`g`
 .. |Fg| replace:: :math:t:`F_g`
 
-1. Create groups
-2. Determine bonds between groups
-3. For group |g|, fragment |Fg| is |g| plus all groups bonded to |g|
-4. Cap |Fg|
-5. Embed |Fg| in point charges
 
+With the original GEBF fragmentation method, :cite:t:`Li2007` presented a
+fragmentation method. Using our terminology, this method is to:
 
+#. Define pseudoatoms
 
-.. note::
- 
-   In the original presentation what we call groups are called "fragments". What
-   we call fragments are called "primitivie subsystems". And what we call
-   intersections are called "derived subsystems".
+   - In the orignal presentation no general criteria was specified; however, it
+     is assumed that for molecular clusters pseudoatoms are individual 
+     molecules.
 
-*********************
-Original Presentation
-*********************
+#. For each pseudoatom, define a fragment which is the pseudoatom and all
+   pseudoatoms close to it.
 
-This section presents the GEBF fragmentation method as it was originally
-described in :cite:t:`Li2007`.
+   - The original method uses two criteria for "close", one for covalent systems
+     and one for molecular clusters.
+   - For covalent systems two pseudoatoms are close if they are bonded either
+     covalentally or with a hydrogen bond
+   - For clusters pseudoatoms within some distance |zeta| are considered close
+     (default is 3 Angstroms)
 
-The first step is still to create groups (they are called fragments in the 
-original presentation). Li *et al.* specified that for molecular 
+#. Cap fragments
 
-1. Create groups
-   - For molecualr clusters 
-2. Cap each fragment from 1 with surrounding fragments(called primitive subsystems)
-   - Fragments are considered bonded if there is a covalent or hydrogen bond
-     between them
-   - For clusters all molecules within some distance |zeta| are considered part
-     of a primitive subsystem (default is 3 Angstroms)
-3. Add hydrogens to severed bonds
-4. Remove primitive subsystems which are subsets of other subsystems
-5. Create derivative subsystems.
-   - Assume largest primitive subsystem contains n fragments
-   - Look for sets of n-1 fragments which appear in more than one primitive
-     subsystem. The coefficient of such a system is (1-k) where k is the number
-     of systems it appears in.
-   - Repeat for sets of n-2, n-3, ..., 1 fragments which appear in more than one
-     primative subsystem
-6. Add in some dimers based on distance
+   - Original method specified with hydrogen atoms.
 
+#. Remove fragments which are subsets of other fragments
+
+#. Determine intersections
+
+Of note an algorithm for assigning multiplicities to intersections was also
+presented namely:
+
+- Assume largest fragment contains :math:`n` pseudoatoms.
+- Look for a set of :math:`n-1` pseudoatoms which appears in more than one
+  fragment. The multiplicity of this intersection is :math:`1-k`, where :math`k`
+  is the number of fragments it appears in.
+- Repeat the previous step for sets of :math`n-2, n-3, \ldots, 1` pseudoatoms 
+
+The presented fragmentation method contained an additional step meant to include
+some two-body interactions, namely dimers were considered if the distance
+between them is less than a threshold. The description presented implies that
+the fragments should be disjoint.

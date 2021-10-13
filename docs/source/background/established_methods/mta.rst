@@ -21,3 +21,12 @@ algorithm for doing so is provided. Applications focused on three systems:
 5,7,8-trimethyltocol, zeolite, and a peptide using small basis SCF. Results
 primarily focused on comparing the electorstatic potential computed by MTA to
 that of the supersystem.
+
+*****************
+Other MTA Results
+*****************
+
+:cite:t:`Babu2004` used MTA to approximate the density matrix of an ibuprofen 
+crystal with the HF/STO-3G and HF/6-31G(d,p) levels of theory. Comparisons
+between the supersystem density matrices were made at the HF/STO-3G level of
+theory.
