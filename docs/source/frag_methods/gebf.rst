@@ -2,7 +2,7 @@
 Generalized Energy Based Fragmentation (GEBF)
 #############################################
 
-.. |zeta| ..replace:: :math:`\zeta`
+.. |zeta| replace:: :math:`\zeta`
 .. |g| replace:: :math:t:`g`
 .. |Fg| replace:: :math:t:`F_g`
 
@@ -46,4 +46,5 @@ presented namely:
 The presented fragmentation method contained an additional step meant to include
 some two-body interactions, namely dimers were considered if the distance
 between them is less than a threshold. The description presented implies that
-the fragments should be disjoint.
+the fragments comprising the dimer should be disjoint, although this is not 
+stated.
