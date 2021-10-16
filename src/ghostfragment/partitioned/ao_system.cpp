@@ -12,7 +12,16 @@ AOSpace/Molecule Partitioner
 ----------------------------
 
 This module serves as a driver of sorts for fragmenting a molecule and then
-assigning AO basis sets to the fragments. 
+assigning AO basis sets to the fragments. How fragments are formed, and how AOs
+are mapped to atoms is determined by submodules. This module then uses the
+results of the two submodules to associate each fragment with an AO basis set.
+
+.. note::
+
+   The AO basis set associated with each fragment is more akin to applying an
+   atomic basis set to the fragment, than the AO basis set one would use for say
+   performing a basis-set superposition error calculation. The exact details
+   depend on the "Atom to Center" module though.
 )";
 
 MODULE_CTOR(AOSystem) {
@@ -38,6 +47,17 @@ MODULE_RUN(AOSystem) {
 
     // Step 3: Apply basis functions to fragments
     return_type frags_and_aos(mol_ao_pair);
+
+    for(const auto& fragi : frags) {
+        auto new_set = frags_and_aos.new_subset();
+        for(auto atomi : fragi) {
+            std::get<0>(new_set).insert(atomi);
+            for(auto centeri : atom_ao.at(atomi)) {
+                std::get<1>(new_set).insert(centeri);
+            }
+        }
+        frags_and_aos.insert(std::move(new_set));
+    }
 
     auto rv = results();
     return my_pt::wrap_results(rv, frags_and_aos);
