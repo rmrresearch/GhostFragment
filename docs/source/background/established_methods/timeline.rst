@@ -25,6 +25,12 @@ history of fragment-based methods.
 - Molecular Fractionation with Conjugate Caps (MFCC) :cite:`Zhang2003`
 
 ****
+2005
+****
+
+- Systematic Molecular Fragmentation (SMF) :cite:`Deev2005`
+
+****
 2007
 ****
 

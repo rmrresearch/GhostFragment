@@ -23,3 +23,21 @@ pseudoatom
 supersystem
    This is the system whose properties are actually of interest. Its properties
    are computed by fragmenting it into subsystems.
+
+************************
+Graph Theory Terminology
+************************
+
+Particularly when describing fragmentation algorithms we often treat the
+supersystem as a mathematical graph. 
+
+edge
+   These are the connections between two nodes in the graph. They will usually
+   correspond to covalent bonds, but exactly what defines an edge is usually
+   left up to the user.
+degree
+   This is the number of edges a node has. 
+leaf
+   This is a node with degree 1.
+node
+   In the context of a molecular graph nodes are typically pseudoatoms.

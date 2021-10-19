@@ -17,3 +17,4 @@ exahustive; particularly for the more popular methods.
    fmo
    mfcc
    gebf
+   smf
