@@ -27,6 +27,8 @@ Systematic Molecular Fragmentation Fragmentation Method
 .. |G5| replace:: :math:`G_5`
 .. |G6| replace:: :math:`G_6`
 .. |G7| replace:: :math:`G_7`
+.. |F| replace:: :math:`F`
+.. |Fp| replace:: :math`F'`
 
 :cite:t:`Deev2005` introduced a means of fragmenting large covalently bonded
 molecules. As originally presented, the SMF fragmentation method was used to
@@ -59,12 +61,17 @@ level |l| procedure. Using our terminology the level |l| procedure is:
    |G4|" or the set "|G5|, |G6|, |G7|" (*i.e.* ignore graphs which appear in
    both sets), repeat steps 3-11 for each graph in |G|
 #. The previous step terminates when none of the graphs generated in step 11 
-   survive step 3 of the next cycle.
+   survive step 3 of the next cycle. The resulting set of fragments is |F|.
 
-The above procedure is quite general; the original manuscript also stipulated
-some additional restrictions:
-- The level |l| procedure can only fragment rings containing |l| + 4 (or more)
-  pseudoatoms.
+The original presentation contains a few other details we have omitted, namely:
 
-The original manuscript assigns coefficients of +1 to graphs which result from
-breaking a single bond, and -1 to graphs which result from breaking both bonds.
+- How to calculate the coefficients of the fragments; we instead opt to use the
+  IEP
+- Restrictions on what size rings can be broken for a given |l|. The motivation
+  for these rules stems from their capping method choice. To be more general we
+  instead adopt the view that if a ring shouldn't be broken, it should be 
+  protected as a pseudoatom.
+- An ad hoc means of adding in some non-bonding interactions by considering
+  dimers. We prefer the traditional union-approach as it is more systematic.
+
+

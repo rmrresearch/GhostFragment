@@ -14,3 +14,4 @@ electronic environment.
    :maxdepth: 2
 
    fmo
+   smf
