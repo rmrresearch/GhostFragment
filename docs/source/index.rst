@@ -8,10 +8,6 @@ pertaining to basis-set superposition corrections and fragment-based methods.
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
+   
    background/index
-   frag_methods/index
-   cap_methods/index
-   embed_methods/index
-   screening_methods/index
    references

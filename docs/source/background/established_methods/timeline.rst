@@ -34,4 +34,5 @@ history of fragment-based methods.
 2007
 ****
 
+- Electorstatically-Embedded Many-Body Expansion (EE-MBE) :cite:`Dahlke2006`
 - Generalized Energy Based Fragmentation (GEBF) :cite:`Li2007`

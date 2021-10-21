@@ -11,5 +11,6 @@ algorithms for automatically defining fragments have been proposed.
    :caption: Contents:
 
    mta
+   smf
    gebf
    other
