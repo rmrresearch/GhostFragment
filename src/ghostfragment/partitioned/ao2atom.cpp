@@ -5,7 +5,7 @@
 
 namespace ghostfragment::partitioned {
 
-using my_pt = simde::AtomToCenter;
+using my_pt = simde::AtomToAO;
 
 const auto mod_desc = R"(
 Center To Atom Mapper
@@ -17,7 +17,11 @@ and mid-bond functions).
 
 )";
 
-MODULE_CTOR(AO2Atom) { satisfies_property_type<my_pt>(); }
+MODULE_CTOR(AO2Atom) {
+    description(mod_desc);
+
+    satisfies_property_type<my_pt>();
+}
 
 MODULE_RUN(AO2Atom) {
     using return_type = simde::atom_to_center_return_type;

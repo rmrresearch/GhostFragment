@@ -27,7 +27,7 @@ auto ao2center_mod(const simde::type::molecule& mol,
     using return_type = simde::atom_to_center_return_type;
     using subset_type = typename return_type::value_type;
 
-    return pluginplay::make_lambda<simde::AtomToCenter>(
+    return pluginplay::make_lambda<simde::AtomToAO>(
       [=](auto&& mol_in, auto&& aos_in) {
           REQUIRE(mol_in == mol);
           REQUIRE(aos_in == bs);
@@ -40,9 +40,9 @@ auto ao2center_mod(const simde::type::molecule& mol,
 }
 } // namespace
 
-TEST_CASE("AOSystem") {
+TEST_CASE("NucleiAO") {
     auto mm  = testing::initialize();
-    auto mod = mm.at("AOSystem Partition");
+    auto mod = mm.at("Nuclei-AO Partition");
 
     using return_type = ghostfragment::type::fragmented_mols_and_aos;
 
@@ -54,7 +54,7 @@ TEST_CASE("AOSystem") {
 
             mod.change_submod("Fragmenter", frag_mod(mol));
             mod.change_submod("Atom to Center", ao2center_mod(mol, bs));
-            auto [rv] = mod.run_as<simde::FragmentedAOSystem>(pair);
+            auto [rv] = mod.run_as<simde::FragmentedNucleiAO>(pair);
 
             return_type corr(pair);
             for(std::size_t i = 0; i < nwaters; ++i) {

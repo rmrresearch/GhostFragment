@@ -11,7 +11,7 @@ TEST_CASE("AO2Atom") {
         SECTION(std::to_string(nwaters) + " waters") {
             auto water       = testing::water(nwaters);
             auto bs          = testing::sto3g(water).basis_set();
-            const auto& [rv] = mod.run_as<simde::AtomToCenter>(water, bs);
+            const auto& [rv] = mod.run_as<simde::AtomToAO>(water, bs);
 
             // Our testing funtions add the centers in order; so atom i's AOs
             // are the i-th set of AOs
