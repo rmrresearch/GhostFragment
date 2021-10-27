@@ -39,6 +39,7 @@ inline auto water(std::size_t N = 1) {
     return rv;
 }
 
+/// Creates an STO-3G basis set for the provided molecule (assumed to be waters)
 inline auto sto3g(const simde::type::molecule& mol) {
     using vector_t = std::vector<double>;
     using namespace libchemist;
@@ -71,6 +72,24 @@ inline auto sto3g(const simde::type::molecule& mol) {
         bs.add_center(c);
     }
     return simde::type::ao_space{bs};
+}
+
+inline auto water_ao_pairs(std::size_t N) {
+    const auto water_N = water(N);
+    const auto aos_N   = sto3g(water_N).basis_set();
+    const auto pair    = std::make_tuple(water_N, aos_N);
+    using return_type  = ghostfragment::type::fragmented_mols_and_aos;
+
+    return_type pairs(pair);
+    for(std::size_t i = 0; i < N; ++i) {
+        auto new_subset = pairs.new_subset();
+        for(std::size_t j = 0; j < 3; ++j) {
+            std::get<0>(new_subset).insert(3 * i + j);
+            std::get<1>(new_subset).insert(3 * i + j);
+        }
+        pairs.insert(std::move(new_subset));
+    }
+    return pairs;
 }
 
 } // namespace testing

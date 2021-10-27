@@ -42,7 +42,7 @@ auto ao2center_mod(const simde::type::molecule& mol,
 
 TEST_CASE("NucleiAO") {
     auto mm  = testing::initialize();
-    auto mod = mm.at("Nuclei-AO Partition");
+    auto mod = mm.at("Nuclei-AO Fragmenter");
 
     using return_type = ghostfragment::type::fragmented_mols_and_aos;
 
