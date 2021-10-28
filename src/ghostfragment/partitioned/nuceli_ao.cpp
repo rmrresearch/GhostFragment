@@ -1,10 +1,11 @@
-#include "ghostfragment/types.hpp"
+#include "ghostfragment/property_types/subset_map.hpp"
 #include "partitioned.hpp"
+
+using namespace ghostfragment::pt;
 
 namespace ghostfragment::partitioned {
 
-using my_pt          = simde::FragmentedNucleiAO;
-using frag_pt        = simde::FragmentedMolecule;
+using my_pt          = Frag2AO;
 using atom2center_pt = simde::AtomToAO;
 
 const auto mod_desc = R"(
@@ -27,40 +28,30 @@ results of the two submodules to associate each fragment with an AO basis set.
 MODULE_CTOR(NucleiAO) {
     satisfies_property_type<my_pt>();
 
-    add_submodule<frag_pt>("Fragmenter");
     add_submodule<atom2center_pt>("Atom to Center");
 }
 
 MODULE_RUN(NucleiAO) {
-    using return_type = type::fragmented_mols_and_aos;
-
-    const auto& [mol_ao_pair] = my_pt::unwrap_inputs(inputs);
-    const auto& mol           = std::get<0>(mol_ao_pair);
-    const auto& aos           = std::get<1>(mol_ao_pair);
-
-    // Step 1: Fragments
-    const auto& [frags] = submods.at("Fragmenter").run_as<frag_pt>(mol);
+    const auto& [frags, aos] = my_pt::unwrap_inputs(inputs);
+    const auto& mol          = frags.object();
 
     // Step 2: Map atoms to AOs
     const auto& [atom_ao] =
       submods.at("Atom to Center").run_as<atom2center_pt>(mol, aos);
 
-    // Step 3: Apply basis functions to fragments
-    return_type frags_and_aos(mol_ao_pair);
-
+    typename Frag2AOTraits::fos_value_type fragged_aos(aos);
+    typename Frag2AOTraits::result_type frag2aos;
+    // Step 3: Apply basis functions to fragment
     for(const auto& fragi : frags) {
-        auto new_set = frags_and_aos.new_subset();
+        auto new_set = fragged_aos.new_subset();
         for(auto atomi : fragi) {
-            std::get<0>(new_set).insert(atomi);
-            for(auto centeri : atom_ao.at(atomi)) {
-                std::get<1>(new_set).insert(centeri);
-            }
+            for(auto centeri : atom_ao.at(atomi)) new_set.insert(centeri);
         }
-        frags_and_aos.insert(std::move(new_set));
+        frag2aos.emplace(fragi, std::move(new_set));
     }
 
     auto rv = results();
-    return my_pt::wrap_results(rv, frags_and_aos);
+    return my_pt::wrap_results(rv, frag2aos);
 }
 
 } // namespace ghostfragment::partitioned

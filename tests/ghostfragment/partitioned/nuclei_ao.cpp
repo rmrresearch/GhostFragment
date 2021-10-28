@@ -1,24 +1,21 @@
 #include "../test_ghostfragment.hpp"
 
+using namespace ghostfragment::pt;
+
 namespace {
 // Module assuming atoms [3*i, 3 * i + 3) are the atoms in fragment i
 auto frag_mod(const simde::type::molecule& mol) {
-    using return_type = ghostfragment::type::fragmented_molecule;
-    return pluginplay::make_lambda<simde::FragmentedMolecule>(
-      [=](auto&& mol_in) {
-          REQUIRE(mol_in == mol);
-          return_type rv(mol);
-          auto new_set = rv.new_subset();
-          for(std::size_t i = 0, j = 1; i < mol.size(); ++i, ++j) {
-              new_set.insert(i);
-              if(j == 3) {
-                  rv.insert(new_set);
-                  new_set = rv.new_subset();
-                  j       = 0; // set it to 0 b/c loop will increment it to 1
-              }
-          }
-          return rv;
-      });
+    libchemist::set_theory::FamilyOfSets<simde::type::molecule> rv(mol);
+    auto new_set = rv.new_subset();
+    for(std::size_t i = 0, j = 1; i < mol.size(); ++i, ++j) {
+        new_set.insert(i);
+        if(j == 3) {
+            rv.insert(new_set);
+            new_set = rv.new_subset();
+            j       = 0; // set it to 0 b/c loop will increment it to 1
+        }
+    }
+    return rv;
 }
 
 // Module assuming atom i's AOs are center i
@@ -44,28 +41,21 @@ TEST_CASE("NucleiAO") {
     auto mm  = testing::initialize();
     auto mod = mm.at("Nuclei-AO Fragmenter");
 
-    using return_type = ghostfragment::type::fragmented_mols_and_aos;
+    using return_type = typename Frag2AOTraits::result_type;
 
     for(std::size_t nwaters = 0; nwaters < 4; ++nwaters) {
         SECTION(std::to_string(nwaters) + " waters") {
-            auto mol  = testing::water(nwaters);
-            auto bs   = testing::sto3g(mol).basis_set();
-            auto pair = std::make_tuple(mol, bs);
+            auto mol   = testing::water(nwaters);
+            auto bs    = testing::sto3g(mol).basis_set();
+            auto frags = frag_mod(mol);
 
-            mod.change_submod("Fragmenter", frag_mod(mol));
             mod.change_submod("Atom to Center", ao2center_mod(mol, bs));
-            auto [rv] = mod.run_as<simde::FragmentedNucleiAO>(pair);
+            auto [rv] = mod.run_as<Frag2AO>(frags, bs);
 
-            return_type corr(pair);
-            for(std::size_t i = 0; i < nwaters; ++i) {
-                auto new_subset = corr.new_subset();
-                for(std::size_t j = 0; j < 3; ++j) {
-                    std::get<0>(new_subset).insert(3 * i + j);
-                    std::get<1>(new_subset).insert(3 * i + j);
-                }
-                corr.insert(std::move(new_subset));
+            REQUIRE(rv.size() == nwaters);
+            for(const auto& [key, value] : rv) {
+                for(const auto& keyi : key) { REQUIRE(value.count(bs[keyi])); }
             }
-            REQUIRE(rv == corr);
         }
     }
 }
