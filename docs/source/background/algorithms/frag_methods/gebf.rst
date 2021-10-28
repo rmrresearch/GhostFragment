@@ -1,10 +1,10 @@
-#############################################
-Generalized Energy Based Fragmentation (GEBF)
-#############################################
+##########################
+GEBF Fragmentation Methods
+##########################
 
 .. |zeta| replace:: :math:`\zeta`
-.. |g| replace:: :math:t:`g`
-.. |Fg| replace:: :math:t:`F_g`
+.. |g| replace:: :math:`g`
+.. |Fg| replace:: :math:`F_g`
 
 
 With the original GEBF fragmentation method, :cite:t:`Li2007` presented a

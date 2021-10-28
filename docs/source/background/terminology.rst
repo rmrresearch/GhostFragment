@@ -8,8 +8,19 @@ There are a lot of existing fragment-based methods. Many of these methods have
 coined their own terms for similar concepts. In order to provide a unified
 description of these methods we have settled on the following terminology.
 
+dimer
+   A subsystem made by taking the union of two monomers
+
 fragment
    The inputs to the MBE and GMBE. Fragments are sets of pseudoatoms.
+
+monomer
+   Same as fragment, but preferred when subsystems are being distinguished by
+   numerical prefix. *i.e.*, we use monomer, and not fragment, when we are also
+   talking about dimers, trimers, *etc.*  
+
+n-mer
+   The generalization of monomer, dimer, *etc.* to the union of |n| fragments.
 
 pseudoatom
    In fragmenting the supersystem there are some "most fundamental" units, 

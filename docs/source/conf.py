@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-#
-# Configuration file for the Sphinx documentation builder.
-#
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
 
 import os
 
@@ -43,7 +37,8 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.autosectionlabel',
     'sphinx_togglebutton',
-    'sphinxcontrib.bibtex'
+    'sphinxcontrib.bibtex',
+    'sphinx_rtd_theme'
 ]
 bibtex_bibfiles = ['refs.bib']
 bibtex_reference_style = "super"

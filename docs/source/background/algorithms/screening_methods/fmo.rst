@@ -27,7 +27,7 @@ approximated by:
 FMO04 Screening
 ***************
 
-In the original formulation of three-body FMO :cite:t:`Fedorov_2004`, the FMO00
+In the original formulation of three-body FMO :cite:t:`Fedorov_2004a`, the FMO00
 screening procedure is extended to three-body terms. Instead of one shortest
 inter-atomic distance we now have three, one for each pair of monomers. The 
 FMO04 screening method screens out a trimer if the **second** smallest distance 

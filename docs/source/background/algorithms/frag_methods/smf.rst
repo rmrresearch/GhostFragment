@@ -2,14 +2,15 @@
 Systematic Molecular Fragmentation Fragmentation Method
 #######################################################
 
+.. |i| replace:: :math:`i`
 .. |l|  replace:: :math:`\ell`
 .. |A0| replace:: :math:`A_0`
 .. |A1| replace:: :math:`A_1`
 .. |A1p| replace:: :math:`A_1'`
 .. |A2| replace:: :math:`A_2`
 .. |A2p| replace:: :math:`A_2'`
-.. |Al| replace:: :math:`A_{\ell -1}`
-.. |Alp| replace:: :math:`A_{\ell - 1}'`
+.. |Al1| replace:: :math:`A_{\ell -1}`
+.. |Al1p| replace:: :math:`A_{\ell - 1}'`
 .. |Al| replace:: :math:`A_\ell`
 .. |Alp| replace:: :math:`A_\ell'`
 .. |Bi| replace:: :math:`B_i`

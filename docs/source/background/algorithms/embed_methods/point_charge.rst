@@ -3,12 +3,34 @@ Point Charge Embedding
 ######################
 
 .. |Ai| replace:: :math:`A_i`
+.. |Qi| replace:: :math:`Q_i`
 .. |Fi| replace:: :math:`F_i`
+.. |n|  replace:: :math:`n`
 
 *************
 Non-Iterative
 *************
 
+EE-MBE-A
+========
+
+One of two charge embedding schemes proposed by :cite:t:`Dahlke2006` for the 
+EE-MBE method. 
+
+#. Compute charges for the supersystem
+#. Let |Qi| be the charge of atom :math:`i`, |Ai|
+#. For each |n|-mer, loop over atoms in the supersystem. If |Ai| is not in the
+   |n|-mer, place |Qi| at the location of |Ai|
+
+EE-MBE-B
+========
+
+The second embedding scheme proposed by :cite:t:`Dahlke2006`. 
+
+#. Compute charges for each monomer
+#. Let |Qi| be the charge of atom :math:`i`, |Ai|
+#. For each |n|-mer, loop over atoms in the supersystem. If |Ai| is not in the
+   |n|-mer, place |Qi| at the location of |Ai|
 
 
 *********
