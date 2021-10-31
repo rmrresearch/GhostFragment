@@ -23,7 +23,8 @@ __pycache__
 venv/
 docs/venv/
 
-# This is where Jupyter/IPython store backup files
+# These are where Python and Jupyter put files
+__pycache__/
 .ipynb_checkpoints/
 
 # These are common build directory names

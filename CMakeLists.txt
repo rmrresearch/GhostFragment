@@ -15,11 +15,11 @@ nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/src")
 option(BUILD_TESTING "Should we build the tests?" OFF)
 
 cpp_find_or_build_dependency(
-    property_types
-    URL github.com/NWChemEx-Project/PropertyTypes
+    simde
+    URL github.com/NWChemEx-Project/SimDE
     PRIVATE TRUE
-    BUILD_TARGET property_types
-    FIND_TARGET nwx::property_types
+    BUILD_TARGET simde
+    FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
 )
 
@@ -27,7 +27,7 @@ cpp_add_library(
     ${CMAKE_PROJECT_NAME}
     SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/src/${CMAKE_PROJECT_NAME}"
     INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include/${CMAKE_PROJECT_NAME}"
-    DEPENDS nwx::property_types
+    DEPENDS nwx::simde
 )
 
 if("${BUILD_TESTING}")

@@ -1,8 +1,15 @@
 #pragma once
-#include <property_types/connectivity.hpp>
+#include "ghostfragment/property_types/subset_map.hpp"
+#include "ghostfragment/types.hpp"
+#include <simde/simde.hpp>
 
 namespace ghostfragment::pt {
 
-using connectivity = property_types::Connectivity;
+using frag_traits = simde::FragmentedTraits<simde::type::molecule>;
 
-}
+using nmer_traits = simde::FragmentedTraits<typename frag_traits::return_type>;
+
+/// Property type for a module which computes N-Mers
+using NMers = simde::Fragmented<typename nmer_traits::input_type>;
+
+} // namespace ghostfragment::pt

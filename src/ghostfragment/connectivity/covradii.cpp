@@ -1,9 +1,9 @@
-#include "../modules.hpp"
+#include "connectivity.hpp"
 #include "distance.hpp"
-#include "ghostfragment/property_types/property_types.hpp"
+#include <simde/simde.hpp>
 #include <utilities/iter_tools/combinations.hpp>
 
-namespace ghostfragment {
+namespace ghostfragment::connectivity {
 namespace detail_ {
 
 /// TODO: This should go into ReferenceData
@@ -31,7 +31,7 @@ const auto mod_desc = R"(
 Connectivity Table via Covalent Radii
 -------------------------------------
 
-Let :math:`r_{ij}` be the distance between the :math:`i`-th and :math:`j`-th 
+Let :math:`r_{ij}` be the distance between the :math:`i`-th and :math:`j`-th
 nucleus, and :math:`\sigma_{k}` be the covalent radius of nucleus :math:`k` then
 this module considers the :math:`i` and :math:`j`-th nuclui to be bonded if:
 
@@ -39,45 +39,46 @@ this module considers the :math:`i` and :math:`j`-th nuclui to be bonded if:
 
   r_{ij} \le \left(1 + \tau\right)\left(\sigma_{i} + \sigma_{j}\right)
 
-where :math:`r_{ij}` can be no more than :math:`1+\tau` times larger than  
+where :math:`r_{ij}` can be no more than :math:`1+\tau` times larger than
 :math:`\sigma_{i} + \sigma_{j}` for :math:`i` and :math:`j` to be bonded. For
 example, for :math:`tau=1` :math:`r_{ij}` is allowed to be two times larger
 than the distance predicted by the covalent radii.
 )";
 
 const auto tau_desc = R"(
-How much larger the actual distance can be compared to the predicted distance 
+How much larger the actual distance can be compared to the predicted distance
 (as a ratio).
 )";
 
 MODULE_CTOR(CovRadii) {
     description(mod_desc);
-    satisfies_property_type<pt::connectivity>();
+    satisfies_property_type<simde::Connectivity>();
     add_input<double>("tau").set_description(tau_desc).set_default(0.10);
 }
 
 MODULE_RUN(CovRadii) {
-    const auto& [mol]     = pt::connectivity::unwrap_inputs(inputs);
+    const auto& [mol]     = simde::Connectivity::unwrap_inputs(inputs);
     const auto tau        = inputs.at("tau").value<double>();
     const auto tau_plus_1 = tau + 1.0;
     const auto natoms     = mol.size();
-    property_types::type::connectivity_table ct(mol.size());
+    simde::type::connectivity_table ct(mol.size());
 
     using size_type = typename std::decay_t<decltype(mol)>::size_type;
+    using ghostfragment::detail_::atomic_distance;
     for(size_type i = 0; i < natoms; ++i) {
         const auto atom_i  = mol[i];
         const auto sigma_i = detail_::cov_radii[atom_i.Z() - 1];
         for(size_type j = i + 1; j < natoms; ++j) {
             const auto atom_j   = mol[j];
             const auto sigma_j  = detail_::cov_radii[atom_j.Z() - 1];
-            const auto rij      = detail_::atomic_distance(atom_i, atom_j);
+            const auto rij      = atomic_distance(atom_i, atom_j);
             const auto max_bond = tau_plus_1 * (sigma_i + sigma_j);
             if(rij <= max_bond) ct.add_bond(i, j);
         }
     }
 
     auto rv = results();
-    return pt::connectivity::wrap_results(rv, ct);
+    return simde::Connectivity::wrap_results(rv, ct);
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::connectivity
