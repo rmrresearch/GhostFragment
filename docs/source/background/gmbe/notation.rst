@@ -44,7 +44,7 @@ various |n|-mer sets. We denote the subset of |nmers| consisting of the first
 Given a set |sets|, the powerset of |sets| (the set of all combinations that can
 be formed from |sets|), is denoted as |powersets|. Of more interest to us 
 presently are the subsets of |powersets| which result from taking all 
-combinations involving |k| elements of |S|, which we denote as |powersetsk|.
+combinations involving |k| elements of |sets|, which we denote as |powersetsk|.
 Finally we define the short-hand notation for the intersection of all elements
 in |sets|:
 

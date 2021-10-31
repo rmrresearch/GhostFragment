@@ -68,7 +68,7 @@ fragments and |EIJ|, |EIK|, |EJK|, |EIJK|, *etc* are the energies of the
 nmers
 
 The proof of these equations is somewhat involved and is presented on another
-page :ref:`gmbe_proof`.
+page :ref:`gmbe-proof`.
 
       
 

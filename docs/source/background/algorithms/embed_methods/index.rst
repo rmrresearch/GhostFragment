@@ -14,3 +14,4 @@ the rest of the system.
    :caption: Contents:
 
    density
+   point_charge
