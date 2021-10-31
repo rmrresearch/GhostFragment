@@ -1,35 +1,50 @@
-#include "../modules.hpp"
-#include <simde/simde.hpp>
+// #include "energy.hpp"
+// #include "ghostfragment/property_types/property_types.hpp"
+// #include <simde/simde.hpp>
 
-namespace ghostfragment {
+// namespace ghostfragment::energy {
+// namespace {
 
-using pt      = simde::AOEnergy;
-using frag_pt = simde::FragmentedMolecule;
-using nmer_pt = simde::NMers;
+// constexpr auto module_desc = R"""(
+// ########
+// Synopsis
+// ########
 
-// auto assign_aos(const simde::type::ao_space& aos, const auto&& frags) {
-//     auto partioned_basis;
+// Driver routine for computing the energy of a chemical system using a traditional
+// many-body expansion.
+// )""";
 
 // }
 
-MODULE_CTOR(MBE) {
-    satisfies_property_type<pt>();
+// using my_pt   = simde::AOEnergy;
+// using frag_pt = simde::FragmentedMolecule;
+// using nmer_pt = simde::NMers;
 
-    add_submodule<frag_pt>("Fragmenter");
-    add_submodule<nmer_pt>("NMers");
-}
+// MODULE_CTOR(MBE) {
+//     description(module_desc);
 
-MODULE_RUN(MBE) {
-    auto [aos, sys] = pt::unwrap_inputs(inputs);
+//     satisfies_property_type<my_pt>();
 
-    auto [frags] = submods.at("Fragmenter").run_as<frag_pt>(sys.molecule());
-    auto [nmers] = submods.at("NMers").run_as<nmer_ptr>(frags);
-    // auto [frag2aos] =;
-    // auto [sys_aos]
+//     add_submodule<frag_pt>("Fragmenter");
+//     // add_submodule<nmer_pt>("NMers");
+// }
 
-    double E = 0.0;
-    auto rv  = results();
-    return pt::wrap_results(rv, E);
-}
+// MODULE_RUN(MBE) {
+//     auto [aos, sys] = my_pt::unwrap_inputs(inputs);
+//     const auto& mol = sys.molecule();
 
-} // namespace ghostfragment
+//     auto& frag_mod      = submods.at("Fragmenter");
+//     const auto& [frags] = frag_mod.run_as<frag_pt>(mol);
+
+//     // auto [cs, el_per_nmer, nmers] = nmer_mod.run_as<nmer_pt>(el_per_frag,
+//     // frags);
+//     // auto [nmers] = submods.at("NMers").run_as<nmer_pt>(frags);
+
+//     // auto [sys_aos]
+
+//     double E = 0.0;
+//     auto rv  = results();
+//     return my_pt::wrap_results(rv, E);
+// }
+
+// } // namespace ghostfragment::energy

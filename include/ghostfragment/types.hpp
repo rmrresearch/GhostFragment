@@ -15,6 +15,10 @@ using fragmented = libchemist::set_theory::FamilyOfSets<T>;
 /// Type of a partitioned molecule
 using fragmented_molecule = fragmented<simde::type::molecule>;
 
+/// Type of a partitioned pairs of molecules and AO basis sets
+using fragmented_mols_and_aos =
+  fragmented<std::tuple<simde::type::molecule, simde::type::ao_basis_set>>;
+
 /// Type of the nmers
 using nmers = fragmented<fragmented_molecule>;
 

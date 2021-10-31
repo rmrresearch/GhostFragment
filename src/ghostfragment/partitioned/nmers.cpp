@@ -1,9 +1,10 @@
-#include "../modules.hpp"
+#include "ghostfragment/property_types/property_types.hpp"
 #include "ghostfragment/types.hpp"
+#include "partitioned.hpp"
 #include <simde/simde.hpp>
 #include <utilities/iter_tools/combinations.hpp>
 
-namespace ghostfragment {
+namespace ghostfragment::partitioned {
 
 using n_type = std::size_t;
 
@@ -14,13 +15,13 @@ NMers
 =====
 
 Given a set of input fragments, this module will take unions of the input
-fragments to generate **all** fragments, dimers, trimers, on up to |n|-mers 
-where the value of |n| is controlled by the user. This module works with both 
+fragments to generate **all** fragments, dimers, trimers, on up to |n|-mers
+where the value of |n| is controlled by the user. This module works with both
 disjoint and intersecting fragments; however, for non-disjoint fragments the
 nmers may not be unique.
 )";
 
-using pt = simde::NMers;
+using pt = ghostfragment::pt::NMers;
 
 MODULE_CTOR(NMers) {
     description(mod_desc);
@@ -58,4 +59,4 @@ MODULE_RUN(NMers) {
     return pt::wrap_results(rv, nmers);
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::partitioned

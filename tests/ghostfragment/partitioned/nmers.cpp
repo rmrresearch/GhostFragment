@@ -3,7 +3,7 @@
 using frags_type = ghostfragment::type::fragmented_molecule;
 using nmers_type = ghostfragment::type::nmers;
 using molecule   = simde::type::molecule;
-using my_pt      = simde::NMers;
+using my_pt      = ghostfragment::pt::NMers;
 
 TEST_CASE("NMers") {
     auto mm   = testing::initialize();
