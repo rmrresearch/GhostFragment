@@ -11,3 +11,4 @@ pertaining to basis-set superposition corrections and fragment-based methods.
    
    background/index
    references
+   C++ API <https://rmrresearch.github.io/GhostFragment/cxx_api/index.html>

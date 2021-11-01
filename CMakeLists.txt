@@ -9,7 +9,7 @@ set(
 
 include(get_cpp)
 include(nwx_cxx_api_docs)
-nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/src")
+nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 ### Options ###
 option(BUILD_TESTING "Should we build the tests?" OFF)
