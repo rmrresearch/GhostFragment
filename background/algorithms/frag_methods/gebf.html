@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GEBF Fragmentation Methods &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Other Fragmentation Algorithms" href="other.html" />
+    <link rel="prev" title="Systematic Molecular Fragmentation Fragmentation Method" href="smf.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> GhostFragment
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gmbe/index.html">GMBE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Fragmentation Algorithms</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mta.html">Molecular Tailoring Approach Fragmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation Fragmentation Method</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">GEBF Fragmentation Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other.html">Other Fragmentation Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cap_methods/index.html">Capping Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../screening_methods/index.html">Screening Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
+          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
+          <li><a href="index.html">Fragmentation Algorithms</a> &raquo;</li>
+      <li>GEBF Fragmentation Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/background/algorithms/frag_methods/gebf.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="gebf-fragmentation-methods">
+<h1>GEBF Fragmentation Methods<a class="headerlink" href="#gebf-fragmentation-methods" title="Permalink to this headline"></a></h1>
+<p>With the original GEBF fragmentation method, <span id="id1">Li <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id19" title="Wei Li, Shuhua Li, and Yuansheng Jiang. Generalized energy-based fragmentation approach for computing the ground-state energies and properties of large molecules. The Journal of Physical Chemistry A, 111(11):2193–2199, 2007.">15</a></sup></span> presented a
+fragmentation method. Using our terminology, this method is to:</p>
+<ol class="arabic simple">
+<li><p>Define pseudoatoms</p>
+<ul class="simple">
+<li><p>In the orignal presentation no general criteria was specified; however, it
+is assumed that for molecular clusters pseudoatoms are individual
+molecules.</p></li>
+</ul>
+</li>
+<li><p>For each pseudoatom, define a fragment which is the pseudoatom and all
+pseudoatoms close to it.</p>
+<ul class="simple">
+<li><p>The original method uses two criteria for “close”, one for covalent systems
+and one for molecular clusters.</p></li>
+<li><p>For covalent systems two pseudoatoms are close if they are bonded either
+covalentally or with a hydrogen bond</p></li>
+<li><p>For clusters pseudoatoms within some distance <span class="math notranslate nohighlight">\(\zeta\)</span> are considered close
+(default is 3 Angstroms)</p></li>
+</ul>
+</li>
+<li><p>Cap fragments</p>
+<ul class="simple">
+<li><p>Original method specified with hydrogen atoms.</p></li>
+</ul>
+</li>
+<li><p>Remove fragments which are subsets of other fragments</p></li>
+<li><p>Determine intersections</p></li>
+</ol>
+<p>Of note an algorithm for assigning multiplicities to intersections was also
+presented namely:</p>
+<ul class="simple">
+<li><p>Assume largest fragment contains <span class="math notranslate nohighlight">\(n\)</span> pseudoatoms.</p></li>
+<li><p>Look for a set of <span class="math notranslate nohighlight">\(n-1\)</span> pseudoatoms which appears in more than one
+fragment. The multiplicity of this intersection is <span class="math notranslate nohighlight">\(1-k\)</span>, where :math`k`
+is the number of fragments it appears in.</p></li>
+<li><p>Repeat the previous step for sets of :math`n-2, n-3, ldots, 1` pseudoatoms</p></li>
+</ul>
+<p>The presented fragmentation method contained an additional step meant to include
+some two-body interactions, namely dimers were considered if the distance
+between them is less than a threshold. The description presented implies that
+the fragments comprising the dimer should be disjoint, although this is not
+stated.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="smf.html" class="btn btn-neutral float-left" title="Systematic Molecular Fragmentation Fragmentation Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="other.html" class="btn btn-neutral float-right" title="Other Fragmentation Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

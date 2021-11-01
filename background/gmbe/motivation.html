@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motivating the Induction Hypothesis &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="GMBE Notation" href="notation.html" />
+    <link rel="prev" title="GMBE" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> GhostFragment
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">GMBE</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Motivating the Induction Hypothesis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#one-fragment">One fragment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-fragments">Two fragments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#three-fragments">Three fragments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#four-fragments">Four Fragments</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notation.html">GMBE Notation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="proof.html">GMBE Proof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gmbe.html">Generalized Many-Body Expansion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/index.html">Algorithms for Fragment-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Theoretical Background</a> &raquo;</li>
+          <li><a href="index.html">GMBE</a> &raquo;</li>
+      <li>Motivating the Induction Hypothesis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/background/gmbe/motivation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="motivating-the-induction-hypothesis">
+<h1>Motivating the Induction Hypothesis<a class="headerlink" href="#motivating-the-induction-hypothesis" title="Permalink to this headline"></a></h1>
+<p>This page motivates the induction hypothesis for the GMBE by writing out the
+first several scenarios, <em>i.e.</em>:</p>
+<ul class="simple">
+<li><p>one-body expansion with one fragment,</p></li>
+<li><p>one- and two-body expansions with two fragments,</p></li>
+<li><p>one-, two-, and three-body expansions with three fragments, and</p></li>
+<li><p>one-, two-, three-, and four-body expansions with four fragments.</p></li>
+</ul>
+<p>Following the notation adopted throughout this documentation, <span class="math notranslate nohighlight">\(E\)</span> is the energy
+of the system we are attempting to approximate with the GMBE.</p>
+<div class="section" id="one-fragment">
+<h2>One fragment<a class="headerlink" href="#one-fragment" title="Permalink to this headline"></a></h2>
+<p>For a single fragment, <span class="math notranslate nohighlight">\(I\)</span>, the GMBE is trivial:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Enm}[2]{E^{\left(#1\right)}_{#2}}
+\newcommand{\Ei}{E_{I}}\\E = \Enm{1}{1} = \Ei\end{aligned}\end{align} \]</div>
+<p>Here, <span class="math notranslate nohighlight">\(E\)</span> is the energy of the entire system, <span class="math notranslate nohighlight">\(E^{\left(n\right)}_m\)</span> is the <span class="math notranslate nohighlight">\(n\)</span>-body
+approximation to the energy of the entire system when the system is comprised of
+<span class="math notranslate nohighlight">\(m\)</span> fragments, and <span class="math notranslate nohighlight">\(E_{I}\)</span> is the energy of <span class="math notranslate nohighlight">\(I\)</span>. To make contact with the
+forthcoming equations we define the intersection-corrected energy of <span class="math notranslate nohighlight">\(I\)</span>, <span class="math notranslate nohighlight">\(\mathcal{E}_{I}\)</span>,
+as:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\e}[1]{\mathcal{E}_{#1}}
+\newcommand{\ei}{\e{I}}\\\ei \equiv \Ei\end{aligned}\end{align} \]</div>
+</div>
+<div class="section" id="two-fragments">
+<h2>Two fragments<a class="headerlink" href="#two-fragments" title="Permalink to this headline"></a></h2>
+<p>For two fragments we have a one-body approximation to the GMBE as well as the
+two-body GMBE.</p>
+<div class="section" id="one-body">
+<h3>One-body<a class="headerlink" href="#one-body" title="Permalink to this headline"></a></h3>
+<p>From the IEP we have:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Ej}{E_{J}}
+\newcommand{\Eicj}{E_{I\cap J}}\\E \approx \Enm{1}{2} = \Ei + \Ej - \Eicj\end{aligned}\end{align} \]</div>
+<p>Writing this in terms of the one-body, one-fragment approxmation:</p>
+<div class="math notranslate nohighlight">
+\[\Enm{1}{2} = \Enm{1}{1} + \Ej - \Eicj\]</div>
+<p>Defining <span class="math notranslate nohighlight">\(\mathcal{E}_{J}\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\ej}{\e{J}}\\\ej \equiv \Ej - \Eicj\end{aligned}\end{align} \]</div>
+<p>this becomes:</p>
+<div class="math notranslate nohighlight">
+\[\Enm{1}{2} = \Enm{1}{1} + \ej = \ei + \ej\]</div>
+</div>
+<div class="section" id="two-body">
+<h3>Two-body<a class="headerlink" href="#two-body" title="Permalink to this headline"></a></h3>
+<p>For two fragments, the dimer is the entire system and we trivially have:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Eij}{E_{IJ}}\\E = \Enm{2}{2} = \Eij\end{aligned}\end{align} \]</div>
+<p>The two body interaction of fragments I with J, <span class="math notranslate nohighlight">\(\Delta E_{IJ}\)</span>, is given by the
+difference in energy between the two-body and one-body approximations:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\DE}[1]{\Delta E_{#1}}
+\newcommand{\DEij}{\DE{IJ}}\\\DEij \equiv \Enm{2}{2}-\Enm{1}{2} = \Eij - \ei - \ej\end{aligned}\end{align} \]</div>
+<p>Using <span class="math notranslate nohighlight">\(\Delta E_{IJ}\)</span>, we can rewrite the two-body GMBE as:</p>
+<div class="math notranslate nohighlight">
+\[E = \Enm{1}{2} + \DEij = \ei + \ej + \DEij\]</div>
+<p>Again to make-contact with the forthcoming equations we define an intersection-
+corrected two-body interaction, <span class="math notranslate nohighlight">\(\Delta E_{IJ}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\De}[1]{\Delta\mathcal{E}_{#1}}
+\newcommand{\Deij}{\De{IJ}}\\\Deij \equiv \DEij\end{aligned}\end{align} \]</div>
+<p>with which the final two-body, two-fragment GMBE is:</p>
+<div class="math notranslate nohighlight">
+\[E = \ei + \ej + \Deij\]</div>
+</div>
+</div>
+<div class="section" id="three-fragments">
+<h2>Three fragments<a class="headerlink" href="#three-fragments" title="Permalink to this headline"></a></h2>
+<p>For three fragments we now have one, two, and three-body approximations.</p>
+<div class="section" id="id1">
+<h3>One-body<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<p>From the IEP we have:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Ek}{E_{K}}
+\newcommand{\Eick}{E_{I\cap K}}
+\newcommand{\Ejck}{E_{J\cap K}}
+\newcommand{\Eicjck}{E_{I\cap J\cap K}}\\E \approx \Enm{1}{3} = \Ei + \Ej + \Ek - \Eicj - \Eick - \Ejck + \Eicjck\end{aligned}\end{align} \]</div>
+<p>In terms of the one-body, two-fragment approximation this becomes:</p>
+<div class="math notranslate nohighlight">
+\[\Enm{1}{3} = \Enm{1}{2} + \Ek - \Eick - \Ejck + \Eicjck\]</div>
+<p>Defining:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\ek}{\e{K}}\\\ek \equiv \Ek - \Eick - \Ejck + \Eicjck\end{aligned}\end{align} \]</div>
+<p>yields:</p>
+<div class="math notranslate nohighlight">
+\[\Enm{1}{3} = \Enm{1}{2} + \ek = \ei + \ej + \ek\]</div>
+</div>
+<div class="section" id="id2">
+<h3>Two-body<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<p>Using the IEP we get:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Eik}{E_{IK}}
+\newcommand{\Ejk}{E_{JK}}
+\newcommand{\Eijcik}{E_{IJ\cap IK}}
+\newcommand{\Eijcjk}{E_{IJ\cap JK}}
+\newcommand{\Eikcjk}{E_{IK\cap JK}}
+\newcommand{\Eijcikcjk}{E_{IJ\cap IK\cap JK}}\\E\approx \Enm{2}{3} = \Eij + \Eik + \Ejk -
+                      \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk\end{aligned}\end{align} \]</div>
+<div class="math notranslate nohighlight">
+\[+E_{JI}+E_{KI}+E_{JK}-E_{\left(\left(\left(J\cap I\right)\cup I\right)\cup \left(\left(J\cap K\right)\cup \left(K\cap I\right)\right)\right)}-E_{\left(\left(\left(J\cap K\right)\cup \left(K\cap I\right)\right)\cup \left(J\cup \left(J\cap I\right)\right)\right)}-E_{\left(\left(\left(K\cap I\right)\cup \left(J\cap I\right)\right)\cup \left(\left(J\cap K\right)\cup K\right)\right)}+E_{\left(\left(\left(J\cap I\right)\cup I\right)\cup \left(\left(K\cap I\right)\cup \left(J\cap K\right)\right)\right)}\]</div>
+<p>The sum of the two-body interactions are given by the difference between the
+two-body and one-body approximations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Enm{2}{3}-\Enm{1}{3} =&amp; \Eij + \Eik + \Ejk -
+                      \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk -
+                      \left(\ei + \ej + \ek\right)\\
+                      =&amp; \Enm{2}{2}  + \Eik + \Ejk -
+                      \Eijcik - \Eijcjk - \Eikcjk + \Eijcikcjk - \ek\end{split}\]</div>
+<p>At this point we define intersection-corrected dimer energies according to:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\eij}{\e{IJ}}
+\newcommand{\eik}{\e{IK}}
+\newcommand{\ejk}{\e{JK}}\\\begin{split}\eik \equiv&amp; \Eik - \Eijcik\\
+          =&amp; \Eik - E_{I\cup\left(J\cap K\right)}\\
+\ejk \equiv&amp; \Ejk - \Eijcjk - \Eikcjk + \Eijcikcjk\\
+          =&amp; \Ejk - E_{J\cup\left(I\cap K\right)}
+                  - E_{K\cup\left(I\cap J\right)}
+                  + E_{I\cap J\cap K}\end{split}\end{aligned}\end{align} \]</div>
+<p>if we do this and try to write the two-body interactions in the “usual way” we
+get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Enm{2}{3} =&amp; \Enm{1}{3} + \Enm{2}{2} + \eik + \ejk - \ek\\
+           =&amp; \Enm{1}{3} + \Enm{2}{2} + \left(\eik - \ei - \ek\right) +
+              \left(\ejk - \ej -\ek\right) + \ei + \ej + \ek\end{split}\]</div>
+<p>The appearance of the intersection-corrected monomer energies is at first
+unexpected; however, note that for disjoint fragments:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\eij - \ei - \ej =&amp; \Eij - \Ei - \Ej\\
+\eik - \ei - \ek =&amp; \left(\Eik - \Ei\right) - \Ei -\Ek\\
+\ejk - \ej - \ek =&amp; \left(\Ejk - \Ej - \Ek\right) - \Ej - \Ek\end{split}\]</div>
+<p>That is to say, the intersection-corrected dimer energies already remove the
+energies of the previously seen monomers(i.e., with our ordering IJ is first, so
+when we consider IK, the intersection-correction removes the energy of I,
+similarly for JK, the intersection-correction removes the energies of J and K).
+We instead propose the following intersection-corrected interactions:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Deik}{\De{IK}}
+\newcommand{\Dejk}{\De{JK}}\\\begin{split}\Deij =&amp; \eij - \ei - \ej\\
+\Deik =&amp; \eik - \ek\\
+\Dejk =&amp; \ejk\end{split}\end{aligned}\end{align} \]</div>
+<p>which for disjoint fragments reduce to the usual two-body interactions. With
+these defitions we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Enm{2}{3} =&amp; \Enm{1}{3} + \Enm{2}{2} + \Deik + \ Dejk\\
+          =&amp; \ei + \ej + \ek + \Deij + \Deik + \Dejk\end{split}\]</div>
+</div>
+<div class="section" id="three-body">
+<h3>Three-body<a class="headerlink" href="#three-body" title="Permalink to this headline"></a></h3>
+<p>For three fragments we again obtain a trivial equation for the GMBE:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Eijk}{E_{IJK}}\\E = \Enm{3}{3} = \Eijk\end{aligned}\end{align} \]</div>
+<p>defining the three-body interaction as the difference in the three-body
+approximation and the two-body approximation we get:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Deijk}{\De{IJK}}\\\Deijk \equiv \Enm{3}{3} - \Enm{2}{3} =
+           \Eijk - \left(\ei + \ej + \ek + \Deij + \Deik + \Dejk\right)\end{aligned}\end{align} \]</div>
+<p>with which we can write the full GMBE as:</p>
+<div class="math notranslate nohighlight">
+\[E = \ei + \ej + \ek + \Deij + \Deik + \Dejk + \Deijk\]</div>
+</div>
+</div>
+<div class="section" id="four-fragments">
+<h2>Four Fragments<a class="headerlink" href="#four-fragments" title="Permalink to this headline"></a></h2>
+<div class="section" id="id3">
+<h3>One-body<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<p>Following the IEP we have:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\El}{E_L}
+\newcommand{\Eicl}{E_{I\cap L}}
+\newcommand{\Ejcl}{E_{J\cap L}}
+\newcommand{\Ekcl}{E_{K\cap L}}
+\newcommand{\Eicjcl}{E_{I\cap J\cap L}}
+\newcommand{\Eickcl}{E_{I\cap K\cap L}}
+\newcommand{\Ejckcl}{E_{J\cap K\cap L}}
+\newcommand{\Eicjckcl}{E_{I\cap J\cap K\cap L}}
+\newcommand{\el}{\e{L}}\\\begin{split}\Enm{1}{4} =&amp; \Ei + \Ej + \Ek + \El-\\
+            &amp; \Eicj - \Eick - \Eicl - \Ejck - \Ejcl - \Ekcl +\\
+            &amp; \Eicjck + \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl\end{split}\end{aligned}\end{align} \]</div>
+<p>In terms of the one-body, three-fragment approximation:</p>
+<div class="math notranslate nohighlight">
+\[\Enm{1}{4} = \Enm{1}{3} + \El - \Eicl - \Ejcl - \Ekcl +
+             \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl\]</div>
+<p>Defining:</p>
+<div class="math notranslate nohighlight">
+\[\el = \El - \Eicl - \Ejcl - \Ekcl + \Eicjcl + \Eickcl + \Ejckcl - \Eicjckcl\]</div>
+<p>We get:</p>
+<div class="math notranslate nohighlight">
+\[\Enm{1}{4} = \Enm{1}{3} + \el = \ei + \ej + \ek + \el\]</div>
+</div>
+<div class="section" id="id4">
+<h3>Two-body<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
+<p>We now have six dimers, so the IEP for two-body approximation has 63 terms. We
+jump right to the intersection-corrected dimer energies:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Eil}{E_{IL}}
+\newcommand{\Ejl}{E_{JL}}
+\newcommand{\Ekl}{E_{KL}}
+\newcommand{\eil}{\e{IL}}
+\newcommand{\ejl}{\e{JL}}
+\newcommand{\ekl}{\e{KL}}
+\newcommand{\Eijcil}{E_{IJ\cap IL}}
+\newcommand{\Eikcil}{E_{IK\cap IL}}
+\newcommand{\Ejkcil}{E_{JK\cap IL}}
+\newcommand{\Eijcikcil}{E_{IJ\cap IK\cap IL}}
+\newcommand{\Eijcjkcil}{E_{IJ\cap JK\cap IL}}
+\newcommand{\Eikcjkcil}{E_{IK\cap JK\cap IL}}
+\newcommand{\Eijcikcjkcil}{E_{IJ\cap IK\cap JK\cap IL}}
+\newcommand{\Eijcjl}{E_{IJ\cap JL}}
+\newcommand{\Eikcjl}{E_{IK\cap JL}}
+\newcommand{\Ejkcjl}{E_{JK\cap JL}}
+\newcommand{\Eilcjl}{E_{IL\cap JL}}
+\newcommand{\Eijcikcjl}{E_{IJ\cap IK\cap JL}}
+\newcommand{\Eijcjkcjl}{E_{IJ\cap JK\cap JL}}
+\newcommand{\Eijcilcjl}{E_{IJ\cap IL\cap JL}}
+\newcommand{\Eikcjkcjl}{E_{IK\cap JK\cap JL}}
+\newcommand{\Eikcilcjl}{E_{IK\cap IL\cap JL}}
+\newcommand{\Ejkcilcjl}{E_{JK\cap IL\cap JL}}
+\newcommand{\Eijcikcjkcjl}{E_{IJ\cap IK\cap JK\cap JL}}
+\newcommand{\Eijcikcjkcil}{E_{IJ\cap IK\cap IL\cap JL}}
+\newcommand{\Eijcjkcilcjl}{E_{IJ\cap JK\cap IL\cap JL}}
+\newcommand{\Eikcijcilcjl}{E_{IK\cap IJ\cap IL\cap JL}}
+\newcommand{\Eijcikcjkcilcjl}{E_{IJ\cap IK\cap JK\cap IL\cap JL}}
+\newcommand{\Eijckl}{E_{IJ\cap KL}}
+\newcommand{\Eikckl}{E_{IK\cap KL}}
+\newcommand{\Ejkckl}{E_{JK\cap KL}}
+\newcommand{\Eilckl}{E_{IL\cap KL}}
+\newcommand{\Ejlckl}{E_{JL\cap KL}}
+\newcommand{\Eijcikckl}{E_{IJ\cap IK\cap KL}}
+\newcommand{\Eijcjkckl}{E_{IJ\cap JK\cap KL}}
+\newcommand{\Eijcilckl}{E_{IJ\cap IL\cap KL}}
+\newcommand{\Eijcjlckl}{E_{IJ\cap JL\cap KL}}
+\newcommand{\Eikcjkckl}{E_{IK\cap JK\cap KL}}
+\newcommand{\Eikcilckl}{E_{IK\cap IL\cap KL}}
+\newcommand{\Eikcjlckl}{E_{IK\cap JL\cap KL}}
+\newcommand{\Ejkcilckl}{E_{JK\cap IL\cap KL}}
+\newcommand{\Ejkcjlckl}{E_{JK\cap JL\cap KL}}
+\newcommand{\Eilcjlckl}{E_{IL\cap JL\cap KL}}
+\newcommand{\Eijcikcjkckl}{E_{IJ\cap IK\cap JK\cap KL}}
+\newcommand{\Eijcikcilckl}{E_{IJ\cap IK\cap IL\cap KL}}
+\newcommand{\Eijcikcjlckl}{E_{IJ\cap IK\cap JL\cap KL}}
+\newcommand{\Eijcjkcilckl}{E_{IJ\cap JK\cap IL\cap KL}}
+\newcommand{\Eijcjkcjlckl}{E_{IJ\cap JK\cap IL\cap KL}}
+\newcommand{\Eijcilcjlckl}{E_{IJ\cap IL\cap JL\cap KL}}
+\newcommand{\Eikcjkcilckl}{E_{IK\cap JK\cap IL\cap KL}}
+\newcommand{\Eikcjkcjlckl}{E_{IK\cap JK\cap JL\cap KL}}
+\newcommand{\Eikcilcjlckl}{E_{IK\cap IL\cap JL\cap KL}}
+\newcommand{\Ejkcilcjlckl}{E_{JK\cap IL\cap JL\cap KL}}
+\newcommand{\Eijcikcjkcilckl}{E_{IJ\cap IK\cap JK\cap IL\cap KL}}
+\newcommand{\Eijcikcjkcjlckl}{E_{IJ\cap IK\cap JK\cap JL\cap KL}}
+\newcommand{\Eijcikcilcjlckl}{E_{IJ\cap IK\cap IL\cap JL\cap KL}}
+\newcommand{\Eijcjkcilcjlckl}{E_{IJ\cap JK\cap IL\cap JL\cap KL}}
+\newcommand{\Eikcjkcilcjlckl}{E_{IK\cap JK\cap IL\cap JL\cap KL}}
+\newcommand{\Eijcikcjkcilcjlckl}{E_{IJ\cap IK\cap JK\cap IL\cap JL\cap KL}}\\\begin{split}\eij =&amp; \Eij\\
+\eik =&amp; \Eik - \Eijcik\\
+     =&amp; \Eik - E_{I\cup\left(J\cap K\right)}\\
+\ejk =&amp; \Ejk -
+        \Eijcjk - \Eikcjk +
+        \Eijcikcjk\\
+     =&amp; \Ejk - E_{J\cup\left(I\cap K\right)} - E_{K\cup\left(I\cap J\right)}
+        + E_{I\cap J\cap K}\\
+\eil =&amp; \Eil -
+        \Eijcil - \Eikcil - \Ejkcil +
+        \Eijcikcil + \Eijcjkcil + \Eikcjkcil-\\
+      &amp;  \Eijcikcjkcil\\
+\ejl =&amp; \Ejl -
+        \Eijcjl - \Eikcjl - \Ejkcjl - \Eilcjl +
+        \Eijcikcjl + \Eijcjkcjl + \Eijcilcjl +\\
+      &amp;   \Eikcjkcjl + \Eikcilcjl + \Ejkcilcjl -
+        \Eijcikcjkcjl - \Eijcikcjkcjl - \\
+      &amp; \Eijcjkcilcjl - \Eikcijcilcjl + \Eijcikcjkcilcjl\\
+\ekl =&amp; \Ekl -
+        \Eijckl - \Eikckl - \Ejkckl - \Eilckl - \Ejlckl +
+        \Eijcikckl + \Eijcjkckl + \\
+      &amp;   \Eijcilckl + \Eijcjlckl + \Eikcjkckl + \Eikcilckl + \Eikcjlckl +
+          \Ejkcilckl + \\
+      &amp;   \Ejkcjlckl+ \Eilcjlckl -
+        \Eijcikcjkckl - \Eijcikcilckl - \Eijcikcjlckl - \\
+      &amp;   \Eijcjkcilckl -\Eijcjkcjlckl - \Eijcilcjlckl -
+          \Eikcjkcilckl - \Eikcjkcjlckl - \\
+      &amp;   \Eikcilcjlckl - \Ejkcilcjlckl +
+        \Eijcikcjkcilckl + \Eijcikcjkcjlckl + \\
+      &amp;   \Eijcikcilcjlckl + \Eijcjkcilcjlckl + \Eikcjkcilcjlckl -
+        \Eijcikcjkcilcjlckl\end{split}\end{aligned}\end{align} \]</div>
+<p>From which we define the intersection-corrected two-body interactions:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Deil}{\De{IL}}
+\newcommand{\Dejl}{\De{JL}}
+\newcommand{\Dekl}{\De{KL}}\\\begin{split}\Deij =&amp; \eij - \ei -\ej\\
+\Deik =&amp; \eik - \ek\\
+\Deil =&amp; \eil - \el\\
+\Dejk =&amp; \ejk\\
+\Dejl =&amp; \ejl\\
+\Dekl =&amp; \ekl\end{split}\end{aligned}\end{align} \]</div>
+<p>If the monomers are disjoint we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Deij =&amp; \left(\Eij\right) - \Ei - \Ej\\
+\Deik =&amp; \left(\Eik - \Ei\right) - \Ek\\
+\Deil =&amp; \left(\Eil - \Ei - \Ei + \Ei\right) - \El\\
+\Dejk =&amp; \left(\Ejk - \Ej - \Ek\right)\\
+\Dejl =&amp; \left(\Ejl - \Ej - \Ej - \El + \Ej\right)\\
+\Dekl =&amp; \left(\Ekl - \Ek - \Ek - \El - \El + \Ek + \El\right)\end{split}\]</div>
+<p>where we use parenthesis to show which terms arise from the
+intersection-corrected dimer energy as opposed to which terms arise from
+subtracting out the one-body approximation.</p>
+</div>
+<div class="section" id="id5">
+<h3>Three-Body<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
+<p>There are four possible trimers, so compared to the two-body case the equation
+is far simpler.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Eijl}{E_{IJL}}
+\newcommand{\Eikl}{E_{IKL}}
+\newcommand{\Ejkl}{E_{JKL}}
+\newcommand{\Eijkcijl}{E_{IJK\cap IJL}}
+\newcommand{\Eijkcikl}{E_{IJK\cap IKL}}
+\newcommand{\Eijlcikl}{E_{IJL\cap IKL}}
+\newcommand{\Eijkcjkl}{E_{IJK\cap JKL}}
+\newcommand{\Eijlcjkl}{E_{IJL\cap JKL}}
+\newcommand{\Eiklcjkl}{E_{IKL\cap JKL}}
+\newcommand{\Eijkcijlcikl}{E_{IJK\cap IJL\cap IKL}}
+\newcommand{\Eijkcijlcjkl}{E_{IJK\cap IJL\cap JKL}}
+\newcommand{\Eijkciklcjkl}{E_{IJK\cap IKL\cap JKL}}
+\newcommand{\Eijlciklcjkl}{E_{IJL\cap IKL\cap JKL}}
+\newcommand{\Eijkcijlciklcjkl}{E_{IJK\cap IJL\cap IKL\cap JKL}}\\\begin{split}\Enm{3}{4} =&amp; \Eijk + \Eijl + \Eikl + \Ejkl -
+              \Eijkcijl - \Eijkcikl - \Eijkcjkl - \Eijlcikl - \\
+            &amp;   \Eijlcjkl - \Eiklcjkl +
+              \Eijkcijlcikl + \Eijkcijlcjkl + \Eijkciklcjkl + \\
+            &amp;   \Eijlciklcjkl -
+              \Eijkcijlciklcjkl\end{split}\end{aligned}\end{align} \]</div>
+<p>Defining intersection-corrected trimer energies:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\eijk}{\e{IJK}}
+\newcommand{\eikl}{\e{IKL}}
+\newcommand{\ejkl}{\e{JKL}}
+\newcommand{\eijl}{\e{IJL}}\\\begin{split}\eijk =&amp; \Eijk\\
+\eijl =&amp; \Eijl - \Eijkcijl\\
+\eikl =&amp; \Eikl - \Eijkcikl - \Eijlcikl + \Eijkcijlcikl\\
+\ejkl =&amp; \Ejkl - \Eijkcjkl - \Eijlcjkl - \Eiklcjkl + \Eijkcijlcjkl +
+           \Eijkciklcjkl + \\
+       &amp; \Eijlciklcjkl - \Eijkcijlciklcjkl\end{split}\end{aligned}\end{align} \]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Deijl}{\De{IJL}}
+\newcommand{\Deikl}{\De{IKL}}
+\newcommand{\Dejkl}{\De{JKL}}\\\begin{split}\Deijk =&amp; \eijk - \Deij - \Deik - \Dejk - \ei - \ej -\ek\\
+\Deijl =&amp; \eijl - \Deil - \Dejl - \el\\
+\Deikl =&amp; \eikl - \Dekl\\
+\Dejkl =&amp; \ejkl\end{split}\end{aligned}\end{align} \]</div>
+<p>For disjoint-fragments:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Deijk =&amp; \left[\Eijk\right] -
+          \left(\Eij - \Ei -\Ej\right) -
+          \left(\Eik - \Ei -\Ek\right) -
+          \left(\Ejk - \Ej -\Ek\right) - \Ei - \Ej - \Ek\\
+       =&amp; \Eijk - \Eij - \Eik - \Ejk + \Ei + \Ej + \Ek\\
+\Deijl =&amp; \left[\Eijl - \Eij\right] -
+          \left(\Eil - \Ei - \El\right) -
+          \left(\Ejl - \Ej - \El\right) - \El\\
+       =&amp; \Eijl - \Eij - \Eil - \Ejl + \Ei + \Ej + \El\\
+\Deikl =&amp; \left[\Eikl - \Eik - \Eil + \Ei\right] -
+           \left(\Ekl - \Ek - \El\right) \\
+       =&amp; \Eikl - \Eik - \Eil - \Ekl + \Ei + \Ek + \El\\
+\Dejkl =&amp; \left[\Ejkl - \Ejk - \Ejl - \Ekl + \Ej + \Ek + \El\right]\end{split}\]</div>
+<p>where we have used square-brackets to show which terms came form the
+intersection-corrected trimer energies and parenthesis to show which come from
+the intersection-corrected dimer energies. These are the usual (cleaned-up)
+three-body expressions.</p>
+</div>
+<div class="section" id="four-body">
+<h3>Four-Body<a class="headerlink" href="#four-body" title="Permalink to this headline"></a></h3>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Eijkl}{E_{IJKL}}\\E = \Enm{4}{4} = \Eijkl\end{aligned}\end{align} \]</div>
+<p>Defining the four-body interaction:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\Deijkl}{\De{IJKL}}\\\Deijkl = E_{IJKL} - \Deijk - \Deijl - \Deikl - \Dejkl -
+          \Deij - \Deik - \Deil - \Dejk - \Dejl - \Dekl -
+          \ei - \ej - \ek - \el\end{aligned}\end{align} \]</div>
+<p>we arrive at the GMBE for four fragments:</p>
+<div class="math notranslate nohighlight">
+\[E = \ei + \ej + \ek + \el + \Deij + \Deik + \Deil + \Dejk + \Dejl + \Dekl +
+    \Deijk + \Deijl + \Deikl + \Dejkl + \Deijkl\]</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="GMBE" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="notation.html" class="btn btn-neutral float-right" title="GMBE Notation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

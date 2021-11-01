@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GMBE Proof &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Generalized Many-Body Expansion" href="gmbe.html" />
+    <link rel="prev" title="GMBE Notation" href="notation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> GhostFragment
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">GMBE</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="motivation.html">Motivating the Induction Hypothesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notation.html">GMBE Notation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GMBE Proof</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-induction-hypothesis">The Induction Hypothesis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#proof-of-exactness">Proof Of Exactness</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exactness-of-the-intersection-corrected-energies">Exactness of the Intersection-Corrected Energies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exactness-of-the-many-body-interactions">Exactness of the Many-Body Interactions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gmbe.html">Generalized Many-Body Expansion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/index.html">Algorithms for Fragment-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Theoretical Background</a> &raquo;</li>
+          <li><a href="index.html">GMBE</a> &raquo;</li>
+      <li>GMBE Proof</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/background/gmbe/proof.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="gmbe-proof">
+<h1>GMBE Proof<a class="headerlink" href="#gmbe-proof" title="Permalink to this headline"></a></h1>
+<div class="section" id="the-induction-hypothesis">
+<h2>The Induction Hypothesis<a class="headerlink" href="#the-induction-hypothesis" title="Permalink to this headline"></a></h2>
+<p>Based on the motivation in (TODO: add section) we hypothesize that the GMBE for
+a system fragmented into <span class="math notranslate nohighlight">\(m\)</span> fragments can be written in a form designed to
+mimic a corresponding MBE via:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\e}[1]{\mathcal{E}_{#1}}
+\newcommand{\De}[1]{\Delta\e{#1}}
+\newcommand{\mCk}[2]{_{#1}C_{#2}}
+\newcommand{\kmers}[1]{\mathbb{F}^{\left(m, #1\right)}}
+\newcommand{\kmeri}[2]{F^{\left(#1\right)}_{#2}}
+\newcommand{\ei}{\e{I}}
+\newcommand{\Deij}{\De{IJ}}
+\newcommand{\mCn}{\mCk{m}{n}}
+\newcommand{\nmers}{\kmers{n}}
+\newcommand{\nmeri}{\kmeri{n}{I}}\\\begin{split}E =&amp; \sum_{I=1}^{m} \ei + \sum_{I=1}^{m-1}\sum_{J=I+1}^{m} \Deij + \cdots +
+    \De{IJK\cdots m}\\
+  =&amp; \sum_{\kmeri{1}{K}\in\kmers{1}} \e{\kmeri{1}{K}} +
+     \sum_{n=2}^{m}\sum_{\nmeri\in\nmers}^{\mCn} \De{\nmeri}\end{split}\end{aligned}\end{align} \]</div>
+<p>Here the intersection-corrected energy of the <span class="math notranslate nohighlight">\(I\)</span>-th <span class="math notranslate nohighlight">\(n\)</span>-mer are defined by:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\nmersuptoi}{\mathbb{F}^{\left(m,n\right)}[1:I-1]}
+\newcommand{\powersetk}[2]{\mathbb{P}^{\left(#1\right)}\left(#2\right)}
+\newcommand{\setint}[1]{\left(\bigcap {#1}\right)}
+\newcommand{\nmerj}{\kmeri{n}{J}}\\\begin{split}\e{\nmeri} =&amp; E_{\nmeri} -
+              \sum_{\nmerj\in\nmersuptoi} E_{\nmerj\cap\nmeri} +
+              \sum_{x\in\powersetk{2}{\nmersuptoi}}
+              E_{\setint{x}\cap\nmeri} - \cdots +\\
+            &amp; (-1) ^{I-1} E_{\setint{\nmersuptoi}\cap\nmeri}\\
+           =&amp; E_{\nmeri} -
+              \sum_{k=1}^{I-1}\sum_{x\in\powersetk{k}{\nmersuptoi}}
+                (-1) ^ k E_{\left(\bigcap x\right)\cap \nmeri}\end{split}\end{aligned}\end{align} \]</div>
+<p>The notation is complex, but the idea is simple. The <span class="math notranslate nohighlight">\(I\)</span>-th <span class="math notranslate nohighlight">\(n\)</span>-mer’s
+intersection-corrected enegy is obtaind by subtracting from the <span class="math notranslate nohighlight">\(I\)</span>-th <span class="math notranslate nohighlight">\(n\)</span>-mer’s
+energy (the <span class="math notranslate nohighlight">\(k=0\)</span> term) the components of the energy which appeared in any
+of the previous <span class="math notranslate nohighlight">\(I-1\)</span> <span class="math notranslate nohighlight">\(n\)</span>-mers (these corrections are the <span class="math notranslate nohighlight">\(k=1\)</span>
+terms); however, for components which appear in three or more of the previous
+<span class="math notranslate nohighlight">\(n\)</span>-mers we have now removed them too many times and need to add them back in
+(the <span class="math notranslate nohighlight">\(k=2\)</span> terms). This process repeats until we have addresed the
+intersection of all <span class="math notranslate nohighlight">\(I\)</span> <span class="math notranslate nohighlight">\(n\)</span>-mers. If it helps you can think of this as the
+set-equivalent of Gram-Schmidt orthogonalization.</p>
+<p>Akin to the MBE we obtain <span class="math notranslate nohighlight">\(n\)</span>-body interactions by removing <span class="math notranslate nohighlight">\(k\)</span>-body
+interactions (<span class="math notranslate nohighlight">\(k\)</span> less than <span class="math notranslate nohighlight">\(n\)</span>). The caveat here is that intersection-corrected
+eneriges have already done some of this for us and we need to be careful not to
+remove lower-order interactions too many times. To that end we define the set:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\psetp}[2]{\mathbb{P}'^{\left(#1\right)}\left(#2\right)}\\\psetp{k}{\nmeri} = \powersetk{k}{\nmeri}\setminus
+                    \left(\bigcup_{J=1}^{I-1}\psetp{k}{\nmerj}\right)\end{aligned}\end{align} \]</div>
+<p>which is the set of <span class="math notranslate nohighlight">\(k\)</span>-mers that can be formed from the monomers comprising the
+<span class="math notranslate nohighlight">\(I\)</span>-th <span class="math notranslate nohighlight">\(n\)</span>-mer, but can not be formed from any of the previously considered
+<span class="math notranslate nohighlight">\(n\)</span>-mers. In terms of this set, the intersection-corrected interactions are:</p>
+<div class="math notranslate nohighlight">
+\[\De{\nmeri} = \e{\nmeri} -
+              \sum_{k=2}^{n-1}\sum_{\kmeri{k}{J}\in\psetp{k}{\nmeri}}
+               \De{\kmeri{k}{J}} - \sum_{\kmeri{1}{K}\in\psetp{1}{\nmeri}}
+               \e{\kmeri{1}{K}}\]</div>
+</div>
+<div class="section" id="proof-of-exactness">
+<h2>Proof Of Exactness<a class="headerlink" href="#proof-of-exactness" title="Permalink to this headline"></a></h2>
+<p>We now proceed to show that this form of the GMBE is exact. To that end consider
+the GMBE for <span class="math notranslate nohighlight">\(m\)</span> fragments:</p>
+<div class="math notranslate nohighlight">
+\[E = \sum_{I=1}^{m} \ei +
+      \sum_{n=2}^{m}\sum_{\nmeri\in\nmers}^{\mCn} \De{\nmeri}\]</div>
+<p>We expand the <span class="math notranslate nohighlight">\(n=m\)</span> interaction:</p>
+<div class="math notranslate nohighlight">
+\[\De{\kmeri{m}{1}} = \e{\kmeri{m}{1}} -
+                    \sum_{n=2}^{m-1}\sum_{\nmeri\in\psetp{k}{\kmeri{m}{1}}}
+                      \De{\nmeri} -
+                    \sum_{\kmeri{1}{K}\in\psetp{1}{\kmeri{m}{1}}}
+                      \e{\kmeri{1}{K}}\]</div>
+<p>Here the notation <span class="math notranslate nohighlight">\(F^{\left(m\right)}_{0}\)</span> is meant to make explicit that
+there is only one <span class="math notranslate nohighlight">\(m\)</span>-mer, the entire system. Consequently, for a given <span class="math notranslate nohighlight">\(k\)</span>
+(including <span class="math notranslate nohighlight">\(k=1\)</span>) we have:</p>
+<div class="math notranslate nohighlight">
+\[\psetp{k}{\kmeri{m}{1}} = \powersetk{k}{\kmeri{m}{1}} = \kmers{k}\]</div>
+<p>which is to say that since there are no previous <span class="math notranslate nohighlight">\(m\)</span>-mers the primed powerset
+reduces to the normal powerset, which in turn reduces to the set of <span class="math notranslate nohighlight">\(k\)</span>-mers
+because the <span class="math notranslate nohighlight">\(m\)</span>-mer is the entire system. With this realization:</p>
+<div class="math notranslate nohighlight">
+\[\De{\kmeri{m}{1}} = \e{\kmeri{m}{1}} -
+                    \sum_{n=2}^{m-1}\sum_{\nmeri\in\nmers}
+                      \De{\nmeri} -
+                    \sum_{\kmeri{1}{K}\in\nmers}
+                      \e{\kmeri{1}{K}}\]</div>
+<p>and:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E =&amp; \sum_{\kmeri{1}{K}\in\kmers{1}} \e{\kmeri{1}{K}} +
+     \sum_{n=2}^{m-1}\sum_{\nmeri\in\nmers}^{\mCn} \De{\nmeri} +
+     \e{\kmeri{m}{1}} -
+     \sum_{n=2}^{m-1}\sum_{\nmeri\in\nmers} \De{\nmeri} -
+     \sum_{\kmeri{1}{K}\in\kmers{1}} \e{\kmeri{1}{K}}\\
+   =&amp; \e{\kmeri{m}{1}}\\
+   =&amp; E_{\kmeri{m}{1}}\end{split}\]</div>
+<p>which with the last line follows from the definition of the
+intersection-corrected <span class="math notranslate nohighlight">\(m\)</span>-mer energy. Basically this proof shows that, like the
+normal MBE, the GMBE is just a very creative way of adding zero.</p>
+</div>
+<div class="section" id="exactness-of-the-intersection-corrected-energies">
+<h2>Exactness of the Intersection-Corrected Energies<a class="headerlink" href="#exactness-of-the-intersection-corrected-energies" title="Permalink to this headline"></a></h2>
+<p>The exactness proof only relies on the fact that:</p>
+<div class="math notranslate nohighlight">
+\[E = \e{\kmeri{m}{1}} = E_{\kmeri{m}{1}}\]</div>
+<p>and:</p>
+<div class="math notranslate nohighlight">
+\[\De{\kmeri{m}{1}} = \e{\kmeri{m}{1}} -
+\sum_{n=2}^{m-1}\sum_{\nmeri\in\nmers}
+  \De{\nmeri} -
+\sum_{\kmeri{1}{K}\in\nmers}
+  \e{\kmeri{1}{K}}\]</div>
+<p>The defitions of the intersection-corrected energies and interactions of orders
+<span class="math notranslate nohighlight">\(k\neq m\)</span> are immaterial in the exactness proof. Here we show that our
+intersection-corrected energies are defined such that the <span class="math notranslate nohighlight">\(n\)</span>-body approximation
+to the energy of the supersystem is given by:</p>
+<div class="math notranslate nohighlight">
+\[E^{(m,n)} = \sum_{\nmeri}\e{\nmeri}\]</div>
+<div class="section" id="the-base-case">
+<h3>The base case<a class="headerlink" href="#the-base-case" title="Permalink to this headline"></a></h3>
+<p>For a system comprsied of a single <span class="math notranslate nohighlight">\(n\)</span>-mer we have:</p>
+<div class="math notranslate nohighlight">
+\[E^{(1,n)} = E_{\kmeri{n}{1}}\]</div>
+<p>For arbitrary <span class="math notranslate nohighlight">\(n\)</span>, it is always true that for the <span class="math notranslate nohighlight">\(I=1\)</span>-th <span class="math notranslate nohighlight">\(n\)</span>-mer:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\sum_{k=1}^{I-1}\sum_{\kmeri{k}{J}\in\powersetk{k}{\nmersuptoi}}
+  (-1)^k E_{\left(\bigcap \kmeri{k}{J}\right)\cap \nmeri} = 0\]</div>
+</div></blockquote>
+<p>Hence:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E^{(1,n)} =&amp; E_{\kmeri{n}{1}} +
+            \sum_{k=1}^{I-1}\sum_{\kmeri{k}{J}\in\powersetk{k}{\nmersuptoi}}
+            (-1)^k E_{\left(\bigcap \kmeri{k}{J}\right)\cap \nmeri}\\
+          =&amp; \e{\kmeri{n}{1}}\end{split}\]</div>
+<p>Proving that the proposed intersection-corrected energy formula does not
+under/overcount a system comprised of a single <span class="math notranslate nohighlight">\(n\)</span>-mer. In the next section we
+use induction to prove that this is true for an arbitrary number of <span class="math notranslate nohighlight">\(n\)</span>-mers.</p>
+</div>
+<div class="section" id="proof-by-induction">
+<h3>Proof By Induction<a class="headerlink" href="#proof-by-induction" title="Permalink to this headline"></a></h3>
+<p>We now assume that for <span class="math notranslate nohighlight">\(\ell - 1\)</span> <span class="math notranslate nohighlight">\(n\)</span>-mers the following is true:</p>
+<div class="math notranslate nohighlight">
+\[E^{(\ell - 1,n)} = \sum_{I=1}^{\ell - 1}\e{\kmeri{n}{I}}\]</div>
+<p>It is perhaps a somewhat esoteric point, but the above equation simply states
+that <span class="math notranslate nohighlight">\(E^{(\ell - 1, n)}\)</span> is the under-/over-counting free approximation
+to the system’s energy resulting from using <span class="math notranslate nohighlight">\(\ell - 1\)</span> <span class="math notranslate nohighlight">\(n\)</span>-mers. It is
+not clamining that this is a good approximation to the system’s energy, nor does
+it have to be for our current purposes. For example, and simplicity, let <span class="math notranslate nohighlight">\(m\)</span> be
+2, <span class="math notranslate nohighlight">\(\ell\)</span> be 2, and <span class="math notranslate nohighlight">\(n\)</span>  be 1. In this example, unless the first fragment
+is actually the  entire system, <span class="math notranslate nohighlight">\(E^{(\ell - 1, n)}\)</span> will be missing
+energies of entire atoms  (specifically the atoms that appear in the second
+fragment, but not the first),  making it a very poor approximation to the
+system’s energy. In practice, the only <span class="math notranslate nohighlight">\(\ell\)</span> we care about is when <span class="math notranslate nohighlight">\(\ell\)</span> equals
+“<span class="math notranslate nohighlight">\(m\)</span> choose <span class="math notranslate nohighlight">\(n\)</span>”; this proof shows that the route we take to get to “<span class="math notranslate nohighlight">\(m\)</span> choose
+<span class="math notranslate nohighlight">\(n\)</span>” is under-/over-counting free.</p>
+<p>Esoteric point aside, we proceed by creating the ordered set <span class="math notranslate nohighlight">\(\mathbb{F}^{\left(m,n\right)}[1:\ell]\)</span> by appending
+the <span class="math notranslate nohighlight">\(\ell\)</span>-th <span class="math notranslate nohighlight">\(n\)</span>-mer onto to the ordered set <span class="math notranslate nohighlight">\(\mathbb{F}^{\left(m,n\right)}[1:\ell-1]\)</span>. The approximate energy is
+then given by IEP. We choose to write the IEP as the sum of the <span class="math notranslate nohighlight">\(\ell-1\)</span>
+approximate energy (which is intersection corrected by assumption) plus the
+energy of the <span class="math notranslate nohighlight">\(\ell\)</span>-th <span class="math notranslate nohighlight">\(n\)</span>-mer, corrected for the intersections of the <span class="math notranslate nohighlight">\(\ell\)</span>-th
+<span class="math notranslate nohighlight">\(n\)</span>-mer with the proceeding <span class="math notranslate nohighlight">\(\ell-1\)</span> fragments:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E^{(\ell, n)} =&amp; E^{(\ell - 1, n)} + E_{\kmeri{n}{\ell}} -
+              \sum_{I=1}^{\ell-1} E_{\kmeri{n}{I}\cap\kmeri{n}{\ell}} +
+              \sum_{I=1}^{\ell-2}\sum_{J=I+1}^{\ell-1}
+                E_{\kmeri{n}{I}\cap\kmeri{n}{J}\cap\kmeri{n}{\ell}} -
+              \cdots\\
+           =&amp; E^{(\ell-1, n)} + E_{\kmeri{n}{\ell}} -
+              \sum_{k=1}^{\ell-1}
+              \sum_{\kmeri{k}{I}\in
+                    \powersetk{k}{\mathbb{F}^{\left(m,n\right)}[1:\ell - 1]}}
+                 (-1)^k
+                 E_{\left(\bigcap \kmeri{k}{I}\right)\cap\kmeri{n}{\ell}}\\
+           =&amp; E^{(\ell-1, n)} + \e{\kmeri{n}{\ell}}\\
+           =&amp; \sum_{I=1}^{\ell}\e{\kmeri{n}{I}}\end{split}\]</div>
+<p>Proving it for <span class="math notranslate nohighlight">\(\ell\)</span> <span class="math notranslate nohighlight">\(n\)</span>-mers.</p>
+</div>
+</div>
+<div class="section" id="exactness-of-the-many-body-interactions">
+<h2>Exactness of the Many-Body Interactions<a class="headerlink" href="#exactness-of-the-many-body-interactions" title="Permalink to this headline"></a></h2>
+<p>The next step in the proof is to show that the when the GMBE is truncated at an
+<span class="math notranslate nohighlight">\(n\)</span> not equal to <span class="math notranslate nohighlight">\(m\)</span> (we already showed <span class="math notranslate nohighlight">\(n\)</span> equal to <span class="math notranslate nohighlight">\(m\)</span>) the
+intersection-corrected many-body interactions also do not over-/under-count
+interactions. Truncated at order <span class="math notranslate nohighlight">\(n\)</span> the GMBE reads:</p>
+<div class="math notranslate nohighlight">
+\[E^{(m,n)} =  \sum_{\kmeri{1}{I}\in\kmers{1}} \e{\kmeri{1}{I}} +
+\sum_{\ell=2}^{n}\sum_{\kmeri{\ell}{J}\in\kmers{\ell}}^{\mCk{m}{\ell}}
+  \De{\kmeri{\ell}{J}}\]</div>
+<p>Expanding the the <span class="math notranslate nohighlight">\(n\)</span>-body intersection-corrected interaction:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E^{(m, n)} =&amp;
+  \sum_{\kmeri{1}{I}\in\kmers{1}} \e{\kmeri{1}{I}} +
+  \sum_{\ell=2}^{n-1}
+    \sum_{\kmeri{\ell}{J}\in\kmers{\ell}}^{\mCk{m}{\ell}}
+       \De{\kmeri{\ell}{J}} + \\
+  &amp; \sum_{\kmeri{n}{J}\in\kmers{n}}^{\mCn}
+     \left[
+       \e{\kmeri{n}{J}} -
+       \sum_{\ell=2}^{n-1}
+       \sum_{\kmeri{\ell}{K}\in\psetp{\ell}{\kmeri{n}{J}}}
+         \De{\kmeri{\ell}{K}} -
+       \sum_{\kmeri{1}{\ell}\in\psetp{1}{\kmeri{n}{J}}}
+       \e{\kmeri{1}{\ell}}
+     \right]\end{split}\]</div>
+<p>Assuming every fragment shows up in at least one <span class="math notranslate nohighlight">\(n\)</span>-mer, we have:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{\kmeri{n}{J}\in\kmers{n}}^{\mCn}
+\sum_{\ell=2}^{n-1}
+\sum_{\kmeri{\ell}{K}\in\psetp{\ell}{\kmeri{n}{J}}}
+  \De{\kmeri{\ell}{K}} =
+\sum_{\ell=2}^{n-1}
+\sum_{\kmeri{\ell}{K}\in\kmers{\ell}}^{\mCk{m}{\ell}} \De{\kmeri{\ell}{K}}\]</div>
+<p>Similarly:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{\kmeri{n}{J}\in\kmers{n}}^{\mCn}
+\sum_{\kmeri{1}{\ell}\in\psetp{1}{\kmeri{n}{J}}}
+  \e{\kmeri{1}{\ell}}  =
+\sum_{\kmeri{1}{\ell}\in\kmers{1}}\e{\kmeri{1}{\ell}}\]</div>
+<p>and we have:</p>
+<div class="math notranslate nohighlight">
+\[E^{(m, n)} = \sum_{\kmeri{n}{J}\in\kmers{n}}^{\mCn} \e{\kmeri{n}{J}}\]</div>
+<p>which is just the IEP for <span class="math notranslate nohighlight">\(n\)</span>-mers.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="notation.html" class="btn btn-neutral float-left" title="GMBE Notation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gmbe.html" class="btn btn-neutral float-right" title="Generalized Many-Body Expansion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

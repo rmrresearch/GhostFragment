@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FMO Capping Method &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Systematic Molecular Fragmentation Capping Method" href="smf.html" />
+    <link rel="prev" title="Capping Methods" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> GhostFragment
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gmbe/index.html">GMBE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../frag_methods/index.html">Fragmentation Algorithms</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Capping Methods</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">FMO Capping Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation Capping Method</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../screening_methods/index.html">Screening Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
+          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
+          <li><a href="index.html">Capping Methods</a> &raquo;</li>
+      <li>FMO Capping Method</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/background/algorithms/cap_methods/fmo.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="fmo-capping-method">
+<h1>FMO Capping Method<a class="headerlink" href="#fmo-capping-method" title="Permalink to this headline"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The information in this section is my interpretation of the cited references.
+In many cases the descriptions of the algorithms provided in the literature
+are somewhat vague. Thus what is in this section may not accurately reflect
+how the underlying implementations actually work. Please feel free to
+contribute and make this section more accurate.</p>
+</div>
+<p>In FMO calculations caps in the traditional sense are not used.</p>
+<div class="section" id="fmo99-capping">
+<h2>FMO99 Capping<a class="headerlink" href="#fmo99-capping" title="Permalink to this headline"></a></h2>
+<p>The initial FMO capping method <span id="id1">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id7" title="Kazuo Kitaura, Eiji Ikeo, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Fragment molecular orbital method: an approximate computational method for large molecules. Chemical Physics Letters, 313(3-4):701–706, 1999.">11</a></sup></span>, here labeled as FMO99,
+assigned electrons unevenly to the fragments (<em>i.e.</em>, one of the fragments gets
+both of the bonding electrons). From this assignment, an initial density for
+fragment <span class="math notranslate nohighlight">\(I\)</span> is obtained by:</p>
+<ol class="arabic simple">
+<li><p>Defining a reference system (no guidance on how to do this was provided)</p></li>
+<li><p>Localizing the molecular orbitals of the reference system to the atoms in <span class="math notranslate nohighlight">\(I\)</span></p>
+<ul class="simple">
+<li><p>The relevant atoms must have the same geometry in both the reference system
+and the target system</p></li>
+</ul>
+</li>
+<li><p>Discarding contributions to the molecular orbitals from atoms outside <span class="math notranslate nohighlight">\(I\)</span></p></li>
+<li><p>Renormalizing the molecular orbitals</p></li>
+<li><p>Use the renormalized MOs to form a n-electron density (n depending on how
+the electrons are assigned)</p></li>
+</ol>
+</div>
+<div class="section" id="fmo00-capping">
+<h2>FMO00 Capping<a class="headerlink" href="#fmo00-capping" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The language describing the FMO00 method <span id="id2">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id9" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: application to polypeptides. Chemical Physics Letters, 318(6):614–618, 2000.">17</a></sup></span> uses is:
+“core” and “valence” orbitals; however, based on subsequent publications,
+such as <span id="id3">Fedorov and Kitaura<sup><a class="reference internal" href="../../../references.html#id17" title="Dmitri G. Fedorov and Kazuo Kitaura. The importance of three-body terms in the fragment molecular orbital method. The Journal of Chemical Physics, 120(15):6832–6840, 2004.">7</a></sup></span>, I believe what they are actually referring to
+would typically be termed “occupied” and “virtual” orbitals, respectively.
+The language in this section reflects this assumption.</p>
+</div>
+<p>A new capping method was proposed in a subsequent paper <span id="id4">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id9" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: application to polypeptides. Chemical Physics Letters, 318(6):614–618, 2000.">17</a></sup></span>,
+here denoted FMO00. In this method, for a bond <span class="math notranslate nohighlight">\(a-b\)</span>, the bonding
+electrons are assigned to one of the two atoms in the bond, say <span class="math notranslate nohighlight">\(a\)</span>. For
+clarity, we refer to the fragment which gets atom <span class="math notranslate nohighlight">\(a\)</span> as <span class="math notranslate nohighlight">\(A\)</span>, and that which
+gets <span class="math notranslate nohighlight">\(b\)</span> as <span class="math notranslate nohighlight">\(B\)</span>. <span class="math notranslate nohighlight">\(B\)</span>’s initial density is computed using the normal AO basis set
+for <span class="math notranslate nohighlight">\(B\)</span>, with the usual equations. However, <span class="math notranslate nohighlight">\(A\)</span>’s initial density is computed
+using <span class="math notranslate nohighlight">\(A\)</span>’s usual basis set augmented with the virtual orbitals from <span class="math notranslate nohighlight">\(b\)</span>. To
+extract the virtual orbitals of <span class="math notranslate nohighlight">\(b\)</span>, a modified version of <span class="math notranslate nohighlight">\(A\)</span>’s Fock operator
+is used:</p>
+<div class="math notranslate nohighlight">
+\[\widehat{F}'_A = \widehat{F}_A  +
+                 \sum_{i\in b} \gamma_i\Ket{i}\Bra{i}\]</div>
+<p>where <span class="math notranslate nohighlight">\(widehat{F}_A\)</span> is the original Fock operator, <span class="math notranslate nohighlight">\(i\)</span> runs over
+the occupied orbitals of <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(\gamma_i\)</span> is a large positive coefficient (
+default value is between 10$^6$ and 10$^8$), and <span class="math notranslate nohighlight">\(\Ket{i}\)</span> is the
+<span class="math notranslate nohighlight">\(i\)</span>-th occupied orbital of <span class="math notranslate nohighlight">\(b\)</span>. In practice orbital <span class="math notranslate nohighlight">\(\Ket{i}\)</span> is
+only decribed by the AOs on the <span class="math notranslate nohighlight">\(b\)</span>, which is to say, that after localizing
+<span class="math notranslate nohighlight">\(\ket{i}\)</span> only the matrix elements <span class="math notranslate nohighlight">\(C_{\mu i}\)</span> where <span class="math notranslate nohighlight">\(\mu\)</span> is
+on <span class="math notranslate nohighlight">\(b\)</span> are kept.</p>
+</div>
+<div class="section" id="fmo04-capping">
+<h2>FMO04 Capping<a class="headerlink" href="#fmo04-capping" title="Permalink to this headline"></a></h2>
+<p>In describing a three-body FMO method <span id="id5">Fedorov and Kitaura<sup><a class="reference internal" href="../../../references.html#id17" title="Dmitri G. Fedorov and Kazuo Kitaura. The importance of three-body terms in the fragment molecular orbital method. The Journal of Chemical Physics, 120(15):6832–6840, 2004.">7</a></sup></span>, a new capping
+method was pitched which is effectively a combination of <a class="reference internal" href="#fmo99-capping"><span class="std std-ref">FMO99 Capping</span></a>
+and <a class="reference internal" href="#fmo00-capping"><span class="std std-ref">FMO00 Capping</span></a>. In this study all severed bonds were carbon-carbon
+bonds. Thus the decision was made to use the occupied orbitals of a methane
+molecule instead of the actual occupied orbitals. The methane orbitals were
+split so that one atom, call it <span class="math notranslate nohighlight">\(a\)</span>, gets one of the <span class="math notranslate nohighlight">\(sp^3\)</span> orbitals
+(specifically the <span class="math notranslate nohighlight">\(sp^3\)</span> orbital along the bond) and the other atom, call
+it <span class="math notranslate nohighlight">\(b\)</span>, gets the remaining four occupied orbitals. For a given bond, the
+decision of which atom is <span class="math notranslate nohighlight">\(a\)</span> versus which atom is <span class="math notranslate nohighlight">\(b\)</span> was made so that <span class="math notranslate nohighlight">\(a\)</span> went
+to the fragment with the smaller ordinal number (presumably the ordinal number
+was assigned based on user input, but this point was not clarified).</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Capping Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="smf.html" class="btn btn-neutral float-right" title="Systematic Molecular Fragmentation Capping Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

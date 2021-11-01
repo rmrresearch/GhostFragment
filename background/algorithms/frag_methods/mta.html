@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Molecular Tailoring Approach Fragmentation &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Systematic Molecular Fragmentation Fragmentation Method" href="smf.html" />
+    <link rel="prev" title="Fragmentation Algorithms" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> GhostFragment
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gmbe/index.html">GMBE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Fragmentation Algorithms</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Molecular Tailoring Approach Fragmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gebf.html">GEBF Fragmentation Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other.html">Other Fragmentation Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cap_methods/index.html">Capping Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../screening_methods/index.html">Screening Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
+          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
+          <li><a href="index.html">Fragmentation Algorithms</a> &raquo;</li>
+      <li>Molecular Tailoring Approach Fragmentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/background/algorithms/frag_methods/mta.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="molecular-tailoring-approach-fragmentation">
+<h1>Molecular Tailoring Approach Fragmentation<a class="headerlink" href="#molecular-tailoring-approach-fragmentation" title="Permalink to this headline"></a></h1>
+<div class="section" id="mta03-fragmentation">
+<h2>MTA03 Fragmentation<a class="headerlink" href="#mta03-fragmentation" title="Permalink to this headline"></a></h2>
+<p>In the context of MTA, the first fragmentation method presented was introduced
+by <span id="id1">Babu and Gadre<sup><a class="reference internal" href="../../../references.html#id4" title="K. Babu and Shridhar R. Gadre. Ab initio quality one-electron properties of large molecules: development and testing of molecular tailoring approach. Journal of Computational Chemistry, 24(4):484–495, 2003.">1</a></sup></span>. Using our terminology:</p>
+<ol class="arabic simple">
+<li><p>Generate pseudoatoms (some recommendations were given including <span class="math notranslate nohighlight">\(pi\)</span>
+bonds, aromatic rings, and functional groups).</p></li>
+<li><p>Assign edges to the pseudoatoms. Let this graph be <span class="math notranslate nohighlight">\(G_0\)</span>.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(L_i\)</span> be the set of leaf pseudoatoms in <span class="math notranslate nohighlight">\(G_i\)</span>. For each pseudoatom in
+<span class="math notranslate nohighlight">\(L_i\)</span>, create a new pseudoatom which contains the original pseudoatom and
+the pseudoatom it is attached to. The graph resulting from compressing each
+pseudoatom in <span class="math notranslate nohighlight">\(L_i\)</span> is <span class="math notranslate nohighlight">\(G_{i+1}\)</span></p></li>
+<li><p>If there are no leaf pseudoatoms in <span class="math notranslate nohighlight">\(G_i\)</span>, form <span class="math notranslate nohighlight">\(G_{i+1}\)</span> by removing an edge (the
+original algorithm specifies that it is the first edge contained in the
+connectivity matrix).</p></li>
+<li><p>Repeat the previous two steps until only isolated pseudoatoms remain.</p></li>
+<li><p>Determine the actual number of atoms in each leaf pseudoatom. Let <span class="math notranslate nohighlight">\(N_i\)</span> be the
+number in the <span class="math notranslate nohighlight">\(i\)</span>-th pseudoatom.</p></li>
+<li><p>Compare <span class="math notranslate nohighlight">\(N_i\)</span> to a user-defined range. If <span class="math notranslate nohighlight">\(N_i\)</span> is in the range than the
+the <span class="math notranslate nohighlight">\(i\)</span>-th pseudoatom is a fragment and is removed from the graph.</p></li>
+<li><p>If pseudoatoms remain in the graph, the pseudoatoms are expanded once and the
+previous two steps are repeated with the resulting graph.</p></li>
+<li><p>Expansion terminates when either: all atoms are assigned to fragments, or the
+original pseudoatoms are recovered.</p></li>
+<li><p>In the event that the original pseudoatoms are recovered the resulting graph
+becomes <span class="math notranslate nohighlight">\(G_0\)</span> and the algorithm returns to step 2.</p></li>
+<li><p>After all atoms are assigned to fragments identify all edges which have been
+severed.</p></li>
+<li><p>For each severed edge grow the graph uniformally from the nodes of the edge
+until the resulting graph is in the target range.</p></li>
+</ol>
+<p>The resulting set of fragments is then postprocessed. This includes:</p>
+<ul class="simple">
+<li><p>Capping severed valencies with hydrogen bonds</p></li>
+<li><p>Merging fragments which differ by only a few atoms</p></li>
+<li><p>If weak bonds are included as edges, groups of four or less atoms connected to
+a larger fragment via a weak bond are removed from the fragment.</p></li>
+<li><p>Close contacts between capping hydrogens are corrected by either removing a
+few more atoms, or by adding more atoms to make the region complete.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike the body of the fragmentation algorithm, the postprocessing steps are
+not described in detail and are thus open to some interpretation.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Fragmentation Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="smf.html" class="btn btn-neutral float-right" title="Systematic Molecular Fragmentation Fragmentation Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
