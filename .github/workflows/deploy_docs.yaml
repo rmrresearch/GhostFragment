@@ -16,7 +16,7 @@ jobs:
       - name: Get CMake
         uses: lukka/get-cmake@v3.21.2
       - name: Install Doxygen
-        run: apt-get install doxygen -y  
+        run: sudo apt-get install doxygen -y  
       - name: Configure C++ documentation
         run: cmake -H. -Bbuild -DONLY_BUILD_DOCS=True -DBUILD_DOCS=True
       - name: Build C++ documentation
