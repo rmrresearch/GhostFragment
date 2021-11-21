@@ -5,7 +5,7 @@ using namespace ghostfragment::pt;
 namespace {
 // Module assuming atoms [3*i, 3 * i + 3) are the atoms in fragment i
 auto frag_mod(const simde::type::molecule& mol) {
-    libchemist::set_theory::FamilyOfSets<simde::type::molecule> rv(mol);
+    chemist::set_theory::FamilyOfSets<simde::type::molecule> rv(mol);
     auto new_set = rv.new_subset();
     for(std::size_t i = 0, j = 1; i < mol.size(); ++i, ++j) {
         new_set.insert(i);

@@ -6,10 +6,10 @@ namespace ghostfragment::pt {
 template<typename Type2Fragment, typename MappedType>
 struct SubsetMapTraits {
     /// Type of the FamilyOfSets used for the keys
-    using fos_key_type = libchemist::set_theory::FamilyOfSets<Type2Fragment>;
+    using fos_key_type = chemist::set_theory::FamilyOfSets<Type2Fragment>;
 
     /// Type of the FamilyOfSets used for the values
-    using fos_value_type = libchemist::set_theory::FamilyOfSets<MappedType>;
+    using fos_value_type = chemist::set_theory::FamilyOfSets<MappedType>;
 
     /// Type of the key in the returned map
     using key_type = typename fos_key_type::value_type;

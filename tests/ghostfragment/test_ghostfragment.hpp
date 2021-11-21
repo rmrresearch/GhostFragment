@@ -5,12 +5,14 @@
 
 namespace testing {
 
+// Common set-up all tests have
 inline auto initialize() {
     pluginplay::ModuleManager mm;
     ghostfragment::load_modules(mm);
     return mm;
 }
 
+// Makes a H, He, and O atom centered at the origin
 inline auto some_atoms() {
     using molecule = simde::type::molecule;
     using atom     = typename molecule::value_type;
@@ -42,7 +44,7 @@ inline auto water(std::size_t N = 1) {
 /// Creates an STO-3G basis set for the provided molecule (assumed to be waters)
 inline auto sto3g(const simde::type::molecule& mol) {
     using vector_t = std::vector<double>;
-    using namespace libchemist;
+    using namespace chemist;
 
     // Taken from hard-coded basis sets in NWX
     // O
@@ -74,20 +76,34 @@ inline auto sto3g(const simde::type::molecule& mol) {
     return simde::type::ao_space{bs};
 }
 
-inline auto water_ao_pairs(std::size_t N) {
-    const auto water_N = water(N);
-    const auto aos_N   = sto3g(water_N).basis_set();
-    const auto pair    = std::make_tuple(water_N, aos_N);
-    using return_type  = ghostfragment::type::fragmented_mols_and_aos;
+inline auto fragmented_water(std::size_t N) {
+    auto molecule    = water(N);
+    using frag_type  = ghostfragment::type::fragmented_molecule;
+    using value_type = frag_type::value_type;
+    using size_type  = value_type::size_type;
 
-    return_type pairs(pair);
-    for(std::size_t i = 0; i < N; ++i) {
-        auto new_subset = pairs.new_subset();
-        for(std::size_t j = 0; j < 3; ++j) {
-            std::get<0>(new_subset).insert(3 * i + j);
-            std::get<1>(new_subset).insert(3 * i + j);
-        }
-        pairs.insert(std::move(new_subset));
+    frag_type frags(molecule);
+    for(size_type i = 0; i < N; ++i) {
+        auto water = frags.new_subset();
+        for(size_type j = 0; j < 3; ++j) water.insert(i * 3 + j);
+        frags.insert(water);
+    }
+    return frags;
+}
+
+inline auto water_ao_pairs(std::size_t N) {
+    const auto water_N = fragmented_water(N);
+    const auto aos_N   = sto3g(water_N.object()).basis_set();
+    using return_type  = ghostfragment::type::fragment_to_ao_basis;
+
+    return_type pairs;
+    ghostfragment::type::fragmented_aos aos(aos_N);
+    std::size_t i = 0;
+    for(const auto& water : water_N) {
+        auto new_subset = aos.new_subset();
+        for(std::size_t j = 0; j < 3; ++j) { new_subset.insert(3 * i + j); }
+        pairs.emplace(water, new_subset);
+        ++i;
     }
     return pairs;
 }
