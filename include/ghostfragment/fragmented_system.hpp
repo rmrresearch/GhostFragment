@@ -80,12 +80,49 @@ public:
     FragmentedSystem(fragment_set_type frags, frag2ao_basis_type frags2aos,
                      atom2nelectron_type atom2ne);
 
+    /** @brief Makes a deep-copy of this FragmentedSystem
+     *
+     *  @param[in] other The instance being copied.
+     *
+     *  @throw std::bad_alloc if there is a problem allocating the internal
+     *                        state. Strong throw guarantee.
+     */
     FragmentedSystem(const FragmentedSystem& other);
 
+    /** @brief Takes ownership of another FragmentedSystem's state.
+     *
+     *  @param[in,out] other The instance whose state is being taken. After this
+     *                       call, @p other will in a state which is equivalent
+     *                       to default initialization.
+     *
+     *  @throw None no throw guarantee.
+     */
     FragmentedSystem(FragmentedSystem&& other) noexcept;
 
+    /** @brief Sets this instance's state to a deep copy of @p rhs 's state.
+     *
+     *  After this call any state which this instance may have possessed will be
+     *  released.
+     *
+     *  @param[in] rhs The instance we are copying the state from.
+     *
+     *  @return The current instance, after setting its state to a copy of
+     *          @p rhs 's state.
+     *
+     *  @throw std::bad_alloc if there is a problem allocating state.
+     */
     FragmentedSystem& operator=(const FragmentedSystem& rhs);
 
+    /** @brief Overwrites this instance's state with @p rhs 's state.
+     *
+     *  @param[in] rhs The instance whose state is being taken. After this call
+     *                 @p rhs will have a state which is equivalent to default
+     *                 initialization.
+     *
+     *  @return The current instance, after taking ownership of @p rhs's state.
+     *
+     *  @throw None No throw guarantee.
+     */
     FragmentedSystem& operator=(FragmentedSystem&& rhs) noexcept;
 
     /// Defaulted nothrow dtor
@@ -142,7 +179,32 @@ public:
      */
     size_type n_electrons(const_fragment_reference f) const;
 
+    /** @brief Determines if two FragmentedSystem instances are equal.
+     *
+     *  Two FragmentedSystem instances are equal if:
+     *  - the associated parent objects are equal,
+     *  - the parent objects are fragmented the same way,
+     *  - the fragments map to the same molecular AO basis sets, and
+     *  - the fragments contain the same number of electrons.
+     *
+     *  If any of the above points do not hold, then the FragmentedSystem
+     *  instances are different.
+     *
+     *  @param[in] rhs The FragmentedSystem instance to which the present
+     *                 instance is being compared.
+     *
+     *  @throw None no throw guarantee.
+     */
     bool operator==(const FragmentedSystem& rhs) const noexcept;
+
+    /** @brief Hashes the current instance.
+     *
+     *  @param[in] h The object which will be hashing the state of this
+     *               instance. After this call, the internal state of @p h will
+     *               be updated to contain a hash of the present instance's
+     *               state.
+     */
+    void hash(pluginplay::Hasher& h) const;
 
 private:
     /// Type of the PIMPL
@@ -161,6 +223,9 @@ private:
 /** @brief Determines if two FragmentedSystem instances are different.
  *
  *  @relates FragmentedSystem
+ *
+ *  This function simply negates FragmentedSystem::operator==. See there for a
+ *  complete description of what equality entails.
  *
  *  @param[in] lhs The FragmentedSystem instance on the left of the not-equal
  *                 operator.

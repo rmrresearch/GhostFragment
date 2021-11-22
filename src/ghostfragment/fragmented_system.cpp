@@ -23,6 +23,10 @@ struct FragmentedSystemPIMPL {
                std::tie(rhs.m_frags, rhs.m_frag2aos, rhs.m_atom2ne);
     }
 
+    void hash(pluginplay::Hasher& h) const {
+        h(m_frags, m_frag2aos, m_atom2ne);
+    }
+
     fragment_set_type m_frags;
 
     frag2ao_basis_type m_frag2aos;
@@ -106,12 +110,21 @@ FragmentedSystem::size_type FragmentedSystem::n_electrons(
     return n;
 }
 
+//------------------------------------------------------------------------------
+//                                    Utility
+//------------------------------------------------------------------------------
+
 bool FragmentedSystem::operator==(const FragmentedSystem& rhs) const noexcept {
     if(m_pimpl_ && rhs.m_pimpl_)
         return *m_pimpl_ == *rhs.m_pimpl_;
     else if(!m_pimpl_ && !rhs.m_pimpl_)
         return true;
     return false;
+}
+
+void FragmentedSystem::hash(pluginplay::Hasher& h) const {
+    if(m_pimpl_) h(*m_pimpl_);
+    h(nullptr);
 }
 
 //------------------------------------------------------------------------------

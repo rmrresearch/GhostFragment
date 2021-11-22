@@ -152,4 +152,101 @@ TEST_CASE("FragmentedSystem") {
 
         REQUIRE_THROWS_AS(charged.n_electrons(w0), std::out_of_range);
     }
+
+    SECTION("Comparisons") {
+        SECTION("LHS is default") {
+            FragmentedSystem lhs;
+
+            REQUIRE(lhs == defaulted);
+            REQUIRE_FALSE(lhs != defaulted);
+
+            REQUIRE(lhs != empty);
+            REQUIRE_FALSE(lhs == empty);
+
+            REQUIRE(lhs != neutral);
+            REQUIRE_FALSE(lhs == neutral);
+
+            REQUIRE(lhs != charged);
+            REQUIRE_FALSE(lhs == charged);
+        }
+
+        SECTION("LHS is charged") {
+            vector_type charged_ne{8, 1, 1, 9, 1, 1};
+
+            SECTION("Same state") {
+                FragmentedSystem rhs(dimer, dimer2ao, charged_ne);
+                REQUIRE(charged == rhs);
+                REQUIRE_FALSE(charged != rhs);
+            }
+
+            SECTION("Different Fragments") {
+                auto new_frag = dimer.new_subset();
+                new_frag.insert(0);
+                dimer.insert(new_frag);
+
+                FragmentedSystem rhs(dimer, dimer2ao, charged_ne);
+                REQUIRE(charged != rhs);
+                REQUIRE_FALSE(charged == rhs);
+            }
+
+            SECTION("Different AOs") {
+                dimer2ao.at(dimer.at(0)).insert(3);
+                FragmentedSystem rhs(dimer, dimer2ao, charged_ne);
+                REQUIRE(charged != rhs);
+                REQUIRE_FALSE(charged == rhs);
+            }
+
+            SECTION("Different numbers of electrons") {
+                vector_type neutral_ne{8, 1, 1, 8, 1, 1};
+                FragmentedSystem rhs(dimer, dimer2ao, neutral_ne);
+                REQUIRE(charged != rhs);
+                REQUIRE_FALSE(charged == rhs);
+            }
+        }
+    }
+
+    SECTION("lhs") {
+        SECTION("LHS is default") {
+            auto lhs = pluginplay::hash_objects(FragmentedSystem{});
+
+            REQUIRE(lhs == pluginplay::hash_objects(defaulted));
+
+            REQUIRE(lhs != pluginplay::hash_objects(empty));
+
+            REQUIRE(lhs != pluginplay::hash_objects(neutral));
+
+            REQUIRE(lhs != pluginplay::hash_objects(charged));
+        }
+
+        SECTION("LHS is charged") {
+            auto lhs = pluginplay::hash_objects(charged);
+            vector_type charged_ne{8, 1, 1, 9, 1, 1};
+
+            SECTION("Same state") {
+                FragmentedSystem rhs(dimer, dimer2ao, charged_ne);
+                REQUIRE(lhs == pluginplay::hash_objects(rhs));
+            }
+
+            SECTION("Different Fragments") {
+                auto new_frag = dimer.new_subset();
+                new_frag.insert(0);
+                dimer.insert(new_frag);
+
+                FragmentedSystem rhs(dimer, dimer2ao, charged_ne);
+                REQUIRE(lhs != pluginplay::hash_objects(rhs));
+            }
+
+            SECTION("Different AOs") {
+                dimer2ao.at(dimer.at(0)).insert(3);
+                FragmentedSystem rhs(dimer, dimer2ao, charged_ne);
+                REQUIRE(lhs != pluginplay::hash_objects(rhs));
+            }
+
+            SECTION("Different numbers of electrons") {
+                vector_type neutral_ne{8, 1, 1, 8, 1, 1};
+                FragmentedSystem rhs(dimer, dimer2ao, neutral_ne);
+                REQUIRE(lhs != pluginplay::hash_objects(rhs));
+            }
+        }
+    }
 }
