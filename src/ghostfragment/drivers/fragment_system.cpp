@@ -42,7 +42,7 @@ MODULE_RUN(FragmentedSystem) {
     const auto& [sys, aos] = my_pt::unwrap_inputs(inputs);
     const auto& mol        = sys.molecule();
 
-    if(!sys.charge()) throw std::runtime_error("Charged systems are NYI.");
+    if(sys.charge()) throw std::runtime_error("Charged systems are NYI.");
 
     // Step 1: Form fragments
     auto& fragmenter    = submods.at("Fragmenter");
