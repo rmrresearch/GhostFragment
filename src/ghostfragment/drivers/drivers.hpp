@@ -12,11 +12,11 @@ inline void load_modules(pluginplay::ModuleManager& mm) {
 
 /// Sets the defaults for submodules in the Drivers library, when a suitable
 /// default is provided by GhostFragment
-inline void set_defaults(pluginplay::ModuleManger& mm) {
+inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("FragmentedSystem Driver", "Fragmenter",
                      "cluster partition");
     mm.change_submod("FragmentedSystem Driver", "Fragment to AO Mapper",
-                     "AO Center to Atom Mapper");
+                     "Nuclei-AO Fragmenter");
 }
 
 } // namespace ghostfragment::drivers

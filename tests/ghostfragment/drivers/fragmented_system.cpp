@@ -1,11 +1,11 @@
-#include "ghostfragment/driversfragmented_system.hpp"
-#include "test_ghostfragment.hpp"
+#include "../test_ghostfragment.hpp"
 
 using namespace ghostfragment;
 using namespace testing;
 
 using frag_pt    = simde::FragmentedMolecule;
-using frag2ao_pt = pt::Frag2AO using mod_pt = pt::FragmentedSystem;
+using frag2ao_pt = pt::Frag2AO;
+using mod_pt     = pt::FragmentedSystem;
 
 /* Testing Strategy:
  *
@@ -13,11 +13,12 @@ using frag2ao_pt = pt::Frag2AO using mod_pt = pt::FragmentedSystem;
  * ensure that the driver calls the submodules with the appropriate inputs and
  * that it correctly assigns electrons to atoms.
  */
-TEST_CASE("FragmentedSystem") {
-    auto mm = intialize();
+TEST_CASE("FragmentedSystem Module") {
+    auto mm = initialize();
 
     auto mol = water(1);
-    auto bs  = sto3g(1).basis_set();
+    auto bs  = sto3g(mol).basis_set();
+    simde::type::chemical_system sys(mol);
 
     auto monomer = testing::fragmented_water(1);
     auto mono2ao = testing::water_ao_pairs(1);
@@ -30,7 +31,7 @@ TEST_CASE("FragmentedSystem") {
 
     auto frag2ao_mod =
       pluginplay::make_lambda<frag2ao_pt>([=](auto&& frags_in, auto&& bs_in) {
-          REQURIE(frags_in == monomer);
+          REQUIRE(frags_in == monomer);
           REQUIRE(bs_in == bs);
           return mono2ao;
       });
@@ -40,7 +41,7 @@ TEST_CASE("FragmentedSystem") {
     mod.change_submod("Fragment to AO Mapper", frag2ao_mod);
 
     SECTION("Standard usage") {
-        const auto& [frags] = mod.run_as<mod_pt>(mol, bs);
+        const auto& [frags] = mod.run_as<mod_pt>(sys, bs);
 
         using vector_type = FragmentedSystem::atom2nelectron_type;
         using size_type   = vector_type::value_type;

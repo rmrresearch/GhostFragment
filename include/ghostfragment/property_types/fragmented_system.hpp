@@ -10,7 +10,7 @@ struct FragmentedSystemTraits {
     using system_type = simde::type::chemical_system;
 
     /// Expected input type of the molecular AO basis set
-    using ao_basis_type = simde::ao_basis_set;
+    using ao_basis_type = simde::type::ao_basis_set;
 
     /// How the fragmented system is returned.
     using result_type = ghostfragment::FragmentedSystem;
@@ -42,7 +42,7 @@ PROPERTY_TYPE_INPUTS(FragmentedSystem) {
 
     return pluginplay::declare_input()
       .add_field<input0_type>("Parent system")
-      .template add_field<input1_type>("Moleculare AO Basis Set");
+      .template add_field<input1_type>("Molecular AO Basis Set");
 }
 
 PROPERTY_TYPE_RESULTS(FragmentedSystem) {

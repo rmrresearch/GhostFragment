@@ -35,13 +35,13 @@ MODULE_RUN(NucleiAO) {
     const auto& [frags, aos] = my_pt::unwrap_inputs(inputs);
     const auto& mol          = frags.object();
 
-    // Step 2: Map atoms to AOs
+    // Step 1: Map atoms to AOs
     const auto& [atom_ao] =
       submods.at("Atom to Center").run_as<atom2center_pt>(mol, aos);
 
     typename Frag2AOTraits::fos_value_type fragged_aos(aos);
     typename Frag2AOTraits::result_type frag2aos;
-    // Step 3: Apply basis functions to fragment
+    // Step 2: Apply basis functions to fragment
     for(const auto& fragi : frags) {
         auto new_set = fragged_aos.new_subset();
         for(auto atomi : fragi) {
