@@ -49,7 +49,7 @@ TEST_CASE("HeavyAtom") {
 
     SECTION("Throws if Z == 0") {
         molecule mol{molecule::value_type{"Ez", 0ul}};
-        mod.change_submod("Connectivity", make_lambda(mol, connect_t{}));
+        mod.change_submod("Connectivity", make_lambda(mol, connect_t{1}));
 
         REQUIRE_THROWS_AS(mod.run_as<my_pt>(mol), std::runtime_error);
     }

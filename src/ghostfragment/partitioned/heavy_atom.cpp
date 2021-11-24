@@ -18,6 +18,10 @@ hydrogens bonded to the :math:`i`-th heavy atom. In the event that there are
 hydrogen molecules, (*i.e.*, hydrogen atoms bonded to each other), or lone
 hydrogen atoms, those are put into their own fragment.
 
+While theoretically usable as a fragmentation method proper, this module is
+largely envisioned as being used as a pseudoatom submodule, or as the first step
+in a more involved pseudoatom submodule.
+
 This module will raise an error if there is a hydrogen atom bonded to more than
 one other atom.
 )";
