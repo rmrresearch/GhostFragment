@@ -12,6 +12,7 @@ void load_modules(pluginplay::ModuleManager& mm) {
     energy::load_modules(mm);
     partitioned::load_modules(mm);
 
+    connectivity::set_defaults(mm);
     drivers::set_defaults(mm);
     energy::set_defaults(mm);
     partitioned::set_defaults(mm);
