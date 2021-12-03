@@ -10,6 +10,10 @@ and vibrational frequencies were computed and compared to the supersystem
 counterparts.
 
 In a follow-up paper :cite:t:`Collins2006` presented the original SMF Algorithm
-in more detail. New this time were the ring-repair rule and an approximate
-treatment of the non-bonded interactions between distant fragments. To test the
-new SMF algorithm structures were taken from the Cambridge Structural Database.
+in more detail. New this time were the :ref:`Ring Repair Variation` and an 
+approximate treatment of the non-bonded interactions between distant fragments. 
+To test the new SMF algorithm, structures were taken from the Cambridge 
+Structural Database. Compared to the initial study the resulting molecules were 
+chemically more diverse. Absolute energies and isomerazation eneriges were 
+computed and compared to the respective supersystem values. Results used the SCF
+and MP2 methods combined with small and medium size basis sets.

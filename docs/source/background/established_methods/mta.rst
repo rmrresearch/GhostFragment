@@ -22,6 +22,43 @@ algorithm for doing so is provided. Applications focused on three systems:
 primarily focused on comparing the electorstatic potential computed by MTA to
 that of the supersystem.
 
+The next development :cite:`Ganesh2006` in MTA, led to a rebranding as CGMTA (CG
+standing for cardinality guided). In this study the energy, and energy 
+derivatives, of a fragmented system are computed using the inclusion-exclusion 
+principle. Initial applications focused on replicating the energy of 
+medium-sized organic molecules using small-basis HF, MP2, and B3LYP. Also
+considered were geometry optimizations, and vibrational frequencies. This study
+is also one of the earliest applications of :ref:`CG-MTA 06`.
+
+.. |E_SCF_HB| replace:: :math:`E_{SCF/High}`
+.. |E_MTA_MP2_HB| replace:: :math:`E_{MTA-MP2/High}`
+.. |E_MP2_SB| replace:: :math:`E_{MP2/Low|}`
+.. |E_MTA_MP2_SB| replace:: :math:`E_{MP2/Low|}`
+
+
+:cite:t:`Furtado2012` noted that up to this point in MTA development, errors 
+(relative to the supersystem calcualtion) resulting from MTA tend to be basis
+set independent. They also note that when applying MTA to a correlated method 
+the majority of the error comes from the SCF part of the energy. On the basis
+of these observations, :cite:t:`Furtado2012` propsed the "grafting" correction
+to MTA. Grafting involves:
+
+#. Compute the SCF energy of the supersystem with a large basis set, |E_SCF_HB|.
+#. Using MTA compute the MP2 correlation energy with the same large basis set,
+   |E_MTA_MP2_HB|.
+#. Compute the MP2 energy of the supersystem with a small basis set, |E_MP2_SB|.
+#. Using MTA compute the MP2 correlation energy with the same small basis set,
+   |E_MTA_MP2_SB|.
+
+The final energy is then estimated as |E_SCF_HB| plus |E_MP2_HB| plus a 
+correction (the difference between |E_MP2_SB| and |E_MTA_MP2_SB|) which accounts
+for the error in the fragmentation. Alternatively, one may view the energy as
+|E_SCF_HB| plus |E_MP2_SB| plus a basis set correction (the difference between 
+|E_MTA_MP2_HB| and |E_MTA_MP2_HB|). Either way grafting amounts to a multi-level
+fragment-based method. To demonstrate grafting :cite:t:`Furtado2012` considered
+MP2 energies of water clusters; compared to supersystem MP2/aug-cc-pVDZ energies
+the grafting procedure resulted in errors on the order of 0.3 mH.
+
 *****************
 Other MTA Results
 *****************
@@ -30,3 +67,13 @@ Other MTA Results
 crystal with the HF/STO-3G and HF/6-31G(d,p) levels of theory. Comparisons
 between the supersystem density matrices were made at the HF/STO-3G level of
 theory.
+
+:cite:t:`Rahalkar2008` extended CG-MTA to computations of the Hessian matrix
+with small-basis HF, B3LYP, and MP2 levels of theory. Errors in computed 
+vibrational frequencies were less than a wavenumber.
+
+:cite:t:`Rahalkar2010` paired CG-MTA with small basis IMS-MP2 and IMS-RI-MP2 
+(AFAIk IMS is a disk-based MP2 algoritm in the GAMESS package). Comparisons of 
+CG-MTA energies to FMO energies were also presented. Overall the comparison
+shows that three-body FMO performs about as well as CG-MTA, although it is noted
+that the error in the FMO results tends to increase with basis set size.
