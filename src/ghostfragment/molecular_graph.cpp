@@ -93,4 +93,10 @@ void MolecularGraph::hash(pluginplay::Hasher& h) const {
         h(nullptr);
 }
 
+void MolecularGraph::print(std::ostream& os) const {
+    if(!m_pimpl_) return;
+    os << m_pimpl_->m_nodes << std::endl;
+    os << m_pimpl_->m_edges;
+}
+
 } // namespace ghostfragment

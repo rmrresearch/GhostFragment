@@ -1,14 +1,14 @@
 #include "../test_ghostfragment.hpp"
 #include "ghostfragment/property_types/molecular_graph.hpp"
 
-using traits_type = ghostframent::pt::MolecularGraphTraits;
+using traits_type = ghostfragment::pt::MolecularGraphTraits;
 using input_type  = traits_type::input_type;
 using result_type = traits_type::result_type;
 using conn_type   = result_type::connectivity_type;
 namespace {
 
 auto make_submod(const input_type& frags, const conn_type& conns) {
-    return pluginplya::make_lambda<simde::Connectivity>([=](const auto& mol) {
+    return pluginplay::make_lambda<simde::Connectivity>([=](const auto& mol) {
         REQUIRE(frags.object() == mol);
         return conns;
     });
@@ -42,11 +42,43 @@ TEST_CASE("MolecularGraph from atomic connectivity") {
 
     SECTION("One node") {
         const auto nodes = testing::fragmented_water(1);
-        conn_type atom_cons(1);
+        conn_type atom_cons(3);
+        atom_cons.add_bond(0, 1);
+        atom_cons.add_bond(0, 2);
         mod.change_submod("Atomic connectivity", make_submod(nodes, atom_cons));
 
-        result_type corr(nodes, atom_cons);
+        result_type corr(nodes, conn_type(1));
         const auto& [graph] = mod.run_as<pt>(nodes);
-        REQURIE(graph == corr);
+        REQUIRE(graph == corr);
+    }
+
+    SECTION("Two nodes") {
+        const auto nodes = testing::fragmented_water(1);
+        conn_type atom_cons(6);
+        atom_cons.add_bond(0, 1);
+        atom_cons.add_bond(0, 2);
+        atom_cons.add_bond(3, 4);
+        atom_cons.add_bond(3, 5);
+
+        SECTION("No connection") {
+            mod.change_submod("Atomic connectivity",
+                              make_submod(nodes, atom_cons));
+
+            result_type corr(nodes, conn_type(2));
+            const auto& [graph] = mod.run_as<pt>(nodes);
+            REQUIRE(graph == corr);
+        }
+
+        SECTION("Connected") {
+            atom_cons.add_bond(0, 3);
+            mod.change_submod("Atomic connectivity",
+                              make_submod(nodes, atom_cons));
+
+            conn_type corr_cons(2);
+            corr_cons.add_bond(0, 1);
+            result_type corr(nodes, corr_cons);
+            const auto& [graph] = mod.run_as<pt>(nodes);
+            REQUIRE(graph == corr);
+        }
     }
 }

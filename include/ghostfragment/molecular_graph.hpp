@@ -158,6 +158,8 @@ public:
      */
     void hash(pluginplay::Hasher& h) const;
 
+    void print(std::ostream& os) const;
+
 private:
     /// Type of the class holding the state
     using pimpl_type = detail_::MolecularGraphPIMPL;
@@ -168,6 +170,11 @@ private:
     /// The class's actual state.
     pimpl_ptr m_pimpl_;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const MolecularGraph& g) {
+    g.print(os);
+    return os;
+}
 
 /** @brief Determines if two MolecularGraph instances are different.
  *
