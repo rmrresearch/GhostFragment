@@ -54,7 +54,7 @@ The final energy is then estimated as |E_SCF_HB| plus |E_MP2_HB| plus a
 correction (the difference between |E_MP2_SB| and |E_MTA_MP2_SB|) which accounts
 for the error in the fragmentation. Alternatively, one may view the energy as
 |E_SCF_HB| plus |E_MP2_SB| plus a basis set correction (the difference between 
-|E_MTA_MP2_HB| and |E_MTA_MP2_HB|). Either way grafting amounts to a multi-level
+|E_MTA_MP2_HB| and |E_MTA_MP2_SB|). Either way grafting amounts to a multi-level
 fragment-based method. To demonstrate grafting :cite:t:`Furtado2012` considered
 MP2 energies of water clusters; compared to supersystem MP2/aug-cc-pVDZ energies
 the grafting procedure resulted in errors on the order of 0.3 mH.
@@ -67,6 +67,12 @@ Other MTA Results
 crystal with the HF/STO-3G and HF/6-31G(d,p) levels of theory. Comparisons
 between the supersystem density matrices were made at the HF/STO-3G level of
 theory.
+
+:cite:t:`Gadre2006a` provided additional details about the :ref:`CG-MTA 06`
+fragmentation procedure and provided some additional studies of organic 
+molecules using HF and B3LYP with the 6-31G(d) and 6-31G(d, p) basis sets.
+Absolute energies, gradients, optimized geometries, and mean electorstatic
+potential surfaces were compared to the supersystem results.
 
 :cite:t:`Rahalkar2008` extended CG-MTA to computations of the Hessian matrix
 with small-basis HF, B3LYP, and MP2 levels of theory. Errors in computed 
