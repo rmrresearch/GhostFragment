@@ -74,6 +74,12 @@ molecules using HF and B3LYP with the 6-31G(d) and 6-31G(d, p) basis sets.
 Absolute energies, gradients, optimized geometries, and mean electorstatic
 potential surfaces were compared to the supersystem results.
 
+:cite:t:`Elango_2008` applied CG-MTA to boric acid nanotubes and nanorings. 
+Comparisons to B3LYP/3-21G supersystem energies and (partial) geometry 
+optimizations. Additional results with CG-MTA approximated B3LYP and MP2 are
+reported (6-31+G(d,p) basis set). Of note BSSE calculations are foregone due to
+cost and an expectation that they will not change the results.
+
 :cite:t:`Rahalkar2008` extended CG-MTA to computations of the Hessian matrix
 with small-basis HF, B3LYP, and MP2 levels of theory. Errors in computed 
 vibrational frequencies were less than a wavenumber.
