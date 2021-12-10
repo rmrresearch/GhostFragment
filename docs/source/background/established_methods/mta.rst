@@ -35,6 +35,16 @@ is also one of the earliest applications of :ref:`CG-MTA 06`.
 .. |E_MP2_SB| replace:: :math:`E_{MP2/Low|}`
 .. |E_MTA_MP2_SB| replace:: :math:`E_{MP2/Low|}`
 
+For benzene clusters, :cite:t:`Mahadevi_2010` note that a 1-body CG-MTA
+expansion still neglects some many-body interactions. They suggested a screening 
+method which amounts to manually adding back in two-, three-, etc. body 
+interactions which do not appear in the 1-body CG-MTA expansion. For larger
+benzene clusters (hexamers, for example) these higher-body corrections can be
+more than a kcal/mol. Conceptually this correction is very similar (identical?)
+to :ref:`SMF Screening 06`. The accompanying numerical results demonstrated that 
+BSSE was quite prevelant in the benzene tetramers. Despite this fact, results 
+for larger clusters did not correct for BSSE.
+
 
 :cite:t:`Furtado2012` noted that up to this point in MTA development, errors 
 (relative to the supersystem calcualtion) resulting from MTA tend to be basis
@@ -58,6 +68,14 @@ for the error in the fragmentation. Alternatively, one may view the energy as
 fragment-based method. To demonstrate grafting :cite:t:`Furtado2012` considered
 MP2 energies of water clusters; compared to supersystem MP2/aug-cc-pVDZ energies
 the grafting procedure resulted in errors on the order of 0.3 mH.
+
+*******
+Summary
+*******
+
+Like many fragment-based methods, *the MTA/CG-MTA method* is not a well defined a
+concept as the definition has changed over the years. The following table 
+summarizes the variants of MTA/CG-MTA.
 
 *****************
 Other MTA Results

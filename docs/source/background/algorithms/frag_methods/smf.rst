@@ -32,6 +32,10 @@ Systematic Molecular Fragmentation Fragmentation Method
 .. |Fi| replace:: :math`F_i`
 .. |Fp| replace:: :math`F'`
 
+********************
+SMF Fragmentation 05
+********************
+
 :cite:t:`Deev2005` introduced a means of fragmenting large covalently bonded
 molecules. As originally presented, the SMF fragmentation method was used to
 define the fragments, intersections, and energy expansion coefficients. The
@@ -73,8 +77,6 @@ The original presentation contains a few other details we have omitted, namely:
   for these rules stems from their capping method choice. To be more general we
   instead adopt the view that if a ring shouldn't be broken, it should be 
   protected as a pseudoatom.
-- An ad hoc means of adding in some non-bonding interactions by considering
-  dimers. We prefer the traditional union-approach as it is more systematic.
 
 *********************
 Ring Repair Variation
