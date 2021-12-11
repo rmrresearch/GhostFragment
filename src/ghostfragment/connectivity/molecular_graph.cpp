@@ -13,7 +13,7 @@ Molecular Graph From Atomic Connectivity
 
 This module takes as input a set of disjoint fragments. Then using the atomic
 connectivity of the parent molecular system it determines the edges of the
-graph.
+graph (the nodes of the graph are the input disjoint fragments).
 )";
 
 MODULE_CTOR(MolecularGraph) {
