@@ -1,8 +1,12 @@
 #include "drivers.hpp"
 
+#include "ghostfragment/property_types/property_types.hpp"
+
 namespace ghostfragment::drivers {
 
-using frags_pt = simde::FragmentedMolecule;
+using frags_pt       = simde::FragmentedMolecule;
+using graph_pt       = pt::MolecularGraph;
+using graph2frags_pt = pt::MolecularGraphToFragments;
 
 const auto mod_desc = R"(
 Fragment Driver
@@ -24,5 +28,30 @@ driver calls into a submodule of type XXX, which is responsible for breaking the
 MolecularGraph instance into fragments.
 
 )";
+
+MODULE_CTOR(FragmentDriver) {
+    description(mod_desc);
+    satisfies_property_type<frags_pt>();
+
+    add_submodule<frags_pt>("Pseudoatoms");
+    add_submodule<graph_pt>("Molecular graph");
+    add_submodule<graph2frags_pt>("Molecular graph to fragments");
+}
+
+MODULE_RUN(FragmentDriver) {
+    const auto& [mol] = frags_pt::unwrap_inputs(inputs);
+
+    auto& pseudoatom_mod      = submods.at("Pseudoatoms");
+    const auto& [pseudoatoms] = pseudoatom_mod.run_as<frags_pt>(mol);
+
+    auto& graph_mod     = submods.at("Molecular Graph");
+    const auto& [graph] = graph_mod.run_as<graph_pt>(pseudoatoms);
+
+    auto& frags_mod     = submods.at("Molecular graph to fragments");
+    const auto& [frags] = frags_mod.run_as<graph2frags_pt>(graph);
+
+    auto rv = results();
+    return frags_pt::wrap_results(rv, frags);
+}
 
 } // namespace ghostfragment::drivers

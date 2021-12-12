@@ -64,6 +64,11 @@ MolecularGraph::~MolecularGraph() noexcept = default;
 //                             Accessors
 //------------------------------------------------------------------------------
 
+MolecularGraph::const_molecule_reference MolecularGraph::molecule() const {
+    assert_pimpl_();
+    return m_pimpl_->m_nodes.object();
+}
+
 MolecularGraph::size_type MolecularGraph::nnodes() const noexcept {
     if(m_pimpl_) return m_pimpl_->m_nodes.size();
     return 0;
@@ -72,6 +77,11 @@ MolecularGraph::size_type MolecularGraph::nnodes() const noexcept {
 MolecularGraph::size_type MolecularGraph::nedges() const noexcept {
     if(m_pimpl_) return m_pimpl_->m_edges.bonds().size();
     return 0;
+}
+
+MolecularGraph::edge_list MolecularGraph::edges() const noexcept {
+    if(m_pimpl_) return m_pimpl_->m_edges.bonds();
+    return edge_list{};
 }
 
 //------------------------------------------------------------------------------
@@ -97,6 +107,17 @@ void MolecularGraph::print(std::ostream& os) const {
     if(!m_pimpl_) return;
     os << m_pimpl_->m_nodes << std::endl;
     os << m_pimpl_->m_edges;
+}
+
+//------------------------------------------------------------------------------
+//                           Protected/Private Members
+//------------------------------------------------------------------------------
+
+void MolecularGraph::assert_pimpl_() const {
+    if(m_pimpl_) return;
+
+    throw std::runtime_error("Instance does not have a PIMPL. Was it default "
+                             "constructed or moved from?");
 }
 
 } // namespace ghostfragment

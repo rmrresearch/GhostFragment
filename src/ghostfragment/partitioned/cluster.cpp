@@ -1,4 +1,4 @@
-#include "ghostfragment/types.hpp"
+#include "ghostfragment/property_types/property_types.hpp"
 #include "partitioned.hpp"
 #include <simde/simde.hpp>
 
@@ -52,45 +52,40 @@ The end result is that if the input is a cluster of molecules, each molecule is
 assigned to its own partition. If the input is a single molecule the result is a
 single partition. And if there are zero atoms in the input molecular system you
 get back zero partitions.
-
-Atoms are assigned to partitions in input order. Meaning within a partition atom
-``i`` will come before atom ``j` if atom ``i`` was declared in the supersystem
-before atom ``j``.
 )";
 
-using pt = simde::FragmentedMolecule;
+using my_pt    = ghostfragment::pt::MolecularGraphToFragments;
+using graph_pt = ghostfragment::pt::MolecularGraph;
 
 MODULE_CTOR(Cluster) {
     description(mod_desc);
-    satisfies_property_type<pt>();
-
-    add_submodule<simde::Connectivity>("Connectivity")
-      .set_description("Determines the input system's connectivity.");
+    satisfies_property_type<my_pt>();
 }
 
 MODULE_RUN(Cluster) {
-    using subset_type = typename type::fragmented_molecule::value_type;
-    const auto& [mol] = pt::unwrap_inputs(inputs);
-    const auto natoms = mol.size();
+    using result_type   = pt::MolecularGraphToFragmentsTraits::fragment_type;
+    using subset_type   = typename result_type::value_type;
+    using input_type    = pt::MolecularGraphToFragmentsTraits::graph_type;
+    using molecule_type = typename input_type::molecule_type;
 
-    type::fragmented_molecule frags(mol); // Will be the fragments
+    const auto& [graph] = my_pt::unwrap_inputs(inputs);
+    const auto natoms   = graph.nnodes();
 
     // Handle zero atom edge-case
     if(natoms == 0) {
         auto rv = results();
-        return pt::wrap_results(rv, frags);
+        return my_pt::wrap_results(rv, result_type{molecule_type{}});
     }
 
-    auto& ctable_mod     = submods.at("Connectivity");
-    const auto& [ctable] = ctable_mod.run_as<simde::Connectivity>(mol);
+    result_type frags(graph.molecule()); // Will be the fragments
+    const auto& bonds = graph.edges();
 
-    using size_type = typename std::decay_t<decltype(ctable)>::size_type;
+    using size_type = typename std::decay_t<decltype(bonds)>::size_type;
     std::map<type::tag, std::set<size_type>> atom2frag;
 
     // We know we have at least one atom so seed atom 0 to fragment 0
     type::tag curr_tag = "0";
     std::vector<bool> seen(natoms, false); // Ensures all atoms get assigned
-    const auto& bonds = ctable.bonds();
     for(size_type i = 0; i < natoms; ++i) {
         if(seen[i]) continue;
         std::set<size_type> seed{i};
@@ -106,7 +101,7 @@ MODULE_RUN(Cluster) {
     }
 
     auto rv = results();
-    return pt::wrap_results(rv, frags);
+    return my_pt::wrap_results(rv, frags);
 }
 
 } // namespace ghostfragment::partitioned

@@ -31,6 +31,12 @@ public:
     /// Type used to input the partitioned molecular system
     using partitioned_mol_type = type::fragmented_molecule;
 
+    /// Type used to model the Molecule
+    using molecule_type = partitioned_mol_type::superset_type;
+
+    /// Read-only reference to the Molecule
+    using const_molecule_reference = const molecule_type&;
+
     /// Type of a node in the graph
     using node_type = partitioned_mol_type::value_type;
 
@@ -39,6 +45,9 @@ public:
 
     /// Type used for edges of the graph
     using edge_type = connectivity_type::pair_type;
+
+    /// Type used for a list of edges
+    using edge_list = connectivity_type::bond_list_type;
 
     /// Type used for indexing and offsets
     using size_type = std::size_t;
@@ -112,6 +121,16 @@ public:
     /// Default, no-throw dtor
     ~MolecularGraph() noexcept;
 
+    /** @brief Returns a read-only reference to the molecular system this graph
+     *         models.
+     *
+     *  @return The molecular system the present graph describes.
+     *
+     *  @throw std::runtime_error if the instance does not contain a PIMPL.
+     *                            Strong throw guarantee.
+     */
+    const_molecule_reference molecule() const;
+
     /** @brief Returns the number of nodes in the graph.
      *
      *  Each MolecularGraph is a representation of a molecular system. In this
@@ -134,6 +153,11 @@ public:
      *  @throw None No throw guarantee.
      */
     size_type nedges() const noexcept;
+
+    /** @brief Returns a list of the edges in the graph.
+     *
+     */
+    edge_list edges() const noexcept;
 
     /** @brief Determines if this instance is equivalent to @p rhs.
      *
@@ -161,6 +185,9 @@ public:
     void print(std::ostream& os) const;
 
 private:
+    /// Throws if there is no PIMPL
+    void assert_pimpl_() const;
+
     /// Type of the class holding the state
     using pimpl_type = detail_::MolecularGraphPIMPL;
 
