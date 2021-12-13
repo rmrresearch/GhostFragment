@@ -56,13 +56,14 @@ The resulting set of fragments is then postprocessed. This includes:
    Unlike the body of the fragmentation algorithm, the postprocessing steps are
    not described in detail and are thus open to some interpretation.
    
-********   
-CG-MTA06
-********
+*******************   
+MTA06 Fragmentation
+*******************
 
 .. |Ai| replace:: :math:`A_i`
 .. |Fi| replace:: :math:`F_i`
 .. |R| replace:: :math:`R`
+.. |N| replace:: :math:`N`
 
 Along with the rebranding of MTA to CG-MTA, :cite:t:`Ganesh2006` introduced a 
 new fragmentation methodology with two user defined thresholds: a cut-off radius

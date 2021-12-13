@@ -8,6 +8,7 @@ Systematic Molecular Fragmentation Fragmentation Method
 .. |A1| replace:: :math:`A_1`
 .. |A1p| replace:: :math:`A_1'`
 .. |A2| replace:: :math:`A_2`
+.. |A3| replace:: :math:`A_3`
 .. |A2p| replace:: :math:`A_2'`
 .. |Al1| replace:: :math:`A_{\ell -1}`
 .. |Al1p| replace:: :math:`A_{\ell - 1}'`

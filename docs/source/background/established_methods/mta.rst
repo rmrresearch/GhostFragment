@@ -28,7 +28,7 @@ derivatives, of a fragmented system are computed using the inclusion-exclusion
 principle. Initial applications focused on replicating the energy of 
 medium-sized organic molecules using small-basis HF, MP2, and B3LYP. Also
 considered were geometry optimizations, and vibrational frequencies. This study
-is also one of the earliest applications of :ref:`CG-MTA 06`.
+is also one of the earliest applications of :ref:`mta06 fragmentation`.
 
 .. |E_SCF_HB| replace:: :math:`E_{SCF/High}`
 .. |E_MTA_MP2_HB| replace:: :math:`E_{MTA-MP2/High}`
@@ -40,11 +40,10 @@ expansion still neglects some many-body interactions. They suggested a screening
 method which amounts to manually adding back in two-, three-, etc. body 
 interactions which do not appear in the 1-body CG-MTA expansion. For larger
 benzene clusters (hexamers, for example) these higher-body corrections can be
-more than a kcal/mol. Conceptually this correction is very similar (identical?)
-to :ref:`SMF Screening 06`. The accompanying numerical results demonstrated that 
+more than a kcal/mol. Conceptually this correction is very similar to 
+:ref:`SMF Screening 05`. The accompanying numerical results demonstrated that 
 BSSE was quite prevelant in the benzene tetramers. Despite this fact, results 
 for larger clusters did not correct for BSSE.
-
 
 :cite:t:`Furtado2012` noted that up to this point in MTA development, errors 
 (relative to the supersystem calcualtion) resulting from MTA tend to be basis
@@ -60,7 +59,7 @@ to MTA. Grafting involves:
 #. Using MTA compute the MP2 correlation energy with the same small basis set,
    |E_MTA_MP2_SB|.
 
-The final energy is then estimated as |E_SCF_HB| plus |E_MP2_HB| plus a 
+The final energy is then estimated as |E_SCF_HB| plus |E_MTA_MP2_HB| plus a 
 correction (the difference between |E_MP2_SB| and |E_MTA_MP2_SB|) which accounts
 for the error in the fragmentation. Alternatively, one may view the energy as
 |E_SCF_HB| plus |E_MP2_SB| plus a basis set correction (the difference between 
@@ -69,13 +68,31 @@ fragment-based method. To demonstrate grafting :cite:t:`Furtado2012` considered
 MP2 energies of water clusters; compared to supersystem MP2/aug-cc-pVDZ energies
 the grafting procedure resulted in errors on the order of 0.3 mH.
 
-*******
-Summary
-*******
+***********
+MTA Summary
+***********
 
-Like many fragment-based methods, *the MTA/CG-MTA method* is not a well defined a
-concept as the definition has changed over the years. The following table 
-summarizes the variants of MTA/CG-MTA.
+Like many fragment-based methods, *the MTA/CG-MTA method* is not a well defined
+concept, as the definition of the method has changed over the years. The 
+following table summarizes the variants of MTA/CG-MTA, which have appeared. Note
+that the names of the variants are our names, and were not present in the
+original manuscripts.
+
+.. |Frag3| replace:: :ref:`mta03 fragmentation`
+.. |Frag6| replace:: :ref:`mta06 fragmentation`
+.. |Hcap| replace:: :ref:`h capping`
+.. |Sc10| replace:: :ref:`SMF Screening 05`
+
++--------+-----------+-----------+--------+-----------+
+| Name   | Fragments | Embedding | Caps   | Screening |
++========+===========+===========+========+===========+
+| MTA 03 | |Frag3|   | N/A       | |Hcap| | N/A       |
++--------+-----------+-----------+--------+-----------+
+| MTA 06 | |Frag6|   | N/A       | |Hcap| | N/A       |
++--------+-----------+-----------+--------+-----------+
+| MTA 10 | |Frag6|   | N/A       | |Hcap| | |Sc10|    |
++--------+-----------+-----------+--------+-----------+
+
 
 *****************
 Other MTA Results
@@ -86,8 +103,9 @@ crystal with the HF/STO-3G and HF/6-31G(d,p) levels of theory. Comparisons
 between the supersystem density matrices were made at the HF/STO-3G level of
 theory.
 
-:cite:t:`Gadre2006a` provided additional details about the :ref:`CG-MTA 06`
-fragmentation procedure and provided some additional studies of organic 
+:cite:t:`Gadre2006a` provided additional details about the 
+:ref:`mta06 fragmentation` procedure and provided some additional studies of 
+organic 
 molecules using HF and B3LYP with the 6-31G(d) and 6-31G(d, p) basis sets.
 Absolute energies, gradients, optimized geometries, and mean electorstatic
 potential surfaces were compared to the supersystem results.
