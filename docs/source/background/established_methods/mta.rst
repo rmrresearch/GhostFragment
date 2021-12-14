@@ -90,7 +90,7 @@ original manuscripts.
 +--------+-----------+-----------+--------+-----------+
 | MTA 06 | |Frag6|   | N/A       | |Hcap| | N/A       |
 +--------+-----------+-----------+--------+-----------+
-| MTA 10 | |Frag6|   | N/A       | |Hcap| | |Sc10|    |
+| MTA 10 | Manual    | N/A       | |Hcap| | |Sc10|    |
 +--------+-----------+-----------+--------+-----------+
 
 
@@ -121,7 +121,14 @@ with small-basis HF, B3LYP, and MP2 levels of theory. Errors in computed
 vibrational frequencies were less than a wavenumber.
 
 :cite:t:`Rahalkar2010` paired CG-MTA with small basis IMS-MP2 and IMS-RI-MP2 
-(AFAIk IMS is a disk-based MP2 algoritm in the GAMESS package). Comparisons of 
+(AFAIK IMS is a disk-based MP2 algoritm in the GAMESS package). Comparisons of 
 CG-MTA energies to FMO energies were also presented. Overall the comparison
 shows that three-body FMO performs about as well as CG-MTA, although it is noted
 that the error in the FMO results tends to increase with basis set size.
+
+***********
+MTA Reviews
+***********
+
+:cite:t:`Gadre_2010` reviewed applications of CG-MTA geometry optimization, 
+frequency calculations, as well as property computations to clusters.
