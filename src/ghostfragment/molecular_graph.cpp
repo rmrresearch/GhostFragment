@@ -84,6 +84,13 @@ MolecularGraph::edge_list MolecularGraph::edges() const noexcept {
     return edge_list{};
 }
 
+MolecularGraph::const_node_reference MolecularGraph::node(size_type i) const {
+    if(i < nnodes() && m_pimpl_) return m_pimpl_->m_nodes.at(i);
+    throw std::out_of_range(
+      std::to_string(i) + " is not in the range [0, nnodes) where nnodes == " +
+      std::to_string(nnodes()));
+}
+
 //------------------------------------------------------------------------------
 //                               Utilities
 //------------------------------------------------------------------------------

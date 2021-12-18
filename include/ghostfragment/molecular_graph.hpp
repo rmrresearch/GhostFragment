@@ -40,6 +40,9 @@ public:
     /// Type of a node in the graph
     using node_type = partitioned_mol_type::value_type;
 
+    /// Type of a read-only reference to a node in the graph
+    using const_node_reference = const node_type&;
+
     /// Type used to input the connectivity
     using connectivity_type = simde::type::connectivity_table;
 
@@ -124,6 +127,10 @@ public:
     /** @brief Returns a read-only reference to the molecular system this graph
      *         models.
      *
+     *  The MolecularGraph class ultimately models a molecular system as a
+     *  mathematical graph. This function can be used to retrieve the molecular
+     *  system this graph describes.
+     *
      *  @return The molecular system the present graph describes.
      *
      *  @throw std::runtime_error if the instance does not contain a PIMPL.
@@ -148,6 +155,17 @@ public:
 
     /** @brief Returns the number of edges in the graph.
      *
+     *  Each MolecularGraph is a representation of a molecular system. In this
+     *  representation the atoms in the molecular system are partitioned into
+     *  disjoint sets (either as one atom per set, or with multiple atoms in
+     *  the same set). Regardless of how the atoms are partitioned, the sets
+     *  resulting from the partitioning are the nodes of the graph. If an atom
+     *  in one node is bonded to an atom in another node, then an edge exists
+     *  between those nodes. This function returns the number of edges between
+     *  nodes. It should be noted that this does NOT include in the count any
+     *  bonds which are inside a node (this distinction is only relevant when a
+     *  node contains multiple atoms).
+     *
      *  @return The number of edges.
      *
      *  @throw None No throw guarantee.
@@ -156,8 +174,22 @@ public:
 
     /** @brief Returns a list of the edges in the graph.
      *
+     *  @return A random-access container filled with edges. Edges in the
+     *          container are modeled as pairs of indices, where the indices
+     *          map to nodes.
+     *
+     *  @throw None No throw guarantee.
      */
     edge_list edges() const noexcept;
+
+    /** @brief Returns the requested node of the graph.
+     *
+     *  @param[in] i The index of the node.
+     *
+     *  @throw std::out_of_range if @p i is not in the range [0, nnodes()).
+     *                           Strong throw guarantee.
+     */
+    const_node_reference node(size_type i) const;
 
     /** @brief Determines if this instance is equivalent to @p rhs.
      *

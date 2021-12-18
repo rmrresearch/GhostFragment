@@ -82,4 +82,27 @@ TEST_CASE("Cluster Partitioner") {
         return_t corr(mol, {{0, 2, 4}, {1, 3}});
         REQUIRE(corr == rv);
     }
+
+    SECTION("Two pseudoatoms - no bond") {
+        molecule mol{H, H, O, H, H};
+        nodes_t nodes(mol, {{0, 1, 2}, {3, 4}});
+        connect_t edges(2);
+        graph input(nodes, edges);
+
+        const auto& [rv] = mod.run_as<my_pt>(input);
+        return_t corr(mol, {{0, 1, 2}, {3, 4}});
+        REQUIRE(corr == rv);
+    }
+
+    SECTION("Two pseudoatoms - bonded") {
+        molecule mol{H, H, O, H, H};
+        nodes_t nodes(mol, {{0, 1, 2}, {3, 4}});
+        connect_t edges(2);
+        edges.add_bond(0, 1);
+        graph input(nodes, edges);
+
+        const auto& [rv] = mod.run_as<my_pt>(input);
+        return_t corr(mol, {{0, 1, 2, 3, 4}});
+        REQUIRE(corr == rv);
+    }
 }

@@ -69,10 +69,11 @@ MODULE_RUN(Cluster) {
     using molecule_type = typename input_type::molecule_type;
 
     const auto& [graph] = my_pt::unwrap_inputs(inputs);
-    const auto natoms   = graph.nnodes();
+    // patoms is short for pseudoatoms
+    const auto npatoms = graph.nnodes();
 
-    // Handle zero atom edge-case
-    if(natoms == 0) {
+    // Handle zero patom edge-case
+    if(npatoms == 0) {
         auto rv = results();
         return my_pt::wrap_results(rv, result_type{molecule_type{}});
     }
@@ -81,22 +82,23 @@ MODULE_RUN(Cluster) {
     const auto& bonds = graph.edges();
 
     using size_type = typename std::decay_t<decltype(bonds)>::size_type;
-    std::map<type::tag, std::set<size_type>> atom2frag;
+    std::map<type::tag, std::set<size_type>> patom2frag;
 
-    // We know we have at least one atom so seed atom 0 to fragment 0
+    // We know we have at least one patom so seed patom 0 to fragment 0
     type::tag curr_tag = "0";
-    std::vector<bool> seen(natoms, false); // Ensures all atoms get assigned
-    for(size_type i = 0; i < natoms; ++i) {
+    std::vector<bool> seen(npatoms, false); // Ensures all patoms get assigned
+    for(size_type i = 0; i < npatoms; ++i) {
         if(seen[i]) continue;
         std::set<size_type> seed{i};
-        atom2frag[curr_tag] = detail_::assign_bonds(bonds, seed);
-        for(auto x : atom2frag[curr_tag]) seen[x] = true;
-        curr_tag = std::to_string(atom2frag.size());
+        patom2frag[curr_tag] = detail_::assign_bonds(bonds, seed);
+        for(auto x : patom2frag[curr_tag]) seen[x] = true;
+        curr_tag = std::to_string(patom2frag.size());
     }
 
-    for(const auto& [tag, atoms] : atom2frag) {
+    for(const auto& [tag, patoms] : patom2frag) {
         subset_type new_mol(frags.data());
-        for(auto i : atoms) new_mol.insert(i);
+        for(auto patom_i : patoms)
+            for(auto atom_i : graph.node(patom_i)) new_mol.insert(atom_i);
         frags.insert(new_mol);
     }
 

@@ -11,6 +11,8 @@ namespace ghostfragment {
 TEST_CASE("MolecularGraph") {
     using frags_t   = MolecularGraph::partitioned_mol_type;
     using connect_t = MolecularGraph::connectivity_type;
+    using edge_list = MolecularGraph::edge_list;
+    using pair_t    = typename edge_list::value_type;
 
     auto water0 = testing::fragmented_water(0);
     auto water1 = testing::fragmented_water(1);
@@ -82,6 +84,66 @@ TEST_CASE("MolecularGraph") {
             REQUIRE(pmoved == &moved);
             REQUIRE(moved == corr);
         }
+    }
+
+    SECTION("molecule()") {
+        REQUIRE_THROWS_AS(defaulted.molecule(), std::runtime_error);
+        REQUIRE(empty.molecule() == water0.object());
+        REQUIRE(monomer.molecule() == water1.object());
+        REQUIRE(dimer.molecule() == water2.object());
+        REQUIRE(trimer.molecule() == water3.object());
+        REQUIRE(tetramer.molecule() == water4.object());
+    }
+
+    SECTION("nnodes()") {
+        REQUIRE(defaulted.nnodes() == 0);
+        REQUIRE(empty.nnodes() == 0);
+        REQUIRE(monomer.nnodes() == 1);
+        REQUIRE(dimer.nnodes() == 2);
+        REQUIRE(trimer.nnodes() == 3);
+        REQUIRE(tetramer.nnodes() == 4);
+    }
+
+    SECTION("nedges()") {
+        REQUIRE(defaulted.nedges() == 0);
+        REQUIRE(empty.nedges() == 0);
+        REQUIRE(monomer.nedges() == 0);
+        REQUIRE(dimer.nedges() == 0);
+        REQUIRE(trimer.nedges() == 1);
+        REQUIRE(tetramer.nedges() == 2);
+    }
+
+    SECTION("edges()") {
+        REQUIRE(defaulted.edges() == edge_list{});
+        REQUIRE(empty.edges() == edge_list{});
+        REQUIRE(monomer.edges() == edge_list{});
+        REQUIRE(dimer.edges() == edge_list{});
+        REQUIRE(trimer.edges() == edge_list{pair_t{0, 1}});
+        REQUIRE(tetramer.edges() == edge_list{pair_t{1, 2}, pair_t{2, 3}});
+    }
+
+    SECTION("node()") {
+        REQUIRE_THROWS_AS(defaulted.node(0), std::out_of_range);
+
+        REQUIRE_THROWS_AS(empty.node(0), std::out_of_range);
+
+        REQUIRE(monomer.node(0) == water1[0]);
+        REQUIRE_THROWS_AS(monomer.node(1), std::out_of_range);
+
+        REQUIRE(dimer.node(0) == water2[0]);
+        REQUIRE(dimer.node(1) == water2[1]);
+        REQUIRE_THROWS_AS(dimer.node(2), std::out_of_range);
+
+        REQUIRE(trimer.node(0) == water3[0]);
+        REQUIRE(trimer.node(1) == water3[1]);
+        REQUIRE(trimer.node(2) == water3[2]);
+        REQUIRE_THROWS_AS(trimer.node(3), std::out_of_range);
+
+        REQUIRE(tetramer.node(0) == water4[0]);
+        REQUIRE(tetramer.node(1) == water4[1]);
+        REQUIRE(tetramer.node(2) == water4[2]);
+        REQUIRE(tetramer.node(3) == water4[3]);
+        REQUIRE_THROWS_AS(tetramer.node(4), std::out_of_range);
     }
 
     SECTION("hash") {
