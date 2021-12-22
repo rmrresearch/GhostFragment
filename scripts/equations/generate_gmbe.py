@@ -80,19 +80,25 @@ def print_equation(nmers, ovps, clean_up = False):
     return rv
 
 if __name__ == "__main__":
-    n_fragments = 4
-    trunc_order = 2
-    frags = make_fragments(n_fragments)
-    nmers = make_nmers(trunc_order, frags)
-    ovps  = make_intersections(nmers)
-    for x in ovps:
-        if len(x.value.associate()) == 3:
-            print(x, x.clean_up())
+    #n_fragments = 4
+    #trunc_order = 2
+    #frags = make_fragments(n_fragments)
+    #nmers = make_nmers(trunc_order, frags)
+    #ovps  = make_intersections(nmers)
+    #for x in ovps:
+    #    if len(x.value.associate()) == 3:
+    #        print(x, x.clean_up())
     #print(print_equation(nmers, ovps, True))
-    nmers = [Term(1.0, Union(Index("I"), Index("J"))),
-             Term(1.0, Union(Index("I"), Index("K"))),
-             Term(1.0, Union(Index("J"), Index("K"))),
-             Term(1.0, Union(Index("I"), Index("L"))),
-             Term(1.0, Union(Index("J"), Index("L")))]
-    diff = diff_ovps(nmers, Term(1.0, Union(Index("K"), Index("L"))))
+    i,j,k,l = Index("1"), Index("2"), Index("3"), Index("4")
+    ij,ik,il,jk,jl = Union(i,j), Union(i,k), Union(i,l), Union(j,k), Union(j,l)
+    kl = Union(k,l)
+    for xs in combinations([ij, ik, jk, il, jl, kl], 6):
+      x = Intersection(xs[0], xs[1], xs[2], xs[3], xs[4], xs[5])
+      print(x, Term(1.0, x).clean_up())
+    #nmers = [Term(1.0, Union(Index("I"), Index("J"))),
+    #         Term(1.0, Union(Index("I"), Index("K"))),
+    #         Term(1.0, Union(Index("J"), Index("K"))),
+    #         Term(1.0, Union(Index("I"), Index("L"))),
+    #         Term(1.0, Union(Index("J"), Index("L")))]
+    #diff = diff_ovps(nmers, Term(1.0, Union(Index("K"), Index("L"))))
     #print(print_equation(nmers, diff, True))
