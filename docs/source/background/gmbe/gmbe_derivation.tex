@@ -11,172 +11,162 @@
 \newcommand{\fxn}[1]{f\left(#1\right)}
 \newcommand{\gxn}[1]{g\left(#1\right)}
 \newcommand{\pset}[1]{\mathcal{P}\left(#1\right)}
-\newcommand{\mcn}[2]{\mathcal{P}^{(#1)}\left(#2\right)}
+\newcommand{\mcn}[2]{\mathcal{U}^{(#1)}\left(#2\right)}
 \newcommand{\fn}[1]{f^{(#1)}}
-\newcommand{\ints}[1]{\mathcal{I}^{(#1)}}
+\newcommand{\ints}[2]{\mathcal{I}^{(#1)}\left(#2\right)}
+\newcommand{\iset}[1]{\mathcal{I}\left(#1\right)}
 \newcommand{\setf}{\mathbb{F}}
+\newcommand{\fmem}[2]{f^{\left(#1\right)}_{#2}}
+\newcommand{\smem}[2]{s^{\left(#1\right)}_{#2}}
 \newcommand{\setfn}[1]{\setf^{(#1)}}
-\newcommand{\sets}{\mathbb{S}}
+\newcommand{\sets}{\mathbb{S}^{(N)}}
 \newcommand{\setx}{\mathbb{X}}
 \newcommand{\fxns}{\fxn{\pset{\sets}}}
-\newcommand{\gapprox}[1]{g^{(#1)}\left(\sets\right)}
+\newcommand{\gapprox}[1]{g\left(#1\right)}
 
 \begin{document}
 
 \maketitle
 
-\section{Definitions}
+\section{Notation}
 
 Let:
 
 \begin{itemize}
-	\item $\sets$ be a set of finite cardinality
-	\item $s$ be an element of $\sets$.
-	\item $\setfn{m}$ be a (ordered) family of sets over $\sets$ with 
-	      cardinality $m$.  
-	\item $f_i$ be the $i$-th element of $\setfn{m}$.
-	\item $\pset{\setx}$ be the powerset of the set $\setx$.
-	\item $f$ be a function which takes a set $\setx$ and maps it to a
-	      scalar, $\fxn{\setx}$.
+	\item $\sets$ denote a set of cardinality $N$
+	\item $\pset{\sets}$ be the powerset of the set $\sets$.
+	\item $\mcn{n}{\sets}$ is the subset of $\pset{\sets}$, whose elements are
+          (unions of) $n$-length combinations of elements taken from $\sets$
+    \item $\ints{n}{\sets}$ is similar to $\mcn{n}{\sets}$ except that instead
+         of taking unions of $n$-length combinations one takes intersections.
+    \item By analogy to powerset we define $\iset{\sets}$ to be the set: $\left\lbrace\ints{m}{\sets} \mid m\in[0,N]\right\rbrace$.
 \end{itemize}
 
 \section{Problem Descriptions}
 
-Ultimately we would like to compute $\fxns$; however, the computational cost of 
-computing $\fxns$ scales exponentially with $N$. Instead we propose a series of 
-systematic approximations to $\fxns$. 
+Ultimately we have a function $f$, which maps the powerset of a set $\sets$ to a
+scalar $\fxns$; however, the computational cost of
+computing $\fxns$ scales exponentially with $N$. Instead we propose a series of
+systematic approximations to $\fxns$.
 
-In the first order approximation we divide $\sets$ into $m$ subsets such that:
+In the first order approximation we form a family of sets $\setfn{m}$ which
+contains $m$ subsets of $\sets$. The only stipulation on the members of
+$\setfn{m}$ is that:
 \begin{equation}
-	\pset{\sets} \approx \bigcup_{f_i\in \setfn{m}}^m \pset{f_i}.
+    \sets = \bigcup_{\fmem{1}{i}\in\setfn{m}} \fmem{1}{i}
 \end{equation}
-Of note we do not assume that the various $f_i$ are disjoint. Using the 
-inclusion-exclusion principle (IEP), we can approximate $\fxns$ via:
+must be true. Of note we do not assume that the various $\fmem{1}{i}$ are
+disjoint. Using $\setfn{m}$, we then approximate $\pset{\sets}$ via:
+\begin{equation}
+	\pset{\sets} \approx
+      \bigcup_{\fmem{1}{i}\in \setfn{m}} \pset{\fmem{1}{i}}.
+\end{equation}
+Using the inclusion-exclusion principle (IEP), we can then approximate $\fxns$
+via:
 \begin{align}
-	\fxn{\pset{\sets}} \approx& \sum_{i=1}^m \fxn{\pset{f_i}} -
-                       \sum_{i=1}^{m-1}\sum_{j=i+1}^{m} 
-                       \fxn{\pset{f_i\cap f_j}} + \cdots \nonumber\\
-                       &+\left(-1\right)^{m-1}
-                       \fxn{\pset{f_1\cap f_2\cap\cdots\cap f_m}},
+	\fxn{\pset{\sets}} \approx&
+        \sum_{i=1}^m \fxn{\pset{\fmem{1}{i}}} -
+        \sum_{i=1}^{m-1}\sum_{j=i+1}^{m}
+          \fxn{\pset{\fmem{1}{i}\cap\fmem{1}{j}}} + \cdots +\nonumber\\
+      & \left(-1\right)^{m-1}
+          \fxn{\pset{\fmem{1}{1}\cap\fmem{1}{2}\cap\cdots\cap\fmem{1}{m}}},
 \end{align}
-where $f_i\cap f_j$ is the intersection of sets $f_i$ and $f_j$. For brevity, 
-and because there is a one-to-one mapping between a set $\setx$ and its 
-powerset, we define a new function $g$ such that:
+where $\fmem{1}{i}\cap \fmem{1}{j}$ is the intersection of sets $\fmem{1}{i}$
+and $\fmem{1}{j}$. For brevity, and because there is a one-to-one mapping
+between $\sets$ and its powerset, we define a new function $g$ such that:
 \begin{equation}
-	\gxn{\setx} \equiv \fxn{\pset{\setx}}.
+	\gxn{\sets} \equiv \fxn{\pset{\sets}}.
 \end{equation}
-In terms of $g$, our first order approximation, $\gapprox{1,m}$, becomes:
+In terms of $g$, our first order approximation, $\gapprox{\setfn{m}}$, becomes:
 \begin{align}
-	\gapprox{1,m} =& \sum_{i=1}^m \gxn{f_i} -
-	\sum_{i=1}^{m-1}\sum_{j=i+1}^{m} 
-	\gxn{f_i\cap f_j} + \cdots \nonumber\\
-	&+\left(-1\right)^{m-1}
-	\gxn{f_1\cap f_2\cap\cdots\cap f_m}.\label{eq:order1}
+	\gapprox{\setfn{m}} =&
+        \sum_{i=1}^m \gxn{\fmem{1}{i}} -
+	    \sum_{i=1}^{m-1}\sum_{j=i+1}^{m}
+	      \gxn{\fmem{1}{i}\cap\fmem{1}{j}} + \cdots +\nonumber\\
+	  & \left(-1\right)^{m-1}
+        \gxn{\fmem{1}{1}\cap\fmem{1}{2}\cap\cdots\cap\fmem{1}{m}}.
+\end{align}
+To further simplify the equation we write the intersections in terms of the
+various $\ints{j}{\setfn{m}}$:
+\begin{align}
+    \gapprox{\setfn{m}} =&
+        \sum_{j=1}^m\sum_{\smem{1,j}{i}\in\ints{j}{\setfn{m}}}
+        \left(-1\right)^{j-1}\gxn{\smem{1,j}{i}}.\label{eq:order1}
 \end{align}
 
-As a second order approximation to $\pset{\sets}$ we take all pairwise unions 
+\newcommand{\dimers}{\mcn{2}{\setfn{m}}}
+\newcommand{\lmers}{\mcn{\ell}{\setfn{m}}}
+
+As a second order approximation to $\pset{\sets}$ we take all pairwise unions
 of the initial $m$ subsets:
-\begin{equation}
-	\pset{\sets} \approx \bigcup_{i=1}^{m-1}\bigcup_{j=i+1}^m\pset{f_i\cup f_j}.
-\end{equation}
-Like $f_i$ and $f_j$ individually, each of the various $f_i\cup f_j$ are subsets
-of $\sets$ as well. Thus the various $f_i\cup f_j$ also form a family of sets 
-over $\sets$; we define the ordered family of sets generated from pairs of 
-elements of $\setfn{m}$ to be $\setfn{2,m}$, and we define $\fn{2,m}_i$ to be 
-the $i$-th element of $\setfn{2,m}$. With these definitions the second order 
-approximation to $\pset{\sets}$ can be written more compactly as:
-\begin{equation}
-	\pset{\sets} \approx \bigcup_{\fn{2,m}_i\in\setfn{2,m}}\pset{\fn{2,m}_i}.
-\end{equation}
-Using the IEP the second order approximation to $\gxn{\sets}$, $\gapprox{2,m}$, 
-is:
 \begin{align}
-	\gapprox{2,m} =& \sum_{\fn{2,m}_i\in\setfn{2,m}} \gxn{\fn{2,m}_i} -
-	    \sum_{\fn{2,m}_i\in\setfn{2,m}}
-	    \sum_{\fn{2,m}_j\in\setfn{2,m}\setminus\fn{2,m}_i} 
-	      \gxn{\fn{2,m}_i\cap \fn{2,m}_j} + \cdots \nonumber\\
-	  & +\left(-1\right)^{\card{\setfn{2,m}}-1}
- 	    \gxn{\fn{2,m}_1\cap
- 	    	 \fn{2,m}_2\cap\cdots\cap
- 	    	 \fn{2,m}_{\card{\setfn{2,m}}}},
+	\pset{\sets} \approx \bigcup_{\fmem{2}{i}\in\dimers}\pset{\fmem{2}{i}}.
 \end{align}
-where $\card{\setfn{2,m}}$ is the cardinality of $\setfn{2,m}$ (which because 
-the sets are possibly non-disjoint may be less than $m$ choose 2) and 
-$\setfn{2,m}\setminus{\fn{2,m}_i}$ is $\setfn{2,m}$ without $\fn{2,m}_i$. In 
-order to write this more compactly we realize that the various intersections 
-are also subsets of $\sets$. The intersections involving combinations of $j$ 
-elements of $\setfn{2,m}$ form a family of sets over $\sets$ which we define as 
-$\ints{2,m,j}$. We define $\fn{2,m,j}_i$ as the $i$-th member of $\ints{2,m,j}$.
-With these definitions $\gapprox{2,m}$ becomes:
+Using the IEP the second order approximation to $\gxn{\sets}$,
+$\gapprox{\dimers}$, is:
 \begin{align}
-	\gapprox{2,m} = \sum_{j=1}^{\card{\setfn{2}}}
-	                \sum_{\fn{2,m,j}_i\in\ints{2,m,j}} 
-	                \left(-1\right)^{j-1}\gxn{\fn{2,m,j}_i}
+	\gapprox{\dimers}=& \sum_{j=1}^{\card{\dimers}}
+                        \sum_{\smem{2,j}{i}\in\ints{j}{\dimers}}
+                          \left(-1\right)^{j-1}\gxn{\smem{2,j}{i}}.
 \end{align}
-
-
-The above readily generalizes to an $\ell$-order approximation to 
+The above readily generalizes to an $\ell$-order approximation to
 $\pset{\sets}$:
-\begin{equation}
-	\pset{\sets} \approx 
-	\bigcup_{\fn{\ell,m}_i\in\setfn{\ell,m}}\pset{\fn{\ell,m}_i}.
-\end{equation}
-and using the IEP we may write the $\ell$-order approximation to $\gxn{\sets}$, 
-$\gapprox{\ell,m}$, as:
 \begin{align}
-	\gapprox{\ell,m} = \sum_{j=1}^{\card{\setfn{\ell}}}
-	\sum_{\fn{\ell,m,j}_i\in\ints{\ell,m,j}} 
-	\left(-1\right)^{j-1}\gxn{\fn{\ell,m,j}_i}.
+    \pset{\sets} \approx \bigcup_{\fmem{\ell}{i}\in\lmers}\pset{\fmem{l}{i}}.
 \end{align}
-As written this equation express the $\ell$-order approximation in terms of 
-subsets of $\ints{\ell, m, j}$. The subsets in $\ints{\ell, m, j}$ are 
-intersections formed from elements of sets $\setfn{\ell, m}$. The elements of 
-$\setfn{\ell,m}$ are themselves unions of elements from the family of sets 
-$\setfn{1,m}$. Hence if we flatten the nested families of sets we end up with 
-subsets of $\sets$ where each subset can be written as intersections of unions 
-of the elements from $\setfn{1,m}$. Since intersection distributes over union 
-it should be possible to rewrite $\gapprox{\ell,m}$ in terms of unions of 
-intersections of elements from $\setfn{1,m}$. Inverting this relationship is 
-the first problem.
-
-In practice we actually prefer to write 
-$\gapprox{\ell,m}$ as:
+and the $\ell$-order approximation to $\gxn{\sets}$, $\gapprox{\lmers}$:
 \begin{align}
-\gapprox{\ell,m} = \gapprox{1,m} + \left(\gapprox{2,m} - \gapprox{1,m}\right) + 
-                   \cdots + 
-                   \left(\gapprox{\ell,m} - \gapprox{\ell - 1,m}\right),
+    \gapprox{\lmers}=& \sum_{j=1}^{\card{\lmers}}
+                       \sum_{\smem{\ell,j}{i}\in\ints{j}{\lmers}}
+                       \left(-1\right)^{j-1}\gxn{\smem{\ell,j}{i}}.
 \end{align}
-which projects $\gapprox{\ell,m}$ into: 
-\begin{itemize}
-	\item the first order approximation, 
-    \item corrections stemming from the  second order approximation, 
-    \item corrections from the third-order through $\left(\ell-1\right)$-order
-          approximations (the ellided terms), and 
-    \item the corrections that come from the $\ell$ order approximation. 
-\end{itemize}    
-In this form, $\gapprox{\ell,m}$ is written in terms of subsets from not only 
-$\ints{\ell,m,j}$, but also using subsets from all of the families of sets 
-$\ints{k, m, j}$ with $k$ in the range $[1, \ell)$. Writing $\gapprox{\ell,m}$ 
-in this form, but using the inverted relationships from solving problem one, is 
-the second problem.
+If we flatten the nested families of sets we end up with subsets of $\sets$
+which are written as intersections-of-unions of the elements of $\setfn{m}$.
+Since intersection distributes over union, it should be possible to rewrite
+$\gapprox{\lmers}$ in terms of unions-of-intersections of the elements of
+$\setfn{m}$. Inverting this relationship is the first problem we must tackle.
 
+%In practice we actually prefer to write
+%$\gapprox{\ell,m}$ as:
+%\begin{align}
+%\gapprox{\ell,m} = \gapprox{1,m} + \left(\gapprox{2,m} - \gapprox{1,m}\right) +
+%                   \cdots +
+%                   \left(\gapprox{\ell,m} - \gapprox{\ell - 1,m}\right),
+%\end{align}
+%which projects $\gapprox{\ell,m}$ into:
+%\begin{itemize}
+%	\item the first order approximation,
+%    \item corrections stemming from the  second order approximation,
+%    \item corrections from the third-order through $\left(\ell-1\right)$-order
+%          approximations (the ellided terms), and
+%    \item the corrections that come from the $\ell$ order approximation.
+%\end{itemize}
+%In this form, $\gapprox{\ell,m}$ is written in terms of subsets from not only
+%$\ints{\ell,m,j}$, but also using subsets from all of the families of sets
+%$\ints{k, m, j}$ with $k$ in the range $[1, \ell)$. Writing $\gapprox{\ell,m}$
+%in this form, but using the inverted relationships from solving problem one, is
+%the second problem.
+%
 \section{Problem One}
 
-Our overall strategy is deduce the general form of $\gapprox{\ell,m}$,
-by first determining the general form for select $\ell$ values. Writing the 
-order-one approximation in terms of the elements of $\setfn{1,m}$ is
-trivial (it is just Eq.~\ref{eq:order1}). The first non-trivial order is 
-$\ell=2$. 
+Our overall strategy is deduce the general form of $\gapprox{\lmers}$,
+by first determining the general form for select $\ell$ values. Writing the
+order-one approximation in terms of the elements of $\setfn{m}$ is
+trivial (it is just Eq.~\ref{eq:order1}). The first non-trivial order is
+$\ell=2$.
 
 \subsection{$\ell=2$}
 
-To deduce the general form for $\ell=2$ we systematically consider increasing 
-values of $m$. For $m=1$, there is no $\ell=2$ term, and $m=2$ has a trivial 
+\newcommand{\unionset}[2]{\mcn{#1}{\setfn{#2}}}
+
+To deduce the general form for $\ell=2$ we systematically consider increasing
+values of $m$. For $m=1$, there is no $\ell=2$ term, and $m=2$ has a trivial
 $\ell=2$ term:
 \begin{equation}
-	\gapprox{2,2} = \gxn{f_1\cup f_2}.
+	\gapprox{\unionset{2}{2}} = \gxn{f_1\cup f_2}.
 \end{equation}
 Hence the first non-trivial $m$ is $m=3$.
+
 
 \newcommand{\Di}{f_{12}}
 \newcommand{\Dj}{f_{13}}
@@ -194,7 +184,8 @@ Hence the first non-trivial $m$ is $m=3$.
 
 For $m=3$ we have:
 \begin{align}
-	\gapprox{2,3} =& \gxn{\Di} + \gxn{\Dj} + \gxn{\Dk} - \gxn{\IDiDj} - 
+	\gapprox{\unionset{2}{3}} =&
+      \gxn{\Di} + \gxn{\Dj} + \gxn{\Dk} - \gxn{\IDiDj} -
 	                 \gxn{\IDiDk} -\nonumber\\
 	               & \gxn{\IDjDk} + \gxn{\IDiDjDk}\label{eq:m2},
 \end{align}
@@ -218,7 +209,7 @@ and that:
 \end{align}
 we can rewrite Eq.~\eqref{eq:m2} as:
 \begin{align}
-	\gapprox{2,3} =& \gapprox{2,2} + \gxn{\Dj} + \gxn{\Dk} -
+	\gapprox{\unionset{2}{3}} =& \gapprox{\unionset{2}{3}} + \gxn{\Dj} + \gxn{\Dk} -
 	                 \gxn{f_3 \cup \Ii} -
 	                 \gxn{f_2 \cup \Ij} -\nonumber\\
 	               & \gxn{f_2 \cup \Ik} +
@@ -228,7 +219,7 @@ where we have defined:
 \begin{align}
 	s_{ijk\cdots} \equiv& f_i\cap f_j\cap f_k \cap \cdots
 \end{align}
-and identified the $m=2$ approximation. 
+and identified the $m=2$ approximation.
 
 \newcommand{\Dl}{f_{14}}
 \newcommand{\Dm}{f_{24}}
@@ -297,38 +288,40 @@ and identified the $m=2$ approximation.
 \newcommand{\Ikk}{s_{134}}
 \newcommand{\Ill}{s_{234}}
 
-For $m=4$ there are 63 terms. Stemming from the $\ints{2,4,1}$ family of sets 
-are 6 trivial terms:
+\newcommand{\intsset}[3]{\ints{#1}{\unionset{#2}{#3}}}
+
+For $m=4$ there are 63 terms. Stemming from the $\intsset{1}{2}{4}$ family of
+sets are 6 trivial terms:
 \begin{align}
-	\sum_{\fn{2,4,1}_i\in\ints{2,4,1}}\gxn{\fn{2,4,1}_i} =& 
-	  \gxn{\Di} + \gxn{\Dj} + \gxn{\Dk} + \gxn{\Dl} + 
+	\sum_{\fmem{2}{i}\in\intsset{1}{2}{4}}\gxn{\fmem{2}{i}} =&
+	  \gxn{\Di} + \gxn{\Dj} + \gxn{\Dk} + \gxn{\Dl} +
 	  \gxn{\Dm} + \gxn{\Dn}\nonumber\\
-	=& \sum_{\fn{2,3}_i\in\setfn{2,3}}\gxn{\fn{2,3}_i} +
-	   \sum_{\fn{2,4}_i\in\setfn{2,4}\setminus\setfn{2,3}}
-	    \gxn{\fn{2,4}_i},
+	=& \sum_{\fmem{2}{i}\in\intsset{1}{2}{3}}\gxn{\fmem{2}{i}} +
+	   \sum_{\fmem{2}{i}\in\intsset{1}{2}{4}\setminus\intsset{1}{2}{3}}
+	    \gxn{\fn{2}_i},
 \end{align}
 where in the second line we separated the six terms into the three that are
-common to the $\setfn{2,3}$ family of sets and the three which are unique to
-the $\setfn{2,4}$ family of sets.
+from the $\intsset{1}{2}{3}$ family of sets and the three which are unique to
+the $\intsset{1}{2}{4}$ family of sets.
 
-Stemming from $\ints{2,4,2}$ are 15 terms:
+Stemming from $\intsset{2}{2}{4}$ are 15 terms:
 \begin{align}
-	\sum_{\fn{2,4,2}_i\in\ints{2,4,2}}\gxn{\fn{2,4,2}_i} =
-	  & \gxn{\IDiDj} + \gxn{\IDiDk} + \gxn{\IDiDl} + \gxn{\IDiDm} +\nonumber\\ 
-	  & \gxn{\IDiDn} + \gxn{\IDjDk} + \gxn{\IDjDl} + \gxn{\IDjDm} +\nonumber\\ 
-	  & \gxn{\IDjDn} + \gxn{\IDkDl} + \gxn{\IDkDm} + \gxn{\IDkDn} +\nonumber\\ 
+	\sum_{\smem{2,2}{i}\in\intsset{2}{2}{4}}\gxn{\smem{2,2}{i}} =
+	  & \gxn{\IDiDj} + \gxn{\IDiDk} + \gxn{\IDiDl} + \gxn{\IDiDm} +\nonumber\\
+	  & \gxn{\IDiDn} + \gxn{\IDjDk} + \gxn{\IDjDl} + \gxn{\IDjDm} +\nonumber\\
+	  & \gxn{\IDjDn} + \gxn{\IDkDl} + \gxn{\IDkDm} + \gxn{\IDkDn} +\nonumber\\
 	  & \gxn{\IDlDm} + \gxn{\IDlDn} + \gxn{\IDmDn},
 \end{align}
 which respectively simplify to:
 \begin{align}
-	\sum_{\fn{2,4,2}_i\in\ints{2,4,2}}\gxn{\fn{2,4,2}_i} =
-	& \gxn{f_1\cup\Ik} + \gxn{f_2\cup\Ij} + \gxn{f_1\cup\In} + 
+	\sum_{\smem{2,2}{i}\in\intsset{2}{2}{4}}\gxn{\smem{2,2}{i}} =
+	& \gxn{f_1\cup\Ik} + \gxn{f_2\cup\Ij} + \gxn{f_1\cup\In} +
 	  \gxn{f_2\cup\Il} + \nonumber\\
-	& \gxn{\Ij\cup\Ik\cup\Il\cup\In} + \gxn{f_3\cup\Ii} + 
+	& \gxn{\Ij\cup\Ik\cup\Il\cup\In} + \gxn{f_3\cup\Ii} +
 	  \gxn{f_1\cup\Io} + \nonumber\\
-	& \gxn{\Ii\cup\Ik\cup\Il\cup\Io} + \gxn{f_3\cup\Il} 
+	& \gxn{\Ii\cup\Ik\cup\Il\cup\Io} + \gxn{f_3\cup\Il}
 	+ \gxn{\Ii\cup\Ij\cup\In\cup\Io} + \nonumber\\
-	& \gxn{f_2\cup\Io} + \gxn{f_3\cup\In} + \gxn{f_4\cup\Ii} + 
+	& \gxn{f_2\cup\Io} + \gxn{f_3\cup\In} + \gxn{f_4\cup\Ii} +
 	  \gxn{f_4\cup\Ij} + \gxn{f_4\cup\Ik},
 \end{align}
 where we have used:
@@ -339,71 +332,70 @@ where we have used:
 	   =& \left(a\cap c\right)\cup\left(a\cap d\right)\cup
           \left(b\cap c\right)\cup\left(b\cap d\right)
 \end{align}
-Identifying the terms which were present for $\ints{2,3,2}$:
-\begin{align}
-	\sum_{\fn{2,4,2}_i\in\ints{2,4,2}}\gxn{\fn{2,4,2}_i} =
-	& \sum_{\fn{2,3,2}_i\in\ints{2,3,2}}\gxn{\fn{2,3,2}_i} + 
-      \gxn{f_1\cup\In} + \gxn{f_2\cup\Il} + \nonumber\\
-	& \gxn{\Ij\cup\Ik\cup\Il\cup\In}  +  \gxn{f_1\cup\Io} + \nonumber\\
-	& \gxn{\Ii\cup\Ik\cup\Il\cup\Io} + \gxn{f_3\cup\Il} 
-	+ \gxn{\Ii\cup\Ij\cup\In\cup\Io} + \nonumber\\
-	& \gxn{f_2\cup\Io} + \gxn{f_3\cup\In} + \gxn{f_4\cup\Ii} + 
-	\gxn{f_4\cup\Ij} + \gxn{f_4\cup\Ik},
-\end{align}
+%Identifying the terms which were present for $\ints{2,3,2}$:
+%\begin{align}
+%	\sum_{\fn{2,4,2}_i\in\ints{2,4,2}}\gxn{\fn{2,4,2}_i} =
+%	& \sum_{\fn{2,3,2}_i\in\ints{2,3,2}}\gxn{\fn{2,3,2}_i} +
+%      \gxn{f_1\cup\In} + \gxn{f_2\cup\Il} + \nonumber\\
+%	& \gxn{\Ij\cup\Ik\cup\Il\cup\In}  +  \gxn{f_1\cup\Io} + \nonumber\\
+%	& \gxn{\Ii\cup\Ik\cup\Il\cup\Io} + \gxn{f_3\cup\Il}
+%	+ \gxn{\Ii\cup\Ij\cup\In\cup\Io} + \nonumber\\
+%	& \gxn{f_2\cup\Io} + \gxn{f_3\cup\In} + \gxn{f_4\cup\Ii} +
+%	\gxn{f_4\cup\Ij} + \gxn{f_4\cup\Ik},
+%\end{align}
 
-
-Stemming from $\ints{2,4,3}$ are 20 terms:
+Stemming from $\intsset{3}{2}{4}$ are 20 terms:
 \begin{align}
-	\sum_{\fn{2,4,3}_i\in\ints{2,4,3}}\gxn{\fn{2,4,3}_i} =
+	\sum_{\smem{2,3}{i}\in\intsset{3}{2}{4}}\gxn{\smem{2,3}{i}} =
 	  & \gxn{\IDiDjDk} + \gxn{\IDiDjDl} + \gxn{\IDiDjDm} + \nonumber\\
-	  & \gxn{\IDiDjDn} + \gxn{\IDiDkDl} + \gxn{\IDiDkDm} + \nonumber\\ 
+	  & \gxn{\IDiDjDn} + \gxn{\IDiDkDl} + \gxn{\IDiDkDm} + \nonumber\\
 	  & \gxn{\IDiDkDn} + \gxn{\IDiDlDm} + \gxn{\IDiDlDn} + \nonumber\\
-	  & \gxn{\IDiDmDn} + \gxn{\IDjDkDl} + \gxn{\IDjDkDm} + \nonumber\\ 
+	  & \gxn{\IDiDmDn} + \gxn{\IDjDkDl} + \gxn{\IDjDkDm} + \nonumber\\
 	  & \gxn{\IDjDkDn} + \gxn{\IDjDlDm} + \gxn{\IDjDlDn} + \nonumber\\
-	  & \gxn{\IDjDmDn} + \gxn{\IDkDlDm} + \gxn{\IDkDlDn} + \nonumber\\ 
+	  & \gxn{\IDjDmDn} + \gxn{\IDkDlDm} + \gxn{\IDkDlDn} + \nonumber\\
 	  & \gxn{\IDkDmDn} + \gxn{\IDlDmDn},
 \end{align}
 which respectively simplify to:
 \begin{align}
-	\sum_{\fn{2,4,3}_i\in\ints{2,4,3}}\gxn{\fn{2,4,3}_i} =
-	& \gxn{\Ii\cup\Ij\cup\Ik} + \gxn{f_1\cup\Ill} + 
+	\sum_{\smem{2,3}{i}\in\intsset{3}{2}{4}}\gxn{\smem{2,3}{i}} =
+	& \gxn{\Ii\cup\Ij\cup\Ik} + \gxn{f_1\cup\Ill} +
 	  \gxn{\Ii\cup\Il\cup\Ik} + \nonumber\\
-	& \gxn{\Ij\cup\Il\cup\Ik} + \gxn{\Ii\cup\Ij\cup\In} + 
-	  \gxn{f_2\cup\Ikk} + \nonumber\\ 
+	& \gxn{\Ij\cup\Il\cup\Ik} + \gxn{\Ii\cup\Ij\cup\In} +
+	  \gxn{f_2\cup\Ikk} + \nonumber\\
 	& \gxn{\Ij\cup\Ik\cup\In} + \gxn{\Ii\cup\Il\cup\In} +
 	  \gxn{\Ij\cup\Il\cup\In} + \nonumber\\
-	& \gxn{\Il\cup\Ik\cup\In} + \gxn{\Ii\cup\Ij\cup\Io} + 
-	  \gxn{\Ii\cup\Ik\cup\Io} + \nonumber\\ 
-	& \gxn{f_3\cup\Ijj} + \gxn{\Ii\cup\Il\cup\Io} + 
+	& \gxn{\Il\cup\Ik\cup\In} + \gxn{\Ii\cup\Ij\cup\Io} +
+	  \gxn{\Ii\cup\Ik\cup\Io} + \nonumber\\
+	& \gxn{f_3\cup\Ijj} + \gxn{\Ii\cup\Il\cup\Io} +
 	  \gxn{\Ij\cup\Il\cup\Io} + \nonumber\\
-	& \gxn{\Il\cup\Ik\cup\Io} + \gxn{\Ii\cup\In\cup\Io} + 
-	  \gxn{\Ij\cup\In\cup\Io} +\nonumber\\ 
+	& \gxn{\Il\cup\Ik\cup\Io} + \gxn{\Ii\cup\In\cup\Io} +
+	  \gxn{\Ij\cup\In\cup\Io} +\nonumber\\
 	& \gxn{\Ik\cup\In\cup\Io} + \gxn{f_4\cup\Iii}.
 \end{align}
-Identifying the terms which stem from $\ints{2,3,3}$:
-\begin{align}
-	\sum_{\fn{2,4,3}_i\in\ints{2,4,3}}\gxn{\fn{2,4,3}_i} =
-	& \sum_{\fn{2,3,3}_i\in\ints{2,3,3}}\gxn{\fn{2,3,3}_i} + 
-	  \gxn{f_1\cup\Ill} + \gxn{\Ii\cup\Il\cup\Ik} + \nonumber\\
-	& \gxn{\Ij\cup\Il\cup\Ik} + \gxn{\Ii\cup\Ij\cup\In} + 
-	\gxn{f_2\cup\Ikk} + \nonumber\\ 
-	& \gxn{\Ij\cup\Ik\cup\In} + \gxn{\Ii\cup\Il\cup\In} +
-	\gxn{\Ij\cup\Il\cup\In} + \nonumber\\
-	& \gxn{\Il\cup\Ik\cup\In} + \gxn{\Ii\cup\Ij\cup\Io} + 
-	\gxn{\Ii\cup\Ik\cup\Io} + \nonumber\\ 
-	& \gxn{f_3\cup\Ijj} + \gxn{\Ii\cup\Il\cup\Io} + 
-	\gxn{\Ij\cup\Il\cup\Io} + \nonumber\\
-	& \gxn{\Il\cup\Ik\cup\Io} + \gxn{\Ii\cup\In\cup\Io} + 
-	\gxn{\Ij\cup\In\cup\Io} +\nonumber\\ 
-	& \gxn{\Ik\cup\In\cup\Io} + \gxn{f_4\cup\Iii}.
-\end{align}
-At this point we have identified all terms which are also present in 
-$\gapprox{2,3}$ and remaining terms are unique to $\gapprox{2,4}$.
+%Identifying the terms which stem from $\ints{2,3,3}$:
+%\begin{align}
+%	\sum_{\fn{2,4,3}_i\in\ints{2,4,3}}\gxn{\fn{2,4,3}_i} =
+%	& \sum_{\fn{2,3,3}_i\in\ints{2,3,3}}\gxn{\fn{2,3,3}_i} +
+%	  \gxn{f_1\cup\Ill} + \gxn{\Ii\cup\Il\cup\Ik} + \nonumber\\
+%	& \gxn{\Ij\cup\Il\cup\Ik} + \gxn{\Ii\cup\Ij\cup\In} +
+%	\gxn{f_2\cup\Ikk} + \nonumber\\
+%	& \gxn{\Ij\cup\Ik\cup\In} + \gxn{\Ii\cup\Il\cup\In} +
+%	\gxn{\Ij\cup\Il\cup\In} + \nonumber\\
+%	& \gxn{\Il\cup\Ik\cup\In} + \gxn{\Ii\cup\Ij\cup\Io} +
+%	\gxn{\Ii\cup\Ik\cup\Io} + \nonumber\\
+%	& \gxn{f_3\cup\Ijj} + \gxn{\Ii\cup\Il\cup\Io} +
+%	\gxn{\Ij\cup\Il\cup\Io} + \nonumber\\
+%	& \gxn{\Il\cup\Ik\cup\Io} + \gxn{\Ii\cup\In\cup\Io} +
+%	\gxn{\Ij\cup\In\cup\Io} +\nonumber\\
+%	& \gxn{\Ik\cup\In\cup\Io} + \gxn{f_4\cup\Iii}.
+%\end{align}
+%At this point we have identified all terms which are also present in
+%$\gapprox{2,3}$ and remaining terms are unique to $\gapprox{2,4}$.
 
 
-Stemming from $\ints{2,4,4}$ are 15 terms:
+Stemming from $\intsset{4}{2}{4}$ are 15 terms:
 \begin{align}
-	\sum_{\fn{2,4,4}_i\in\ints{2,4,4}}\gxn{\fn{2,4,4}_i} =
+	\sum_{\smem{2,4}{i}\in\intsset{4}{2}{4}}\gxn{\smem{2,4}{i}} =
 	  & \gxn{\IDiDjDkDl} + \gxn{\IDiDjDkDm} + \nonumber\\
 	  & \gxn{\IDiDjDkDn} + \gxn{\IDiDjDlDm} + \nonumber\\
 	  & \gxn{\IDiDjDlDn} + \gxn{\IDiDjDmDn} + \nonumber\\
@@ -416,12 +408,12 @@ Stemming from $\ints{2,4,4}$ are 15 terms:
 which respectively simplify to:
 
 \begin{align}
-	\sum_{\fn{2,4,4}_i\in\ints{2,4,4}}\gxn{\fn{2,4,4}_i} =
-	& \gxn{\Ii\cup\Ij\cup\Ill} + \gxn{\Ii\cup\Ik\cup\Ikk} + 
+	\sum_{\smem{2,4}{i}\in\intsset{4}{2}{4}}\gxn{\smem{2,4}{i}} =
+	& \gxn{\Ii\cup\Ij\cup\Ill} + \gxn{\Ii\cup\Ik\cup\Ikk} +
 	  \gxn{\Ij\cup\Ik\cup\Ijj} + \nonumber\\
 	& \gxn{\Ii\cup\Il\cup\Ill} + \gxn{\Ij\cup\Il\cup\Ill} +
 	  \gxn{\Il\cup\Ik} + \nonumber\\
-	& \gxn{\Ii\cup\In\cup\Ikk} + \gxn{\Ij\cup\In} + 
+	& \gxn{\Ii\cup\In\cup\Ikk} + \gxn{\Ij\cup\In} +
 	  \gxn{\Ik\cup\In\cup\Ikk} + \nonumber\\
 	& \gxn{\Il\cup\In\cup\Iii} + \gxn{\Ii\cup\Io} +
 	  \gxn{\Ij\cup\Io\cup\Ijj} + \nonumber\\
@@ -429,43 +421,42 @@ which respectively simplify to:
 	  \gxn{\In\cup\Io\cup\Iii},
 \end{align}
 
-Stemming from $\ints{2,4,5}$ are 6 terms:
+Stemming from $\intsset{5}{2}{4}$ are 6 terms:
 \begin{align}
-	\sum_{\fn{2,4,5}_i\in\ints{2,4,5}}\gxn{\fn{2,4,5}_i} =
+	\sum_{\smem{2,5}{i}\in\intsset{5}{2}{4}}\gxn{\smem{2,5}{i}} =
  	  & \gxn{\IDiDjDkDlDm} + \gxn{\IDiDjDkDlDn} + \nonumber\\
 	  & \gxn{\IDiDjDkDmDn} + \gxn{\IDiDjDlDmDn} + \nonumber\\
 	  & \gxn{\IDiDkDlDmDn} + \gxn{\IDjDkDlDmDn},
 \end{align}
-which respectively simplify to:	  
+which respectively simplify to:
 
 \begin{align}
-	\sum_{\fn{2,4,5}_i\in\ints{2,4,5}}\gxn{\fn{2,4,5}_i} =
-	& \gxn{\Ii\cup\Ikk\cup\Ill} + \gxn{\Ij\cup\Ijj\cup\Ill} + 
+	\sum_{\smem{2,5}{i}\in\intsset{5}{2}{4}}\gxn{\smem{2,5}{i}} =
+	& \gxn{\Ii\cup\Ikk\cup\Ill} + \gxn{\Ij\cup\Ijj\cup\Ill} +
 	  \gxn{\Ik\cup\Ijj\cup\Ikk} + \nonumber\\
-	& \gxn{\Il\cup\Iii\cup\Ill} + \gxn{\In\cup\Iii\cup\Ikk} + 
+	& \gxn{\Il\cup\Iii\cup\Ill} + \gxn{\In\cup\Iii\cup\Ikk} +
 	  \gxn{\Io\cup\Iii\cup\Ijj},
 \end{align}
 
-Finally there is one term stemming from $\ints{2,4,6}$:	  
+Finally there is one term stemming from $\intsset{6}{2}{4}$:
 \begin{align}
-    \sum_{\fn{2,4,6}_i\in\ints{2,4,6}}\gxn{\fn{2,4,6}_i} =
-      \gxn{\IDiDjDkDlDmDn} = \gxn{\Iii\cup\Ijj\cup\Ikk\cup\Ill}         
+    \sum_{\smem{2,6}{i}\in\intsset{6}{2}{4}}\gxn{\smem{2,6}{i}} =
+      \gxn{\IDiDjDkDlDmDn} = \gxn{\Iii\cup\Ijj\cup\Ikk\cup\Ill}
 \end{align}
 
 
 At this point we make a number of observations:
 \begin{itemize}
-	\item There are $2^{m \choose 2} - 1$ terms. So $m=5$ and $6$ 
+	\item There are $2^{m \choose 2} - 1$ terms. So $m=5$ and $6$
 	      respectively contain 1023, and 32,768 terms. Meaning explicitly
 	      writing out higher-orders is impractical.
-	\item The expressions involve unions of elements from $\ints{1,m}$ (where 
-	      $\ints{1,m}$ is the set 
-	      $\left\lbrace\ints{1,m,i}\ \mid i\in[1,{m \choose 2}]\right\rbrace$) 
-	      instead of intersections of elements from $\ints{2,m}$.
-	\item Algorithmically this allows us to reuse information from the 
-	      dramatically smaller $\ints{1,m}$ family of sets (namely which 
-	      elements of $\ints{1,m}$ are empty) to decrease the number of terms 
-	      we must consider.
+	\item The expressions involve unions of elements from $\unionset{2}{m}$,
+          $\unionset{1}{m}$, and  $\iset{\unionset{1}{m}}$ instead of
+          intersections of elements from $\iset{\unionset{2}{m}}$.
+	\item Algorithmically this allows us to reuse information from the
+	      dramatically smaller $\iset{\unionset{1}{m}}$ family of sets (namely
+          which elements of $\iset{\unionset{1}{m}}$ are empty) to decrease the
+          number of terms we must consider.
 \end{itemize}
 
 
