@@ -209,10 +209,10 @@ and that:
 \end{align}
 we can rewrite Eq.~\eqref{eq:m2} as:
 \begin{align}
-	\gapprox{\unionset{2}{3}} =& \gapprox{\unionset{2}{3}} + \gxn{\Dj} + \gxn{\Dk} -
+	\gapprox{\unionset{2}{3}} =& \gapprox{\unionset{2}{2}} + \gxn{\Dj} + \gxn{\Dk} -
 	                 \gxn{f_3 \cup \Ii} -
 	                 \gxn{f_2 \cup \Ij} -\nonumber\\
-	               & \gxn{f_2 \cup \Ik} +
+	               & \gxn{f_1 \cup \Ik} +
 	                 \gxn{\Ii\cup \Ij\cup \Ik}
 \end{align}
 where we have defined:
@@ -302,7 +302,14 @@ sets are 6 trivial terms:
 \end{align}
 where in the second line we separated the six terms into the three that are
 from the $\intsset{1}{2}{3}$ family of sets and the three which are unique to
-the $\intsset{1}{2}{4}$ family of sets.
+the $\intsset{1}{2}{4}$ family of sets. This is straightforward to generalize
+to arbitrary $m$:
+\begin{align}
+    \sum_{\fmem{2}{i}\in\intsset{1}{2}{m}}\gxn{\fmem{2}{i}} =
+    \sum_{\fmem{2}{i}\in\intsset{1}{2}{m-1}}\gxn{\fmem{2}{i}} +
+    \sum_{\fmem{2}{i}\in\intsset{1}{2}{m}\setminus\intsset{1}{2}{m-1}}
+    \gxn{\fn{2}_i}.
+\end{align}
 
 Stemming from $\intsset{2}{2}{4}$ are 15 terms:
 \begin{align}
@@ -332,17 +339,18 @@ where we have used:
 	   =& \left(a\cap c\right)\cup\left(a\cap d\right)\cup
           \left(b\cap c\right)\cup\left(b\cap d\right)
 \end{align}
-%Identifying the terms which were present for $\ints{2,3,2}$:
-%\begin{align}
-%	\sum_{\fn{2,4,2}_i\in\ints{2,4,2}}\gxn{\fn{2,4,2}_i} =
-%	& \sum_{\fn{2,3,2}_i\in\ints{2,3,2}}\gxn{\fn{2,3,2}_i} +
-%      \gxn{f_1\cup\In} + \gxn{f_2\cup\Il} + \nonumber\\
-%	& \gxn{\Ij\cup\Ik\cup\Il\cup\In}  +  \gxn{f_1\cup\Io} + \nonumber\\
-%	& \gxn{\Ii\cup\Ik\cup\Il\cup\Io} + \gxn{f_3\cup\Il}
-%	+ \gxn{\Ii\cup\Ij\cup\In\cup\Io} + \nonumber\\
-%	& \gxn{f_2\cup\Io} + \gxn{f_3\cup\In} + \gxn{f_4\cup\Ii} +
-%	\gxn{f_4\cup\Ij} + \gxn{f_4\cup\Ik},
-%\end{align}
+Identifying the terms which were present for $\intsset{2}{2}{3}$:
+\begin{align}
+	\sum_{\smem{2,2}{i}\in\intsset{2}{2}{4}}\gxn{\smem{2,2}{i}} =
+	& \sum_{\smem{2,2}{i}\in\intsset{2}{2}{3}}\gxn{\smem{2,2}{i}} +
+      \gxn{f_1\cup\In} + \gxn{f_2\cup\Il} + \nonumber\\
+	& \gxn{\Ij\cup\Ik\cup\Il\cup\In}  +  \gxn{f_1\cup\Io} + \nonumber\\
+	& \gxn{\Ii\cup\Ik\cup\Il\cup\Io} + \gxn{f_3\cup\Il}
+	+ \gxn{\Ii\cup\Ij\cup\In\cup\Io} + \nonumber\\
+	& \gxn{f_2\cup\Io} + \gxn{f_3\cup\In} + \gxn{f_4\cup\Ii} +
+	\gxn{f_4\cup\Ij} + \gxn{f_4\cup\Ik}.
+\end{align}
+
 
 Stemming from $\intsset{3}{2}{4}$ are 20 terms:
 \begin{align}
@@ -372,25 +380,26 @@ which respectively simplify to:
 	  \gxn{\Ij\cup\In\cup\Io} +\nonumber\\
 	& \gxn{\Ik\cup\In\cup\Io} + \gxn{f_4\cup\Iii}.
 \end{align}
-%Identifying the terms which stem from $\ints{2,3,3}$:
-%\begin{align}
-%	\sum_{\fn{2,4,3}_i\in\ints{2,4,3}}\gxn{\fn{2,4,3}_i} =
-%	& \sum_{\fn{2,3,3}_i\in\ints{2,3,3}}\gxn{\fn{2,3,3}_i} +
-%	  \gxn{f_1\cup\Ill} + \gxn{\Ii\cup\Il\cup\Ik} + \nonumber\\
-%	& \gxn{\Ij\cup\Il\cup\Ik} + \gxn{\Ii\cup\Ij\cup\In} +
-%	\gxn{f_2\cup\Ikk} + \nonumber\\
-%	& \gxn{\Ij\cup\Ik\cup\In} + \gxn{\Ii\cup\Il\cup\In} +
-%	\gxn{\Ij\cup\Il\cup\In} + \nonumber\\
-%	& \gxn{\Il\cup\Ik\cup\In} + \gxn{\Ii\cup\Ij\cup\Io} +
-%	\gxn{\Ii\cup\Ik\cup\Io} + \nonumber\\
-%	& \gxn{f_3\cup\Ijj} + \gxn{\Ii\cup\Il\cup\Io} +
-%	\gxn{\Ij\cup\Il\cup\Io} + \nonumber\\
-%	& \gxn{\Il\cup\Ik\cup\Io} + \gxn{\Ii\cup\In\cup\Io} +
-%	\gxn{\Ij\cup\In\cup\Io} +\nonumber\\
-%	& \gxn{\Ik\cup\In\cup\Io} + \gxn{f_4\cup\Iii}.
-%\end{align}
-%At this point we have identified all terms which are also present in
-%$\gapprox{2,3}$ and remaining terms are unique to $\gapprox{2,4}$.
+Identifying the terms which stem from $\intsset{2}{3}{3}$:
+\begin{align}
+	\sum_{\smem{2,3}{i}\in\intsset{2}{3}{4}}\gxn{\smem{2,3}{i}} =
+	& \sum_{\smem{2,3}{i}\in\intsset{2}{3}{3}}\gxn{\smem{2,3}{i}} +
+	  \gxn{f_1\cup\Ill} + \gxn{\Ii\cup\Il\cup\Ik} + \nonumber\\
+	& \gxn{\Ij\cup\Il\cup\Ik} + \gxn{\Ii\cup\Ij\cup\In} +
+	\gxn{f_2\cup\Ikk} + \nonumber\\
+	& \gxn{\Ij\cup\Ik\cup\In} + \gxn{\Ii\cup\Il\cup\In} +
+	\gxn{\Ij\cup\Il\cup\In} + \nonumber\\
+	& \gxn{\Il\cup\Ik\cup\In} + \gxn{\Ii\cup\Ij\cup\Io} +
+	\gxn{\Ii\cup\Ik\cup\Io} + \nonumber\\
+	& \gxn{f_3\cup\Ijj} + \gxn{\Ii\cup\Il\cup\Io} +
+	\gxn{\Ij\cup\Il\cup\Io} + \nonumber\\
+	& \gxn{\Il\cup\Ik\cup\Io} + \gxn{\Ii\cup\In\cup\Io} +
+	\gxn{\Ij\cup\In\cup\Io} +\nonumber\\
+	& \gxn{\Ik\cup\In\cup\Io} + \gxn{f_4\cup\Iii}.
+\end{align}
+At this point we have identified all terms which are also present in
+$\gapprox{\unionset{2}{3}}$ and remaining terms are unique to
+$\gapprox{\unionset{2}{4}}$.
 
 
 Stemming from $\intsset{4}{2}{4}$ are 15 terms:
