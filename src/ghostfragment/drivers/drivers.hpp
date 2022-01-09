@@ -5,6 +5,7 @@ namespace ghostfragment::drivers {
 
 DECLARE_MODULE(FragmentDriver);
 DECLARE_MODULE(FragmentedSystem);
+DECLARE_MODULE(NMerDriver);
 
 /// Loads all the modules in the Drivers library into the provided ModuleManager
 inline void load_modules(pluginplay::ModuleManager& mm) {
