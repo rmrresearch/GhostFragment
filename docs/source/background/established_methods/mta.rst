@@ -120,11 +120,23 @@ cost and an expectation that they will not change the results.
 with small-basis HF, B3LYP, and MP2 levels of theory. Errors in computed 
 vibrational frequencies were less than a wavenumber.
 
+:cite:t:`Yeole_2010` applied CG-MTA to conjugated :math:`\pi` systems with small
+basis DFT and MP2. Single point energies, gradients, and optimized geometries
+were computed and compared to the results of the respective full calculation.
+Overall the results were promising (i.e., chemically accurate) as long as
+relatively large fragments were used (fragments had radii of 6+ Angstroms).
+
 :cite:t:`Rahalkar2010` paired CG-MTA with small basis IMS-MP2 and IMS-RI-MP2 
 (AFAIK IMS is a disk-based MP2 algoritm in the GAMESS package). Comparisons of 
 CG-MTA energies to FMO energies were also presented. Overall the comparison
 shows that three-body FMO performs about as well as CG-MTA, although it is noted
 that the error in the FMO results tends to increase with basis set size.
+
+:cite:t:`Sahu2013` applied the grafted MTA procedure to additional clusters. Of
+note they also introduced the idea of an R-goodness for two-, three-, body
+interactions. The manuscript suggests that these higher-body R-goodness 
+parameters could be used to influence the fragmentation procedure; however, a
+clear description of how to do this is not provided.
 
 ***********
 MTA Reviews
