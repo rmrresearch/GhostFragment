@@ -1,3 +1,4 @@
+#include "capping/capping.hpp"
 #include "connectivity/connectivity.hpp"
 #include "drivers/drivers.hpp"
 #include "energy/energy.hpp"
@@ -7,11 +8,13 @@
 namespace ghostfragment {
 
 void load_modules(pluginplay::ModuleManager& mm) {
+    capping::load_modules(mm);
     connectivity::load_modules(mm);
     drivers::load_modules(mm);
     energy::load_modules(mm);
     partitioned::load_modules(mm);
 
+    capping::set_defaults(mm);
     connectivity::set_defaults(mm);
     drivers::set_defaults(mm);
     energy::set_defaults(mm);

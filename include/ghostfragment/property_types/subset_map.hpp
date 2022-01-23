@@ -48,7 +48,4 @@ using Frag2AO = SubsetMap<simde::type::molecule, simde::type::ao_basis_set>;
 using Frag2AOTraits =
   SubsetMapTraits<simde::type::molecule, simde::type::ao_basis_set>;
 
-template<typename T>
-using Capped = SubsetMap<T, simde::type::molecule>;
-
 } // namespace ghostfragment::pt

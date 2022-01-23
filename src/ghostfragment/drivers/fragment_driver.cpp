@@ -24,8 +24,8 @@ pesudoatoms are (conceptually) perfectly fine fragments in and of themselves.
 For this reason we take the submodule for forming the pseudoatoms to be of type
 simde::FragmentMolecule also. Next we determine the connectivity of the
 pseudoatoms; this happens in a submodule of type MolecularGraph. Finally, the
-driver calls into a submodule of type XXX, which is responsible for breaking the
-MolecularGraph instance into fragments.
+driver calls into a submodule of type MolecularGraphToFragments, which is 
+responsible for breaking the MolecularGraph instance into fragments.
 
 )";
 
