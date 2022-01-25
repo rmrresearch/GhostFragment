@@ -26,10 +26,9 @@ systems: 5,7,8-trimethyltocol, zeolite, and a peptide using small basis SCF.
 Results primarily focused on comparing the electorstatic potential computed by
 MTA to that of the supersystem.
 
-The next development :cite:`Ganesh2006` in MTA, led to a rebranding as CGMTA (CG
-standing for cardinality guided). In this study the energy, and energy 
-derivatives, of a fragmented system are computed using the inclusion-exclusion 
-principle. Initial applications focused on replicating the energy of 
+The next development :cite:`Ganesh2006` in MTA, came from realizing the IEP 
+could be used to compute the energy, and energy derivatives, of a fragmented 
+system. Initial applications focused on replicating the energy of 
 medium-sized organic molecules using small-basis HF, MP2, and B3LYP. Also
 considered were geometry optimizations, and vibrational frequencies. This study
 is also one of the earliest applications of :ref:`mta06 fragmentation` and with
@@ -40,10 +39,10 @@ it the MTA 06 variant of MTA.
 .. |E_MP2_SB| replace:: :math:`E_{MP2/Low|}`
 .. |E_MTA_MP2_SB| replace:: :math:`E_{MP2/Low|}`
 
-For benzene clusters, :cite:t:`Mahadevi_2010` note that a 1-body CG-MTA
+For benzene clusters, :cite:t:`Mahadevi_2010` note that a 1-body MTA
 expansion still neglects some many-body interactions. They suggested a screening 
 method which amounts to manually adding back in two-, three-, etc. body 
-interactions which do not appear in the 1-body CG-MTA expansion. For larger
+interactions which do not appear in the 1-body MTA expansion. For larger
 benzene clusters (hexamers, for example) these higher-body corrections can be
 more than a kcal/mol. Conceptually this correction is very similar to 
 :ref:`SMF Screening 05`. The accompanying numerical results demonstrated that 
@@ -77,9 +76,9 @@ the grafting procedure resulted in errors on the order of 0.3 mH.
 MTA Summary
 ***********
 
-Like many fragment-based methods, *the MTA/CG-MTA method* is not a well defined
+Like many fragment-based methods, *the MTA method* is not a well defined
 concept, as the definition of the method has changed over the years. The 
-following table summarizes the variants of MTA/CG-MTA, which have appeared. Note
+following table summarizes the variants of MTA, which have appeared. Note
 that the names of the variants are our names, and were not present in the
 original manuscripts.
 
@@ -98,7 +97,8 @@ original manuscripts.
 | MTA 10 | Manual    | N/A       |  N/A   | |Sc10|    |
 +--------+-----------+-----------+--------+-----------+
 
-
+In this table "manual" fragmentation refers to the fact that the user specified
+the fragments. 
 
 *****************
 Other MTA Results
@@ -111,13 +111,13 @@ HF/STO-3G and HF/6-31G(d,p) levels of theory. Comparisons between the
 supersystem density matrices were made at the HF/STO-3G level of theory.
 
 :cite:t:`Gadre2006a` provided additional details about the 
-:ref:`mta06 fragmentation` procedure and saw the MTA 06 variant of CG-MTA be 
+:ref:`mta06 fragmentation` procedure and saw the MTA 06 variant of MTA be 
 applied to additional studies of organic molecules. Calulations used the HF 
 and B3LYP methods with the 6-31G(d) and 6-31G(d, p) basis sets.
 Absolute energies, gradients, optimized geometries, and molecular electorstatic
 potential surfaces were compared to the supersystem results.
 
-:cite:t:`Elango_2008` applied the MTA 06 variant of CG-MTA to boric acid 
+:cite:t:`Elango_2008` applied the MTA 06 variant of MTA to boric acid 
 nanotubes and nanorings. Comparisons to B3LYP/3-21G supersystem energies and 
 (partial) geometry optimizations. Additional results with CG-MTA approximated 
 B3LYP and MP2 are reported (6-31+G(d,p) basis set). Of note BSSE calculations 
@@ -126,33 +126,46 @@ results.
 
 :cite:t:`JovanJoseK.2008` considered optimized structures of lithium clusters
 using small basis DFT. Results for larger clusters relied on the MTA 06 variant
-of CG-MTA (disclaimer it is possible that the fragments were manually defined,
+of MTA (disclaimer it is possible that the fragments were manually defined,
 but it is not clear from the presentation). Several properties were computed for 
 each cluster including: the adiabatic ionization potential (which is notable as 
 it requires computing the energy of the cationic cluster) and the 
 polarizability.
 
-:cite:t:`Rahalkar2008` used the MTA 06 variant of CG-MTA to computatethe Hessian 
+:cite:t:`Rahalkar2008` used the MTA 06 variant of MTA to computatethe Hessian 
 matrix at the HF, B3LYP, and MP2 levels of theory (with small basis sets). 
 Errors in computed vibrational frequencies were less than a wavenumber.
 
-:cite:t:`Jose2009` used the MTA 06 variant of CG-MTA to study CO2 clusters with
+:cite:t:`Jose2009` used the MTA 06 variant of MTA to study CO2 clusters with
 DFT. Optimized geometries and vibrational frequencies were considered. For
 vibrational frequencies, CG-MTA matched supersystem calculations to within about
 a wavenumber.
 
-:cite:t:`Yeole_2010` applied CG-MTA to conjugated :math:`\pi` systems with small
+:cite:t:`Yeole_2010` applied MTA to conjugated :math:`\pi` systems with small
 basis DFT and MP2. Single point energies, gradients, and optimized geometries
 were computed and compared to the results of the respective full calculation.
-Overall the results were promising (i.e., chemically accurate) as long as
-relatively large fragments were used (fragments had radii of 6+ Angstroms).
+Overall the results were promising as long as relatively large fragments were 
+used (fragments had radii of 6+ Angstroms).
 
-:cite:t:`Rahalkar2010` paired the MTA 06 variant of CG-MTA with small basis 
+:cite:t:`Rahalkar2010` paired the MTA 06 variant of MTA with small basis 
 IMS-MP2 and IMS-RI-MP2 (AFAIK IMS is a disk-based MP2 algoritm in the GAMESS 
-package). Comparisons of CG-MTA energies to FMO energies were also presented. 
+package). Comparisons of MTA energies to FMO energies were also presented. 
 Overall the comparison shows that three-body FMO performs about as well as 
-CG-MTA, although it is noted that the error in the FMO results tends to increase 
+MTA, although it is noted that the error in the FMO results tends to increase 
 with basis set size.
+
+:cite:t:`Yeole2012` applied MTA (exactly which variant is unclear, possibly MTA 
+10, without screening) to CO2 clusters with the focus of finding local minima. 
+MTA was used to approximate single point energies and gradients at the MP2/CBS 
+level of theory (extrapolations of MP2/aDZ and MP2/aTZ). No comparisons to full 
+system calculations were presented, instead comparisons were made to previously 
+published results that leveraged a Lennard-Jones potential.
+
+:cite:t:`RAHALKAR2012` used the density matrix from the MTA 06 variant of MTA to
+build a Fock matrix. Subsequent diagonalization of the Fock matrix yielded MOs.
+The study uses relatively small fragments and in turn the results are a mixed
+bag. Some HOMO-LUMO gaps are modeled well, others aren't. Of note they consider
+several conjugated systems.
 
 :cite:t:`Sahu2013` applied the grafted MTA procedure to additional clusters. Of
 note they also introduced the idea of an R-goodness for two-, three-, body
@@ -164,5 +177,5 @@ clear description of how to do this is not provided.
 MTA Reviews
 ***********
 
-:cite:t:`Gadre_2010` reviewed applications of CG-MTA geometry optimization, 
+:cite:t:`Gadre_2010` reviewed applications of MTA geometry optimization, 
 frequency calculations, as well as property computations to clusters.
