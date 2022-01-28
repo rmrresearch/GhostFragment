@@ -76,15 +76,15 @@ the grafting procedure resulted in errors on the order of 0.3 mH.
 MTA Summary
 ***********
 
-Like many fragment-based methods, *the MTA method* is not a well defined
-concept, as the definition of the method has changed over the years. The 
-following table summarizes the variants of MTA, which have appeared. Note
+Like many fragment-based methods, there is no "*the MTA method*" as the 
+definition of the method has changed over the years without modifying the name. 
+The following table summarizes the variants of MTA, which have appeared. Note
 that the names of the variants are our names, and were not present in the
 original manuscripts.
 
 .. |Frag3| replace:: :ref:`mta03 fragmentation`
 .. |Frag6| replace:: :ref:`mta06 fragmentation`
-.. |Hcap| replace:: :ref:`h capping`
+.. |Hcap| replace:: :ref:`mta capping`
 .. |Sc10| replace:: :ref:`SMF Screening 05`
 
 +--------+-----------+-----------+--------+-----------+
@@ -98,7 +98,9 @@ original manuscripts.
 +--------+-----------+-----------+--------+-----------+
 
 In this table "manual" fragmentation refers to the fact that the user specified
-the fragments. 
+the fragments. Based on the presentation of MTA in the literature it is
+reasonable to assume that the authors of MTA really consider the IEP to be the
+key ingrediant of what distinguishes MTA from other fragment methods.
 
 *****************
 Other MTA Results
@@ -161,6 +163,9 @@ level of theory (extrapolations of MP2/aDZ and MP2/aTZ). No comparisons to full
 system calculations were presented, instead comparisons were made to previously 
 published results that leveraged a Lennard-Jones potential.
 
+:cite:t:`Rahalkar2012` is conceptually similar to :cite:`Yeole2012` except that
+instead of CO2 clusters the focus was on acetylene clusters.
+
 :cite:t:`RAHALKAR2012` used the density matrix from the MTA 06 variant of MTA to
 build a Fock matrix. Subsequent diagonalization of the Fock matrix yielded MOs.
 The study uses relatively small fragments and in turn the results are a mixed
@@ -177,5 +182,20 @@ clear description of how to do this is not provided.
 MTA Reviews
 ***********
 
+
 :cite:t:`Gadre_2010` reviewed applications of MTA geometry optimization, 
 frequency calculations, as well as property computations to clusters.
+
+:cite:t:`Rahalkar2011` reviewed the MTA method up to that point. The 
+presentation primarily distinguishes MTA from other methods by pointing out that
+MTA is capable of geometry optimizations and that MTA has been applied to large
+systems. Also of note this review gives a nice explanation of the MTA 06 
+fragmentation method. 
+
+:cite:t:`Gadre2014` is a review primarily focusing on understanding the
+structure of molecular clusters (from both the experimental and theoeritcal 
+perspective); however, there is a bit of disucssion of how fragment-based 
+methods, including MTA, have been used to study the problem. 
+
+:cite:t:`Sahu_2014` review MTA primarily in light of its applications to
+predicting minima of molecular clusters.
