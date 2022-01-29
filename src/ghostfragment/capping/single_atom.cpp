@@ -25,6 +25,7 @@ level.
 
 #. Generate atomic connectivity
 #. Determine caps we need
+#. Pair each fragment with its set of caps
 
 )""";
 }
@@ -65,6 +66,7 @@ MODULE_RUN(SingleAtom) {
                 if(!ss2caps.count(atom_j)) {
                     auto new_cap    = mol[atom_j];
                     new_cap.Z()     = Z;
+                    new_cap.name()  = "H";
                     ss2caps[atom_j] = all_the_caps.size();
                     all_the_caps.push_back(new_cap);
                 }
