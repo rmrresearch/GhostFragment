@@ -11,6 +11,7 @@ DECLARE_MODULE(NMerDriver);
 inline void load_modules(pluginplay::ModuleManager& mm) {
     mm.add_module<FragmentDriver>("Fragment Driver");
     mm.add_module<FragmentedSystem>("FragmentedSystem Driver");
+    mm.add_module<NMerDriver>("NMer Driver");
 }
 
 /// Sets the defaults for submodules in the Drivers library, when a suitable
@@ -25,6 +26,8 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
                      "Fragment Driver");
     mm.change_submod("FragmentedSystem Driver", "Fragment to AO Mapper",
                      "Nuclei-AO Fragmenter");
+
+    mm.change_submod("NMer Driver", "Capper", "Atomic Capping");
 }
 
 } // namespace ghostfragment::drivers

@@ -4,6 +4,7 @@
 #include "energy/energy.hpp"
 #include "ghostfragment/load_modules.hpp"
 #include "partitioned/partitioned.hpp"
+#include "screening/screening.hpp"
 
 namespace ghostfragment {
 
@@ -13,12 +14,14 @@ void load_modules(pluginplay::ModuleManager& mm) {
     drivers::load_modules(mm);
     energy::load_modules(mm);
     partitioned::load_modules(mm);
+    screening::load_modules(mm);
 
     capping::set_defaults(mm);
     connectivity::set_defaults(mm);
     drivers::set_defaults(mm);
     energy::set_defaults(mm);
     partitioned::set_defaults(mm);
+    screening::set_defaults(mm);
 }
 
 } // namespace ghostfragment
