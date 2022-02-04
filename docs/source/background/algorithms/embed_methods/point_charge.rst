@@ -33,9 +33,9 @@ The second embedding scheme proposed by :cite:t:`Dahlke2006`.
    |n|-mer, place |Qi| at the location of |Ai|
 
 
-*********
-Iterative
-*********
+********************************
+Iterative Point Charge Embedding
+********************************
 
 Iterative point charge embedding requires the use of point charges that in some
 shape or form respond to changes in the electronic structure. Typically this

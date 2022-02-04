@@ -163,7 +163,7 @@ level of theory (extrapolations of MP2/aDZ and MP2/aTZ). No comparisons to full
 system calculations were presented, instead comparisons were made to previously 
 published results that leveraged a Lennard-Jones potential.
 
-:cite:t:`Rahalkar2012` is conceptually similar to :cite:`Yeole2012` except that
+:cite:t:`Rahalkar2012a` is conceptually similar to :cite:`Yeole2012` except that
 instead of CO2 clusters the focus was on acetylene clusters.
 
 :cite:t:`RAHALKAR2012` used the density matrix from the MTA 06 variant of MTA to
