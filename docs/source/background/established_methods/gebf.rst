@@ -33,3 +33,9 @@ GEBF Summary
 ******************
 Other GEBF Results
 ******************
+
+:cite:t:`Hua_2008` extended the GEBF07 method to geometry optimizations and
+vibrational frequency calculations. The GEBF07 energies, optimized geometries,
+and vibrational frequencies were compared to the conventional results. Small
+basis SCF (both HF and DFT) results, for several types of systems (clusters, 
+peptides, and hydrogelators) are presented.
