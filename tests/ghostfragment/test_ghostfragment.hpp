@@ -2,7 +2,6 @@
 #include "ghostfragment/ghostfragment.hpp"
 #include <catch2/catch.hpp>
 #include <simde/simde.hpp>
-
 namespace testing {
 
 // Common set-up all tests have
@@ -101,6 +100,65 @@ inline auto fragmented_water(std::size_t N) {
         frags.insert(water);
     }
     return frags;
+}
+
+inline auto water_nmers(std::size_t N, std::size_t n) {
+    auto water_n = fragmented_water(N);
+    ghostfragment::type::nmers nmers(water_n);
+
+    if(n == 0) return nmers;
+
+    for(std::size_t i = 0; i < N; ++i) {
+        auto frag = nmers.new_subset();
+        frag.insert(i);
+        nmers.insert(frag);
+    }
+
+    if(n == 1) return nmers;
+
+    for(std::size_t i = 0; i < N; ++i) {
+        for(std::size_t j = i + 1; j < N; ++j) {
+            auto frag = nmers.new_subset();
+            frag.insert(i);
+            frag.insert(j);
+            nmers.insert(frag);
+        }
+    }
+
+    if(n == 2) return nmers;
+
+    for(std::size_t i = 0; i < N; ++i) {
+        for(std::size_t j = i + 1; j < N; ++j) {
+            for(std::size_t k = j + 1; k < N; ++k) {
+                auto frag = nmers.new_subset();
+                frag.insert(i);
+                frag.insert(j);
+                frag.insert(k);
+                nmers.insert(frag);
+            }
+        }
+    }
+
+    if(n == 3) return nmers;
+
+    for(std::size_t i = 0; i < N; ++i) {
+        for(std::size_t j = i + 1; j < N; ++j) {
+            for(std::size_t k = j + 1; k < N; ++k) {
+                for(std::size_t l = k + 1; l < N; ++l) {
+                    auto frag = nmers.new_subset();
+                    frag.insert(i);
+                    frag.insert(j);
+                    frag.insert(k);
+                    frag.insert(l);
+                    nmers.insert(frag);
+                }
+            }
+        }
+    }
+
+    if(n == 4) return nmers;
+
+    throw std::runtime_error("Didn't code up higher than n == 4");
 }
 
 // Fragments each water as (OH)(H)

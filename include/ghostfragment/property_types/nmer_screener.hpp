@@ -8,7 +8,10 @@ DECLARE_PROPERTY_TYPE(NMerScreener);
 
 PROPERTY_TYPE_INPUTS(NMerScreener) {
     using input_t = typename CappedFragmentsTraits::result_type;
-    return pluginplay::declare_input().add_field<input_t>("Capped fragments");
+    auto inputs   = pluginplay::declare_input()
+                    .add_field<input_t>("Capped fragments")
+                    .template add_field<unsigned int>("N");
+    return inputs;
 }
 
 PROPERTY_TYPE_RESULTS(NMerScreener) {
