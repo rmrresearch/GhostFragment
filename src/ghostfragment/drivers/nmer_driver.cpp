@@ -6,6 +6,7 @@ namespace ghostfragment::drivers {
 
 using pt                  = ghostfragment::pt::NMers;
 using capped_fragments_pt = ghostfragment::pt::CappedFragments;
+using screener_pt         = ghostfragment::pt::NMerScreener;
 
 const auto mod_desc = R"(
 NMer Driver
@@ -31,15 +32,22 @@ MODULE_CTOR(NMerDriver) {
     satisfies_property_type<pt>();
 
     add_submodule<capped_fragments_pt>("Capper");
+    add_submodule<screener_pt>("Screener");
+
+    add_input<unsigned>("N-Mer Truncation Order");
 }
 
 MODULE_RUN(NMerDriver) {
     const auto& [frags] = pt::unwrap_inputs(inputs);
+    const auto N        = inputs.at("N-Mer Truncation Order").value<unsigned>();
 
+    // 1. Cap the Frgaments
     auto& cap_mod              = submods.at("Capper");
     const auto& [capped_frags] = cap_mod.run_as<capped_fragments_pt>(frags);
 
-    type::nmers nmers;
+    // 2. Screen the nmers
+    auto& screen_mod    = submods.at("Screener");
+    const auto& [nmers] = screen_mod.run_as<screener_pt>(capped_frags, N);
 
     auto rv = results();
     return pt::wrap_results(rv, nmers);
