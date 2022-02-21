@@ -24,12 +24,12 @@ pesudoatoms are (conceptually) perfectly fine fragments in and of themselves.
 For this reason we take the submodule for forming the pseudoatoms to be of type
 simde::FragmentMolecule also. Next we determine the connectivity of the
 pseudoatoms; this happens in a submodule of type MolecularGraph. Finally, the
-driver calls into a submodule of type MolecularGraphToFragments, which is 
+driver calls into a submodule of type MolecularGraphToFragments, which is
 responsible for breaking the MolecularGraph instance into fragments.
 
 )";
 
-MODULE_CTOR(FragmentDriver) {
+MODULE_CTOR(Fragment) {
     description(mod_desc);
     satisfies_property_type<frags_pt>();
 
@@ -38,7 +38,7 @@ MODULE_CTOR(FragmentDriver) {
     add_submodule<graph2frags_pt>("Molecular graph to fragments");
 }
 
-MODULE_RUN(FragmentDriver) {
+MODULE_RUN(Fragment) {
     const auto& [mol] = frags_pt::unwrap_inputs(inputs);
 
     auto& pseudoatom_mod      = submods.at("Pseudoatoms");

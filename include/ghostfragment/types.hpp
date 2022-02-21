@@ -1,6 +1,7 @@
 #pragma once
 #include <chemist/chemical_system/chemical_system.hpp>
 #include <chemist/set_theory/set_theory.hpp>
+#include <pluginplay/hasher.hpp>
 #include <simde/types.hpp>
 
 namespace ghostfragment::type {
@@ -27,5 +28,8 @@ using nmers = fragmented<fragmented_molecule>;
 
 /// Type of a partitioned system
 using fragmented_system = fragmented<simde::type::chemical_system>;
+
+/// Type used to hash an object
+using pluginplay::Hasher;
 
 } // namespace ghostfragment::type

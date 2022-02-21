@@ -23,9 +23,7 @@ struct FragmentedSystemPIMPL {
                std::tie(rhs.m_frags, rhs.m_frag2aos, rhs.m_atom2ne);
     }
 
-    void hash(pluginplay::Hasher& h) const {
-        h(m_frags, m_frag2aos, m_atom2ne);
-    }
+    void hash(type::Hasher& h) const { h(m_frags, m_frag2aos, m_atom2ne); }
 
     fragment_set_type m_frags;
 

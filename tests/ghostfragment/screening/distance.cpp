@@ -30,17 +30,8 @@ TEST_CASE("Distance Screening") {
     auto mm  = testing::initialize();
     auto mod = mm.at("Screen by minimum distance");
 
-    SECTION("No fragments") {
-        capped_type capped;
-        type::fragmented_molecule frags;
-        type::nmers corr(frags);
-        const auto& [nmers] = mod.run_as<my_pt>(capped, 0u);
-        // TODO: investigate why this comparison seg faults
-        // REQUIRE(corr == nmers);
-    }
-
     SECTION("Water monomers") {
-        for(std::size_t n_waters = 1; n_waters < 4; ++n_waters) {
+        for(std::size_t n_waters = 2; n_waters < 4; ++n_waters) {
             SECTION("N = " + std::to_string(n_waters)) {
                 SECTION("Normal Connectivity") {
                     auto water_n = fragmented_water(n_waters);
@@ -52,71 +43,24 @@ TEST_CASE("Distance Screening") {
                         capped.emplace(frag_i, empty_set);
 
                     SECTION("No cut-off") {
-                        SECTION("n == 0") {
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 0u);
-                            REQUIRE(nmers == water_nmers(n_waters, 0u));
-                        }
+                        const auto& [dimers] = mod.run_as<my_pt>(capped, 2u);
+                        REQUIRE(dimers == water_nmers(n_waters, 2u));
 
-                        SECTION("n == 1") {
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 1u);
-                            REQUIRE(nmers == water_nmers(n_waters, 1u));
-                        }
-
-                        SECTION("n == 2") {
-                            if(n_waters < 2) {
-                                REQUIRE_THROWS_AS(mod.run_as<my_pt>(capped, 2u),
-                                                  std::runtime_error);
-                            } else {
-                                const auto& [nmers] =
-                                  mod.run_as<my_pt>(capped, 2u);
-                                REQUIRE(nmers == water_nmers(n_waters, 2u));
-                            }
-                        }
-
-                        SECTION("n == 3") {
-                            if(n_waters < 3) {
-                                REQUIRE_THROWS_AS(mod.run_as<my_pt>(capped, 3u),
-                                                  std::runtime_error);
-                            } else {
-                                const auto& [nmers] =
-                                  mod.run_as<my_pt>(capped, 3u);
-                                REQUIRE(nmers == water_nmers(n_waters, 3u));
-                            }
+                        if(n_waters == 3) {
+                            const auto& [nmers] = mod.run_as<my_pt>(capped, 3u);
+                            REQUIRE(nmers == water_nmers(n_waters, 3u));
                         }
                     }
 
                     SECTION("Cut-off of 0") {
                         mod.change_input("threshold", 0.0);
-                        SECTION("n == 0") {
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 0u);
-                            REQUIRE(nmers == water_nmers(n_waters, 0u));
-                        }
 
-                        SECTION("n == 1") {
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 1u);
+                        const auto& [dimers] = mod.run_as<my_pt>(capped, 2u);
+                        REQUIRE(dimers == water_nmers(n_waters, 1u));
+
+                        if(n_waters == 3) {
+                            const auto& [nmers] = mod.run_as<my_pt>(capped, 3u);
                             REQUIRE(nmers == water_nmers(n_waters, 1u));
-                        }
-
-                        SECTION("n == 2") {
-                            if(n_waters < 2) {
-                                REQUIRE_THROWS_AS(mod.run_as<my_pt>(capped, 2u),
-                                                  std::runtime_error);
-                            } else {
-                                const auto& [nmers] =
-                                  mod.run_as<my_pt>(capped, 2u);
-                                REQUIRE(nmers == water_nmers(n_waters, 1u));
-                            }
-                        }
-
-                        SECTION("n == 3") {
-                            if(n_waters < 3) {
-                                REQUIRE_THROWS_AS(mod.run_as<my_pt>(capped, 3u),
-                                                  std::runtime_error);
-                            } else {
-                                const auto& [nmers] =
-                                  mod.run_as<my_pt>(capped, 3u);
-                                REQUIRE(nmers == water_nmers(n_waters, 1u));
-                            }
                         }
                     }
                 }
@@ -146,20 +90,6 @@ TEST_CASE("Distance Screening") {
 
                     SECTION("No cut-off") {
                         type::nmers corr(water_n);
-                        SECTION("n == 0") {
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 0u);
-                            REQUIRE(nmers == corr);
-                        }
-
-                        SECTION("n == 1") {
-                            for(std::size_t i = 0; i < N; ++i) {
-                                auto frag = corr.new_subset();
-                                frag.insert(i);
-                                corr.insert(frag);
-                            }
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 1u);
-                            REQUIRE(nmers == corr);
-                        }
 
                         SECTION("n == 2") {
                             for(std::size_t i = 0; i < N; ++i) {
@@ -200,9 +130,6 @@ TEST_CASE("Distance Screening") {
                                 const auto& [nmers] =
                                   mod.run_as<my_pt>(capped, 3u);
                                 REQUIRE(nmers == corr);
-                            } else {
-                                REQUIRE_THROWS_AS(mod.run_as<my_pt>(capped, 3u),
-                                                  std::runtime_error);
                             }
                         }
                     }
@@ -210,20 +137,6 @@ TEST_CASE("Distance Screening") {
                     SECTION("Cut-off == 0") {
                         mod.change_input("threshold", 0.0);
                         type::nmers corr(water_n);
-                        SECTION("n == 0") {
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 0u);
-                            REQUIRE(nmers == corr);
-                        }
-
-                        SECTION("n == 1") {
-                            for(std::size_t i = 0; i < N; ++i) {
-                                auto frag = corr.new_subset();
-                                frag.insert(i);
-                                corr.insert(frag);
-                            }
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 1u);
-                            REQUIRE(nmers == corr);
-                        }
 
                         SECTION("n == 2") {
                             for(std::size_t i = 0; i < N; ++i) {
@@ -255,9 +168,6 @@ TEST_CASE("Distance Screening") {
                                 const auto& [nmers] =
                                   mod.run_as<my_pt>(capped, 3u);
                                 REQUIRE(nmers == corr);
-                            } else {
-                                REQUIRE_THROWS_AS(mod.run_as<my_pt>(capped, 3u),
-                                                  std::runtime_error);
                             }
                         }
                     }

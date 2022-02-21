@@ -42,13 +42,10 @@ Distance Based Screening
 ------------------------
 
 Many of the initial NMer screening routines relied on distance based cutoffs to
-select which NMers survived. 
+select which NMers survived.
 
 The steps in this module:
 
-#. Handle zero-fragment edge-case (return empty set)
-#. Handle truncation at 0-mers edge-case
-#. Handle truncation at fragments edge-case
 #. Computes the minimum distance between each pair of capped fragments
 #. As part of previous step, we screen pairs, and maintain a list of pairs that
    survive
@@ -59,14 +56,18 @@ The steps in this module:
 Algorithm Notes:
 ----------------
 
+This module assumes it's run as part of NMer driver and that NMer driver has
+taken care of ensuring the number of fragments is greater than or equal to the
+requested truncation order and that the NMer driver takes care of the truncation
+orders of 0 and 1. Hence we only worry about "real" nmers.
+
 Let N be the number of fragments, n be the nmer truncation level, and t be the
 distance cut-off then:
 
-- n == 0 and N == 0 are handled separately
-- Determining the distances between fragments has us consider all fragments and 
+- Determining the distances between fragments has us consider all fragments and
   dimers
 - For a trimer to survive there must be a path through the trimer such that
-  each edge of the path is within the threshold distance. This means it must be 
+  each edge of the path is within the threshold distance. This means it must be
   the case that:
   - path a-b-c is such that a-b < t and b-c < t, and/or
   - path b-a-c is such that a-b < t and a-c < t, and/or
@@ -87,7 +88,7 @@ distance cut-off then:
   - path b-(c-a)-d is such that b-c-d < t and a-c < t
   - path a-b-c-d is such that b-c-d < t and a-b < t
 - The generalization is that the m-mers that survive can be formed by taking the
-  unions of (m-1)-mers that survive with pairs a-b such that at least one of the 
+  unions of (m-1)-mers that survive with pairs a-b such that at least one of the
   monomers (either a or b) is in the (m-1)-mer. If the pair a-b is a subset of
   the (m-1)-mer you just get back the (m-1)-mer
 )""";
@@ -109,40 +110,10 @@ MODULE_RUN(MinimumDistance) {
     // N == number of frags, n == truncation order
     const auto N = capped_frags.size();
 
-    if(n > N)
-        throw std::runtime_error("Can not create " + std::to_string(n) +
-                                 "-mers with only " + std::to_string(N) +
-                                 " fragments.");
-
-    // Handle zero fragment cases
-    if(N == 0) {
-        type::fragmented_molecule frags;
-        type::nmers nmers(frags);
-        auto rv = results();
-        return my_pt::wrap_results(rv, nmers);
-    }
-
     // TODO: Revisit when Chemist#284 is tackled
     type::fragmented_molecule frags(capped_frags.begin()->first.object());
     for(const auto& [f0, c0] : capped_frags) frags.insert(f0);
     type::nmers nmers(frags);
-
-    // should be combined with N == 0 when #286 is tackled
-    if(n == 0) {
-        auto rv = results();
-        return my_pt::wrap_results(rv, nmers);
-    }
-
-    // n == 1 edge-case (i.e. we don't need to form pairs at all)
-    if(n == 1) {
-        for(std::size_t i = 0; i < N; ++i) {
-            auto frag = nmers.new_subset();
-            frag.insert(i);
-            nmers.insert(frag);
-        }
-        auto rv = results();
-        return my_pt::wrap_results(rv, nmers);
-    }
 
     // This will be the surviving dimers
     using nmer_type = typename type::nmers::value_type;

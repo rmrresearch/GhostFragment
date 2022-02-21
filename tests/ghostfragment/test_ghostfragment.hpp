@@ -1,6 +1,7 @@
 #pragma once
 #include "ghostfragment/ghostfragment.hpp"
 #include <catch2/catch.hpp>
+#include <chemist/chemist.hpp>
 #include <simde/simde.hpp>
 namespace testing {
 
@@ -70,7 +71,7 @@ inline auto sto3g(const simde::type::molecule& mol) {
 
     AOBasisSet<double> bs;
     for(const auto& atom_i : mol) {
-        Center<double> c;
+        AtomicBasisSet<double> c;
         for(std::size_t i = 0; i < 3; ++i) c.coord(i) = atom_i.coords()[i];
         if(atom_i.Z() == 1) {
             c.add_shell(ShellType::pure, 0, c0, a0);
