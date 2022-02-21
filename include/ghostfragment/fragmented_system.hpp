@@ -204,7 +204,7 @@ public:
      *               be updated to contain a hash of the present instance's
      *               state.
      */
-    void hash(pluginplay::Hasher& h) const;
+    void hash(type::Hasher& h) const;
 
 private:
     /// Type of the PIMPL

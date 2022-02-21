@@ -1,8 +1,8 @@
 #pragma once
 #include "ghostfragment/ghostfragment.hpp"
 #include <catch2/catch.hpp>
+#include <chemist/chemist.hpp>
 #include <simde/simde.hpp>
-
 namespace testing {
 
 // Common set-up all tests have
@@ -41,6 +41,17 @@ inline auto water(std::size_t N = 1) {
     return rv;
 }
 
+/// Creates a connectivity table for the system resulting from `water(N)`
+inline auto water_connectivity(std::size_t N) {
+    simde::type::connectivity_table connects(3 * N);
+    for(std::size_t water_i = 0; water_i < N; ++water_i) {
+        std::size_t start = 3 * water_i;     // Index of oxygen for water_i
+        connects.add_bond(start, start + 1); // start + 1 is 1st hydrogen
+        connects.add_bond(start, start + 2); // start + 2 is 2nd hydrogen
+    }
+    return connects;
+}
+
 /// Creates an STO-3G basis set for the provided molecule (assumed to be waters)
 inline auto sto3g(const simde::type::molecule& mol) {
     using vector_t = std::vector<double>;
@@ -60,7 +71,7 @@ inline auto sto3g(const simde::type::molecule& mol) {
 
     AOBasisSet<double> bs;
     for(const auto& atom_i : mol) {
-        Center<double> c;
+        AtomicBasisSet<double> c;
         for(std::size_t i = 0; i < 3; ++i) c.coord(i) = atom_i.coords()[i];
         if(atom_i.Z() == 1) {
             c.add_shell(ShellType::pure, 0, c0, a0);
@@ -76,6 +87,7 @@ inline auto sto3g(const simde::type::molecule& mol) {
     return simde::type::ao_space{bs};
 }
 
+// Makes fragments where each water is in a single fragment
 inline auto fragmented_water(std::size_t N) {
     auto molecule    = water(N);
     using frag_type  = ghostfragment::type::fragmented_molecule;
@@ -87,6 +99,84 @@ inline auto fragmented_water(std::size_t N) {
         auto water = frags.new_subset();
         for(size_type j = 0; j < 3; ++j) water.insert(i * 3 + j);
         frags.insert(water);
+    }
+    return frags;
+}
+
+inline auto water_nmers(std::size_t N, std::size_t n) {
+    auto water_n = fragmented_water(N);
+    ghostfragment::type::nmers nmers(water_n);
+
+    if(n == 0) return nmers;
+
+    for(std::size_t i = 0; i < N; ++i) {
+        auto frag = nmers.new_subset();
+        frag.insert(i);
+        nmers.insert(frag);
+    }
+
+    if(n == 1) return nmers;
+
+    for(std::size_t i = 0; i < N; ++i) {
+        for(std::size_t j = i + 1; j < N; ++j) {
+            auto frag = nmers.new_subset();
+            frag.insert(i);
+            frag.insert(j);
+            nmers.insert(frag);
+        }
+    }
+
+    if(n == 2) return nmers;
+
+    for(std::size_t i = 0; i < N; ++i) {
+        for(std::size_t j = i + 1; j < N; ++j) {
+            for(std::size_t k = j + 1; k < N; ++k) {
+                auto frag = nmers.new_subset();
+                frag.insert(i);
+                frag.insert(j);
+                frag.insert(k);
+                nmers.insert(frag);
+            }
+        }
+    }
+
+    if(n == 3) return nmers;
+
+    for(std::size_t i = 0; i < N; ++i) {
+        for(std::size_t j = i + 1; j < N; ++j) {
+            for(std::size_t k = j + 1; k < N; ++k) {
+                for(std::size_t l = k + 1; l < N; ++l) {
+                    auto frag = nmers.new_subset();
+                    frag.insert(i);
+                    frag.insert(j);
+                    frag.insert(k);
+                    frag.insert(l);
+                    nmers.insert(frag);
+                }
+            }
+        }
+    }
+
+    if(n == 4) return nmers;
+
+    throw std::runtime_error("Didn't code up higher than n == 4");
+}
+
+// Fragments each water as (OH)(H)
+inline auto fragmented_water_needing_caps(std::size_t N) {
+    auto molecule    = water(N);
+    using frag_type  = ghostfragment::type::fragmented_molecule;
+    using value_type = frag_type::value_type;
+    using size_type  = value_type::size_type;
+
+    frag_type frags(molecule);
+    for(size_type i = 0; i < N; ++i) {
+        auto oh = frags.new_subset();
+        for(size_type j = 0; j < 2; ++j) oh.insert(i * 3 + j);
+        frags.insert(oh);
+        auto h = frags.new_subset();
+        h.insert(i * 3 + 2);
+        frags.insert(h);
     }
     return frags;
 }
