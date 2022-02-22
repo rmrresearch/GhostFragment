@@ -22,6 +22,17 @@ public:
     using result_type = std::map<subset_type, cap_set>;
 };
 
+/** @brief Property type for a series of "capped" atomic systems.
+ *
+ *  In theories which require decomposing a molecular supersystem into
+ *  molecular subsystems the decomposition of large covalently bonded molecules
+ *  will usually sever covalent bonds. To restore the proper valency one "caps"
+ *  the bonds. There are a number of ways of capping such bonds. The modules
+ *  implementing the various capping strategies satisfy this property type.
+ *
+ *  @tparam Type2Cap The set of objects being capped. Expected to be a
+ *                   specialization of FamilyOfSets.
+ */
 template<typename Type2Cap>
 DECLARE_TEMPLATED_PROPERTY_TYPE(Capped, Type2Cap);
 
@@ -42,5 +53,8 @@ TEMPLATED_PROPERTY_TYPE_RESULTS(Capped, Type2Cap) {
 
 using CappedFragments       = Capped<type::fragmented_molecule>;
 using CappedFragmentsTraits = CappedTraits<type::fragmented_molecule>;
+
+using CappedNMers       = Capped<type::nmers>;
+using CappedNMersTraits = CappedTraits<type::nmers>;
 
 } // namespace ghostfragment::pt
