@@ -42,11 +42,11 @@ public:
     /// Type of the entire atomic orbital (AO) basis set for the supersystem
     using ao_basis_set_type = simde::type::ao_basis_set;
 
-    /// Type of a fragment's AO basis set, mask/view of the supersystem's basis
-    using fragment_basis_type = type::ao_set;
+    /// Type of a subset of AOs, mask/view of the supersystem's basis
+    using ao_set_type = type::ao_set;
 
-    /// Type of a read-only reference to a fragment's AO basis set
-    using const_fragment_basis_reference = const fragment_basis_type&;
+    /// Type of a read-only reference to a subset of the AO basis set
+    using const_ao_set_reference = const ao_set_type&;
 
     /// Type of a map from sets of atoms to AOs on that atom
     using nucleus_to_ao_basis_type = type::fragment_to_ao_basis;
@@ -162,16 +162,23 @@ public:
      */
     const_fragment_reference fragment(size_type i) const;
 
-    /** @brief Retrieves the molecular AO basis set for the provided fragment.
+    /** @brief Retrieves the molecular AO basis set for the provided set of
+     *         atoms.
      *
-     *  @param[in] f The fragment who's AO basis set is being requested.
+     *  To actually make ChemicalSystem instances we will need the AO basis sets
+     *  for sets of atoms. These sets of atoms will sometimes be fragments, but
+     *  they can also be intersections of fragments, unions of fragments, etc.
+     *  This function will loop over the atoms in the input and return the AO
+     *  basis set which is the union of the AO bases for the atoms.
+     *
+     *  @param[in] f The set of atoms to form the AO basis set for.
      *
      *  @return The molecular AO basis set for fragment @p f.
      *
      *  @throw std::out_of_range if @p f is not a fragment in the current
      *                           instance. Strong throw guarantee.
      */
-    fragment_basis_type ao_basis_set(const_fragment_reference f) const;
+    ao_set_type ao_basis_set(const_fragment_reference f) const;
 
     /** @brief Retrieves the number of electrons for the provided fragment.
      *
@@ -219,11 +226,20 @@ private:
     /// Type of the PIMPL
     using pimpl_type = detail_::FragmentedSystemPIMPL;
 
+    /// Type of a mutable reference to the PIMPL
+    using pimpl_reference = pimpl_type&;
+
+    /// Type of a read-only reference to the PIMPL
+    using const_pimpl_reference = const pimpl_type&;
+
     /// Type of a pointer to the PIMPL
     using pimpl_pointer = std::unique_ptr<pimpl_type>;
 
-    /// Wraps he process of checking if @p f is in this instance
-    void assert_frag_(const_fragment_reference f) const;
+    /// Wraps asserting that the instance has a PIMPL, returns it if it does
+    pimpl_reference pimpl_();
+
+    /// Wraps asserting that the instance has a PIMPL, returns it if it does
+    const_pimpl_reference pimpl_() const;
 
     /// Contains the actual state of the class
     pimpl_pointer m_pimpl_;

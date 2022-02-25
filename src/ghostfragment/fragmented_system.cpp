@@ -7,12 +7,20 @@ namespace detail_ {
 // This PIMPL just stores the input in the same form that it comes into
 // FragmentedSystem
 struct FragmentedSystemPIMPL {
-    using parent_type           = FragmentedSystem;
-    using fragment_set_type     = parent_type::fragment_set_type;
-    using atom_to_ao_basis_type = parent_type::nucleus_to_ao_basis_type;
-    using atom2nelectron_type   = parent_type::atom2nelectron_type;
+    using parent_type = FragmentedSystem;
 
-    FragmentedSystemPIMPL(fragment_set_type frags, atom_to_ao_basis_type f2ao,
+    using fragment_set_type        = parent_type::fragment_set_type;
+    using fragment_type            = parent_type::fragment_type;
+    using const_fragment_reference = parent_type::const_fragment_reference;
+
+    using nucleus_to_ao_set_type = parent_type::nucleus_to_ao_basis_type;
+    using ao_set_type            = parent_type::ao_set_type;
+
+    using size_type = parent_type::size_type;
+
+    using atom2nelectron_type = parent_type::atom2nelectron_type;
+
+    FragmentedSystemPIMPL(fragment_set_type frags, nucleus_to_ao_set_type f2ao,
                           atom2nelectron_type a2e) :
       m_frags(std::move(frags)),
       m_atom2aos(std::move(f2ao)),
@@ -25,9 +33,44 @@ struct FragmentedSystemPIMPL {
 
     void hash(type::Hasher& h) const { h(m_frags, m_atom2aos, m_atom2ne); }
 
+    // Wraps process of going from an atom index to a "fragment"
+    fragment_type atom2frag(size_type i) const {
+        auto rv = m_frags.new_subset();
+        rv.insert(i);
+        return rv;
+    }
+
+    ao_set_type ao_basis_set(const_fragment_reference f) const {
+        // TODO: revist when Chemist#284 is handled
+        if(m_atom2aos.empty())
+            throw std::out_of_range("No AOs have been assigned!!!!");
+
+        const auto& mol_in = f.object();
+        const auto& mol    = m_atom2aos.begin()->first.object();
+        if(mol_in != mol)
+            throw std::out_of_range("Atoms don't belong to this supersystem");
+
+        const auto& all_aos = m_atom2aos.begin()->second.object();
+
+        type::fragmented_aos temp(all_aos);
+        auto rv = temp.new_subset();
+
+        for(const auto& x : f) rv += m_atom2aos.at(atom2frag(x));
+        return rv;
+    }
+
+    size_type n_electrons(const_fragment_reference f) const {
+        if(f.object() != m_frags.object())
+            throw std::out_of_range("Atoms don't belong to this superset");
+
+        size_type n = 0;
+        for(const auto& atom_idx : f) { n += m_atom2ne.at(atom_idx); }
+        return n;
+    }
+
     fragment_set_type m_frags;
 
-    atom_to_ao_basis_type m_atom2aos;
+    nucleus_to_ao_set_type m_atom2aos;
 
     atom2nelectron_type m_atom2ne;
 };
@@ -90,38 +133,17 @@ FragmentedSystem::const_fragment_reference FragmentedSystem::fragment(
                                 " is out of range [0, " + std::to_string(n) +
                                 ").");
 
-    return m_pimpl_->m_frags.at(i);
+    return pimpl_().m_frags.at(i);
 }
 
-FragmentedSystem::fragment_basis_type FragmentedSystem::ao_basis_set(
+FragmentedSystem::ao_set_type FragmentedSystem::ao_basis_set(
   const_fragment_reference f) const {
-    assert_frag_(f);
-    const auto& atoms2aos = m_pimpl_->m_atom2aos;
-
-    // TODO: revist when Chemist#284 is handled
-    if(atoms2aos.empty())
-        throw std::runtime_error("No AOs have been assigned!!!!");
-    const auto& mol     = f.object();
-    const auto& all_aos = atoms2aos.begin()->second.object();
-
-    type::fragmented_aos temp(all_aos);
-    auto rv = temp.new_subset();
-
-    for(const auto& x : f) {
-        auto atom_set = m_pimpl_->m_frags.new_subset();
-        atom_set.insert(x);
-        rv += atoms2aos.at(atom_set);
-    }
-    return rv;
+    return pimpl_().ao_basis_set(f);
 }
 
 FragmentedSystem::size_type FragmentedSystem::n_electrons(
   const_fragment_reference f) const {
-    assert_frag_(f);
-
-    size_type n = 0;
-    for(const auto& atom_idx : f) { n += m_pimpl_->m_atom2ne[atom_idx]; }
-    return n;
+    return pimpl_().n_electrons(f);
 }
 
 //------------------------------------------------------------------------------
@@ -137,21 +159,28 @@ bool FragmentedSystem::operator==(const FragmentedSystem& rhs) const noexcept {
 }
 
 void FragmentedSystem::hash(pluginplay::Hasher& h) const {
-    if(m_pimpl_) h(*m_pimpl_);
-    h(nullptr);
+    if(m_pimpl_)
+        h(*m_pimpl_);
+    else
+        h(nullptr);
 }
 
 //------------------------------------------------------------------------------
 //                             Private Members
 //------------------------------------------------------------------------------
 
-void FragmentedSystem::assert_frag_(const_fragment_reference f) const {
-    if(m_pimpl_) {
-        for(const auto& x : m_pimpl_->m_frags)
-            if(x == f) return;
-    }
-    throw std::out_of_range("Provided fragment is not part of this fragmented "
-                            "system");
+FragmentedSystem::pimpl_reference FragmentedSystem::pimpl_() {
+    if(m_pimpl_) return *m_pimpl_;
+
+    throw std::runtime_error("Instance has no state. Was it default "
+                             "constructed or moved from?");
+}
+
+FragmentedSystem::const_pimpl_reference FragmentedSystem::pimpl_() const {
+    if(m_pimpl_) return *m_pimpl_;
+
+    throw std::runtime_error("Instance has no state. Was it default "
+                             "constructed or moved from?");
 }
 
 } // namespace ghostfragment

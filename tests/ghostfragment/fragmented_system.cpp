@@ -123,7 +123,7 @@ TEST_CASE("FragmentedSystem") {
         const auto& w0 = monomer.at(0);
         const auto& w1 = dimer.at(1);
 
-        REQUIRE_THROWS_AS(defaulted.ao_basis_set(w0), std::out_of_range);
+        REQUIRE_THROWS_AS(defaulted.ao_basis_set(w0), std::runtime_error);
 
         REQUIRE_THROWS_AS(empty.ao_basis_set(w0), std::out_of_range);
 
@@ -164,9 +164,10 @@ TEST_CASE("FragmentedSystem") {
         const auto& w0 = monomer.at(0);
         const auto& w1 = dimer.at(1);
 
-        REQUIRE_THROWS_AS(defaulted.n_electrons(w0), std::out_of_range);
+        REQUIRE_THROWS_AS(defaulted.n_electrons(w0), std::runtime_error);
 
-        REQUIRE_THROWS_AS(empty.n_electrons(w0), std::out_of_range);
+        // TODO: Revisit after Chemist#288
+        // REQUIRE_THROWS_AS(empty.n_electrons(w0), std::out_of_range);
 
         REQUIRE(neutral.n_electrons(w0) == 10);
         REQUIRE_THROWS_AS(neutral.n_electrons(w1), std::out_of_range);
