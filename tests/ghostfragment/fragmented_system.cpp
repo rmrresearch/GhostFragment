@@ -127,11 +127,35 @@ TEST_CASE("FragmentedSystem") {
 
         REQUIRE_THROWS_AS(empty.ao_basis_set(w0), std::out_of_range);
 
-        REQUIRE(neutral.ao_basis_set(w0) == mono2ao.at(w0));
+        auto O0 = monomer.new_subset();
+        auto H0 = monomer.new_subset();
+        auto H1 = monomer.new_subset();
+        O0.insert(0);
+        H0.insert(1);
+        H1.insert(2);
+
+        auto w0_basis = mono2ao.at(O0) + mono2ao.at(H0) + mono2ao.at(H1);
+
+        REQUIRE(neutral.ao_basis_set(w0) == w0_basis);
         REQUIRE_THROWS_AS(neutral.ao_basis_set(w1), std::out_of_range);
 
-        REQUIRE(charged.ao_basis_set(dimer.at(0)) == dimer2ao.at(dimer.at(0)));
-        REQUIRE(charged.ao_basis_set(w1) == dimer2ao.at(w1));
+        O0      = dimer.new_subset();
+        H0      = dimer.new_subset();
+        H1      = dimer.new_subset();
+        auto O1 = dimer.new_subset();
+        auto H2 = dimer.new_subset();
+        auto H3 = dimer.new_subset();
+        O0.insert(0);
+        H0.insert(1);
+        H1.insert(2);
+        O1.insert(3);
+        H2.insert(4);
+        H3.insert(5);
+        w0_basis      = dimer2ao.at(O0) + dimer2ao.at(H0) + dimer2ao.at(H1);
+        auto w1_basis = dimer2ao.at(O1) + dimer2ao.at(H2) + dimer2ao.at(H3);
+
+        REQUIRE(charged.ao_basis_set(dimer.at(0)) == w0_basis);
+        REQUIRE(charged.ao_basis_set(w1) == w1_basis);
 
         REQUIRE_THROWS_AS(charged.ao_basis_set(w0), std::out_of_range);
     }
@@ -190,7 +214,9 @@ TEST_CASE("FragmentedSystem") {
             }
 
             SECTION("Different AOs") {
-                dimer2ao.at(dimer.at(0)).insert(3);
+                auto O1 = dimer.new_subset();
+                O1.insert(3);
+                dimer2ao.at(O1).insert(4);
                 FragmentedSystem rhs(dimer, dimer2ao, charged_ne);
                 REQUIRE(charged != rhs);
                 REQUIRE_FALSE(charged == rhs);
@@ -237,7 +263,9 @@ TEST_CASE("FragmentedSystem") {
             }
 
             SECTION("Different AOs") {
-                dimer2ao.at(dimer.at(0)).insert(3);
+                auto O1 = dimer.new_subset();
+                O1.insert(3);
+                dimer2ao.at(O1).insert(4);
                 FragmentedSystem rhs(dimer, dimer2ao, charged_ne);
                 REQUIRE(lhs != pluginplay::hash_objects(rhs));
             }

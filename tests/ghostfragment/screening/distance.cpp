@@ -44,11 +44,11 @@ TEST_CASE("Distance Screening") {
 
                     SECTION("No cut-off") {
                         const auto& [dimers] = mod.run_as<my_pt>(capped, 2u);
-                        REQUIRE(dimers == water_nmers(n_waters, 2u));
+                        REQUIRE(dimers == make_nmers(water_n, 2u));
 
                         if(n_waters == 3) {
                             const auto& [nmers] = mod.run_as<my_pt>(capped, 3u);
-                            REQUIRE(nmers == water_nmers(n_waters, 3u));
+                            REQUIRE(nmers == make_nmers(water_n, 3u));
                         }
                     }
 
@@ -56,11 +56,11 @@ TEST_CASE("Distance Screening") {
                         mod.change_input("threshold", 0.0);
 
                         const auto& [dimers] = mod.run_as<my_pt>(capped, 2u);
-                        REQUIRE(dimers == water_nmers(n_waters, 1u));
+                        REQUIRE(dimers == make_nmers(water_n, 1u));
 
                         if(n_waters == 3) {
                             const auto& [nmers] = mod.run_as<my_pt>(capped, 3u);
-                            REQUIRE(nmers == water_nmers(n_waters, 1u));
+                            REQUIRE(nmers == make_nmers(water_n, 1u));
                         }
                     }
                 }
@@ -70,67 +70,15 @@ TEST_CASE("Distance Screening") {
                     const auto N = water_n.size();
 
                     // Make correct answer
-                    simde::type::molecule all_the_caps;
-                    const auto& mol = water_n.object();
-                    for(size_t i = 0; i < n_waters; ++i) {
-                        // Cap replacing the 2nd H
-                        simde::type::atom h("H", 1ul, mol[i * 3 + 2].coords());
-                        // Cap replacing the O
-                        simde::type::atom o("H", 1ul, mol[i * 3].coords());
-                        all_the_caps.push_back(h);
-                        all_the_caps.push_back(o);
-                    }
-                    type::fragmented_molecule caps(all_the_caps);
-                    capped_type capped;
-                    for(std::size_t i = 0; i < N; ++i) {
-                        auto caps4i = caps.new_subset();
-                        caps4i.insert(i);
-                        capped.emplace(water_n[i], caps4i);
-                    }
+                    auto capped = capped_water(n_waters);
 
                     SECTION("No cut-off") {
-                        type::nmers corr(water_n);
+                        const auto& [nmers] = mod.run_as<my_pt>(capped, 2u);
+                        REQUIRE(nmers == make_nmers(water_n, 2u));
 
-                        SECTION("n == 2") {
-                            for(std::size_t i = 0; i < N; ++i) {
-                                auto frag = corr.new_subset();
-                                frag.insert(i);
-                                corr.insert(frag);
-                                for(std::size_t j = i + 1; j < N; ++j) {
-                                    auto dimer = corr.new_subset();
-                                    dimer.insert(i);
-                                    dimer.insert(j);
-                                    corr.insert(dimer);
-                                }
-                            }
-                            const auto& [nmers] = mod.run_as<my_pt>(capped, 2u);
-                            REQUIRE(nmers == corr);
-                        }
-
-                        SECTION("n == 3") {
-                            for(std::size_t i = 0; i < N; ++i) {
-                                auto frag = corr.new_subset();
-                                frag.insert(i);
-                                corr.insert(frag);
-                                for(std::size_t j = i + 1; j < N; ++j) {
-                                    auto dimer = corr.new_subset();
-                                    dimer.insert(i);
-                                    dimer.insert(j);
-                                    corr.insert(dimer);
-                                    for(std::size_t k = j + 1; k < N; ++k) {
-                                        auto trimer = corr.new_subset();
-                                        trimer.insert(i);
-                                        trimer.insert(j);
-                                        trimer.insert(k);
-                                        corr.insert(trimer);
-                                    }
-                                }
-                            }
-                            if(N > 2) {
-                                const auto& [nmers] =
-                                  mod.run_as<my_pt>(capped, 3u);
-                                REQUIRE(nmers == corr);
-                            }
+                        if(N > 2) {
+                            const auto& [nmers] = mod.run_as<my_pt>(capped, 3u);
+                            REQUIRE(nmers == make_nmers(water_n, 3ul));
                         }
                     }
 
@@ -140,9 +88,6 @@ TEST_CASE("Distance Screening") {
 
                         SECTION("n == 2") {
                             for(std::size_t i = 0; i < N; ++i) {
-                                auto frag = corr.new_subset();
-                                frag.insert(i);
-                                corr.insert(frag);
                                 if(i % 2 == 1) continue;
                                 auto dimer = corr.new_subset();
                                 dimer.insert(i);
@@ -155,9 +100,6 @@ TEST_CASE("Distance Screening") {
 
                         SECTION("n == 2") {
                             for(std::size_t i = 0; i < N; ++i) {
-                                auto frag = corr.new_subset();
-                                frag.insert(i);
-                                corr.insert(frag);
                                 if(i % 2 == 1) continue;
                                 auto dimer = corr.new_subset();
                                 dimer.insert(i);

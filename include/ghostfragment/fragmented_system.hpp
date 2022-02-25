@@ -9,10 +9,20 @@ class FragmentedSystemPIMPL;
 /** @brief Abstraction to describe the initial fragmentation of the supersystem.
  *
  *  One of the first major steps in most fragment-based methods is to fragment
- *  the supersystem. To GhostFragment this means: dividing the atoms into sets,
- *  pairing each of those sets with an AO basis set, and assigning electrons to
- *  each of those sets. This class holds the results of fragmenting the
- *  supersystem and holds the information required to create System instances
+ *  the supersystem. To GhostFragment this means:
+ *
+ *  - establishing some fundamental disjoint representation of the supersystem
+ *    (we use atoms for now, but pseudoatoms would work too)
+ *  - establish a mapping from the disjoint representation to AOs (for now this
+ *    means mapping an atom to the AOs associated with it)
+ *  - establish a mapping from the disjoint representation to the number of
+ *    electrons (for now this is assigning electrons to atoms)
+ *  - form the fragments in terms of memebers of the disjoint representation
+ *    (for now the fragments are written in terms of atoms). The fragments need
+ *    not be disjoint themselves.
+ *
+ *  With the above information, this class holds the results of fragmenting the
+ *  supersystem and the information required to create ChemicalSystem instances
  *  for each fragment.
  */
 class FragmentedSystem {
@@ -33,13 +43,13 @@ public:
     using ao_basis_set_type = simde::type::ao_basis_set;
 
     /// Type of a fragment's AO basis set, mask/view of the supersystem's basis
-    using fragment_basis_type = typename type::fragmented_aos::value_type;
+    using fragment_basis_type = type::ao_set;
 
     /// Type of a read-only reference to a fragment's AO basis set
     using const_fragment_basis_reference = const fragment_basis_type&;
 
-    /// Type of a map from fragments to
-    using frag2ao_basis_type = type::fragment_to_ao_basis;
+    /// Type of a map from sets of atoms to AOs on that atom
+    using nucleus_to_ao_basis_type = type::fragment_to_ao_basis;
 
     /** @brief Used for offsets and counts.
      *
@@ -68,8 +78,8 @@ public:
      *  @param[in] frags A container filled with subsets of the parent system.
      *                   Each subset will treated as a fragment. Fragments may
      *                   overlap.
-     *  @param[in] frag2aos A map from fragments in @p frags to their molecular
-     *                      AO basis sets.
+     *  @param[in] atom2aos A map from nuclei in the supersystem to their AO
+     *                      basis sets.
      *  @param[in] atom2ne A map from atoms in the parent system to their number
      *                     of electrons. Indexing of @p atom2ne should match the
      *                     order in the parent system.
@@ -77,7 +87,7 @@ public:
      *  @throw std::bad_alloc if there is a problem allocating the internal
      *                        state. Strong throw guarantee.
      */
-    FragmentedSystem(fragment_set_type frags, frag2ao_basis_type frags2aos,
+    FragmentedSystem(fragment_set_type frags, nucleus_to_ao_basis_type atom2aos,
                      atom2nelectron_type atom2ne);
 
     /** @brief Makes a deep-copy of this FragmentedSystem
@@ -161,8 +171,7 @@ public:
      *  @throw std::out_of_range if @p f is not a fragment in the current
      *                           instance. Strong throw guarantee.
      */
-    const_fragment_basis_reference ao_basis_set(
-      const_fragment_reference f) const;
+    fragment_basis_type ao_basis_set(const_fragment_reference f) const;
 
     /** @brief Retrieves the number of electrons for the provided fragment.
      *

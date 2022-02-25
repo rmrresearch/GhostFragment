@@ -26,8 +26,8 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
 
     mm.change_submod("FragmentedSystem Driver", "Fragmenter",
                      "Fragment Driver");
-    mm.change_submod("FragmentedSystem Driver", "Fragment to AO Mapper",
-                     "Nuclei-AO Fragmenter");
+    mm.change_submod("FragmentedSystem Driver", "Atom to AO Mapper",
+                     "AO Center to Atom Mapper");
 
     mm.change_submod("NMer Driver", "Capper", "Atomic Capping");
     mm.change_submod("NMer Driver", "Screener", "Screen by minimum distance");

@@ -3,7 +3,7 @@
 
 namespace ghostfragment {
 
-/** @brief Class describing a term in the fragment-based method.
+/** @brief Class describing a set of inputs to an electronic structure package
  *
  *  Ultimately each fragment-based method comes down to combining a series of
  *  calculations to approximate the supersystem. There are a plethora of ways to
@@ -31,10 +31,12 @@ namespace ghostfragment {
  *  gets notable more complicated when ghost atoms and embedding fields are
  *  involved.
  *
- *  To work around this, GhostFragment introduces the concept of a term.
- *  A term wraps a series of inputs and the coefficients to combine them.
+ *  To work around this, GhostFragment introduces the concept of a composite
+ *  input, which is modeled by the CompositeInput class. Each CompositeInput
+ *  instance can be thought of as a container containing ChemicalSystem,
+ *  AOBasisSet pairs. Associated with each pair is a coefficient.
  */
-class Interaction {
+class CompositeInput {
 public:
     using nmer_type = typename type::nmers::value_type;
 

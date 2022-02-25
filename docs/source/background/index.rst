@@ -2,14 +2,15 @@
 Theoretical Background
 ######################
 
-The pages in this part attempt to provide a comprehensive theoertical background 
+The pages in this part attempt to provide a comprehensive theoretical background
 to the topics of basis-set superposition error and fragment-based methods.
 
 .. warning::
 
    This is a work in progress. The list of fragment-based methods is incomplete.
    Furthermore algorithm names are preliminary and may change as the literature
-   is summarized (our intent is to name algorithms after their first occurance).
+   is summarized (our intent is to name algorithms after their first
+   occurrence).
 
 .. toctree::
     :maxdepth: 2
@@ -20,4 +21,5 @@ to the topics of basis-set superposition error and fragment-based methods.
     bsse/index
     established_methods/index
     algorithms/index
+    fragment_vs_nmer
     terminology

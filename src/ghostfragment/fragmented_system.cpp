@@ -7,27 +7,27 @@ namespace detail_ {
 // This PIMPL just stores the input in the same form that it comes into
 // FragmentedSystem
 struct FragmentedSystemPIMPL {
-    using parent_type         = FragmentedSystem;
-    using fragment_set_type   = parent_type::fragment_set_type;
-    using frag2ao_basis_type  = parent_type::frag2ao_basis_type;
-    using atom2nelectron_type = parent_type::atom2nelectron_type;
+    using parent_type           = FragmentedSystem;
+    using fragment_set_type     = parent_type::fragment_set_type;
+    using atom_to_ao_basis_type = parent_type::nucleus_to_ao_basis_type;
+    using atom2nelectron_type   = parent_type::atom2nelectron_type;
 
-    FragmentedSystemPIMPL(fragment_set_type frags, frag2ao_basis_type f2ao,
+    FragmentedSystemPIMPL(fragment_set_type frags, atom_to_ao_basis_type f2ao,
                           atom2nelectron_type a2e) :
       m_frags(std::move(frags)),
-      m_frag2aos(std::move(f2ao)),
+      m_atom2aos(std::move(f2ao)),
       m_atom2ne(std::move(a2e)) {}
 
     bool operator==(const FragmentedSystemPIMPL& rhs) const noexcept {
-        return std::tie(m_frags, m_frag2aos, m_atom2ne) ==
-               std::tie(rhs.m_frags, rhs.m_frag2aos, rhs.m_atom2ne);
+        return std::tie(m_frags, m_atom2aos, m_atom2ne) ==
+               std::tie(rhs.m_frags, rhs.m_atom2aos, rhs.m_atom2ne);
     }
 
-    void hash(type::Hasher& h) const { h(m_frags, m_frag2aos, m_atom2ne); }
+    void hash(type::Hasher& h) const { h(m_frags, m_atom2aos, m_atom2ne); }
 
     fragment_set_type m_frags;
 
-    frag2ao_basis_type m_frag2aos;
+    atom_to_ao_basis_type m_atom2aos;
 
     atom2nelectron_type m_atom2ne;
 };
@@ -50,10 +50,10 @@ auto make_pimpl(Args&&... args) {
 FragmentedSystem::FragmentedSystem() noexcept = default;
 
 FragmentedSystem::FragmentedSystem(fragment_set_type frags,
-                                   frag2ao_basis_type frag2aos,
+                                   nucleus_to_ao_basis_type atom2aos,
                                    atom2nelectron_type atom2ne) :
   m_pimpl_(
-    make_pimpl(std::move(frags), std::move(frag2aos), std::move(atom2ne))) {}
+    make_pimpl(std::move(frags), std::move(atom2aos), std::move(atom2ne))) {}
 
 FragmentedSystem::FragmentedSystem(const FragmentedSystem& other) :
   m_pimpl_(other.m_pimpl_ ? make_pimpl(*other.m_pimpl_) : nullptr) {}
@@ -93,10 +93,26 @@ FragmentedSystem::const_fragment_reference FragmentedSystem::fragment(
     return m_pimpl_->m_frags.at(i);
 }
 
-FragmentedSystem::const_fragment_basis_reference FragmentedSystem::ao_basis_set(
+FragmentedSystem::fragment_basis_type FragmentedSystem::ao_basis_set(
   const_fragment_reference f) const {
     assert_frag_(f);
-    return m_pimpl_->m_frag2aos.at(f);
+    const auto& atoms2aos = m_pimpl_->m_atom2aos;
+
+    // TODO: revist when Chemist#284 is handled
+    if(atoms2aos.empty())
+        throw std::runtime_error("No AOs have been assigned!!!!");
+    const auto& mol     = f.object();
+    const auto& all_aos = atoms2aos.begin()->second.object();
+
+    type::fragmented_aos temp(all_aos);
+    auto rv = temp.new_subset();
+
+    for(const auto& x : f) {
+        auto atom_set = m_pimpl_->m_frags.new_subset();
+        atom_set.insert(x);
+        rv += atoms2aos.at(atom_set);
+    }
+    return rv;
 }
 
 FragmentedSystem::size_type FragmentedSystem::n_electrons(
@@ -131,11 +147,8 @@ void FragmentedSystem::hash(pluginplay::Hasher& h) const {
 
 void FragmentedSystem::assert_frag_(const_fragment_reference f) const {
     if(m_pimpl_) {
-        // map::count relies on equality meaning f < k and k < f are both false
-        // for some key k; however, if f and k have different parent objects
-        // then f < k and k < f will both be false even though f != k
-        for(const auto& [k, _] : m_pimpl_->m_frag2aos)
-            if(k == f) return;
+        for(const auto& x : m_pimpl_->m_frags)
+            if(x == f) return;
     }
     throw std::out_of_range("Provided fragment is not part of this fragmented "
                             "system");

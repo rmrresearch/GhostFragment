@@ -4,7 +4,7 @@ using namespace ghostfragment;
 using namespace testing;
 
 using frag_pt    = simde::FragmentedMolecule;
-using frag2ao_pt = pt::Frag2AO;
+using atom2ao_pt = simde::AtomToAO;
 using mod_pt     = pt::FragmentedSystem;
 
 /* Testing Strategy:
@@ -29,16 +29,20 @@ TEST_CASE("FragmentedSystem Module") {
         return monomer;
     });
 
-    auto frag2ao_mod =
-      pluginplay::make_lambda<frag2ao_pt>([=](auto&& frags_in, auto&& bs_in) {
-          REQUIRE(frags_in == monomer);
+    auto atom2ao_mod =
+      pluginplay::make_lambda<atom2ao_pt>([=](auto&& mol_in, auto&& bs_in) {
+          REQUIRE(mol_in == mol);
           REQUIRE(bs_in == bs);
-          return mono2ao;
+          using return_type = simde::atom_to_center_return_type;
+          using set_type    = typename return_type::value_type;
+          return_type corr(mol_in.size());
+          for(std::size_t j = 0; j < mol_in.size(); ++j) corr[j] = set_type{j};
+          return corr;
       });
 
     auto& mod = mm.at("FragmentedSystem Driver");
     mod.change_submod("Fragmenter", fragmenter_mod);
-    mod.change_submod("Fragment to AO Mapper", frag2ao_mod);
+    mod.change_submod("Atom to AO Mapper", atom2ao_mod);
 
     SECTION("Standard usage") {
         const auto& [frags] = mod.run_as<mod_pt>(sys, bs);

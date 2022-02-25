@@ -38,7 +38,7 @@ TEST_CASE("NMer Driver") {
 
             for(unsigned n = 0; n <= n_waters; ++n) {
                 // The nmers
-                auto nmers = water_nmers(n_waters, n);
+                auto nmers = make_nmers(water_n, n);
 
                 // The module doing the screening, just matters it returns nmers
                 auto screen_mod = pluginplay::make_lambda<screener_t>(

@@ -103,61 +103,60 @@ inline auto fragmented_water(std::size_t N) {
     return frags;
 }
 
-inline auto water_nmers(std::size_t N, std::size_t n) {
-    auto water_n = fragmented_water(N);
+inline auto make_nmers(ghostfragment::type::fragmented_molecule water_n,
+                       std::size_t n) {
+    const auto N = water_n.size();
     ghostfragment::type::nmers nmers(water_n);
 
-    if(n == 0) return nmers;
-
-    for(std::size_t i = 0; i < N; ++i) {
-        auto frag = nmers.new_subset();
-        frag.insert(i);
-        nmers.insert(frag);
-    }
-
-    if(n == 1) return nmers;
-
-    for(std::size_t i = 0; i < N; ++i) {
-        for(std::size_t j = i + 1; j < N; ++j) {
+    if(n == 0)
+        return nmers;
+    else if(n == 1) {
+        for(std::size_t i = 0; i < N; ++i) {
             auto frag = nmers.new_subset();
             frag.insert(i);
-            frag.insert(j);
             nmers.insert(frag);
         }
-    }
-
-    if(n == 2) return nmers;
-
-    for(std::size_t i = 0; i < N; ++i) {
-        for(std::size_t j = i + 1; j < N; ++j) {
-            for(std::size_t k = j + 1; k < N; ++k) {
+        return nmers;
+    } else if(n == 2) {
+        for(std::size_t i = 0; i < N; ++i) {
+            for(std::size_t j = i + 1; j < N; ++j) {
                 auto frag = nmers.new_subset();
                 frag.insert(i);
                 frag.insert(j);
-                frag.insert(k);
                 nmers.insert(frag);
             }
         }
-    }
-
-    if(n == 3) return nmers;
-
-    for(std::size_t i = 0; i < N; ++i) {
-        for(std::size_t j = i + 1; j < N; ++j) {
-            for(std::size_t k = j + 1; k < N; ++k) {
-                for(std::size_t l = k + 1; l < N; ++l) {
+        return nmers;
+    } else if(n == 3) {
+        for(std::size_t i = 0; i < N; ++i) {
+            for(std::size_t j = i + 1; j < N; ++j) {
+                for(std::size_t k = j + 1; k < N; ++k) {
                     auto frag = nmers.new_subset();
                     frag.insert(i);
                     frag.insert(j);
                     frag.insert(k);
-                    frag.insert(l);
                     nmers.insert(frag);
                 }
             }
         }
+        return nmers;
+    } else if(n == 4) {
+        for(std::size_t i = 0; i < N; ++i) {
+            for(std::size_t j = i + 1; j < N; ++j) {
+                for(std::size_t k = j + 1; k < N; ++k) {
+                    for(std::size_t l = k + 1; l < N; ++l) {
+                        auto frag = nmers.new_subset();
+                        frag.insert(i);
+                        frag.insert(j);
+                        frag.insert(k);
+                        frag.insert(l);
+                        nmers.insert(frag);
+                    }
+                }
+            }
+        }
+        return nmers;
     }
-
-    if(n == 4) return nmers;
 
     throw std::runtime_error("Didn't code up higher than n == 4");
 }
@@ -181,6 +180,33 @@ inline auto fragmented_water_needing_caps(std::size_t N) {
     return frags;
 }
 
+// Capped waters when fragments are generated with fragmented_water_needing_caps
+inline auto capped_water(std::size_t n_waters) {
+    using capped_type = ghostfragment::pt::CappedFragmentsTraits::result_type;
+    auto frags        = fragmented_water_needing_caps(n_waters);
+    const auto N      = frags.size();
+
+    simde::type::molecule all_the_caps;
+    const auto& mol = frags.object();
+    for(size_t i = 0; i < n_waters; ++i) {
+        // Cap replacing the 2nd H
+        simde::type::atom h("H", 1ul, mol[i * 3 + 2].coords());
+        // Cap replacing the O
+        simde::type::atom o("H", 1ul, mol[i * 3].coords());
+        all_the_caps.push_back(h);
+        all_the_caps.push_back(o);
+    }
+
+    ghostfragment::type::fragmented_molecule caps(all_the_caps);
+    capped_type capped;
+    for(std::size_t i = 0; i < N; ++i) {
+        auto caps4i = caps.new_subset();
+        caps4i.insert(i);
+        capped.emplace(frags[i], caps4i);
+    }
+    return capped;
+}
+
 inline auto water_ao_pairs(std::size_t N) {
     const auto water_N = fragmented_water(N);
     const auto aos_N   = sto3g(water_N.object()).basis_set();
@@ -189,11 +215,12 @@ inline auto water_ao_pairs(std::size_t N) {
     return_type pairs;
     ghostfragment::type::fragmented_aos aos(aos_N);
     std::size_t i = 0;
-    for(const auto& water : water_N) {
-        auto new_subset = aos.new_subset();
-        for(std::size_t j = 0; j < 3; ++j) { new_subset.insert(3 * i + j); }
-        pairs.emplace(water, new_subset);
-        ++i;
+    for(std::size_t atom = 0; atom < 3 * N; ++atom) {
+        auto atom_set = water_N.new_subset();
+        atom_set.insert(atom);
+        auto ao_set = aos.new_subset();
+        ao_set.insert(atom);
+        pairs.emplace(atom_set, ao_set);
     }
     return pairs;
 }
