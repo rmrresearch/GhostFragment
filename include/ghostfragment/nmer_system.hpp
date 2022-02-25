@@ -1,42 +1,72 @@
-// #pragma once
+#pragma once
+#include "ghostfragment/fragmented_system.hpp"
+#include "ghostfragment/types.hpp"
+namespace ghostfragment {
+namespace detail_ {
+class NMerSystemPIMPL;
+} // namespace detail_
 
-// namespace ghostfragment {
-// namespace detail_ {
-// class NMerSystemPIMPL;
-// class NMerSystemReferencePIMPL;
-// } // namespace detail_
+/** @brief
+ *
+ */
+class NMerSystem {
+private:
+    using pimpl_type = detail_::NMerSystemPIMPL;
 
-// template<typename PimplType = detail_::NMerSystemReferencePIMPL>
-// class NMerSystemReference {
-// public:
-//     using system_type       = ;
-//     using ao_basis_set_type = ;
-//     using pimpl_type        = PimplType;
-//     using pimpl_pointer     = std::unique_ptr<pimpl_type>;
+public:
+    /// Type of a pointer to a PIMPL
+    using pimpl_pointer = std::unique_ptr<pimpl_type>;
 
-//     ~NMerSystemReference() noexcept;
+    /// Type of an object describing how the fragments were originally made
+    using fragmented_system_type = FragmentedSystem;
 
-// protected:
-//     friend class NMerSystem;
-//     NMerSystemReference(pimpl_pointer p);
+    /// Type of a read-only reference to the fragments
+    using const_fragmented_system_reference = const fragmented_system_type&;
 
-// private:
-//     pimpl_pointer m_pimpl_;
-// };
+    /// Type used to
+    using fragment_type = fragmented_system_type::fragment_type;
 
-// /** @brief
-//  *
-//  */
-// class NMerSystem {
-// private:
-//     using reference_pimpl_type = detail_::NMerSystemReferencePIMPL;
+    /// Type of a read-only reference to a fragment
+    using const_fragment_reference =
+      fragmented_system_type::const_fragment_reference;
 
-// public:
-//     using reference = NMerSystemReference<>;
+    /// Type of a read-only reference to a subset of the supersystem's AO basis
+    using const_ao_set_reference =
+      fragmented_system_type::const_ao_set_reference;
 
-//     using const_reference =
-//       NMerSystemReference<const detail_::NMerSystemReferencePIMPL>;
-//     NMerSystem();
-// };
+    /// Type used for modeling, non-negative integers
+    using size_type = fragmented_system_type::size_type;
 
-// } // namespace ghostfragment
+    /// Type used to describe the set of N-Mers
+    using nmer_set_type = type::nmers;
+
+    /// Type used to describe an N-Mer
+    using nmer_type = typename nmer_set_type::value_type;
+
+    /// Type used to describe a read-only referenc to an N-Mer
+    using const_nmer_reference = const nmer_type&;
+
+    using capped_nmers = std::map<nmer_type, fragment_type>;
+
+    NMerSystem() noexcept;
+
+    NMerSystem(fragmented_system_type frags, capped_nmers nmers);
+
+    NMerSystem(pimpl_pointer pimpl) noexcept;
+
+    ~NMerSystem() noexcept;
+
+    const_fragmented_system_reference fragments() const;
+
+    const_ao_set_reference ao_basis_set(const_nmer_reference nmer) const;
+    const_ao_set_reference ao_basis_set(const_fragment_reference frag) const;
+
+    size_type n_electrons(const_nmer_reference nmer) const;
+    size_type n_electrons(const_fragment_reference frag) const;
+
+private:
+    /// The object actually implementing this class.
+    pimpl_pointer m_pimpl_;
+};
+
+} // namespace ghostfragment
