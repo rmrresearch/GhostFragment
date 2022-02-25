@@ -9,4 +9,4 @@ developing and testing fragment-based methods easy.
     :maxdepth: 2
     :caption: Contents:
 
-    consierations
+    considerations
