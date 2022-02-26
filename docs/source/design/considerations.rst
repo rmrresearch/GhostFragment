@@ -19,10 +19,17 @@ Fragment Method Considerations
 ******************************
 
 #. Most methods differ in how they form fragments.
-#. Forming fragments is more than grouping atoms, it also requires assigning
-   AOs, and electrons to the fragment.
+#. Forming fragments is more than grouping atoms, it also requires the ability 
+   to assign AOs, and electrons to the fragments and intersections of fragments
 #. Most fragment methods start by preliminarily forming pseudoatoms, i.e.,
-   disjoint groups of atoms that are never separated
+   disjoint groups of atoms that are never separated.
+#. The actual atoms themselves can always be used as a trivial set of 
+   pseudoatoms
+#. For disjoint fragments, the fragments themselves can be considered 
+   pseudoatoms
+#. Mapping of AOs and number of electrons needs to be done from pseudoatoms to
+   work with intersecting fragments
+
 
 ******************************
 N-Mer Formation Considerations
@@ -43,13 +50,17 @@ N-Mer Formation Considerations
    screening). In such a case, neglecting the |m|-mer can lead to neglecting
    interactions (and even atoms).
 #. Forming |n|-mers, and their intersections, also requires us to assign
-   electrons and AOs.
+   electrons and AOs (can use the fragment assignments)
 
 *****************************
 Capping Method Considerations
 *****************************
 
 #. It is necessary to cap not only fragments, but |n|-mers, and intersections.
+#. Caps (more specifically the atoms replaced by the caps) need to be considered 
+   when forming intersections. For example, consider a system A-B which gets 
+   fragmented A-H, H-B. Summing A-H and H-B double counts the severed bond. We 
+   can approximately account for this double counting by: (A-H) + (H-B) - (H-H).
 
 
 ******************************

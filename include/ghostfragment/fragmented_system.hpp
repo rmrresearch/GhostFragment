@@ -24,6 +24,8 @@ class FragmentedSystemPIMPL;
  *  With the above information, this class holds the results of fragmenting the
  *  supersystem and the information required to create ChemicalSystem instances
  *  for each fragment.
+ *
+ *  TODO: The capping information should be in this class too.
  */
 class FragmentedSystem {
 public:
