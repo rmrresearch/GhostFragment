@@ -51,6 +51,18 @@ NMerSystem::NMerSystem(fragmented_system_type frags, capped_nmers nmers) :
 NMerSystem::NMerSystem(pimpl_pointer pimpl) noexcept :
   m_pimpl_(std::move(pimpl)) {}
 
+NMerSystem::NMerSystem(const NMerSystem& other) :
+  NMerSystem(other.m_pimpl_ ? make_pimpl(*other.m_pimpl_) : nullptr) {}
+
+NMerSystem::NMerSystem(NMerSystem&& other) noexcept = default;
+
+NMerSystem& NMerSystem::operator=(const NMerSystem& other) {
+    if(this != &other) NMerSystem(other).m_pimpl_.swap(m_pimpl_);
+    return *this;
+}
+
+NMerSystem& NMerSystem::operator=(NMerSystem&& other) noexcept = default;
+
 NMerSystem::~NMerSystem() noexcept = default;
 
 // -- Accessors ----------------------------------------------------------------
@@ -61,6 +73,10 @@ NMerSystem::size_type NMerSystem::size() const noexcept {
 }
 
 NMerSystem::const_nmer_reference NMerSystem::nmer(size_type i) const {
+    if(i >= size())
+        throw std::out_of_range("N-Mer offset must be in range [0, " +
+                                std::to_string(size()) + ").");
+
     auto itr = pimpl_().m_nmers.begin();
     return std::next(itr, i)->first;
 }
@@ -87,6 +103,17 @@ NMerSystem::size_type NMerSystem::n_electrons(
 NMerSystem::size_type NMerSystem::n_electrons(
   NMerSystem::const_fragment_reference frag) const {
     return fragments().n_electrons(frag);
+}
+
+// -- Utilities ----------------------------------------------------------------
+
+bool NMerSystem::operator==(const NMerSystem& rhs) const noexcept {
+    if(!m_pimpl_ != !rhs.m_pimpl_)
+        return false; // One has a PIMPL other doesn't
+    else if(!m_pimpl_)
+        return true; // Both don't have a PIMPL
+    return std::tie(m_pimpl_->m_nmers, m_pimpl_->m_frags) ==
+           std::tie(rhs.m_pimpl_->m_nmers, rhs.m_pimpl_->m_frags);
 }
 
 // -- Private Methods ----------------------------------------------------------
