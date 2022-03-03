@@ -7,6 +7,8 @@ Generalized Energy Based Fragmentation (GEBF)
 .. |stdH|  replace:: :ref:`standard distance`
 .. |smf06| replace:: :ref:`smf06 screening`
 
+GEBF is the culmanation of the :ref:`DCLC` methods.
+
 Development of GEBF was motivated by a need to treat large 
 macromolecules/clusters that are charged or highly polar :cite:`Li2007`. The 
 original GEBF method, which we term the GEBF07 method, consists of the |Frag7|, 
@@ -34,8 +36,19 @@ GEBF Summary
 Other GEBF Results
 ******************
 
+:cite:t:`Li2008a` used GEBF07 (with manually specified fragments) 
+as the QM part of a QM/MM calcualtion. This method was applied to
+solvated polyethylene.
+
 :cite:t:`Hua_2008` extended the GEBF07 method to geometry optimizations and
 vibrational frequency calculations. The GEBF07 energies, optimized geometries,
 and vibrational frequencies were compared to the conventional results. Small
 basis SCF (both HF and DFT) results, for several types of systems (clusters, 
 peptides, and hydrogelators) are presented.
+
+************
+GEBF Reviews
+************
+
+:cite:t:`Li2008` provides a brief introduction to fragment-based methods 
+primarily focusing on GEBF (including its earlier incarnations).

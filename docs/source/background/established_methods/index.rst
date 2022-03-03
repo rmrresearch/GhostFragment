@@ -16,6 +16,8 @@ particularly for the more popular methods.
    mta
    fmo
    mfcc
+   dclc
+   ecmfcc
    smf
    eembe
    gebf
