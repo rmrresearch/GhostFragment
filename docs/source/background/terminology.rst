@@ -19,6 +19,11 @@ monomer
    numerical prefix. *i.e.*, we use monomer, and not fragment, when we are also
    talking about dimers, trimers, *etc.*  
 
+multi-layer
+   Refers to when the final fragment-based method is put together in an ONIOM-
+   like manner. The layers can be different theories, different fragmentations, 
+   etc. 
+
 n-mer
    The generalization of monomer, dimer, *etc.* to the union of |n| fragments.
 

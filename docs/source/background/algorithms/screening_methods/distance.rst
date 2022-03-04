@@ -38,6 +38,28 @@ inter-atomic distance we now have three, one for each pair of monomers. The
 FMO04 screening method screens out a trimer if the **second** smallest distance 
 is greater than a threshold (default is 2.0, in units of van der Waal radii).
 
+
+.. _ec_mfcc_screening:
+
+*****************
+EC-MFCC Screening
+*****************
+
+.. |R1| replace:: :math`R_1`
+.. |R2| replace:: :math`R_2`
+
+As part of the EC-MFCC method, :cite:t:`Li_2205` introduced a screening method
+for pairs which relies on two thresholds. The first threshold, |R1| is used for
+screening van der Waals interactions, whereas the second threshold, |R2|, is
+used for screening electrostatics. Exactly how these cut-offs are used is a bit
+unclear from the manuscript. More specifically, the manuscript mentions that
+|R2| is only used for charged molecules; however, since |R1| and |R2| are 
+specified per molecule it is not clear why one would specify both |R1| and |R2|
+for a charged molecule if only |R2| is used. Our guess is that |R1| is used
+when the fragments in the pair are neutral and |R2| is used when one or both
+fragmnts are charged.
+
+
 ***************
 SMF06 Screening
 ***************
