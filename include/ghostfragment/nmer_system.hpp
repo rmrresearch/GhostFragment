@@ -6,11 +6,17 @@ namespace detail_ {
 class NMerSystemPIMPL;
 } // namespace detail_
 
-/** @brief
+/** @brief Describes how a supersystem has been broken up into unions of
+ *         fragments.
+ *
+ *  This class models a view of a supersystem after it has been decomposed into
+ *  unions of fragments, i.e., n-mers. The n-mers remember their history (i.e.,
+ *  know which fragments formed them) and the fragments are accessible as well.
  *
  */
 class NMerSystem {
 private:
+    /// Type of the class storing this instance's state.
     using pimpl_type = detail_::NMerSystemPIMPL;
 
 public:
@@ -84,12 +90,61 @@ public:
      */
     NMerSystem(pimpl_pointer pimpl) noexcept;
 
+    /** @brief Copy ctor
+     *
+     *  This ctor will deep copy the state contained in @p other and use the
+     *  deep copy to initialze a new NMerSystem instance.
+     *
+     *  @param[in] other The NMerSystem being copied.
+     *
+     *  @throw std::bad_alloc if there is a problem copying @p other. Strong
+     *                        throw guarantee.
+     */
     NMerSystem(const NMerSystem& other);
 
+    /** @brief Move ctor
+     *
+     *  This ctor will create a new NMerSystem by taking ownership of the state
+     *  contained in @p other.
+     *
+     *  @param[in,out] other The instance who's state is being taken. After this
+     *                       call @p other will be in a state consistent with
+     *                       being default initialized.
+     *
+     * @throw None No throw guarantee.
+     */
     NMerSystem(NMerSystem&& other) noexcept;
 
+    /** @brief Copy assingment
+     *
+     *  This operator will replace the state contained in the current instance
+     *  (releasing it in the process) with a deep copy of the state contained in
+     *  the @p rhs instance.
+     *
+     *  @param[in] rhs The instance whose state is being copied.
+     *
+     *  @return The current instance, after replacing its state with a copy of
+     *          the state contained in @p rhs.
+     *
+     *  @throw std::bad_alloc if there's a problem copying the state. Strong
+     *                        throw guarantee.
+     */
     NMerSystem& operator=(const NMerSystem& rhs);
 
+    /** @brief Move assignment
+     *
+     *  This operator will overwrite the state contained in the current instance
+     *  (releasing it in the process) with the state contained in @p rhs.
+     *
+     *  @param[in,out] rhs the instance who's state is being taken. After this
+     *                     call @p rhs will be in a state consistent with being
+     *                     default initialized.
+     *
+     *  @return The current instance, after replacing its state with the state
+     *          in @p rhs.
+     *
+     *  @throw None No throw guarantee.
+     */
     NMerSystem& operator=(NMerSystem&& rhs) noexcept;
 
     /// Standard defaulted no-throw dtor
@@ -223,7 +278,28 @@ public:
      */
     size_type n_electrons(const_fragment_reference frag) const;
 
+    /** @brief Compares two NMerSystem instances for equality.
+     *
+     *  Two NMerSystem instances are equal if they were created from the same
+     *  set of fragments (as determined by comparing the FragmentedSystem
+     *  instances) and if they contain the same set of NMers.
+     *
+     *  @param[in] rhs The NMerSystem being compared to the current instance.
+     *
+     *  @return True if the NMerSystem
+     *
+     *  @throw None No throw guarantee.
+     */
     bool operator==(const NMerSystem& rhs) const noexcept;
+
+    /** @brief Hashes the state in the current instance.
+     *
+     *  @param[in,out] h The object which will be hashing the state of this
+     *                   instance. After this call the internal state of @p h
+     *                   will be updated to contain a hash of the present
+     *                   instance's state.
+     */
+    void hash(type::Hasher&) const;
 
 private:
     /// Type of a mutable reference to the PIMPL
@@ -242,6 +318,19 @@ private:
     pimpl_pointer m_pimpl_;
 };
 
+/** @brief Determines if two NMerSystem instances are different.
+ *  @relates NMerSystem
+ *
+ *  This operator simply negates NMerSystem::operator==. See
+ *  NMerSystem::operator== for details on how NMerSystem instances are compared.
+ *
+ *  @param[in] lhs The instance on the left side of the operator.
+ *  @param[in] rhs The instance being compared to @p lhs.
+ *
+ *  @return False if @p lhs and @p rhs compare equal and true otherwise.
+ *
+ *  @throw None No throw guarantee.
+ */
 inline bool operator!=(const NMerSystem& lhs, const NMerSystem& rhs) noexcept {
     return !(lhs == rhs);
 }

@@ -116,6 +116,11 @@ bool NMerSystem::operator==(const NMerSystem& rhs) const noexcept {
            std::tie(rhs.m_pimpl_->m_nmers, rhs.m_pimpl_->m_frags);
 }
 
+void NMerSystem::hash(type::Hasher& h) const {
+    if(!m_pimpl_) return;
+    h(m_pimpl_->m_nmers, m_pimpl_->m_frags);
+}
+
 // -- Private Methods ----------------------------------------------------------
 
 NMerSystem::pimpl_reference NMerSystem::pimpl_() {

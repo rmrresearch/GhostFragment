@@ -151,19 +151,46 @@ TEST_CASE("NMerSystem") {
     }
 
     SECTION("Comparisons") {
+        // default is the same as default
         REQUIRE(defaulted == NMerSystem{});
         REQUIRE_FALSE(defaulted != NMerSystem{});
 
+        // Default != stateful
         REQUIRE_FALSE(has_value == defaulted);
         REQUIRE(has_value != defaulted);
 
+        // Same n-mers and fragments
         REQUIRE(has_value == NMerSystem(frags, nmers));
         REQUIRE_FALSE(has_value != NMerSystem(frags, nmers));
 
+        // Different fragments
         REQUIRE_FALSE(has_value == NMerSystem(fragmented_system_type{}, nmers));
         REQUIRE(has_value != NMerSystem(fragmented_system_type{}, nmers));
 
+        // Different n-mers
         REQUIRE_FALSE(has_value == NMerSystem(frags, capped_nmers{}));
         REQUIRE(has_value != NMerSystem(frags, capped_nmers{}));
+    }
+
+    SECTION("hash") {
+        using pluginplay::hash_objects;
+
+        // Default == default
+        auto default_hash = hash_objects(defaulted);
+        REQUIRE(default_hash == hash_objects(NMerSystem{}));
+
+        // Default != stateful
+        auto value_hash = hash_objects(has_value);
+        REQUIRE(value_hash != default_hash);
+
+        // Same n-mers
+        REQUIRE(value_hash == hash_objects(NMerSystem(frags, nmers)));
+
+        // Different fragments
+        REQUIRE(value_hash !=
+                hash_objects(NMerSystem(fragmented_system_type{}, nmers)));
+
+        // Different n-mers
+        REQUIRE(value_hash != hash_objects(NMerSystem(frags, capped_nmers{})));
     }
 }
