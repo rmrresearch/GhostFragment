@@ -4,6 +4,7 @@
 #include "ghostfragment/property_types/molecular_graph.hpp"
 #include "ghostfragment/property_types/molecular_graph_to_fragments.hpp"
 #include "ghostfragment/property_types/nmer_screener.hpp"
+#include "ghostfragment/property_types/nmer_system.hpp"
 #include "ghostfragment/property_types/subset_map.hpp"
 #include "ghostfragment/types.hpp"
 #include <simde/simde.hpp>
