@@ -18,6 +18,7 @@ particularly for the more popular methods.
    mfcc
    dclc
    ecmfcc
+   efamfcc
    smf
    eembe
    gebf

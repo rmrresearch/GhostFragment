@@ -32,7 +32,7 @@ approximated by:
 FMO04 Screening
 ***************
 
-In the original formulation of three-body FMO :cite:t:`Fedorov_2004a`, the FMO00
+In the original formulation of three-body FMO :cite:t:`Fedorov2004a`, the FMO00
 screening procedure is extended to three-body terms. Instead of one shortest
 inter-atomic distance we now have three, one for each pair of monomers. The 
 FMO04 screening method screens out a trimer if the **second** smallest distance 
@@ -48,7 +48,7 @@ EC-MFCC Screening
 .. |R1| replace:: :math`R_1`
 .. |R2| replace:: :math`R_2`
 
-As part of the EC-MFCC method, :cite:t:`Li_2205` introduced a screening method
+As part of the EC-MFCC method, :cite:t:`Li_2005` introduced a screening method
 for pairs which relies on two thresholds. The first threshold, |R1| is used for
 screening van der Waals interactions, whereas the second threshold, |R2|, is
 used for screening electrostatics. Exactly how these cut-offs are used is a bit

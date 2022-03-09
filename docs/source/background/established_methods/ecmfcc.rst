@@ -4,11 +4,16 @@
 Energy-Corrected MFCC
 #####################
 
+.. |dclc_frag| replace:: :ref:`DCLC_fragmentation_method`
+.. |dclc_cap| replace:: :ref:`DCLC_capping_method`
+.. |mfcc_screen| replace:: :ref:`ec_mfcc_screening`
+.. |mfcc_embed| replace: :ref:`ec_mfcc_charges`
+
 EC-MFCC was introduced by :cite:t:`Li_2005` as a follow-up to the :ref:`DCLC`
 fragment-based method. EC-MFCC differs from DCLC in that it also inclues 
 two-body interactions. The higher-body interactions are computed 
 among the pseudoatoms not the fragments (our terminology; the original 
-manuscript refers to them as fragments) and rely on the :ref:`ec_mfcc_screening`
+manuscript refers to them as fragments) and rely on the |mfcc_screen|
 method to avoid computing negligible two-body interactions. 
 
 At the one-body level EC-MFCC is the same as DCLC. Since it uses essentially two
@@ -28,3 +33,12 @@ the fragments computed using a 1-body GMBE (fragments/pseudoatoms again
 adhereing to our terminology). EC-MFCC was applied to a series of medium to 
 large systems. Energies and geometries were computed with EC-MFCC and compared 
 to small basis MP2 supersystem results. 
+
+
++-------------------+-------------+---------------+------------+---------------+
+| Name              | Fragments   | Embedding     | Caps       | Screening     |
++=========+=========+=============+===============+============+===============+
+| EC-MFCC | Layer 0 | |dclc_frag| | N/A           | |dclc_cap| | N/A           |
++         +---------+-------------+---------------+------------+---------------+
+|         | Layer 1 | N/A         | N/A           | |dclc_cap| | |mfcc_screen| |
++---------+---------+-------------+---------------+------------+---------------+

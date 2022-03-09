@@ -39,6 +39,12 @@ order methods which came out the same year).
 - Systematic Molecular Fragmentation (SMF) :cite:`Deev2005`
 
 ****
+2006
+****
+
+- Electrostatic field-adpated MFCC (EFA-MFCC) :cite:`Jiang2006`
+
+****
 2007
 ****
 

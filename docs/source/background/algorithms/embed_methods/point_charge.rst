@@ -11,6 +11,19 @@ Point Charge Embedding
 Non-Iterative
 *************
 
+.. _ec_mfcc_charges:
+
+EC-MFCC Charges
+===============
+
+Introduced by :cite:t:`Jiang2006`. The description is a bit vague, but the idea
+seems to be to only put charges on the most electronegative/electropositive 
+atoms. In the original presentation proteins with charged termini were
+fragmented. When a terminus did not show up in the fragment it was replaced by
+a point charge. How this would generalize to other systems is not immediately
+clear.
+
+
 EE-MBE-A
 ========
 
