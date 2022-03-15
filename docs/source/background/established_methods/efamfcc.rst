@@ -4,9 +4,9 @@
 Electrostatic Field Adapted MFCC (EFA-MFCC)
 ###########################################
 
-.. |dclc_frag| replace:: :ref:`DCLC_fragmentation_method`
+.. |dclc_frag| replace:: :ref:`DCLC fragmentation<DCLC_fragmentation_method>`
 .. |dclc_cap| replace:: :ref:`DCLC_capping_method`
-.. |mfcc_embed| replace: :ref:`ec_mfcc_charges`
+.. |mfcc_embed| replace:: :ref:`ec_mfcc_charges`
  
 In an effort to extend the DCLC and EC-MFCC methods to charged systems, 
 :cite:t:`Jiang2006` introduced the electrostatic field-adapted MFCC (EFA-MFCC)

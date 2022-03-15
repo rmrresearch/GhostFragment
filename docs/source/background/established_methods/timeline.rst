@@ -36,6 +36,7 @@ order methods which came out the same year).
 ****
 
 - Energy-Corredcted Molecular Fractionation with Conjugate Caps (EC-MFCC) :cite:`Li_2005`
+- Fragment energy assembler (FEA) :cite:`Li2005b`
 - Systematic Molecular Fragmentation (SMF) :cite:`Deev2005`
 
 ****

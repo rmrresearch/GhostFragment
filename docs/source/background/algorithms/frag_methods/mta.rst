@@ -98,3 +98,8 @@ minimally |R| (after merging fragments it could be higher).
 
    This method was potentially introduced earlier :cite:`Gadre2006`; however, I 
    am unable to access this reference to verify.
+
+.. note::
+   
+   This method can be viewed as the :ref:`fea_frag_method` with some processing
+   steps. To our knowledge the two were developed independently however.

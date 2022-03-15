@@ -13,12 +13,13 @@ particularly for the more popular methods.
    :caption: Contents:
 
    timeline
-   mta
-   fmo
-   mfcc
    dclc
    ecmfcc
-   efamfcc
-   smf
    eembe
+   efamfcc
+   fea
+   fmo
    gebf
+   mta
+   mfcc
+   smf
