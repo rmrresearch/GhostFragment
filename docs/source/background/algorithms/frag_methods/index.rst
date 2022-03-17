@@ -11,6 +11,7 @@ algorithms for automatically defining fragments have been proposed.
    :caption: Contents:
 
    fea
+   mfcc
    mta
    smf
    dclc

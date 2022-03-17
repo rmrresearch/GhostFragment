@@ -6,6 +6,8 @@ H Capping
 .. |Y| replace:: :math:`Y`
 .. |F| replace:: :math:`F`
 
+.. _simple_replacement:
+
 ******************
 Simple Replacement
 ******************

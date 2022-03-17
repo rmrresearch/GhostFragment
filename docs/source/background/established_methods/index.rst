@@ -20,6 +20,7 @@ particularly for the more popular methods.
    fea
    fmo
    gebf
+   kem
    mta
    mfcc
    smf
