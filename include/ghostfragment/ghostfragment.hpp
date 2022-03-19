@@ -7,6 +7,7 @@
  *  used by downstream projects.
  */
 
+#include "ghostfragment/caps.hpp"
 #include "ghostfragment/fragmented_system.hpp"
 #include "ghostfragment/load_modules.hpp"
 #include "ghostfragment/molecular_graph.hpp"

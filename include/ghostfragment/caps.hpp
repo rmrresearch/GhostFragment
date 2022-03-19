@@ -52,7 +52,7 @@ inline bool Caps::count(const_reference cap) const {
 
 inline void Caps::add_cap(value_type cap, size_type idx_replaced) {
     m_caps_.push_back(cap);
-    m_atom_replaced_.push_back(idx_replaced);
+    m_atom_replaced_.emplace_back(idx_replaced);
 }
 
 inline void Caps::hash(type::Hasher& h) const { h(m_caps_, m_atom_replaced_); }

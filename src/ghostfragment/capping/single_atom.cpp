@@ -71,7 +71,7 @@ MODULE_RUN(SingleAtom) {
                     new_cap.Z()    = Z;
                     new_cap.name() = "H";
                     all_the_caps.add_cap(new_cap, atom_j);
-                    cap2idx.emplace(atom_j, all_the_caps.size());
+                    cap2idx.emplace(atom_j, all_the_caps.size() - 1);
                 }
 
                 // Add the cap to the set of caps for this fragment

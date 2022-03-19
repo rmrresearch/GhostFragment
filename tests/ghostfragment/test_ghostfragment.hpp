@@ -180,24 +180,35 @@ inline auto fragmented_water_needing_caps(std::size_t N) {
     return frags;
 }
 
-// Capped waters when fragments are generated with fragmented_water_needing_caps
 inline auto capped_water(std::size_t n_waters) {
+    auto water_n      = fragmented_water(n_waters);
+    using capped_type = ghostfragment::pt::CappedFragmentsTraits::result_type;
+    capped_type capped;
+    ghostfragment::Caps caps;
+    ghostfragment::type::fragmented<ghostfragment::Caps> no_caps(caps);
+    auto empty_set = no_caps.new_subset();
+    for(const auto& frag_i : water_n) capped.emplace(frag_i, empty_set);
+    return capped;
+}
+
+// Capped waters when fragments are generated with fragmented_water_needing_caps
+inline auto capped_water_needing_caps(std::size_t n_waters) {
     using capped_type = ghostfragment::pt::CappedFragmentsTraits::result_type;
     auto frags        = fragmented_water_needing_caps(n_waters);
     const auto N      = frags.size();
 
-    simde::type::molecule all_the_caps;
+    ghostfragment::Caps all_the_caps;
     const auto& mol = frags.object();
     for(size_t i = 0; i < n_waters; ++i) {
         // Cap replacing the 2nd H
         simde::type::atom h("H", 1ul, mol[i * 3 + 2].coords());
         // Cap replacing the O
         simde::type::atom o("H", 1ul, mol[i * 3].coords());
-        all_the_caps.push_back(h);
-        all_the_caps.push_back(o);
+        all_the_caps.add_cap(h, i * 3 + 2);
+        all_the_caps.add_cap(o, i * 3);
     }
 
-    ghostfragment::type::fragmented_molecule caps(all_the_caps);
+    ghostfragment::type::fragmented<ghostfragment::Caps> caps(all_the_caps);
     capped_type capped;
     for(std::size_t i = 0; i < N; ++i) {
         auto caps4i = caps.new_subset();
