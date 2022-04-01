@@ -1,5 +1,5 @@
 #pragma once
-#include "ghostfragment/types.hpp"
+#include <ghostfragment/type/type.hpp>
 
 namespace ghostfragment {
 namespace detail_ {
@@ -8,26 +8,40 @@ class FragmentedSystemPIMPL;
 
 /** @brief Abstraction to describe the initial fragmentation of the supersystem.
  *
+ *  This class is meant to function similar to a FamilyOfSets<ChemicalSystem>
+ *
  *  One of the first major steps in most fragment-based methods is to fragment
  *  the supersystem. To GhostFragment this means:
  *
  *  - establishing some fundamental disjoint representation of the supersystem
  *    (we use atoms for now, but pseudoatoms would work too)
+ *  - form the fragments in terms of memebers of the disjoint representation
+ *    (for now the fragments are written in terms of atoms). The fragments need
+ *    not be disjoint themselves.
+ *  - capping the fragments.
  *  - establish a mapping from the disjoint representation to AOs (for now this
  *    means mapping an atom to the AOs associated with it)
  *  - establish a mapping from the disjoint representation to the number of
  *    electrons (for now this is assigning electrons to atoms)
- *  - form the fragments in terms of memebers of the disjoint representation
- *    (for now the fragments are written in terms of atoms). The fragments need
- *    not be disjoint themselves.
  *
  *  With the above information, this class holds the results of fragmenting the
  *  supersystem and the information required to create ChemicalSystem instances
  *  for each fragment.
- *
- *  TODO: The capping information should be in this class too.
  */
 class FragmentedSystem {
+private:
+    /// Type of the PIMPL
+    using pimpl_type = detail_::FragmentedSystemPIMPL;
+
+    /// Type of a mutable reference to the PIMPL
+    using pimpl_reference = pimpl_type&;
+
+    /// Type of a read-only reference to the PIMPL
+    using const_pimpl_reference = const pimpl_type&;
+
+    /// Type of a pointer to the PIMPL
+    using pimpl_pointer = std::unique_ptr<pimpl_type>;
+
 public:
     /// Type of the entire molecular supersystem
     using molecule_type = simde::type::molecule;
@@ -49,9 +63,6 @@ public:
 
     /// Type of a read-only reference to a subset of the AO basis set
     using const_ao_set_reference = const ao_set_type&;
-
-    /// Type of a map from sets of atoms to AOs on that atom
-    using nucleus_to_ao_basis_type = type::fragment_to_ao_basis;
 
     /** @brief Used for offsets and counts.
      *
@@ -75,22 +86,7 @@ public:
      */
     FragmentedSystem() noexcept;
 
-    /** @brief Creates a FragmentedSystem with the provided state.
-     *
-     *  @param[in] frags A container filled with subsets of the parent system.
-     *                   Each subset will treated as a fragment. Fragments may
-     *                   overlap.
-     *  @param[in] atom2aos A map from nuclei in the supersystem to their AO
-     *                      basis sets.
-     *  @param[in] atom2ne A map from atoms in the parent system to their number
-     *                     of electrons. Indexing of @p atom2ne should match the
-     *                     order in the parent system.
-     *
-     *  @throw std::bad_alloc if there is a problem allocating the internal
-     *                        state. Strong throw guarantee.
-     */
-    FragmentedSystem(fragment_set_type frags, nucleus_to_ao_basis_type atom2aos,
-                     atom2nelectron_type atom2ne);
+    explicit FragmentedSystem(pimpl_pointer pimpl) noexcept;
 
     /** @brief Makes a deep-copy of this FragmentedSystem
      *
@@ -225,18 +221,6 @@ public:
     void hash(type::Hasher& h) const;
 
 private:
-    /// Type of the PIMPL
-    using pimpl_type = detail_::FragmentedSystemPIMPL;
-
-    /// Type of a mutable reference to the PIMPL
-    using pimpl_reference = pimpl_type&;
-
-    /// Type of a read-only reference to the PIMPL
-    using const_pimpl_reference = const pimpl_type&;
-
-    /// Type of a pointer to the PIMPL
-    using pimpl_pointer = std::unique_ptr<pimpl_type>;
-
     /// Wraps asserting that the instance has a PIMPL, returns it if it does
     pimpl_reference pimpl_();
 

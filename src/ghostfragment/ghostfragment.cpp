@@ -2,9 +2,9 @@
 #include "connectivity/connectivity.hpp"
 #include "drivers/drivers.hpp"
 #include "energy/energy.hpp"
-#include "ghostfragment/load_modules.hpp"
 #include "partitioned/partitioned.hpp"
 #include "screening/screening.hpp"
+#include <ghostfragment/load_modules.hpp>
 
 namespace ghostfragment {
 

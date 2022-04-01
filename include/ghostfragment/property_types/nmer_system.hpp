@@ -1,5 +1,5 @@
 #pragma once
-#include "ghostfragment/nmer_system.hpp"
+#include <ghostfragment/nmer_system.hpp>
 #include <simde/simde.hpp>
 
 namespace ghostfragment::pt {

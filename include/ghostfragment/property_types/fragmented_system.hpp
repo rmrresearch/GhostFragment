@@ -1,5 +1,5 @@
 #pragma once
-#include "ghostfragment/fragmented_system.hpp"
+#include <ghostfragment/fragmented_system.hpp>
 #include <simde/simde.hpp>
 
 namespace ghostfragment::pt {

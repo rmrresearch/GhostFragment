@@ -1,6 +1,5 @@
 #include "capping.hpp"
-
-#include "ghostfragment/property_types/capped.hpp"
+#include <ghostfragment/property_types/capped.hpp>
 
 using my_pt      = ghostfragment::pt::CappedFragments;
 using connect_pt = simde::Connectivity;
@@ -14,13 +13,13 @@ Single Atom Capper
 ##################
 
 This module closes off the valencies of the input fragments using single atoms.
-More specifically for each bond A-B, such that atom A is in the fragment, and 
-atom B is not, an atom (default is a hydrogen atom) will be added to the 
+More specifically for each bond A-B, such that atom A is in the fragment, and
+atom B is not, an atom (default is a hydrogen atom) will be added to the
 fragment. By default the added atom will be placed at the location of B.
 
 
-The inputs to this module are fragments. In general these inputs are 
-non-disjoint, for this reason we choose to establish connectivity at an atomic 
+The inputs to this module are fragments. In general these inputs are
+non-disjoint, for this reason we choose to establish connectivity at an atomic
 level.
 
 #. Generate atomic connectivity
@@ -82,7 +81,7 @@ MODULE_RUN(SingleAtom) {
     }
 
     // Step 3. Pair frags with their cap sets
-    type::fragmented<Caps> caps(all_the_caps);
+    type::fragmented_caps caps(all_the_caps);
     return_t capped_frags;
     for(std::size_t i = 0; i < frags.size(); ++i) {
         // Make a subset of all_the_caps containing fragment i's caps

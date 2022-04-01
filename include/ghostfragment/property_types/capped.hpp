@@ -1,6 +1,6 @@
 #pragma once
 #include <ghostfragment/caps.hpp>
-#include <ghostfragment/types.hpp>
+#include <ghostfragment/type/type.hpp>
 
 #include <simde/simde.hpp>
 
@@ -16,7 +16,7 @@ template<typename Type2Cap>
 struct CappedTraits {
 private:
     using frag_type = typename Type2Cap::value_type;
-    using cap_set   = type::fragmented<Caps>;
+    using cap_set   = type::fragmented_caps;
     using cap_type  = typename cap_set::value_type;
 
 public:

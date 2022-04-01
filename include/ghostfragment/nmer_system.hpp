@@ -1,6 +1,7 @@
 #pragma once
-#include "ghostfragment/fragmented_system.hpp"
-#include "ghostfragment/types.hpp"
+#include <ghostfragment/fragmented_system.hpp>
+#include <ghostfragment/type/type.hpp>
+
 namespace ghostfragment {
 namespace detail_ {
 class NMerSystemPIMPL;

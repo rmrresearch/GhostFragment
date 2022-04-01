@@ -185,7 +185,7 @@ inline auto capped_water(std::size_t n_waters) {
     using capped_type = ghostfragment::pt::CappedFragmentsTraits::result_type;
     capped_type capped;
     ghostfragment::Caps caps;
-    ghostfragment::type::fragmented<ghostfragment::Caps> no_caps(caps);
+    ghostfragment::type::fragmented_caps no_caps(caps);
     auto empty_set = no_caps.new_subset();
     for(const auto& frag_i : water_n) capped.emplace(frag_i, empty_set);
     return capped;
@@ -208,7 +208,7 @@ inline auto capped_water_needing_caps(std::size_t n_waters) {
         all_the_caps.add_cap(o, i * 3);
     }
 
-    ghostfragment::type::fragmented<ghostfragment::Caps> caps(all_the_caps);
+    ghostfragment::type::fragmented_caps caps(all_the_caps);
     capped_type capped;
     for(std::size_t i = 0; i < N; ++i) {
         auto caps4i = caps.new_subset();

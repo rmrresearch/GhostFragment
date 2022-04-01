@@ -1,9 +1,12 @@
 #include "../test_ghostfragment.hpp"
+#include <ghostfragment/detail_/fragmented_system_pimpl.hpp>
 
 using namespace ghostfragment;
 using namespace testing;
 
-using frag_pt    = simde::FragmentedMolecule;
+using frag_pt    = pt::FragmentedMolecule;
+using cap_pt     = pt::CappedFragments;
+using ao_pt      = pt::AtomicOrbitals;
 using atom2ao_pt = simde::AtomToAO;
 using mod_pt     = pt::FragmentedSystem;
 
@@ -22,11 +25,22 @@ TEST_CASE("FragmentedSystem Module") {
 
     auto monomer = testing::fragmented_water(1);
     auto mono2ao = testing::water_ao_pairs(1);
+    auto caps    = testing::capped_water(1);
 
     // Create and set default submods
     auto fragmenter_mod = pluginplay::make_lambda<frag_pt>([=](auto&& mol_in) {
         REQUIRE(mol_in == mol);
         return monomer;
+    });
+
+    auto cap_mod = pluginplay::make_lambda<cap_pt>([=](auto&& frags_in) {
+        REQUIRE(frags_in == monomer);
+        return caps;
+    });
+
+    auto cap_ao_mod = pluginplay::make_lambda<ao_pt>([=](auto&& nuclei) {
+        REQUIRE(nuclei == caps.begin()->second.object().nuclei());
+        return sto3g(nuclei);
     });
 
     auto atom2ao_mod =
@@ -42,6 +56,8 @@ TEST_CASE("FragmentedSystem Module") {
 
     auto& mod = mm.at("FragmentedSystem Driver");
     mod.change_submod("Fragmenter", fragmenter_mod);
+    mod.change_submod("Capper", cap_mod);
+    mod.change_submod("Cap Basis", cap_ao_mod);
     mod.change_submod("Atom to AO Mapper", atom2ao_mod);
 
     SECTION("Standard usage") {
@@ -50,7 +66,12 @@ TEST_CASE("FragmentedSystem Module") {
         using vector_type = FragmentedSystem::atom2nelectron_type;
         using size_type   = vector_type::value_type;
 
-        FragmentedSystem corr(monomer, mono2ao, vector_type{8, 1, 1});
+        auto pimpl         = std::make_unique<detail_::FragmentedSystemPIMPL>();
+        pimpl->m_frags     = monomer;
+        pimpl->m_frag2caps = caps;
+        pimpl->m_atom2ne   = std::vector<unsigned int>{8, 1, 1};
+        pimpl->m_cap2ne    = std::vector<unsigned int>{};
+        FragmentedSystem corr(std::move(pimpl));
         REQUIRE(frags == corr);
     }
 

@@ -1,5 +1,5 @@
-#include "ghostfragment/property_types/property_types.hpp"
 #include "partitioned.hpp"
+#include <ghostfragment/property_types/property_types.hpp>
 #include <simde/simde.hpp>
 
 namespace ghostfragment::partitioned {
@@ -46,7 +46,7 @@ const auto mod_desc = R"(
 Cluster Partitioner
 -------------------
 
-This module partitions the input molecular system by walking the connectivity 
+This module partitions the input molecular system by walking the connectivity
 table and assigning all atoms that are bonded together into a single partition.
 The end result is that if the input is a cluster of molecules, each molecule is
 assigned to its own partition. If the input is a single molecule the result is a

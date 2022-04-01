@@ -1,6 +1,5 @@
 #include "drivers.hpp"
-
-#include "ghostfragment/property_types/property_types.hpp"
+#include <ghostfragment/property_types/property_types.hpp>
 
 namespace ghostfragment::drivers {
 

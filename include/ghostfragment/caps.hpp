@@ -1,5 +1,6 @@
 #pragma once
-#include <ghostfragment/types.hpp>
+#include <ghostfragment/type/nuclei.hpp>
+#include <ghostfragment/type/utility.hpp>
 
 namespace ghostfragment {
 
@@ -30,6 +31,8 @@ public:
     size_type replaced_atom(size_type i) const {
         return m_atom_replaced_.at(i);
     }
+
+    const cap_set_type& nuclei() const { return m_caps_; }
 
     bool operator==(const Caps& rhs) const noexcept;
 

@@ -1,6 +1,6 @@
 #pragma once
-#include "ghostfragment/molecular_graph.hpp"
-#include "ghostfragment/types.hpp"
+#include <ghostfragment/molecular_graph.hpp>
+#include <ghostfragment/type/type.hpp>
 
 namespace ghostfragment::pt {
 
