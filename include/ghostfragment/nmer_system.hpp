@@ -77,7 +77,7 @@ public:
      *  @throw std::bad_alloc if there is a problem allocating the PIMPL. Strong
      *                        throw guarantee.
      */
-    NMerSystem(fragmented_system_type frags, capped_nmers nmers);
+    NMerSystem(fragmented_system_type frags, nmer_set_type nmers);
 
     /** @brief Creates a new NMerSystem with the provided PIMPL
      *

@@ -6,15 +6,15 @@ namespace detail_ {
 class NMerSystemPIMPL {
 public:
     using parent_type       = NMerSystem;
-    using capped_nmers      = typename parent_type::capped_nmers;
+    using nmers_type        = typename parent_type::nmer_set_type;
     using fragment_set_type = typename parent_type::fragmented_system_type;
     using const_fragmented_system_reference =
       typename parent_type::const_fragmented_system_reference;
 
-    NMerSystemPIMPL(capped_nmers nmers, fragment_set_type frags) :
+    NMerSystemPIMPL(nmers_type nmers, fragment_set_type frags) :
       m_nmers(std::move(nmers)), m_frags(std::move(frags)) {}
 
-    capped_nmers m_nmers;
+    nmers_type m_nmers;
 
     fragment_set_type m_frags;
 };
@@ -45,7 +45,7 @@ auto flatten(NMerType&& nmer) {
 
 NMerSystem::NMerSystem() noexcept = default;
 
-NMerSystem::NMerSystem(fragmented_system_type frags, capped_nmers nmers) :
+NMerSystem::NMerSystem(fragmented_system_type frags, nmer_set_type nmers) :
   NMerSystem(make_pimpl(std::move(nmers), std::move(frags))) {}
 
 NMerSystem::NMerSystem(pimpl_pointer pimpl) noexcept :
@@ -78,7 +78,7 @@ NMerSystem::const_nmer_reference NMerSystem::nmer(size_type i) const {
                                 std::to_string(size()) + ").");
 
     auto itr = pimpl_().m_nmers.begin();
-    return std::next(itr, i)->first;
+    return *std::next(itr, i);
 }
 
 NMerSystem::const_fragmented_system_reference NMerSystem::fragments() const {

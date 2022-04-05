@@ -49,6 +49,9 @@ public:
     /// Type of the container holding the fragments
     using fragment_set_type = type::fragmented_molecule;
 
+    /// Type of a immutable reference to the container holding fragments
+    using const_fragment_set_reference = const fragment_set_type&;
+
     /// Type of a fragment, is a mask/view of the molecule_type object
     using fragment_type = typename fragment_set_type::value_type;
 
@@ -63,6 +66,10 @@ public:
 
     /// Type of a read-only reference to a subset of the AO basis set
     using const_ao_set_reference = const ao_set_type&;
+
+    using capped_type = type::fragment_to_caps::mapped_type;
+
+    using const_capped_reference = const capped_type&;
 
     /** @brief Used for offsets and counts.
      *
@@ -148,6 +155,8 @@ public:
      */
     size_type nfrags() const noexcept;
 
+    const_fragment_set_reference frags() const;
+
     /** @brief Retrieves the @p i -th fragment.
      *
      *  This function is used to retrive a fragment by index. The ordering of
@@ -159,6 +168,8 @@ public:
      *                           Strong throw guarantee.
      */
     const_fragment_reference fragment(size_type i) const;
+
+    const_capped_reference caps(const_fragment_reference f) const;
 
     /** @brief Retrieves the molecular AO basis set for the provided set of
      *         atoms.

@@ -46,7 +46,7 @@ TEST_CASE("NucleiAO") {
     for(std::size_t nwaters = 0; nwaters < 4; ++nwaters) {
         SECTION(std::to_string(nwaters) + " waters") {
             auto mol   = testing::water(nwaters);
-            auto bs    = testing::sto3g(mol).basis_set();
+            auto bs    = testing::sto3g(mol);
             auto frags = frag_mod(mol);
 
             mod.change_submod("Atom to Center", ao2center_mod(mol, bs));

@@ -20,12 +20,13 @@ TEST_CASE("FragmentedSystem Module") {
     auto mm = initialize();
 
     auto mol = water(1);
-    auto bs  = sto3g(mol).basis_set();
+    auto bs  = sto3g(mol);
     simde::type::chemical_system sys(mol);
 
-    auto monomer = testing::fragmented_water(1);
-    auto mono2ao = testing::water_ao_pairs(1);
-    auto caps    = testing::capped_water(1);
+    auto monomer    = testing::fragmented_water(1);
+    auto mono2ao    = testing::water_ao_pairs(1);
+    auto caps       = testing::capped_water(1);
+    auto cap_nuclei = caps.begin()->second.object().nuclei();
 
     // Create and set default submods
     auto fragmenter_mod = pluginplay::make_lambda<frag_pt>([=](auto&& mol_in) {
@@ -39,19 +40,26 @@ TEST_CASE("FragmentedSystem Module") {
     });
 
     auto cap_ao_mod = pluginplay::make_lambda<ao_pt>([=](auto&& nuclei) {
-        REQUIRE(nuclei == caps.begin()->second.object().nuclei());
-        return sto3g(nuclei);
+        REQUIRE(nuclei == cap_nuclei);
+        return simde::type::ao_space{sto3g(nuclei)};
     });
 
     auto atom2ao_mod =
       pluginplay::make_lambda<atom2ao_pt>([=](auto&& mol_in, auto&& bs_in) {
-          REQUIRE(mol_in == mol);
-          REQUIRE(bs_in == bs);
           using return_type = simde::atom_to_center_return_type;
           using set_type    = typename return_type::value_type;
-          return_type corr(mol_in.size());
-          for(std::size_t j = 0; j < mol_in.size(); ++j) corr[j] = set_type{j};
-          return corr;
+          if(mol_in == mol) {
+              REQUIRE(mol_in == mol);
+              REQUIRE(bs_in == bs);
+              return_type corr(mol_in.size());
+              for(std::size_t j = 0; j < mol_in.size(); ++j)
+                  corr[j] = set_type{j};
+              return corr;
+          } else {
+              REQUIRE(mol_in == cap_nuclei);
+              REQUIRE(bs_in == sto3g(cap_nuclei));
+              return return_type{};
+          }
       });
 
     auto& mod = mm.at("FragmentedSystem Driver");
@@ -62,16 +70,7 @@ TEST_CASE("FragmentedSystem Module") {
 
     SECTION("Standard usage") {
         const auto& [frags] = mod.run_as<mod_pt>(sys, bs);
-
-        using vector_type = FragmentedSystem::atom2nelectron_type;
-        using size_type   = vector_type::value_type;
-
-        auto pimpl         = std::make_unique<detail_::FragmentedSystemPIMPL>();
-        pimpl->m_frags     = monomer;
-        pimpl->m_frag2caps = caps;
-        pimpl->m_atom2ne   = std::vector<unsigned int>{8, 1, 1};
-        pimpl->m_cap2ne    = std::vector<unsigned int>{};
-        FragmentedSystem corr(std::move(pimpl));
+        auto corr           = testing::fragmented_water_system(1);
         REQUIRE(frags == corr);
     }
 

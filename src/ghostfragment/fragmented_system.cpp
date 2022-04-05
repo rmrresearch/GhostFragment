@@ -47,6 +47,10 @@ FragmentedSystem::size_type FragmentedSystem::nfrags() const noexcept {
     return size_type{0};
 }
 
+FragmentedSystem::const_fragment_set_reference FragmentedSystem::frags() const {
+    return pimpl_().m_frags;
+}
+
 FragmentedSystem::const_fragment_reference FragmentedSystem::fragment(
   size_type i) const {
     const auto n = nfrags();
@@ -56,6 +60,11 @@ FragmentedSystem::const_fragment_reference FragmentedSystem::fragment(
                                 ").");
 
     return pimpl_().m_frags.at(i);
+}
+
+FragmentedSystem::const_capped_reference FragmentedSystem::caps(
+  const_fragment_reference f) const {
+    return pimpl_().m_frag2caps.at(f);
 }
 
 FragmentedSystem::ao_set_type FragmentedSystem::ao_basis_set(
