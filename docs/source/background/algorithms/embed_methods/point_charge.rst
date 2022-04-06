@@ -23,20 +23,23 @@ fragmented. When a terminus did not show up in the fragment it was replaced by
 a point charge. How this would generalize to other systems is not immediately
 clear.
 
+.. _ee_mbe_a:
 
-EE-MBE-A
+EE-MB-A
 ========
 
 One of two charge embedding schemes proposed by :cite:t:`Dahlke2006` for the 
-EE-MBE method. 
+EE-MB method. 
 
 #. Compute charges for the supersystem
 #. Let |Qi| be the charge of atom :math:`i`, |Ai|
 #. For each |n|-mer, loop over atoms in the supersystem. If |Ai| is not in the
    |n|-mer, place |Qi| at the location of |Ai|
 
-EE-MBE-B
-========
+.. _ee_mbe_b:
+
+EE-MB-B
+=======
 
 The second embedding scheme proposed by :cite:t:`Dahlke2006`. 
 

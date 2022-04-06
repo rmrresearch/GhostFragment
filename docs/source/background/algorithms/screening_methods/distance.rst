@@ -81,3 +81,14 @@ method with a multipole expansion.
 The screening method introduced by :cite:t:`Li2007` is a variation on this which
 truncates the multipole expansion at point charges. Li et al. recommended a
 value of |d| of 10 Angstroms.
+
+.. _com_screening:
+
+******************
+EE-MB-CE Screening
+******************
+
+Proposed by :cite:t:`Dahlke2007a`, this screening method is the same as FMO00 
+screening, but uses the center of mass to determine the distance (not shortest
+inter-atomic distance). For water clusters the recommended cut-off was 5 or 6
+Angstroms.
