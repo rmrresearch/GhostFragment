@@ -47,6 +47,15 @@ FragmentedSystem::size_type FragmentedSystem::nfrags() const noexcept {
     return size_type{0};
 }
 
+FragmentedSystem::size_type FragmentedSystem::count(
+  const_fragment_reference f) const noexcept {
+    if(m_pimpl_)
+        for(const auto& frag_i : m_pimpl_->m_frags)
+            if(frag_i == f) return size_type{1};
+
+    return size_type{0};
+}
+
 FragmentedSystem::const_fragment_set_reference FragmentedSystem::frags() const {
     return pimpl_().m_frags;
 }
@@ -64,16 +73,25 @@ FragmentedSystem::const_fragment_reference FragmentedSystem::fragment(
 
 FragmentedSystem::const_capped_reference FragmentedSystem::caps(
   const_fragment_reference f) const {
+    if(m_pimpl_ && !count(f))
+        throw std::out_of_range("Fragment is not part of set");
+
     return pimpl_().m_frag2caps.at(f);
 }
 
 FragmentedSystem::ao_set_type FragmentedSystem::ao_basis_set(
   const_fragment_reference f) const {
+    if(m_pimpl_ && !count(f))
+        throw std::out_of_range("Fragment is not part of set");
+
     return pimpl_().ao_basis_set(f);
 }
 
 FragmentedSystem::size_type FragmentedSystem::n_electrons(
   const_fragment_reference f) const {
+    if(m_pimpl_ && !count(f))
+        throw std::out_of_range("Fragment is not part of set");
+
     return pimpl_().n_electrons(f);
 }
 

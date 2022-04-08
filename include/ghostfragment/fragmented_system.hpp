@@ -8,28 +8,35 @@ class FragmentedSystemPIMPL;
 
 /** @brief Abstraction to describe the initial fragmentation of the supersystem.
  *
- *  This class is meant to function similar to a FamilyOfSets<ChemicalSystem>
- *
- *  One of the first major steps in most fragment-based methods is to fragment
- *  the supersystem. To GhostFragment this means:
+ *  One of the first major steps in most fragment-based methods is to create an
+ *  initial set of fragments. To GhostFragment this means:
  *
  *  - establishing some fundamental disjoint representation of the supersystem
  *    (we use atoms for now, but pseudoatoms would work too)
- *  - form the fragments in terms of memebers of the disjoint representation
- *    (for now the fragments are written in terms of atoms). The fragments need
- *    not be disjoint themselves.
- *  - capping the fragments.
- *  - establish a mapping from the disjoint representation to AOs (for now this
- *    means mapping an atom to the AOs associated with it)
- *  - establish a mapping from the disjoint representation to the number of
- *    electrons (for now this is assigning electrons to atoms)
+ *  - Group memebers of the disjoint representation together to form fragments.
+ *    The fragments need not be disjoint themselves.
+ *  - Add caps to fragments which have severed covalent bonds.
+ *  - Map each element of the disjoint representation to its set of AOs
+ *  - Map each cap to its set of AOs
+ *  - Map each eleement of the disjoint representation to its number of
+ *    electrons
+ *  - Map each cap to its number of electrons.
  *
  *  With the above information, this class holds the results of fragmenting the
  *  supersystem and the information required to create ChemicalSystem instances
  *  for each fragment.
+ *
+ *  Conceptually this class is meant to function similar to a
+ *  FamilyOfSets<ChemicalSystem>. Because the ChemicalSystem class has several
+ *  container-like attributes, it's more straightforward to write a new class
+ *  for it than to adapt FamilyOfSets to the ChemicalSystem class.
  */
 class FragmentedSystem {
 private:
+    // -------------------------------------------------------------------------
+    // -- Types relating to the PIMPL
+    // -------------------------------------------------------------------------
+
     /// Type of the PIMPL
     using pimpl_type = detail_::FragmentedSystemPIMPL;
 
@@ -46,6 +53,10 @@ public:
     /// Type of the entire molecular supersystem
     using molecule_type = simde::type::molecule;
 
+    // -------------------------------------------------------------------------
+    // -- Types related to fragments
+    // -------------------------------------------------------------------------
+
     /// Type of the container holding the fragments
     using fragment_set_type = type::fragmented_molecule;
 
@@ -58,6 +69,10 @@ public:
     /// Type of a read-only reference to a fragment instance
     using const_fragment_reference = const fragment_type&;
 
+    // -------------------------------------------------------------------------
+    // -- Types related to AOs
+    // -------------------------------------------------------------------------
+
     /// Type of the entire atomic orbital (AO) basis set for the supersystem
     using ao_basis_set_type = simde::type::ao_basis_set;
 
@@ -67,8 +82,14 @@ public:
     /// Type of a read-only reference to a subset of the AO basis set
     using const_ao_set_reference = const ao_set_type&;
 
+    // -------------------------------------------------------------------------
+    // -- Types related to caps
+    // -------------------------------------------------------------------------
+
+    /// Type of a set of caps
     using capped_type = type::fragment_to_caps::mapped_type;
 
+    /// Type of an immutable reference to a cap
     using const_capped_reference = const capped_type&;
 
     /** @brief Used for offsets and counts.
@@ -155,6 +176,35 @@ public:
      */
     size_type nfrags() const noexcept;
 
+    /** @brief Determines if a specified fragment goes with this instance.
+     *
+     *  This function is used to determine if @p f is one of the fragments that
+     *  the supersystem has been broken into. N.B. this comparison uses the
+     *  value equality operatator for fragment_type; in particular this means
+     *  that @p f must have come from the same supersystem as the present
+     *  instance.
+     *
+     *  @param[in] f The fragment we are looking for.
+     *
+     *  @return 1 if @p f is one of the fragments the supersystem has been
+     *          decomposed into and 0 otherwise. N.B. that a fragment can not
+     *          occur multiple times in FragmentedSystem instance.
+     *
+     *  @throw None No throw guarantee.
+     */
+    size_type count(const_fragment_reference f) const noexcept;
+
+    /** @brief Returns the FamilyOfSets describing how the supersystem is
+     *         fragmented.
+     *
+     *  This class indexes its attributes by fragment. This function can be
+     *  used to retrieve the set of fragments used for the indexing.
+     *
+     *  @return An immutable reference to the set of fragments.
+     *
+     *  @throw std::runtime_error if this instance does not contain a PIMPL.
+     *                            Strong throw guarantee.
+     */
     const_fragment_set_reference frags() const;
 
     /** @brief Retrieves the @p i -th fragment.
@@ -169,6 +219,18 @@ public:
      */
     const_fragment_reference fragment(size_type i) const;
 
+    /** @brief Returns the set of caps for the specified fragment.
+     *
+     *  Given one of the fragments in this instance, this function will retrun
+     *  the caps for that fragment.
+     *
+     *  @throw std::runtime_error if this instance does not contain a PIMPL.
+     *                            Strong throw guarantee.
+     *
+     *  @throw std::out_of_range if @p f is not part of this instance (as
+     *                           determined by the counter memeber). Strong
+     *                           throw guarantee.
+     */
     const_capped_reference caps(const_fragment_reference f) const;
 
     /** @brief Retrieves the molecular AO basis set for the provided set of
@@ -183,6 +245,9 @@ public:
      *  @param[in] f The set of atoms to form the AO basis set for.
      *
      *  @return The molecular AO basis set for fragment @p f.
+     *
+     *  @throw std::runtime_error if this instance does not contain a PIMPL.
+     *                            Strong throw guarantee.
      *
      *  @throw std::out_of_range if @p f is not a fragment in the current
      *                           instance. Strong throw guarantee.
@@ -231,13 +296,14 @@ public:
      */
     void hash(type::Hasher& h) const;
 
-private:
+protected:
     /// Wraps asserting that the instance has a PIMPL, returns it if it does
     pimpl_reference pimpl_();
 
     /// Wraps asserting that the instance has a PIMPL, returns it if it does
     const_pimpl_reference pimpl_() const;
 
+private:
     /// Contains the actual state of the class
     pimpl_pointer m_pimpl_;
 };

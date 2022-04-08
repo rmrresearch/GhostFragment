@@ -1,4 +1,6 @@
 #pragma once
+#include "testing/aos.hpp"
+#include "testing/caps.hpp"
 #include "testing/connectivity.hpp"
 #include "testing/fragment.hpp"
 #include "testing/sto3g.hpp"
@@ -25,21 +27,6 @@ inline auto some_atoms() {
     atom He{"He", 2ul};
     atom O{"O", 8ul};
     return std::make_tuple(H, He, O);
-}
-
-// Assigns AOs to nuclei for the
-inline auto fragmented_water_to_ao(const simde::type::molecule& mol) {
-    using pimpl_type  = ghostfragment::detail_::FragmentedSystemPIMPL;
-    using return_type = pimpl_type::idx2ao_map_type;
-    return_type atom2aos;
-    auto aos = sto3g(mol);
-    ghostfragment::type::fragmented_aos ao_sets(aos);
-    for(std::size_t atom_i = 0; atom_i < mol.size(); ++atom_i) {
-        auto ao_set = ao_sets.new_subset();
-        ao_set.insert(atom_i);
-        atom2aos.emplace_back(ao_set);
-    }
-    return atom2aos;
 }
 
 inline auto make_nmers(ghostfragment::type::fragmented_molecule water_n,
@@ -100,63 +87,6 @@ inline auto make_nmers(ghostfragment::type::fragmented_molecule water_n,
     throw std::runtime_error("Didn't code up higher than n == 4");
 }
 
-// Fragments each water as (OH)(H)
-inline auto fragmented_water_needing_caps(std::size_t N) {
-    auto molecule    = water(N);
-    using frag_type  = ghostfragment::type::fragmented_molecule;
-    using value_type = frag_type::value_type;
-    using size_type  = value_type::size_type;
-
-    frag_type frags(molecule);
-    for(size_type i = 0; i < N; ++i) {
-        auto oh = frags.new_subset();
-        for(size_type j = 0; j < 2; ++j) oh.insert(i * 3 + j);
-        frags.insert(oh);
-        auto h = frags.new_subset();
-        h.insert(i * 3 + 2);
-        frags.insert(h);
-    }
-    return frags;
-}
-
-inline auto capped_water(std::size_t n_waters) {
-    auto water_n      = fragmented_water(n_waters);
-    using capped_type = ghostfragment::pt::CappedFragmentsTraits::result_type;
-    capped_type capped;
-    ghostfragment::Caps caps;
-    ghostfragment::type::fragmented_caps no_caps(caps);
-    auto empty_set = no_caps.new_subset();
-    for(const auto& frag_i : water_n) capped.emplace(frag_i, empty_set);
-    return capped;
-}
-
-// Capped waters when fragments are generated with fragmented_water_needing_caps
-inline auto capped_water_needing_caps(std::size_t n_waters) {
-    using capped_type = ghostfragment::pt::CappedFragmentsTraits::result_type;
-    auto frags        = fragmented_water_needing_caps(n_waters);
-    const auto N      = frags.size();
-
-    ghostfragment::Caps all_the_caps;
-    const auto& mol = frags.object();
-    for(size_t i = 0; i < n_waters; ++i) {
-        // Cap replacing the 2nd H
-        simde::type::atom h("H", 1ul, mol[i * 3 + 2].coords());
-        // Cap replacing the O
-        simde::type::atom o("H", 1ul, mol[i * 3].coords());
-        all_the_caps.add_cap(h, i * 3 + 2);
-        all_the_caps.add_cap(o, i * 3);
-    }
-
-    ghostfragment::type::fragmented_caps caps(all_the_caps);
-    capped_type capped;
-    for(std::size_t i = 0; i < N; ++i) {
-        auto caps4i = caps.new_subset();
-        caps4i.insert(i);
-        capped.emplace(frags[i], caps4i);
-    }
-    return capped;
-}
-
 inline auto water_ao_pairs(std::size_t N) {
     const auto water_N = fragmented_water(N);
     const auto aos_N   = sto3g(water_N.object());
@@ -175,16 +105,15 @@ inline auto water_ao_pairs(std::size_t N) {
     return pairs;
 }
 
-inline auto fragmented_water_system(std::size_t N) {
+inline auto fragmented_water_system_pimpl(std::size_t N) {
     using pimpl_type   = ghostfragment::detail_::FragmentedSystemPIMPL;
     auto pimpl         = std::make_unique<pimpl_type>();
     auto mol           = fragmented_water(N);
-    auto caps          = capped_water(N);
-    auto cap_mol       = caps.begin()->second.object().nuclei();
+    auto caps          = caps_for_water(N);
     pimpl->m_frags     = mol;
-    pimpl->m_frag2caps = caps;
-    pimpl->m_atom2aos  = fragmented_water_to_ao(mol.object());
-    pimpl->m_cap2aos   = fragmented_water_to_ao(cap_mol);
+    pimpl->m_frag2caps = capped_water(N);
+    pimpl->m_atom2aos  = atom_to_ao(mol.object());
+    pimpl->m_cap2aos   = atom_to_ao(caps.object().nuclei());
     pimpl->m_atom2ne   = std::vector<unsigned int>{};
     pimpl->m_cap2ne    = std::vector<unsigned int>{};
 
@@ -193,7 +122,11 @@ inline auto fragmented_water_system(std::size_t N) {
         pimpl->m_atom2ne.push_back(1);
         pimpl->m_atom2ne.push_back(1);
     }
-    return ghostfragment::FragmentedSystem(std::move(pimpl));
+    return pimpl;
+}
+
+inline auto fragmented_water_system(std::size_t N) {
+    return ghostfragment::FragmentedSystem(fragmented_water_system_pimpl(N));
 }
 
 } // namespace testing
