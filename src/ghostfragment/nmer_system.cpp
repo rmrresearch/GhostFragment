@@ -81,13 +81,31 @@ NMerSystem::const_nmer_reference NMerSystem::nmer(size_type i) const {
     return *std::next(itr, i);
 }
 
+bool NMerSystem::count(const_nmer_reference nmer) const noexcept {
+    if(!m_pimpl_) return false;
+    for(const auto& nmer_i : pimpl_().m_nmers)
+        if(nmer_i == nmer) return true;
+    return false;
+}
+
 NMerSystem::const_fragmented_system_reference NMerSystem::fragments() const {
     return pimpl_().m_frags;
 }
 
 NMerSystem::ao_set_type NMerSystem::ao_basis_set(
   NMerSystem::const_nmer_reference nmer) const {
-    return ao_basis_set(flatten(nmer));
+    pimpl_();
+    assert_nmer_(nmer);
+    if(nmer.size() == 0) throw std::runtime_error("TODO: N==0 not coded");
+
+    auto itr = nmer.begin();
+    auto rv  = ao_basis_set(fragments().fragment(*itr));
+    ++itr;
+    for(; itr != nmer.end(); ++itr) {
+        rv += ao_basis_set(fragments().fragment(*itr));
+    }
+
+    return rv;
 }
 
 NMerSystem::ao_set_type NMerSystem::ao_basis_set(
@@ -97,7 +115,15 @@ NMerSystem::ao_set_type NMerSystem::ao_basis_set(
 
 NMerSystem::size_type NMerSystem::n_electrons(
   NMerSystem::const_nmer_reference nmer) const {
-    return n_electrons(flatten(nmer));
+    pimpl_();
+    assert_nmer_(nmer);
+    size_type rv = 0;
+
+    for(const auto frag_i : nmer) {
+        rv += n_electrons(fragments().fragment(frag_i));
+    }
+
+    return rv;
 }
 
 NMerSystem::size_type NMerSystem::n_electrons(
@@ -122,6 +148,11 @@ void NMerSystem::hash(type::Hasher& h) const {
 }
 
 // -- Private Methods ----------------------------------------------------------
+
+void NMerSystem::assert_nmer_(const_nmer_reference nmer) const {
+    if(count(nmer)) return;
+    throw std::out_of_range("N-mer is not in current instance");
+}
 
 NMerSystem::pimpl_reference NMerSystem::pimpl_() {
     if(m_pimpl_) return *m_pimpl_;

@@ -175,6 +175,21 @@ public:
      */
     const_nmer_reference nmer(size_type i) const;
 
+    /** @brief Determines if the specified n-mer is in the instance.
+     *
+     *  This method can be used to determine if a particular n-mer is in the
+     *  instance. N.B. that this relies on type::nmers value comparison, which
+     *  also verifies that n-mers are formed from the same fragments (and those
+     *  fragments have the same supersystem).
+     *
+     *  @param[in] nmer The n-mer we are looking for.
+     *
+     *  @return True if the n-mer is in the instance and false otherwise.
+     *
+     *  @throw None No throw guarantee.
+     */
+    bool count(const_nmer_reference nmer) const noexcept;
+
     /** @brief Retrieves the fragments used to create the n-mers.
      *
      *  @return A read-only reference to the original fragmented representation
@@ -193,9 +208,7 @@ public:
      *  union of the AO basis sets for each atom in the resulting set.
      *
      *  @param[in] nmer The set of fragments to determine the AO basis set for.
-     *                  @p nmer does not neeed to actually be an n-mer;
-     *                  however, it does need to be comprised of the same
-     *                  fragments as this instance.
+     *
      *
      *  @return The AO basis set for @p nmer.
      *
@@ -264,14 +277,13 @@ public:
      *  `fragments().n_electrons` with the provided fragment.
      *
      *  @param[in] frag The set of atoms to compute the number of electrons
-     *                  for. The actual input does not need to be a fragment f
-     *                  used to create this instance. All that matters is that
-     *                  @p frag is formed from the same supersystem.
+     *                  for.
      *
      *  @return The number of electrons in @p frag.
      *
      *  @throw std::runtime_error if the instance does not contain a PIMPL.
      *                            Strong throw guarantee.
+     *
      *  @throw std::out_of_range if @p frag is not formed from the same
      *                           supersystem as the current instance. Strong
      *                           throw guarantee.
@@ -308,6 +320,9 @@ private:
 
     /// Type of a read-only reference to the PIMPL
     using const_pimpl_reference = const pimpl_type&;
+
+    /// Asserts that an n-mer is part of this instance
+    void assert_nmer_(const_nmer_reference nmer) const;
 
     /// Asserts we have a PIMPL and returns a modifiable reference to it
     pimpl_reference pimpl_();
