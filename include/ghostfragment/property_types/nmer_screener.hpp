@@ -1,6 +1,6 @@
 #pragma once
-#include "ghostfragment/property_types/capped.hpp"
-#include "ghostfragment/types.hpp"
+#include <ghostfragment/property_types/capped.hpp>
+#include <ghostfragment/type/type.hpp>
 #include <simde/simde.hpp>
 namespace ghostfragment::pt {
 

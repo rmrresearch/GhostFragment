@@ -1,6 +1,6 @@
-#include "ghostfragment/types.hpp"
 #include "partitioned.hpp"
 #include <cmath>
+#include <ghostfragment/type/type.hpp>
 #include <limits>
 
 namespace ghostfragment::partitioned {
@@ -12,7 +12,7 @@ Center To Atom Mapper
 ---------------------
 
 This module will map each center to the atom it is closest to. This algorithm is
-not suitable for use when centers are not atom-centered (*e.g.*, ghost atoms, 
+not suitable for use when centers are not atom-centered (*e.g.*, ghost atoms,
 and mid-bond functions).
 
 )";

@@ -1,5 +1,5 @@
 #pragma once
-#include "ghostfragment/types.hpp"
+#include <ghostfragment/type/type.hpp>
 #include <simde/simde.hpp>
 
 namespace ghostfragment {

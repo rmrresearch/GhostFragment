@@ -1,5 +1,5 @@
 #pragma once
-#include "ghostfragment/types.hpp"
+#include <ghostfragment/type/type.hpp>
 
 namespace ghostfragment {
 namespace detail_ {
@@ -8,20 +8,60 @@ class FragmentedSystemPIMPL;
 
 /** @brief Abstraction to describe the initial fragmentation of the supersystem.
  *
- *  One of the first major steps in most fragment-based methods is to fragment
- *  the supersystem. To GhostFragment this means: dividing the atoms into sets,
- *  pairing each of those sets with an AO basis set, and assigning electrons to
- *  each of those sets. This class holds the results of fragmenting the
- *  supersystem and holds the information required to create System instances
+ *  One of the first major steps in most fragment-based methods is to create an
+ *  initial set of fragments. To GhostFragment this means:
+ *
+ *  - establishing some fundamental disjoint representation of the supersystem
+ *    (we use atoms for now, but pseudoatoms would work too)
+ *  - Group memebers of the disjoint representation together to form fragments.
+ *    The fragments need not be disjoint themselves.
+ *  - Add caps to fragments which have severed covalent bonds.
+ *  - Map each element of the disjoint representation to its set of AOs
+ *  - Map each cap to its set of AOs
+ *  - Map each eleement of the disjoint representation to its number of
+ *    electrons
+ *  - Map each cap to its number of electrons.
+ *
+ *  With the above information, this class holds the results of fragmenting the
+ *  supersystem and the information required to create ChemicalSystem instances
  *  for each fragment.
+ *
+ *  Conceptually this class is meant to function similar to a
+ *  FamilyOfSets<ChemicalSystem>. Because the ChemicalSystem class has several
+ *  container-like attributes, it's more straightforward to write a new class
+ *  for it than to adapt FamilyOfSets to the ChemicalSystem class.
  */
 class FragmentedSystem {
+private:
+    // -------------------------------------------------------------------------
+    // -- Types relating to the PIMPL
+    // -------------------------------------------------------------------------
+
+    /// Type of the PIMPL
+    using pimpl_type = detail_::FragmentedSystemPIMPL;
+
+    /// Type of a mutable reference to the PIMPL
+    using pimpl_reference = pimpl_type&;
+
+    /// Type of a read-only reference to the PIMPL
+    using const_pimpl_reference = const pimpl_type&;
+
+    /// Type of a pointer to the PIMPL
+    using pimpl_pointer = std::unique_ptr<pimpl_type>;
+
 public:
     /// Type of the entire molecular supersystem
     using molecule_type = simde::type::molecule;
 
+    // -------------------------------------------------------------------------
+    // -- Types related to fragments
+    // -------------------------------------------------------------------------
+
     /// Type of the container holding the fragments
     using fragment_set_type = type::fragmented_molecule;
+
+    /// Type of a immutable reference to the container holding fragments
+    using const_fragment_set_reference = const fragment_set_type&;
 
     /// Type of a fragment, is a mask/view of the molecule_type object
     using fragment_type = typename fragment_set_type::value_type;
@@ -29,17 +69,28 @@ public:
     /// Type of a read-only reference to a fragment instance
     using const_fragment_reference = const fragment_type&;
 
+    // -------------------------------------------------------------------------
+    // -- Types related to AOs
+    // -------------------------------------------------------------------------
+
     /// Type of the entire atomic orbital (AO) basis set for the supersystem
     using ao_basis_set_type = simde::type::ao_basis_set;
 
-    /// Type of a fragment's AO basis set, mask/view of the supersystem's basis
-    using fragment_basis_type = typename type::fragmented_aos::value_type;
+    /// Type of a subset of AOs, mask/view of the supersystem's basis
+    using ao_set_type = type::ao_set;
 
-    /// Type of a read-only reference to a fragment's AO basis set
-    using const_fragment_basis_reference = const fragment_basis_type&;
+    /// Type of a read-only reference to a subset of the AO basis set
+    using const_ao_set_reference = const ao_set_type&;
 
-    /// Type of a map from fragments to
-    using frag2ao_basis_type = type::fragment_to_ao_basis;
+    // -------------------------------------------------------------------------
+    // -- Types related to caps
+    // -------------------------------------------------------------------------
+
+    /// Type of a set of caps
+    using capped_type = type::fragment_to_caps::mapped_type;
+
+    /// Type of an immutable reference to a cap
+    using const_capped_reference = const capped_type&;
 
     /** @brief Used for offsets and counts.
      *
@@ -63,22 +114,7 @@ public:
      */
     FragmentedSystem() noexcept;
 
-    /** @brief Creates a FragmentedSystem with the provided state.
-     *
-     *  @param[in] frags A container filled with subsets of the parent system.
-     *                   Each subset will treated as a fragment. Fragments may
-     *                   overlap.
-     *  @param[in] frag2aos A map from fragments in @p frags to their molecular
-     *                      AO basis sets.
-     *  @param[in] atom2ne A map from atoms in the parent system to their number
-     *                     of electrons. Indexing of @p atom2ne should match the
-     *                     order in the parent system.
-     *
-     *  @throw std::bad_alloc if there is a problem allocating the internal
-     *                        state. Strong throw guarantee.
-     */
-    FragmentedSystem(fragment_set_type frags, frag2ao_basis_type frags2aos,
-                     atom2nelectron_type atom2ne);
+    explicit FragmentedSystem(pimpl_pointer pimpl) noexcept;
 
     /** @brief Makes a deep-copy of this FragmentedSystem
      *
@@ -140,6 +176,37 @@ public:
      */
     size_type nfrags() const noexcept;
 
+    /** @brief Determines if a specified fragment goes with this instance.
+     *
+     *  This function is used to determine if @p f is one of the fragments that
+     *  the supersystem has been broken into. N.B. this comparison uses the
+     *  value equality operatator for fragment_type; in particular this means
+     *  that @p f must have come from the same supersystem as the present
+     *  instance.
+     *
+     *  @param[in] f The fragment we are looking for.
+     *
+     *  @return 1 if @p f is one of the fragments the supersystem has been
+     *          decomposed into and 0 otherwise. N.B. that a fragment can not
+     *          occur multiple times in FragmentedSystem instance.
+     *
+     *  @throw None No throw guarantee.
+     */
+    size_type count(const_fragment_reference f) const noexcept;
+
+    /** @brief Returns the FamilyOfSets describing how the supersystem is
+     *         fragmented.
+     *
+     *  This class indexes its attributes by fragment. This function can be
+     *  used to retrieve the set of fragments used for the indexing.
+     *
+     *  @return An immutable reference to the set of fragments.
+     *
+     *  @throw std::runtime_error if this instance does not contain a PIMPL.
+     *                            Strong throw guarantee.
+     */
+    const_fragment_set_reference frags() const;
+
     /** @brief Retrieves the @p i -th fragment.
      *
      *  This function is used to retrive a fragment by index. The ordering of
@@ -152,17 +219,40 @@ public:
      */
     const_fragment_reference fragment(size_type i) const;
 
-    /** @brief Retrieves the molecular AO basis set for the provided fragment.
+    /** @brief Returns the set of caps for the specified fragment.
      *
-     *  @param[in] f The fragment who's AO basis set is being requested.
+     *  Given one of the fragments in this instance, this function will retrun
+     *  the caps for that fragment.
+     *
+     *  @throw std::runtime_error if this instance does not contain a PIMPL.
+     *                            Strong throw guarantee.
+     *
+     *  @throw std::out_of_range if @p f is not part of this instance (as
+     *                           determined by the counter memeber). Strong
+     *                           throw guarantee.
+     */
+    const_capped_reference caps(const_fragment_reference f) const;
+
+    /** @brief Retrieves the molecular AO basis set for the provided set of
+     *         atoms.
+     *
+     *  To actually make ChemicalSystem instances we will need the AO basis sets
+     *  for sets of atoms. These sets of atoms will sometimes be fragments, but
+     *  they can also be intersections of fragments, unions of fragments, etc.
+     *  This function will loop over the atoms in the input and return the AO
+     *  basis set which is the union of the AO bases for the atoms.
+     *
+     *  @param[in] f The set of atoms to form the AO basis set for.
      *
      *  @return The molecular AO basis set for fragment @p f.
+     *
+     *  @throw std::runtime_error if this instance does not contain a PIMPL.
+     *                            Strong throw guarantee.
      *
      *  @throw std::out_of_range if @p f is not a fragment in the current
      *                           instance. Strong throw guarantee.
      */
-    const_fragment_basis_reference ao_basis_set(
-      const_fragment_reference f) const;
+    ao_set_type ao_basis_set(const_fragment_reference f) const;
 
     /** @brief Retrieves the number of electrons for the provided fragment.
      *
@@ -206,16 +296,14 @@ public:
      */
     void hash(type::Hasher& h) const;
 
+protected:
+    /// Wraps asserting that the instance has a PIMPL, returns it if it does
+    pimpl_reference pimpl_();
+
+    /// Wraps asserting that the instance has a PIMPL, returns it if it does
+    const_pimpl_reference pimpl_() const;
+
 private:
-    /// Type of the PIMPL
-    using pimpl_type = detail_::FragmentedSystemPIMPL;
-
-    /// Type of a pointer to the PIMPL
-    using pimpl_pointer = std::unique_ptr<pimpl_type>;
-
-    /// Wraps he process of checking if @p f is in this instance
-    void assert_frag_(const_fragment_reference f) const;
-
     /// Contains the actual state of the class
     pimpl_pointer m_pimpl_;
 };

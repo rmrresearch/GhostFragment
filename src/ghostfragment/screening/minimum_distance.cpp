@@ -41,40 +41,49 @@ constexpr auto desc = R"""(
 Distance Based Screening
 ------------------------
 
-Many of the initial NMer screening routines relied on distance based cutoffs to
-select which NMers survived.
+Many of the initial NMer screening routines relied on distance based cutoffs
+to select which NMers survived.
 
 The steps in this module:
 
 #. Computes the minimum distance between each pair of capped fragments
-#. As part of previous step, we screen pairs, and maintain a list of pairs that
+#. As part of previous step, we screen pairs, and maintain a list of pairs
+that
    survive
-#. Create m-mers by taking unions of surviving (m-1)-mers with surviving pairs
+#. Create m-mers by taking unions of surviving (m-1)-mers with surviving
+pairs
    such that one (and only one) of the fragments in the pair is also in the
    (m-1)-mer.
+
+N.B. This algorithm avoids returning n-mers which are subsets of other
+n-mers.
+     For disjoint fragments it should always be the case that no subsets are
+     returned; however, for non-disjoint fragments some subsets may survive.
 
 Algorithm Notes:
 ----------------
 
 This module assumes it's run as part of NMer driver and that NMer driver has
-taken care of ensuring the number of fragments is greater than or equal to the
-requested truncation order and that the NMer driver takes care of the truncation
-orders of 0 and 1. Hence we only worry about "real" nmers.
+taken care of ensuring the number of fragments is greater than or equal to
+the requested truncation order and that the NMer driver takes care of the
+truncation orders of 0 and 1. Hence we only worry about "real" nmers.
 
-Let N be the number of fragments, n be the nmer truncation level, and t be the
-distance cut-off then:
+Let N be the number of fragments, n be the nmer truncation level, and t be
+the distance cut-off then:
 
-- Determining the distances between fragments has us consider all fragments and
+- Determining the distances between fragments has us consider all fragments
+and
   dimers
 - For a trimer to survive there must be a path through the trimer such that
-  each edge of the path is within the threshold distance. This means it must be
-  the case that:
+  each edge of the path is within the threshold distance. This means it must
+  be the case that:
   - path a-b-c is such that a-b < t and b-c < t, and/or
   - path b-a-c is such that a-b < t and a-c < t, and/or
   - path a-c-b is such that a-c < t and b-c < t
-- For tetramer a-b-c-d to survive there must be a path through the tetramer such
-  that each edge of the path is within the threshold distance. This means that
-  it must be the case:
+- For tetramer a-b-c-d to survive there must be a path through the tetramer
+such
+  that each edge of the path is within the threshold distance. This means
+  that it must be the case:
   - path a-b-c-d is such that a-b-c < t  and c-d < t
   - path a-(b-d)-c is such that a-b-c < t and b-d < t
   - path d-a-b-c is such that a-b-c < t and a-d < t
@@ -87,10 +96,11 @@ distance cut-off then:
   - path b-c-d-a is such that b-c-d < t and a-d < t
   - path b-(c-a)-d is such that b-c-d < t and a-c < t
   - path a-b-c-d is such that b-c-d < t and a-b < t
-- The generalization is that the m-mers that survive can be formed by taking the
-  unions of (m-1)-mers that survive with pairs a-b such that at least one of the
-  monomers (either a or b) is in the (m-1)-mer. If the pair a-b is a subset of
-  the (m-1)-mer you just get back the (m-1)-mer
+- The generalization is that the m-mers that survive can be formed by taking
+the
+  unions of (m-1)-mers that survive with pairs a-b such that at least one of
+  the monomers (either a or b) is in the (m-1)-mer. If the pair a-b is a
+  subset of the (m-1)-mer you just get back the (m-1)-mer
 )""";
 
 MODULE_CTOR(MinimumDistance) {
@@ -119,6 +129,14 @@ MODULE_RUN(MinimumDistance) {
     using nmer_type = typename type::nmers::value_type;
     std::vector<nmer_type> dimers;
 
+    // Add the fragments
+    std::set<nmer_type> good_nmers;
+    for(const auto& f0c0 : capped_frags) {
+        auto frag = nmers.new_subset();
+        frag.insert(f0c0.first);
+        good_nmers.insert(frag);
+    }
+
     // 1. Determine distances between capped fragments
     using key_type = typename std::decay_t<decltype(capped_frags)>::value_type;
     std::map<key_type, std::map<key_type, double>> distance;
@@ -126,7 +144,8 @@ MODULE_RUN(MinimumDistance) {
         const auto& f0 = f0c0.first;
         const auto& c0 = f0c0.second;
         for(const auto& f1c1 : capped_frags) {
-            const auto& f1       = f1c1.first;
+            const auto& f1 = f1c1.first;
+            if(f0 == f1) break; // Only consider f0 > f1
             const auto& c1       = f1c1.second;
             const auto r         = min_distance(f0, c0, f1, c1);
             distance[f0c0][f1c1] = r;
@@ -135,10 +154,15 @@ MODULE_RUN(MinimumDistance) {
                 auto dimer = nmers.new_subset();
                 dimer.insert(f0);
                 dimer.insert(f1);
+                auto frag0 = nmers.new_subset();
+                frag0.insert(f0);
+                good_nmers.erase(frag0);
+                auto frag1 = nmers.new_subset();
+                frag1.insert(f1);
+                good_nmers.erase(frag1);
                 dimers.push_back(dimer);
-                nmers.insert(std::move(dimer));
+                good_nmers.insert(dimer);
             }
-            if(f0 == f1) break; // Only consider f0 <= f1
         }
     }
 
@@ -159,12 +183,16 @@ MODULE_RUN(MinimumDistance) {
                 bool share_a_fragment = (dimer ^ mmer).size() == 1;
                 if(!share_a_fragment) continue;
                 auto mp1_mer = mmer + dimer;
-                nmers.insert(mp1_mer);
+                good_nmers.erase(mmer);
+                good_nmers.erase(dimer);
+                good_nmers.insert(mp1_mer);
                 mp1_mers.push_back(mp1_mer);
             }
         }
         mmers.swap(mp1_mers);
     }
+
+    for(auto x : good_nmers) nmers.insert(x);
 
     auto rv = results();
     return my_pt::wrap_results(rv, nmers);

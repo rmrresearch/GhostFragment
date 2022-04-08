@@ -1,6 +1,6 @@
 #include "partitioned.hpp"
 
-#include "ghostfragment/types.hpp"
+#include <ghostfragment/type/type.hpp>
 
 namespace ghostfragment::partitioned {
 
@@ -11,7 +11,7 @@ const auto mod_desc = R"(
 Fragmentation by Heavy Atom
 ---------------------------
 
-For each of the :math:`N` heavy atoms (where a heavy atom is defined as any 
+For each of the :math:`N` heavy atoms (where a heavy atom is defined as any
 atom, but hydrogen), this fragmentation method creates :math:`N` fragments such
 that the :math:`i`-th fragment contains the :math:`i`-th heavy atom and all
 hydrogens bonded to the :math:`i`-th heavy atom. In the event that there are

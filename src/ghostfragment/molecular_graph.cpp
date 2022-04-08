@@ -1,4 +1,4 @@
-#include "ghostfragment/molecular_graph.hpp"
+#include <ghostfragment/molecular_graph.hpp>
 
 namespace ghostfragment {
 namespace detail_ {

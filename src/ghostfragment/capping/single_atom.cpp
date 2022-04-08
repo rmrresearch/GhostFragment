@@ -1,6 +1,5 @@
 #include "capping.hpp"
-
-#include "ghostfragment/property_types/capped.hpp"
+#include <ghostfragment/property_types/capped.hpp>
 
 using my_pt      = ghostfragment::pt::CappedFragments;
 using connect_pt = simde::Connectivity;
@@ -14,13 +13,13 @@ Single Atom Capper
 ##################
 
 This module closes off the valencies of the input fragments using single atoms.
-More specifically for each bond A-B, such that atom A is in the fragment, and 
-atom B is not, an atom (default is a hydrogen atom) will be added to the 
+More specifically for each bond A-B, such that atom A is in the fragment, and
+atom B is not, an atom (default is a hydrogen atom) will be added to the
 fragment. By default the added atom will be placed at the location of B.
 
 
-The inputs to this module are fragments. In general these inputs are 
-non-disjoint, for this reason we choose to establish connectivity at an atomic 
+The inputs to this module are fragments. In general these inputs are
+non-disjoint, for this reason we choose to establish connectivity at an atomic
 level.
 
 #. Generate atomic connectivity
@@ -50,8 +49,11 @@ MODULE_RUN(SingleAtom) {
     const auto& [conns] = submods.at("Connectivity").run_as<connect_pt>(mol);
 
     // Step 2. Make the caps
-    simde::type::molecule all_the_caps;         // Holds actual caps
-    std::map<std::size_t, std::size_t> ss2caps; // supersysetm index 2 cap index
+    Caps all_the_caps;
+    using cap_type       = typename Caps::value_type;
+    using cap_index_type = typename Caps::size_type;
+    std::map<std::size_t, cap_index_type>
+      cap2idx;                                    // map from a cap to its index
     std::vector<std::set<std::size_t>> frag2caps; // Cap indices for each frag
 
     for(const auto& frag_i : frags) {
@@ -63,23 +65,23 @@ MODULE_RUN(SingleAtom) {
                 if(frag_i.count(mol[atom_j])) continue;
 
                 // Have we added this cap to all_the_caps? If not add it
-                if(!ss2caps.count(atom_j)) {
-                    auto new_cap    = mol[atom_j];
-                    new_cap.Z()     = Z;
-                    new_cap.name()  = "H";
-                    ss2caps[atom_j] = all_the_caps.size();
-                    all_the_caps.push_back(new_cap);
+                if(!cap2idx.count(atom_j)) {
+                    auto new_cap   = mol[atom_j];
+                    new_cap.Z()    = Z;
+                    new_cap.name() = "H";
+                    all_the_caps.add_cap(new_cap, atom_j);
+                    cap2idx.emplace(atom_j, all_the_caps.size() - 1);
                 }
 
                 // Add the cap to the set of caps for this fragment
-                caps_i.insert(ss2caps[atom_j]);
+                caps_i.insert(cap2idx.at(atom_j));
             }
         }
         frag2caps.push_back(caps_i);
     }
 
     // Step 3. Pair frags with their cap sets
-    type::fragmented_molecule caps(all_the_caps);
+    type::fragmented_caps caps(all_the_caps);
     return_t capped_frags;
     for(std::size_t i = 0; i < frags.size(); ++i) {
         // Make a subset of all_the_caps containing fragment i's caps

@@ -1,6 +1,5 @@
 #include "connectivity.hpp"
-
-#include "ghostfragment/property_types/molecular_graph.hpp"
+#include <ghostfragment/property_types/molecular_graph.hpp>
 
 namespace ghostfragment::connectivity {
 

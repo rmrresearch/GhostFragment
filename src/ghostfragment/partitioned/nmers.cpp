@@ -1,6 +1,6 @@
-#include "ghostfragment/property_types/property_types.hpp"
-#include "ghostfragment/types.hpp"
 #include "partitioned.hpp"
+#include <ghostfragment/property_types/property_types.hpp>
+#include <ghostfragment/type/type.hpp>
 #include <simde/simde.hpp>
 #include <utilities/iter_tools/combinations.hpp>
 

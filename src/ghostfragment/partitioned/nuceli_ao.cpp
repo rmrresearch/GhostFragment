@@ -1,5 +1,5 @@
-#include "ghostfragment/property_types/subset_map.hpp"
 #include "partitioned.hpp"
+#include <ghostfragment/property_types/subset_map.hpp>
 
 using namespace ghostfragment::pt;
 
