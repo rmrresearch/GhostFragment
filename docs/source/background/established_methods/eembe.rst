@@ -38,6 +38,17 @@ superystem MP2 energies.
 Other EE-MB Results
 *******************
 
+:cite:t:`Dahlke2008a` considered the applicability of (presumably) EE-MB-B for
+performing molecular dynamics calculations on water clusters. The specific study
+focused on how accurately EE-MB-B replicated the supersystem gradients for a
+water cluster containing 64 water molecules. All calculations were done with
+DFT.
+
 :cite:t:`Dahlke2008` considered how well EE-MB-CE could be used to reproduce
 supersystem energies computed with CCSD, CCSD(T), and higher-order Moller-
 Plesset perturbation theory. The study focused on water hexamer isomers.
+
+:cite:t:`Sorkin2008` applies (presumably) EE-MB-B to water clusters containing a
+NH3 molecule. The main point was to study how well EE-MB can replicate the
+absolute and relative energetics of the corresponding supersystem calculations.
+Also considered were several methods for computing the point charges.
