@@ -52,3 +52,8 @@ Plesset perturbation theory. The study focused on water hexamer isomers.
 NH3 molecule. The main point was to study how well EE-MB can replicate the
 absolute and relative energetics of the corresponding supersystem calculations.
 Also considered were several methods for computing the point charges.
+
+:cite:t:`Leverentz2009` revisits the discussion of EE-MB-A vs. EE-MB-B for mixed
+water, sulfuric acid, and ammonia clusters using DFT. The study notably
+considers a lot of different ways to compute the charges, but ultimately
+concludes the final results are pretty insensitive to the charge details.
