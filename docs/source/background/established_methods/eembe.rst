@@ -4,6 +4,7 @@ Electorstatically-Embedded Many-Body Expansion (EE-MB)
 
 .. |q_a| replace:: :ref:`ee_mb_a`
 .. |q_b| replace:: :ref:`ee_mb_b`
+.. |q_s| replace:: :ref:`screened_charge_model`
 .. |com| replace:: :ref:`com_screening`
 
 The EE-MB method was proposed by :cite:t:`Dahlke2006`. Its initial formulation
@@ -22,6 +23,14 @@ was always run with the full SCF energy, thus it was only the correlation energy
 which is truncated. Also proposed was |com|. Calculations looked at reproducing
 superystem MP2 energies.
 
+In 2011, :cite:t:`Tempkin_2011` introduced the next version of EE-MB, sEE-MB (s
+stands for screened). Instead of traditional point charges, sEE-MB uses charges
+defined by the |q_s| embedding scheme. |q_s| accounts for charge penetration
+(when atoms are close the charge densities overlap and the electrons actually
+see more of the nuclear charge). The sEE-MB method was applied to water clusters
+where for a given MBE truncation order sEE-MB better replicated the supersystem
+energy than EE-MB-B.
+
 +--------------------+-------------+---------------+------------+--------------+
 | Name               | Fragments   | Embedding     | Caps       | Screening    |
 +====================+=============+===============+============+==============+
@@ -33,6 +42,8 @@ superystem MP2 energies.
 | EE-MB-CE +---------+-------------+---------------+------------+--------------+
 |          | Layer 2 | N/A         | |q_b|         | N/A        | |com|        |
 +----------+---------+-------------+---------------+------------+--------------+
+| sEE-MB             | N/A         | |q_s|         | N/A        | N/A          |
++--------------------+-------------+---------------+------------+--------------+
 
 *******************
 Other EE-MB Results

@@ -23,7 +23,7 @@ fragmented. When a terminus did not show up in the fragment it was replaced by
 a point charge. How this would generalize to other systems is not immediately
 clear.
 
-.. _ee_mbe_a:
+.. _ee_mb_a:
 
 EE-MB-A
 ========
@@ -36,7 +36,7 @@ EE-MB method.
 #. For each |n|-mer, loop over atoms in the supersystem. If |Ai| is not in the
    |n|-mer, place |Qi| at the location of |Ai|
 
-.. _ee_mbe_b:
+.. _ee_mb_b:
 
 EE-MB-B
 =======
@@ -73,21 +73,37 @@ ambiguity is resolved by taking the point charges from the fragment which
 resulted from the pseudoatom which contains the atom. This assumes that the GEBF 
 fragmentation method has been used.
 
-****************************
-Point Charge Recommendations
-****************************
+.. _screened_charge_model:
 
-In the context of GEBF applied to a medium sized water cluster (the cluster 
-contained 22 normal water molecules, 5 hydroxide anions, and 5 hyrodnium 
-cations) at the HF/6-311G(d) and MP2/6-311G(d) levels of theory, 
-:cite:t:`Li2007` considered how different point charge choices affected how well
-GEBF replicated the supersystem calculation. Their results indicate that charges 
-derived from a natural population analysis outperformed both Mulliken and 
-electrostatic potential derived charges. All three charge schemes were better
-than no embedding at all. This study also notes that one iteration was
-sufficient to converge the charges. This study also considered water clusters 
-and peptides, noting that not including charges leads to large errors (on the
-order of 50 mH) relative to the supersystem result.
+*********************
+Screened Charge Model
+*********************
 
+.. |Qis| replace:: :math:`q_i^*\left(r_i\right)`
+.. |ri| replace:: :math:`r_i`
+.. |i| replace:: :math:`i``
+.. |zi| replace:: :math:`Z_i`
+.. |Zei| replace:: :math:`\zeta_{z_i}`
 
+In the context of the EE-MB method, :cite:t:`Tempkin_2011` introduced a screened
+point charge. For the |i|-th atom, |Ai|, the screened charge at a distance |ri|
+from |Ai|, |Qis|, is given by:
 
+.. math::
+   \newcommand{\zi}{Z_i}
+   \newcommand{\Zei}{\zeta_{\zi}}
+   \newcommand{\ri}{r_i}
+   \newcommand{\fi}{f\left(\Zei\ri\right)}
+
+   Q_i^*(\ri) = Q_i + m \fi\exp\left(-2\Zei\ri\right)
+   
+where:
+
+- |Qi| is the unscreened charge of |Ai|
+- :math:`m` is the number of electrons in the orbital
+- |zi| is the atomic number of |Ai|
+- |Zei| is the exponent of the Slater orbital, and
+- :math:`f` is a polynomial that depends on the principal quantum number of |Ai|
+
+N.B. the details of the polynomial, as well as values for |Zei| are given in
+:cite:`Wang2010`.
