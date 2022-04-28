@@ -31,6 +31,17 @@ see more of the nuclear charge). The sEE-MB method was applied to water clusters
 where for a given MBE truncation order sEE-MB better replicated the supersystem
 energy than EE-MB-B.
 
+:cite:t:`Qi2013` presented the next incarnations of EE-MB termed EE-MB-NE and 
+EE-MB-HE, where NE means nonlocal energy and HE means higher-level energy. 
+Conceptually EE-MB-NE is the same as EE-MB-CE except that instead of performing 
+a supersystem SCF calculation, one instead runs a local DFT calculation. 
+EE-MB-HE is the name they give to the concept of running a multi-level 
+calculation such that the lowest level is a supersystem calculation. Hence 
+EE-MB-CE and EE-MB-NE are two specific cases of EE-MB-HE (specifically when the
+lowest level is SCF or a local DFT respectively).
+
+
+
 +--------------------+-------------+---------------+------------+--------------+
 | Name               | Fragments   | Embedding     | Caps       | Screening    |
 +====================+=============+===============+============+==============+
@@ -44,6 +55,14 @@ energy than EE-MB-B.
 +----------+---------+-------------+---------------+------------+--------------+
 | sEE-MB             | N/A         | |q_s|         | N/A        | N/A          |
 +--------------------+-------------+---------------+------------+--------------+
+|          | Layer 1 | Supersystem local DFT                                   |
+| EE-MB-NE +---------+-------------+---------------+------------+--------------+
+|          | Layer 2 | N/A         | |q_b|         | N/A        | |com|        |
++----------+---------+-------------+---------------+------------+--------------+
+|          | Layer 1 | Low-level supersystem                                   |
+| EE-MB-HE +---------+-------------+---------------+------------+--------------+
+|          | Layer 2 | N/A         | |q_b|         | N/A        | N/A          |
++----------+---------+-------------+---------------+------------+--------------+
 
 *******************
 Other EE-MB Results
@@ -68,3 +87,8 @@ Also considered were several methods for computing the point charges.
 water, sulfuric acid, and ammonia clusters using DFT. The study notably
 considers a lot of different ways to compute the charges, but ultimately
 concludes the final results are pretty insensitive to the charge details.
+
+:cite:t:`Leverentz_2012` uses EE-MB-B to reproduce supersystem partial charges,
+intermolecular charge transfer, and dipole moments of molecular clusters. Of
+note they were only able to obtain qualitative agreement with supersystem 
+results for intermolecular charge transfer.
