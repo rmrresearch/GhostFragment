@@ -88,6 +88,22 @@ water, sulfuric acid, and ammonia clusters using DFT. The study notably
 considers a lot of different ways to compute the charges, but ultimately
 concludes the final results are pretty insensitive to the charge details.
 
+:cite:t:`Hua2010a` applied EE-MB-B to Zn coordination compounds. The study 
+specifically notes that having each ligand be one fragment, and the Zn be 
+another led to unacceptale errors. Instead one fragment is Zn and the two 
+closest ligands, and the remaining ligands are their own fragments. With such a
+fragmentation scheme EE-MB-B was able to accurately reproduce supersystem
+ligand disassociation energies.
+
+:cite:t:`Kurbanov2011` again considered EE-MB-B applications to Zn coordination
+compounds. This study considers how to fragment the complexes in a more 
+systematic manner. The main finding of this study is a series of guidelines for
+fragmenting coordination compounds. These guidelines are not a fragmentation 
+method, since they don't tell you how to fragment the system; rather the 
+guidelines tell you how you can't fragment the system. By adhereing to the
+aforementioned guidelines, EE-MB-B was again demonstrated to be able to predict
+ligand dissassociation energies.
+
 :cite:t:`Leverentz_2012` uses EE-MB-B to reproduce supersystem partial charges,
 intermolecular charge transfer, and dipole moments of molecular clusters. Of
 note they were only able to obtain qualitative agreement with supersystem 
