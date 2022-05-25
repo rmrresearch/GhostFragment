@@ -42,6 +42,10 @@ lowest level is SCF or a local DFT respectively).
 
 
 
+*******
+Summary
+*******
+
 +--------------------+-------------+---------------+------------+--------------+
 | Name               | Fragments   | Embedding     | Caps       | Screening    |
 +====================+=============+===============+============+==============+
@@ -54,7 +58,7 @@ lowest level is SCF or a local DFT respectively).
 |          | Layer 2 | N/A         | |q_b|         | N/A        | |com|        |
 +----------+---------+-------------+---------------+------------+--------------+
 | sEE-MB             | N/A         | |q_s|         | N/A        | N/A          |
-+--------------------+-------------+---------------+------------+--------------+
++----------+---------+-------------+---------------+------------+--------------+
 |          | Layer 1 | Supersystem local DFT                                   |
 | EE-MB-NE +---------+-------------+---------------+------------+--------------+
 |          | Layer 2 | N/A         | |q_b|         | N/A        | |com|        |
@@ -96,7 +100,7 @@ fragmentation scheme EE-MB-B was able to accurately reproduce supersystem
 ligand disassociation energies.
 
 :cite:t:`Kurbanov2011` again considered EE-MB-B applications to Zn coordination
-compounds. This study considers how to fragment the complexes in a more 
+compounds. This study considers how to fragment the compleexes in a more 
 systematic manner. The main finding of this study is a series of guidelines for
 fragmenting coordination compounds. These guidelines are not a fragmentation 
 method, since they don't tell you how to fragment the system; rather the 
@@ -108,3 +112,12 @@ ligand dissassociation energies.
 intermolecular charge transfer, and dipole moments of molecular clusters. Of
 note they were only able to obtain qualitative agreement with supersystem 
 results for intermolecular charge transfer.
+
+:cite:t:`Kurbanov_2013` applied EE-MB-B and EE-MB-CE to Zn and Cd coordination
+compounds. The study proposes a fragmentation method for Zn and Cd compounds 
+that amounts to pairing the metal with the two ligands with the strongest 
+Coulomb interaction (as deterimined by the maximum absolute point-charge-point-
+charge interaction). Also of interest is a discussion pertaining to how to
+classify the various EE-MB methods. Of particular note is the claim that there
+is an ambiguity in trying to distinguish between intersecting and disjoint
+methods.

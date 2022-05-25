@@ -72,6 +72,31 @@ fragment-based method. To demonstrate grafting :cite:t:`Furtado2012` considered
 MP2 energies of water clusters; compared to supersystem MP2/aug-cc-pVDZ energies
 the grafting procedure resulted in errors on the order of 0.3 mH.
 
+:cite:t:`Isegawa_2013` combined the electrostatic embedding of the EE-MB method
+with the MTA. It is perhaps worth noting this MTA development is somewhat 
+unconventional in that it has not been made by the Gadre group. The study 
+considers how four parameters: size of fragments, fragment boundaries, type of
+background charge, and type of cap atom affect the approximation. Admittedly the
+description of the method is very hard to follow and it is not exactly clear 
+what the final method is. It is perhaps worth noting that this study proposes 
+that one can simply truncate the IEP early (they specificlly state they will 
+only consider at most intersections involving two  ragments). In genernal this 
+leads to unacceptable errors. For example, consider a system of four 
+non-interacting hydrogen atoms. Arbitrarily labeling the atoms 0, 1, 2, and 3 we
+choose to create three fragments: 012, 013, and 123. Applying the IEP:
+
+.. math::
+
+   E = E_{012} + E_{013} + E_{123} - E_{01} - E_{12} - E_{13} + E_{1}
+
+The first three terms are the energies of the fragments, the next three are the
+pair-wise intersections, and the last term is the one ternary intersection. Even 
+with non-interacting systems we can't neglect the ternary interaction as it is 
+an error of half a hartree (*i.e.*, the energy of a hydrogen atom). In the case 
+of :cite:t:`Isegawa_2013`'s study, the approximation works because it's not 
+actually an approximation. More specifically their fragmentation scheme is such
+that the higher-order intersections always cancel out.
+
 ***********
 MTA Summary
 ***********
