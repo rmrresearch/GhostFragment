@@ -121,3 +121,8 @@ charge interaction). Also of interest is a discussion pertaining to how to
 classify the various EE-MB methods. Of particular note is the claim that there
 is an ambiguity in trying to distinguish between intersecting and disjoint
 methods.
+
+:cite:t:`Friedrich_2014` applied EE-MB-B to water clusters with 26 monomers. The
+goal of the study was to replicate CCSD(T)/CBS results computed using the 
+incremental method. Overall the EE-MB-B results match the incremental method
+results quite well.
