@@ -41,10 +41,14 @@ EE-MB-CE and EE-MB-NE are two specific cases of EE-MB-HE (specifically when the
 lowest level is SCF or a local DFT respectively).
 
 
-
 *******
 Summary
 *******
+
+It seems fair to say that the unifying theme of the various flavors of EE-MB is
+the use of non-iterative point charges. Unlike many of the other fragment based
+methods EE-MB has almost always been used to refer to a single flavor 
+(EE-MB-B) and care has been taken to distinguish among the other flavors. 
 
 +--------------------+-------------+---------------+------------+--------------+
 | Name               | Fragments   | Embedding     | Caps       | Screening    |
@@ -126,3 +130,14 @@ methods.
 goal of the study was to replicate CCSD(T)/CBS results computed using the 
 incremental method. Overall the EE-MB-B results match the incremental method
 results quite well.
+
+*************
+EE-MB Reviews
+*************
+
+:cite:t:`Wang2014a` reviewed the various flavors of EE-MB as well as the EE-MTA
+method. This review also introduces the anchor points reactive potential method
+which generates a semi-analytical potential energy surface by partitioning the
+internal coordinates of the system. They then suggest that such a method should
+also be considered a fragment-based method because it fragments the 
+internal coordinates. 
