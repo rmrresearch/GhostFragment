@@ -11,19 +11,35 @@ Point Charge Embedding
 Non-Iterative
 *************
 
-EE-MBE-A
+.. _ec_mfcc_charges:
+
+EC-MFCC Charges
+===============
+
+Introduced by :cite:t:`Jiang2006`. The description is a bit vague, but the idea
+seems to be to only put charges on the most electronegative/electropositive 
+atoms. In the original presentation proteins with charged termini were
+fragmented. When a terminus did not show up in the fragment it was replaced by
+a point charge. How this would generalize to other systems is not immediately
+clear.
+
+.. _ee_mb_a:
+
+EE-MB-A
 ========
 
 One of two charge embedding schemes proposed by :cite:t:`Dahlke2006` for the 
-EE-MBE method. 
+EE-MB method. 
 
 #. Compute charges for the supersystem
 #. Let |Qi| be the charge of atom :math:`i`, |Ai|
 #. For each |n|-mer, loop over atoms in the supersystem. If |Ai| is not in the
    |n|-mer, place |Qi| at the location of |Ai|
 
-EE-MBE-B
-========
+.. _ee_mb_b:
+
+EE-MB-B
+=======
 
 The second embedding scheme proposed by :cite:t:`Dahlke2006`. 
 
@@ -33,9 +49,9 @@ The second embedding scheme proposed by :cite:t:`Dahlke2006`.
    |n|-mer, place |Qi| at the location of |Ai|
 
 
-*********
-Iterative
-*********
+********************************
+Iterative Point Charge Embedding
+********************************
 
 Iterative point charge embedding requires the use of point charges that in some
 shape or form respond to changes in the electronic structure. Typically this
@@ -57,21 +73,37 @@ ambiguity is resolved by taking the point charges from the fragment which
 resulted from the pseudoatom which contains the atom. This assumes that the GEBF 
 fragmentation method has been used.
 
-****************************
-Point Charge Recommendations
-****************************
+.. _screened_charge_model:
 
-In the context of GEBF applied to a medium sized water cluster (the cluster 
-contained 22 normal water molecules, 5 hydroxide anions, and 5 hyrodnium 
-cations) at the HF/6-311G(d) and MP2/6-311G(d) levels of theory, 
-:cite:t:`Li2007` considered how different point charge choices affected how well
-GEBF replicated the supersystem calculation. Their results indicate that charges 
-derived from a natural population analysis outperformed both Mulliken and 
-electrostatic potential derived charges. All three charge schemes were better
-than no embedding at all. This study also notes that one iteration was
-sufficient to converge the charges. This study also considered water clusters 
-and peptides, noting that not including charges leads to large errors (on the
-order of 50 mH) relative to the supersystem result.
+*********************
+Screened Charge Model
+*********************
 
+.. |Qis| replace:: :math:`q_i^*\left(r_i\right)`
+.. |ri| replace:: :math:`r_i`
+.. |i| replace:: :math:`i``
+.. |zi| replace:: :math:`Z_i`
+.. |Zei| replace:: :math:`\zeta_{z_i}`
 
+In the context of the EE-MB method, :cite:t:`Tempkin_2011` introduced a screened
+point charge. For the |i|-th atom, |Ai|, the screened charge at a distance |ri|
+from |Ai|, |Qis|, is given by:
 
+.. math::
+   \newcommand{\zi}{Z_i}
+   \newcommand{\Zei}{\zeta_{\zi}}
+   \newcommand{\ri}{r_i}
+   \newcommand{\fi}{f\left(\Zei\ri\right)}
+
+   Q_i^*(\ri) = Q_i + m \fi\exp\left(-2\Zei\ri\right)
+   
+where:
+
+- |Qi| is the unscreened charge of |Ai|
+- :math:`m` is the number of electrons in the orbital
+- |zi| is the atomic number of |Ai|
+- |Zei| is the exponent of the Slater orbital, and
+- :math:`f` is a polynomial that depends on the principal quantum number of |Ai|
+
+N.B. the details of the polynomial, as well as values for |Zei| are given in
+:cite:`Wang2010`.

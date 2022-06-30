@@ -8,6 +8,7 @@ Systematic Molecular Fragmentation Fragmentation Method
 .. |A1| replace:: :math:`A_1`
 .. |A1p| replace:: :math:`A_1'`
 .. |A2| replace:: :math:`A_2`
+.. |A3| replace:: :math:`A_3`
 .. |A2p| replace:: :math:`A_2'`
 .. |Al1| replace:: :math:`A_{\ell -1}`
 .. |Al1p| replace:: :math:`A_{\ell - 1}'`
@@ -29,7 +30,12 @@ Systematic Molecular Fragmentation Fragmentation Method
 .. |G6| replace:: :math:`G_6`
 .. |G7| replace:: :math:`G_7`
 .. |F| replace:: :math:`F`
+.. |Fi| replace:: :math`F_i`
 .. |Fp| replace:: :math`F'`
+
+********************
+SMF Fragmentation 05
+********************
 
 :cite:t:`Deev2005` introduced a means of fragmenting large covalently bonded
 molecules. As originally presented, the SMF fragmentation method was used to
@@ -67,12 +73,26 @@ level |l| procedure. Using our terminology the level |l| procedure is:
 The original presentation contains a few other details we have omitted, namely:
 
 - How to calculate the coefficients of the fragments; we instead opt to use the
-  IEP
+  IEP.  
 - Restrictions on what size rings can be broken for a given |l|. The motivation
   for these rules stems from their capping method choice. To be more general we
   instead adopt the view that if a ring shouldn't be broken, it should be 
   protected as a pseudoatom.
-- An ad hoc means of adding in some non-bonding interactions by considering
-  dimers. We prefer the traditional union-approach as it is more systematic.
 
+*********************
+Ring Repair Variation
+*********************
 
+In a subsequent paper :cite:t:`Collins2006` ammended the original SMF
+fragmentation method to include what they term the "ring repair rule". This
+amounts to performing the following steps after the orginal SMF fragmentation
+method:
+
+#. For each fragment |Fi| in |F|, consider pairs of pseudoatoms |A0| and |A1|
+#. If |A0| and |A1| are both bonded to another pseudoatom |A2|, and |A2| is not 
+   in |Fi|, add |A2| to |Fi|
+#. If |A0| is bonded to a pseudoatom |A2|, which is not in |Fi|, and |A3| is 
+   bonded to a different pseudoatom |A3|, which is also not in |Fi|, then add
+   |A2| and |A3| to |Fi| if |A2| and |A3| are bonded.
+#. If either of the previous two steps modifies a fragment repeat the original
+   SMF fragmentation method with the new set.

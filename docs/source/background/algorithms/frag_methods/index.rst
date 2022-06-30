@@ -10,7 +10,10 @@ algorithms for automatically defining fragments have been proposed.
    :maxdepth: 2
    :caption: Contents:
 
+   fea
+   mfcc
    mta
    smf
+   dclc
    gebf
    other
