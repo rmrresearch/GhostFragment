@@ -1,3 +1,4 @@
+#pragma once
 #include <ghostfragment/fragment_based_method.hpp>
 #include <ghostfragment/interaction.hpp>
 

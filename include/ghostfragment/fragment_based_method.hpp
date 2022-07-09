@@ -19,7 +19,6 @@ public:
     using pimpl_type                  = detail_::FragmentBasedMethodPIMPL;
     using pimpl_pointer               = std::unique_ptr<pimpl_type>;
     using nmer_system                 = NMerSystem;
-    using const_nmer_reference        = NMerSystem::const_nmer_reference;
     using interaction_type            = Interaction;
     using const_interaction_reference = const interaction_type&;
 
