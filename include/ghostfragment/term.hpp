@@ -34,16 +34,21 @@ public:
     Term& operator=(Term&& rhs) noexcept;
     ~Term() noexcept;
 
-    bool empty() const noexcept;
-    void swap(Term& other) noexcept;
-
     const_nmer_reference nmer() const;
     const_ao_set_reference ao_basis_set() const;
     coefficient_type coefficient() const;
+
+    bool empty() const noexcept;
+    void swap(Term& other) noexcept;
+    bool operator==(const Term& rhs) const noexcept;
 
 private:
     void assert_pimpl_() const;
     pimpl_pointer m_pimpl_;
 };
+
+inline bool operator!=(const Term& lhs, const Term& rhs) {
+    return !(lhs == rhs);
+}
 
 } // namespace ghostfragment

@@ -23,10 +23,6 @@ Term& Term::operator=(Term&& rhs) noexcept = default;
 
 Term::~Term() noexcept = default;
 
-bool Term::empty() const noexcept { return !static_cast<bool>(m_pimpl_); }
-
-void Term::swap(Term& other) noexcept { m_pimpl_.swap(other.m_pimpl_); }
-
 Term::const_nmer_reference Term::nmer() const {
     assert_pimpl_();
     return m_pimpl_->m_nmer;
@@ -41,6 +37,26 @@ Term::coefficient_type Term::coefficient() const {
     assert_pimpl_();
     return m_pimpl_->m_coef;
 }
+
+// -- Utility Methods
+
+bool Term::empty() const noexcept { return !static_cast<bool>(m_pimpl_); }
+
+void Term::swap(Term& other) noexcept { m_pimpl_.swap(other.m_pimpl_); }
+
+bool Term::operator==(const Term& rhs) const noexcept {
+    // Check if one is empty and the other isn't
+    if(empty() != rhs.empty()) return false;
+
+    // Either both filled, or both emtpy, return if latter
+    if(empty()) return true;
+
+    if(coefficient() != rhs.coefficient()) return false;
+    return std::tie(nmer(), ao_basis_set()) ==
+           std::tie(rhs.nmer(), rhs.ao_basis_set());
+}
+
+// -- Private Methods
 
 void Term::assert_pimpl_() const {
     if(!empty()) return;
