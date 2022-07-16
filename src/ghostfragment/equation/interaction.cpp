@@ -1,6 +1,6 @@
 #include "detail_/interaction_pimpl.hpp"
 
-namespace ghostfragment {
+namespace ghostfragment::equation {
 
 // -- Ctors, Assignment Operators, Dtor
 
@@ -76,4 +76,4 @@ void Interaction::assert_bounds_(size_type i) const {
                             std::to_string(size()) + ").");
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::equation

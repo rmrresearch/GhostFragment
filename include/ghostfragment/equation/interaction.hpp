@@ -1,7 +1,8 @@
 #pragma once
-#include <ghostfragment/term.hpp>
+#include <ghostfragment/equation/term.hpp>
+#include <memory>
 
-namespace ghostfragment {
+namespace ghostfragment::equation {
 namespace detail_ {
 class InteractionPIMPL;
 }
@@ -47,4 +48,4 @@ inline bool operator!=(const Interaction& lhs, const Interaction& rhs) {
     return !(lhs == rhs);
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::equation

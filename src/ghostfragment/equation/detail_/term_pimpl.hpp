@@ -1,7 +1,7 @@
 #pragma once
-#include <ghostfragment/term.hpp>
+#include <ghostfragment/equation/term.hpp>
 
-namespace ghostfragment::detail_ {
+namespace ghostfragment::equation::detail_ {
 
 struct TermPIMPL {
     using parent_type      = Term;
@@ -27,4 +27,4 @@ inline typename TermPIMPL::pimpl_pointer TermPIMPL::clone() const {
     return std::make_unique<TermPIMPL>(*this);
 }
 
-} // namespace ghostfragment::detail_
+} // namespace ghostfragment::equation::detail_

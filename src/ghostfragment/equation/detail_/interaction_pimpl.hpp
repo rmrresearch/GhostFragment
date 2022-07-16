@@ -1,7 +1,7 @@
 #pragma once
-#include <ghostfragment/interaction.hpp>
+#include <ghostfragment/equation/interaction.hpp>
 
-namespace ghostfragment::detail_ {
+namespace ghostfragment::equation::detail_ {
 
 struct InteractionPIMPL {
     using parent_type    = Interaction;
@@ -16,4 +16,4 @@ struct InteractionPIMPL {
     term_container m_terms;
 };
 
-} // namespace ghostfragment::detail_
+} // namespace ghostfragment::equation::detail_

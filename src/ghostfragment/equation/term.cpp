@@ -1,6 +1,6 @@
 #include "detail_/term_pimpl.hpp"
 
-namespace ghostfragment {
+namespace ghostfragment::equation {
 
 Term::Term() noexcept = default;
 
@@ -64,4 +64,4 @@ void Term::assert_pimpl_() const {
                              "move from it?");
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::equation

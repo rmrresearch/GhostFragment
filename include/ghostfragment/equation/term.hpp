@@ -1,17 +1,14 @@
 #pragma once
-#include <ghostfragment/fragment_based_method.hpp>
+#include <ghostfragment/nmer_system.hpp>
 
-namespace ghostfragment {
+namespace ghostfragment::equation {
 namespace detail_ {
 class TermPIMPL;
 }
 
 class Term {
-private:
-    using fbm_type = FragmentBasedMethod;
-
 public:
-    using nmer_system = fbm_type::nmer_system;
+    using nmer_system = NMerSystem;
 
     using nmer_type              = nmer_system::nmer_type;
     using const_nmer_reference   = nmer_system::const_nmer_reference;
@@ -51,4 +48,4 @@ inline bool operator!=(const Term& lhs, const Term& rhs) {
     return !(lhs == rhs);
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::equation
