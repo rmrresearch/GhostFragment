@@ -6,19 +6,25 @@ namespace detail_ {
 class TermPIMPL;
 }
 
+/** @brief Desribes a term in an expression
+ *
+ *  Terms map to individual calculations. Superficially a Term is just a
+ *  ChemicalSystem and a coefficient for scaling the result.
+ *
+ */
 class Term {
 public:
     /// Type of the NMersystem *this is associated with
     using nmer_system = NMerSystem;
 
     /// Ultimately a typedef of NMerSystem::nmer_type
-    using nmer_type              = nmer_system::nmer_type;
+    using nmer_type = nmer_system::nmer_type;
 
     /// Ultimately a typedef of NMerSystem::const_nmer_reference
-    using const_nmer_reference   = nmer_system::const_nmer_reference;
-    
+    using const_nmer_reference = nmer_system::const_nmer_reference;
+
     /// Ultimately a typedef of NMerSystem::ao_set_type
-    using ao_set_type            = nmer_system::ao_set_type;
+    using ao_set_type = nmer_system::ao_set_type;
 
     /// Read-only reference to an ao_set_type
     using const_ao_set_reference = const ao_set_type&;
@@ -27,13 +33,21 @@ public:
     using coefficient_type = double;
 
     /// Type of the object implementing Term
-    using pimpl_type    = detail_::TermPIMPL;
+    using pimpl_type = detail_::TermPIMPL;
 
     /// Type of a pointer to the PIMPL
     using pimpl_pointer = std::unique_ptr<pimpl_type>;
 
     // -- CTors, Assignment Operators, and DTor
 
+    /** @brief Creates a null Term object.
+     *
+     *  The instance resulting from the default ctor is largely a place holder.
+     *  At the moment the only way to give a default constructed Term state is
+     *  to assign to it.
+     *
+     *  @throw None No throw guarantee
+     */
     Term() noexcept;
     Term(nmer_type nmer, ao_set_type aos, coefficient_type coef);
     Term(pimpl_pointer pimpl) noexcept;
@@ -41,6 +55,8 @@ public:
     Term(Term&& other) noexcept;
     Term& operator=(const Term& rhs);
     Term& operator=(Term&& rhs) noexcept;
+
+    /// Standard no-throw dtor
     ~Term() noexcept;
 
     // -- Getters
