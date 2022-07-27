@@ -44,7 +44,7 @@ public:
      *
      *  The instance resulting from the default ctor is largely a place holder.
      *  At the moment the only way to give a default constructed Term state is
-     *  to assign to it.
+     *  to assign to it. The resulting Term is empty.
      *
      *  @throw None No throw guarantee
      */
@@ -61,21 +61,105 @@ public:
 
     // -- Getters
 
+    /** @brief Returns the molecular system involved in *this.
+     *
+     *  The most primitive input for most electronic structure calculations is
+     *  the molecular system. This method returns the molecular system for this
+     *  term.
+     *
+     *  @return a read-only reference to this term's molecular system
+     *
+     *  @throw std::runtime_error if *this does not have a molecular system set.
+     *                            Strong throw guarantee.
+     *
+     */
     const_nmer_reference nmer() const;
+
+    /** @brief Returns the AO basis set for the term
+     *
+     *  In addition to a chemical system, the other input for most electronic
+     *  structure calculations is an AO basis set. This method returns the
+     *  AO basis set for this term.
+     *
+     *  @return A read-only reference to the AO basis set
+     *
+     *  @throw std::runtime_error if *this does not have an AO basis set.
+     *                            Strong throw guarantee.
+     */
     const_ao_set_reference ao_basis_set() const;
+
+    /** @brief The scale factor for this term.
+     *
+     *  Terms are meant to be used as part of interactions. When a term shows
+     *  up in an interaction it is weighted. This method returns the scale
+     *  factor for this term.
+     *
+     *  @return The scale factor
+     *
+     *  @throw std::runtime_error if *this does not have a coefficent set.
+     *                            Strong throw guarantee.
+     */
     coefficient_type coefficient() const;
 
     // -- Utility methods
 
+    /** @brief Determines if the Term's state has been set
+     *
+     *  A term is empty if no part of its state (molecular system,
+     *  AO basis, or coefficient) has been set.
+     *
+     *  @return True if this Term is empty and false otherwise.
+     *
+     *  @throw None no throw guarantee.
+     */
     bool empty() const noexcept;
+
+    /** @brief Exchanges the state in *this with the state in @p other.
+     *
+     *  @param[in,out] other The instance whose state is being swapped with the
+     *                       state in *this. After this call @p other will
+     *                       contain the state which was previously in *this.
+     *
+     *  @throw None No throw guarantee.
+     */
     void swap(Term& other) noexcept;
+
+    /** @brief Compares *this to @p rhs for value equality.
+     *
+     *  Two Term instances are value equal if they are both empty, or if they
+     *  both contain the same state. In comparing state the molecular system,
+     *  AO basis set, and scaling coefficient are compared. N.B. all floating
+     *  point comparisons are also value equality (i.e., floating point values
+     *  are compared to machine epsilon).
+     *
+     *  @param[in] rhs The Term being compared to *this.
+     *
+     *  @throw None No throw guarantee
+     */
     bool operator==(const Term& rhs) const noexcept;
 
 private:
+    /// Code factorization for asserting that *this has a PIMPL
     void assert_pimpl_() const;
+
+    /// The object actually implementing this Term
     pimpl_pointer m_pimpl_;
 };
 
+/** @brief Determines if two terms are different.
+ *
+ *  @relates Term
+ *
+ *  This method simply negates Term::operator==. See Term::operator== for the
+ *  definition of value equality.
+ *
+ *  @param[in] lhs The Term to the left of the operator.
+ *  @param[in] rhs The Term to the right of the operator.
+ *
+ *  @return False if @p lhs is value equal to @p rhs and true otherwise.
+ *
+ *  @throw None No throw guarantee.
+ */
 inline bool operator!=(const Term& lhs, const Term& rhs) {
     return !(lhs == rhs);
 }
