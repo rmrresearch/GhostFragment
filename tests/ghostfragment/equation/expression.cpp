@@ -10,7 +10,7 @@ TEST_CASE("Expression") {
 
     using term_type = Expression::term_type;
     term_type t0(nmer, aos, 1.23);
-    term_type t1(nmer, aos, 3.15);
+    term_type t1(nmer, aos, 3.14);
 
     Expression defaulted;
     Expression i0, i1;
@@ -84,5 +84,82 @@ TEST_CASE("Expression") {
             REQUIRE(pi1_move == &i1_move);
             REQUIRE(i1_copy == i1_move);
         }
+    }
+
+    SECTION("size") {
+        REQUIRE(defaulted.size() == 0);
+        REQUIRE(i0.size() == 1);
+        REQUIRE(i1.size() == 1);
+    }
+
+    SECTION("at") {
+        REQUIRE_THROWS_AS(defaulted.at(0), std::out_of_range);
+
+        REQUIRE(i0.at(0) == t0);
+        REQUIRE_THROWS_AS(i0.at(1), std::out_of_range);
+
+        REQUIRE(i1.at(0) == t1);
+        REQUIRE_THROWS_AS(i1.at(1), std::out_of_range);
+    }
+
+    SECTION("add_term(nmer, aos, coef)") {
+        defaulted.add_term(nmer, aos, 1.23);
+        REQUIRE(defaulted == i0);
+
+        i0.add_term(nmer, aos, 3.14);
+        REQUIRE(i0.size() == 2);
+        REQUIRE(i0.at(0) == t0);
+        REQUIRE(i0.at(1) == t1);
+    }
+
+    SECTION("add_term(term)") {
+        defaulted.add_term(t0);
+        REQUIRE(defaulted == i0);
+
+        i0.add_term(t1);
+        REQUIRE(i0.size() == 2);
+        REQUIRE(i0.at(0) == t0);
+        REQUIRE(i0.at(1) == t1);
+    }
+
+    SECTION("empty") {
+        REQUIRE(defaulted.empty());
+        REQUIRE_FALSE(i0.empty());
+        REQUIRE_FALSE(i1.empty());
+    }
+
+    SECTION("swap") {
+        Expression i0_copy(i0);
+        Expression i1_copy(i1);
+
+        i0.swap(i1);
+        REQUIRE(i0 == i1_copy);
+        REQUIRE(i1 == i0_copy);
+    }
+
+    SECTION("operator==/operator!=") {
+        // defaulted compared to defaulted
+        REQUIRE(defaulted == Expression());
+        REQUIRE_FALSE(defaulted != Expression());
+
+        // defaulted compared to non-default
+        REQUIRE(defaulted != i0);
+        REQUIRE_FALSE(defaulted == i0);
+
+        // non-defaulted to non-defaulted with same state
+        Expression i0_2;
+        i0_2.add_term(t0);
+        REQUIRE(i0 == i0_2);
+        REQUIRE_FALSE(i0 != i0_2);
+
+        // non-defaulted to non-defaulted with different state
+        REQUIRE(i0 != i1);
+        REQUIRE_FALSE(i0 == i1);
+
+        // Order matters
+        i0.add_term(t1);
+        i1.add_term(t0);
+        REQUIRE(i0 != i1);
+        REQUIRE_FALSE(i0 == i1);
     }
 }
