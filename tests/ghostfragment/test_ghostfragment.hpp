@@ -129,4 +129,12 @@ inline auto fragmented_water_system(std::size_t N) {
     return ghostfragment::FragmentedSystem(fragmented_water_system_pimpl(N));
 }
 
+inline auto water_nmer_system(std::size_t n_waters,
+std::size_t N){
+    auto frags = fragmented_water_system(n_waters);
+    auto nmers = make_nmers(fragmented_water(n_waters), N);
+    
+    return ghostfragment::NMerSystem(frags, nmers);
+}
+
 } // namespace testing
