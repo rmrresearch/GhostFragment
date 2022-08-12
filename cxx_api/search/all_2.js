@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['key_5ftype_3',['key_type',['../structghostfragment_1_1pt_1_1SubsetMapTraits.html#a2543e1f23d5937c06f60aed5dd95bc04',1,'ghostfragment::pt::SubsetMapTraits']]]
+  ['declare_5fproperty_5ftype_32',['DECLARE_PROPERTY_TYPE',['../namespaceghostfragment_1_1pt.html#a44bbc33fe39110778525d2e9cbc2fd2d',1,'ghostfragment::pt::DECLARE_PROPERTY_TYPE(FragmentedSystem)'],['../namespaceghostfragment_1_1pt.html#a4fba16b84fe87aca1215da0824c3b6e7',1,'ghostfragment::pt::DECLARE_PROPERTY_TYPE(MolecularGraph)']]],
+  ['declare_5ftemplated_5fproperty_5ftype_33',['DECLARE_TEMPLATED_PROPERTY_TYPE',['../namespaceghostfragment_1_1pt.html#acd063b7d41a1829657929ea0abfd30ca',1,'ghostfragment::pt']]]
 ];

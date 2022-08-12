@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['value_5ftype_11',['value_type',['../structghostfragment_1_1pt_1_1SubsetMapTraits.html#a661e4da1283d74b72e5cd4925bd0a32e',1,'ghostfragment::pt::SubsetMapTraits']]]
+  ['edge_5flist_211',['edge_list',['../classghostfragment_1_1MolecularGraph.html#aa50466bd70cc8c57f335be85d481a113',1,'ghostfragment::MolecularGraph']]],
+  ['edge_5ftype_212',['edge_type',['../classghostfragment_1_1MolecularGraph.html#a2b67e5a09c67562e0b753e07df810b86',1,'ghostfragment::MolecularGraph']]]
 ];

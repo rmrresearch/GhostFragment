@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fragments Vs N-Mers &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script >let toggleHintShow = 'Click to show';</script>
+        <script >let toggleHintHide = 'Click to hide';</script>
+        <script >let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Terminology Used Throughout GhostFragment" href="terminology.html" />
+    <link rel="prev" title="FMO Screening Procedures" href="algorithms/screening_methods/fmo.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> GhostFragment
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gmbe/index.html">GMBE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms/index.html">Algorithms for Fragment-Based Methods</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Fragments Vs N-Mers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#background">Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#our-take">Our Take</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Designing GhostFragment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Theoretical Background</a> &raquo;</li>
+      <li>Fragments Vs N-Mers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/background/fragment_vs_nmer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="fragments-vs-n-mers">
+<h1>Fragments Vs N-Mers<a class="headerlink" href="#fragments-vs-n-mers" title="Permalink to this headline"></a></h1>
+<div class="section" id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline"></a></h2>
+<p>TODO: List previous debates</p>
+</div>
+<div class="section" id="our-take">
+<h2>Our Take<a class="headerlink" href="#our-take" title="Permalink to this headline"></a></h2>
+<p>The unifying aspect of fragment based methods is that they break a supersystem
+up into a set of subsystems, and then use the properties of the subsystems to
+approximate the properties of the supersystem. As has been rightfully pointed
+out a number of times, sub-/supersystem are somewhat relative terms. For
+example, if one is looking at water dimer, it is natural to term the dimer the
+supersystem and the natural (albeit not the only) choice for the subsystems are
+the water monomers. However, it’s entirely possible that the water dimer we just
+considered actually stems from considerations of the three two-body interactions
+in a water trimer; in this case that same water dimer is actually a subsystem.
+The point is that the sub-/supersystem relationship is relative and contextually
+dependent.</p>
+<p><span class="math notranslate nohighlight">\(n\)</span>-mers are defined as the union of <span class="math notranslate nohighlight">\(n\)</span> fragments. Hence <span class="math notranslate nohighlight">\(n\)</span>-mers and fragments
+share a super/subsystem relation. So it’s perhaps unsurprising that the terms
+are relative. That said, in practice we find that there is an asymmetry to how
+fragments and <span class="math notranslate nohighlight">\(n\)</span>-mers are treated, because of this asymmetry it is worth
+exploring the distinction in more detail. Ultimately, the design of
+GhostFragment assumes the user also cares about the distinction between <span class="math notranslate nohighlight">\(n\)</span>-mers
+and fragments and treats them separately.</p>
+<p>At some level every fragment-based method defines a fundamental set of subsets.
+We term the elements of this subset fragments. Once you have defined fragments,
+you always can define dimers, trimers, or in general <span class="math notranslate nohighlight">\(n\)</span>-mers (up to the number
+of fragments) by taking unions of fragments. In practice, fragments tend to
+contain atoms which are proximally close to each other (as determined by metrics
+such as distance between atoms or number of bonds between atoms). With this
+convention, a typical <span class="math notranslate nohighlight">\(n\)</span>-mer differs from a fragment in that the atoms
+contained in the <span class="math notranslate nohighlight">\(n\)</span>-mer are not all close to each other.</p>
+<p>So what’s to stop us from treating the resulting <span class="math notranslate nohighlight">\(n\)</span>-mers as fragments? Put
+another way, can we just treat the process of forming the <span class="math notranslate nohighlight">\(n\)</span>-mers as the last
+step of a fragmentation method? The short answer is there’s no reason we can’t
+treat the <span class="math notranslate nohighlight">\(n\)</span>-mers as fragments. In fact this realization was the key to
+originally computing the energy with the GMBE. That said, what we usually care
+about is accurately predicting the properties of the supersystem. So if the set
+of fragments allows us to accurately predict the properties of the supersystem,
+there’s no reason to consider <span class="math notranslate nohighlight">\(n\)</span>-mers.</p>
+<p>So why do we care about <span class="math notranslate nohighlight">\(n\)</span>-mers at all? The reason is simple, with nearly all
+fragmentation methods limited to producing fragments comprised of proximally
+close atoms, we need a way to build in long-distance interactions. At the moment
+there’s really only two ways to do this: large overlapping fragments, or by
+relying on <span class="math notranslate nohighlight">\(n\)</span>-mers. The former option is essentially a brute-force approach,
+i.e., the fragments need to be so large that every important many-body
+interaction appears in at least one fragment, furthermore the size of the
+fragments must be large enough that the chemical environment around the
+interaction is sufficiently similar to the supersystem. On the contrary by
+relying on <span class="math notranslate nohighlight">\(n\)</span>-mers, we can have small fragments and systematically grow the
+subsystem sizes so that they include the important many-body interactions with
+minimal additional overhead.</p>
+<p>Since most fragment-based methods are going to need to use <span class="math notranslate nohighlight">\(n\)</span>-mers, the design
+of GhostFragment needs to consider them. While it would be possible to hide the
+formation of <span class="math notranslate nohighlight">\(n\)</span>-mers under the fragmentation method, keeping track of  where
+the <span class="math notranslate nohighlight">\(n\)</span>-mers come from has a number of algorithmic advantages:</p>
+<ul class="simple">
+<li><p>re-using <span class="math notranslate nohighlight">\(m\)</span>-mer (<span class="math notranslate nohighlight">\(m\)</span> &lt; <span class="math notranslate nohighlight">\(n\)</span>) guesses</p></li>
+<li><p>easier evaluation of intersections</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="algorithms/screening_methods/fmo.html" class="btn btn-neutral float-left" title="FMO Screening Procedures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="terminology.html" class="btn btn-neutral float-right" title="Terminology Used Throughout GhostFragment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Considerations &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script >let toggleHintShow = 'Click to show';</script>
+        <script >let toggleHintHide = 'Click to hide';</script>
+        <script >let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References" href="../references.html" />
+    <link rel="prev" title="Designing GhostFragment" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> GhostFragment
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../background/index.html">Theoretical Background</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Designing GhostFragment</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Design Considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fragment-method-considerations">Fragment Method Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#n-mer-formation-considerations">N-Mer Formation Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capping-method-considerations">Capping Method Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#energy-equation-considerations">Energy Equation Considerations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Designing GhostFragment</a> &raquo;</li>
+      <li>Design Considerations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/design/considerations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="design-considerations">
+<h1>Design Considerations<a class="headerlink" href="#design-considerations" title="Permalink to this headline"></a></h1>
+<p>When designing GhostFragment we have noted the following pertaining to the field
+of fragment-based methods:</p>
+<ol class="arabic simple">
+<li><p>There are a plethora of fragment-based methods</p></li>
+<li><p>These method typically only differ in a handful of ways: how the fragments
+are formed, how <span class="math notranslate nohighlight">\(n\)</span>-mers are screened, how severed bonds are dealt with, and
+how neglected interactions are approximated.</p></li>
+<li><p>Other</p></li>
+</ol>
+<div class="section" id="fragment-method-considerations">
+<h2>Fragment Method Considerations<a class="headerlink" href="#fragment-method-considerations" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Most methods differ in how they form fragments.</p></li>
+<li><p>Forming fragments is more than grouping atoms, it also requires the ability
+to assign AOs, and electrons to the fragments and intersections of fragments</p></li>
+<li><p>Most fragment methods start by preliminarily forming pseudoatoms, i.e.,
+disjoint groups of atoms that are never separated.</p></li>
+<li><p>The actual atoms themselves can always be used as a trivial set of
+pseudoatoms</p></li>
+<li><p>For disjoint fragments, the fragments themselves can be considered
+pseudoatoms</p></li>
+<li><p>Mapping of AOs and number of electrons needs to be done from pseudoatoms to
+work with intersecting fragments</p></li>
+</ol>
+</div>
+<div class="section" id="n-mer-formation-considerations">
+<h2>N-Mer Formation Considerations<a class="headerlink" href="#n-mer-formation-considerations" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>In practice it’s the set of overlap-corrected <span class="math notranslate nohighlight">\(n\)</span>-mers that are used to
+approximate the property.</p></li>
+<li><p>Generally speaking, a set of <span class="math notranslate nohighlight">\(n\)</span>-mers can be considered a set of overlapping
+fragments (“generally” caveat is required because it’s possible, but not
+common, for the <span class="math notranslate nohighlight">\(n\)</span>-mers to be disjoint).</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span>-mers are usually treated differently enough (e.g. are screened, basis of
+MBE and BSSE equations) that they warrant specialized treatment relative to
+fragments.</p></li>
+<li><p>The set of <span class="math notranslate nohighlight">\(n\)</span>-mers created by simply taking unions of non-disjoint fragments
+can contain <span class="math notranslate nohighlight">\(n\)</span>-mers which are proper subsets of other <span class="math notranslate nohighlight">\(n\)</span>-mers</p></li>
+<li><p>GhostFragment treats <span class="math notranslate nohighlight">\(m\)</span>-mers (<span class="math notranslate nohighlight">\(m\)</span> &lt; <span class="math notranslate nohighlight">\(n\)</span>) as intersections, the exception
+is when an <span class="math notranslate nohighlight">\(m\)</span>-mer is not a proper subset of any <span class="math notranslate nohighlight">\(n\)</span>-mer (possible when
+screening). In such a case, neglecting the <span class="math notranslate nohighlight">\(m\)</span>-mer can lead to neglecting
+interactions (and even atoms).</p></li>
+<li><p>Forming <span class="math notranslate nohighlight">\(n\)</span>-mers, and their intersections, also requires us to assign
+electrons and AOs (can use the fragment assignments)</p></li>
+</ol>
+</div>
+<div class="section" id="capping-method-considerations">
+<h2>Capping Method Considerations<a class="headerlink" href="#capping-method-considerations" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>It is necessary to cap not only fragments, but <span class="math notranslate nohighlight">\(n\)</span>-mers, and intersections.</p></li>
+<li><p>Caps (more specifically the atoms replaced by the caps) need to be considered
+when forming intersections. For example, consider a system A-B which gets
+fragmented A-H, H-B. Summing A-H and H-B double counts the severed bond. We
+can approximately account for this double counting by: (A-H) + (H-B) - (H-H).</p></li>
+</ol>
+</div>
+<div class="section" id="energy-equation-considerations">
+<h2>Energy Equation Considerations<a class="headerlink" href="#energy-equation-considerations" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Most equations pertaining to fragment-based method have redundancy to them,
+e.g. <span class="math notranslate nohighlight">\(\sum_I E_I + \sum_{I&lt;J} \Delta E_{IJ}\)</span> has the <span class="math notranslate nohighlight">\(E_I\)</span> terms
+appear multiple times (explicitly in the sum over monomers and implicitly in
+the two-body interactions).</p></li>
+<li><p>The user may actually care about the value of some intermediate quantity,
+e.g., in a conventional MBE the user may want to know the two-body
+interactions. Hence computing the equations in the least redundant format is
+not always desired.</p></li>
+<li><p>The coefficients on a term depend on how the equation is written.</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Designing GhostFragment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../references.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

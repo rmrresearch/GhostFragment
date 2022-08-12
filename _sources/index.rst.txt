@@ -8,7 +8,8 @@ pertaining to basis-set superposition corrections and fragment-based methods.
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   
+
    background/index
+   design/index
    references
    C++ API <https://rmrresearch.github.io/GhostFragment/cxx_api/index.html>
