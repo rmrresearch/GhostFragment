@@ -36,11 +36,6 @@ Expression::const_term_reference Expression::at(size_type i) const {
 
 // -- Setters
 
-void Expression::add_term(nmer_type nmer, ao_set_type aos,
-                          coefficient_type coef) {
-    add_term(term_type(std::move(nmer), std::move(aos), std::move(coef)));
-}
-
 void Expression::add_term(term_type term) {
     if(!m_pimpl_) std::make_unique<pimpl_type>().swap(m_pimpl_);
     m_pimpl_->m_terms.emplace_back(std::move(term));

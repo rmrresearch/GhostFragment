@@ -14,20 +14,17 @@ class TermPIMPL;
  */
 class Term {
 public:
-    /// Type of the NMersystem *this is associated with
-    using nmer_system = NMerSystem;
+    /// Type of a Chemical System
+    using chemical_system_type = simde::type::chemical_system;
 
-    /// Ultimately a typedef of NMerSystem::nmer_type
-    using nmer_type = nmer_system::nmer_type;
+    /// Ultimately typedef of ChemicalSystem::molecule_t
+    using molecule_type = chemical_system_type::molecule_t;
 
-    /// Ultimately a typedef of NMerSystem::const_nmer_reference
-    using const_nmer_reference = nmer_system::const_nmer_reference;
+    /// Type used to represent the molecular basis set
+    using ao_basis_set_type = simde::type::ao_basis_set;
 
-    /// Ultimately a typedef of NMerSystem::ao_set_type
-    using ao_set_type = nmer_system::ao_set_type;
-
-    /// Read-only reference to an ao_set_type
-    using const_ao_set_reference = const ao_set_type&;
+    /// Unsigned integral type used for indexing and offsets
+    using size_type = std::size_t;
 
     /// Floating-point type of this term's scale factor
     using coefficient_type = double;
@@ -49,7 +46,6 @@ public:
      *  @throw None No throw guarantee
      */
     Term() noexcept;
-    Term(nmer_type nmer, ao_set_type aos, coefficient_type coef);
     Term(pimpl_pointer pimpl) noexcept;
     Term(const Term& other);
     Term(Term&& other) noexcept;
@@ -61,32 +57,51 @@ public:
 
     // -- Getters
 
-    /** @brief Returns the molecular system involved in *this.
+    /** @brief Returns the set of nuclei in *this.
      *
-     *  The most primitive input for most electronic structure calculations is
-     *  the molecular system. This method returns the molecular system for this
-     *  term.
+     *  Each Term has a set of nuclei, the number of electrons, and the AO
+     *  basis set for the term. This method is used to retrieve the set of
+     *  nuclei.
      *
-     *  @return a read-only reference to this term's molecular system
+     *  @return The set of nuclei for this term.
      *
-     *  @throw std::runtime_error if *this does not have a molecular system set.
-     *                            Strong throw guarantee.
-     *
+     *  @throw std::runtime_error if *this has no PIMPL. Strong throw guarantee.
      */
-    const_nmer_reference nmer() const;
+    molecule_type molecule() const;
 
-    /** @brief Returns the AO basis set for the term
+    /** @brief Returns the number of electrons in the term
      *
-     *  In addition to a chemical system, the other input for most electronic
-     *  structure calculations is an AO basis set. This method returns the
-     *  AO basis set for this term.
+     *  Each Term has a set of nuclei, the number of electrons, and the AO
+     *  basis set for the term. This method is used to retrieve the number of
+     *  electrons.
      *
-     *  @return A read-only reference to the AO basis set
-     *
-     *  @throw std::runtime_error if *this does not have an AO basis set.
-     *                            Strong throw guarantee.
+     *  @throw None No throw guarantee.
      */
-    const_ao_set_reference ao_basis_set() const;
+    size_type n_electrons() const noexcept;
+
+    /** @brief Returns the chemical system stored in *this
+     *
+     *  Each Term has a set of nuclei, the number of electrons, and the AO
+     *  basis set for the term. Together the nuclei and electrons constitute
+     *  a ChemicalSystem. This method returns that ChemicalSystem.
+     *
+     *  @return The ChemicalSystem associated with *this.
+     *
+     *  @throw std::runtime_error if *this has no PIMPL. Strong throw guarantee.
+     */
+    chemical_system_type chemical_system() const;
+
+    /** @brief Returns the AO basis set associated with *this.
+     *
+     *  Each Term has a set of nuclei, the number of electrons, and the AO
+     *  basis set for the term. This method is used to retrieve the AO basis
+     *  set.
+     *
+     *  @return The AO basis set contained in *this.
+     *
+     *  @throw std::runtime_error if *this has no PIMPL. Strong throw guarantee.
+     */
+    ao_basis_set_type ao_basis_set() const;
 
     /** @brief The scale factor for this term.
      *
@@ -163,5 +178,7 @@ private:
 inline bool operator!=(const Term& lhs, const Term& rhs) {
     return !(lhs == rhs);
 }
+
+std::ostream& operator<<(std::ostream& os, const Term& t);
 
 } // namespace ghostfragment::equation

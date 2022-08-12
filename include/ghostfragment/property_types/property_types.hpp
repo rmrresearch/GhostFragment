@@ -1,5 +1,6 @@
 #pragma once
 #include <ghostfragment/property_types/capped.hpp>
+#include <ghostfragment/property_types/expression.hpp>
 #include <ghostfragment/property_types/fragmented_system.hpp>
 #include <ghostfragment/property_types/molecular_graph.hpp>
 #include <ghostfragment/property_types/molecular_graph_to_fragments.hpp>

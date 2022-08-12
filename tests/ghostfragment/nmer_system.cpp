@@ -59,6 +59,11 @@ TEST_CASE("NMerSystem") {
         REQUIRE(has_value.size() == 3);
     }
 
+    SECTION("new_nmer") {
+        REQUIRE_THROWS_AS(defaulted.new_nmer(), std::runtime_error);
+        REQUIRE(has_value.new_nmer() == dimers.new_subset());
+    }
+
     SECTION("nmer") {
         REQUIRE_THROWS_AS(defaulted.nmer(0), std::out_of_range);
         REQUIRE(has_value.nmer(0) == dimers[0]);

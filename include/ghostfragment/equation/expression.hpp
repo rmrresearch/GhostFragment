@@ -1,6 +1,7 @@
 #pragma once
 #include <ghostfragment/equation/term.hpp>
 #include <memory>
+#include <ostream>
 
 namespace ghostfragment::equation {
 namespace detail_ {
@@ -22,12 +23,6 @@ public:
 
     /// Read-only reference to a term
     using const_term_reference = const term_type&;
-
-    /// Ultimately a typedef of NMerSystem::nmer_type
-    using nmer_type = term_type::nmer_type;
-
-    /// Ultimately a typedef of NMerSystem::ao_set_type
-    using ao_set_type = term_type::ao_set_type;
 
     /// Ultimately a typedef of Term::coefficient_type
     using coefficient_type = term_type::coefficient_type;
@@ -83,22 +78,6 @@ public:
     // -------------------------------------------------------------------------
     // -- Setters
     // -------------------------------------------------------------------------
-
-    /** @brief Makes and inserts a Term instance.
-     *
-     *  This method is a wrapper around `add_term(term_type)` which takes the
-     *  provided input, forwards that input into a new `term_type` instance,
-     *  and then forwards the `term_type` to the `add_term(term_type)` overload.
-     *
-     *  @param[in] nmer The molecular system for the term.
-     *  @param[in] aos The atomic basis set for the term
-     *  @param[in] coef The scale factor of the term
-     *
-     *  @throw std::bad_alloc if there is a problem allocating the Term, or
-     *                        adding the Term to *this. Strong throw guarantee.
-     *
-     */
-    void add_term(nmer_type nmer, ao_set_type aos, coefficient_type coef);
 
     /** @brief Adds @p term to *this
      *
@@ -159,6 +138,12 @@ private:
 
 inline bool operator!=(const Expression& lhs, const Expression& rhs) {
     return !(lhs == rhs);
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Expression& exp) {
+    if(exp.empty()) return os << "{ empty }";
+    for(auto i = 0; i < exp.size(); ++i) os << exp.at(i) << std::endl;
+    return os;
 }
 
 } // namespace ghostfragment::equation

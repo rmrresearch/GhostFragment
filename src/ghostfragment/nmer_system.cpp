@@ -72,6 +72,10 @@ NMerSystem::size_type NMerSystem::size() const noexcept {
     return pimpl_().m_nmers.size();
 }
 
+NMerSystem::nmer_type NMerSystem::new_nmer() const {
+    return pimpl_().m_nmers.new_subset();
+}
+
 NMerSystem::const_nmer_reference NMerSystem::nmer(size_type i) const {
     if(i >= size())
         throw std::out_of_range("N-Mer offset must be in range [0, " +
