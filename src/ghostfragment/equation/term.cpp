@@ -6,9 +6,6 @@ Term::Term() noexcept = default;
 
 Term::Term(pimpl_pointer pimpl) noexcept : m_pimpl_(std::move(pimpl)) {}
 
-Term::Term(nmer_type nmer, ao_set_type aos, coefficient_type coef) :
-  Term(std::make_unique<pimpl_type>(std::move(nmer), std::move(aos), coef)) {}
-
 Term::Term(const Term& other) :
   m_pimpl_(other.m_pimpl_ ? other.m_pimpl_->clone() : nullptr) {}
 
@@ -23,14 +20,24 @@ Term& Term::operator=(Term&& rhs) noexcept = default;
 
 Term::~Term() noexcept = default;
 
-Term::const_nmer_reference Term::nmer() const {
+Term::molecule_type Term::molecule() const {
     assert_pimpl_();
-    return m_pimpl_->m_nmer;
+    return m_pimpl_->molecule();
 }
 
-Term::const_ao_set_reference Term::ao_basis_set() const {
+Term::size_type Term::n_electrons() const noexcept {
+    return empty() ? 0 : m_pimpl_->m_n_electrons;
+}
+
+Term::chemical_system_type Term::chemical_system() const {
+    auto mol       = molecule();
+    const auto n_e = n_electrons();
+    return chemical_system_type(std::move(mol), n_e);
+}
+
+Term::ao_basis_set_type Term::ao_basis_set() const {
     assert_pimpl_();
-    return m_pimpl_->m_aos;
+    return m_pimpl_->ao_basis_set();
 }
 
 Term::coefficient_type Term::coefficient() const {
@@ -51,9 +58,7 @@ bool Term::operator==(const Term& rhs) const noexcept {
     // Either both filled, or both emtpy, return if latter
     if(empty()) return true;
 
-    if(coefficient() != rhs.coefficient()) return false;
-    return std::tie(nmer(), ao_basis_set()) ==
-           std::tie(rhs.nmer(), rhs.ao_basis_set());
+    return *m_pimpl_ == *rhs.m_pimpl_;
 }
 
 // -- Private Methods
@@ -62,6 +67,13 @@ void Term::assert_pimpl_() const {
     if(!empty()) return;
     throw std::runtime_error("Term is empty. Did you default construct it or "
                              "move from it?");
+}
+
+// -- Related Methods
+
+std::ostream& operator<<(std::ostream& os, const Term& t) {
+    if(t.empty()) return os << "{empty}";
+    return os << t.molecule() << std::endl << t.coefficient();
 }
 
 } // namespace ghostfragment::equation

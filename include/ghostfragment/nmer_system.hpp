@@ -162,6 +162,19 @@ public:
      */
     size_type size() const noexcept;
 
+    /** @brief Makes a new n-mer.
+     *
+     *  Since n-mers are modeled by the Subset class, their construction is a
+     *  bit tricky. This function will create a new, empty n-mer and return it.
+     *  The n-mer is linked to the set of fragments returned by `fragments()`,
+     *  but has not been inserted into *this yet.
+     *
+     *  @return An empty n-mer instance.
+     *
+     *  @throw std::runtime_error if *this is empty. Strong throw guarantee.
+     */
+    nmer_type new_nmer() const;
+
     /** @brief Retrieves an n-mer by offset.
      *
      *
@@ -221,6 +234,9 @@ public:
      */
     ao_set_type ao_basis_set(const_nmer_reference nmer) const;
 
+    template<typename BeginItr, typename EndItr>
+    ao_set_type ao_basis_set(BeginItr&& begin, EndItr&& end) const;
+
     /** @brief Determines the AO basis set for a set of atoms.
      *
      *  This function will loop over the set of atoms in the provided fragment
@@ -267,6 +283,9 @@ public:
      *
      */
     size_type n_electrons(const_nmer_reference nmer) const;
+
+    template<typename BeginItr, typename EndItr>
+    size_type n_electrons(BeginItr&& begin, EndItr&& end) const;
 
     /** @brief Computes the number of electrons in a set of atoms.
      *
@@ -349,6 +368,27 @@ private:
  */
 inline bool operator!=(const NMerSystem& lhs, const NMerSystem& rhs) noexcept {
     return !(lhs == rhs);
+}
+
+template<typename BeginItr, typename EndItr>
+NMerSystem::ao_set_type NMerSystem::ao_basis_set(BeginItr&& begin,
+                                                 EndItr&& end) const {
+    const auto& frags = fragments();
+    if(begin == end) throw std::runtime_error("TODO: N == 0 not coded up");
+    auto rv = ao_basis_set(frags.fragment(*begin));
+    ++begin;
+    for(; begin != end; ++begin) rv += ao_basis_set(frags.fragment(*begin));
+    return rv;
+}
+
+template<typename BeginItr, typename EndItr>
+NMerSystem::size_type NMerSystem::n_electrons(BeginItr&& begin,
+                                              EndItr&& end) const {
+    const auto& frags = fragments();
+    size_type rv      = 0;
+    if(begin == end) return 0;
+    for(; begin != end; ++begin) rv += n_electrons(frags.fragment(*begin));
+    return rv;
 }
 
 } // namespace ghostfragment

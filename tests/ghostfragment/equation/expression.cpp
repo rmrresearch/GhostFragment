@@ -1,5 +1,5 @@
 #include "../test_ghostfragment.hpp"
-#include <ghostfragment/equation/expression.hpp>
+#include <ghostfragment/equation/equation.hpp>
 
 using namespace ghostfragment::equation;
 
@@ -9,8 +9,8 @@ TEST_CASE("Expression") {
     auto aos    = water3.ao_basis_set(nmer);
 
     using term_type = Expression::term_type;
-    term_type t0(nmer, aos, 1.23);
-    term_type t1(nmer, aos, 3.14);
+    term_type t0    = make_term(nmer, aos, 1, 1.23);
+    term_type t1    = make_term(nmer, aos, 1, 3.14);
 
     Expression defaulted;
     Expression i0, i1;
@@ -100,16 +100,6 @@ TEST_CASE("Expression") {
 
         REQUIRE(i1.at(0) == t1);
         REQUIRE_THROWS_AS(i1.at(1), std::out_of_range);
-    }
-
-    SECTION("add_term(nmer, aos, coef)") {
-        defaulted.add_term(nmer, aos, 1.23);
-        REQUIRE(defaulted == i0);
-
-        i0.add_term(nmer, aos, 3.14);
-        REQUIRE(i0.size() == 2);
-        REQUIRE(i0.at(0) == t0);
-        REQUIRE(i0.at(1) == t1);
     }
 
     SECTION("add_term(term)") {
