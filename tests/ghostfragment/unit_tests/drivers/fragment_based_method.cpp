@@ -112,8 +112,10 @@ TEST_CASE("FragmentBasedMethod") {
                                   expr_mod(n_waters, m));
                 mod.change_submod("energy method", egy_mod(n_waters, m));
                 unsigned int mu(m);
+
                 mod.change_input("GMBE truncation order", mu);
-                auto [e]    = mod.run_as<my_pt>(aos, sys);
+                auto [e] = mod.run_as<my_pt>(aos, sys);
+
                 double corr = -double(m * n * n + m * n) / 2.0;
                 REQUIRE(e == corr);
             }

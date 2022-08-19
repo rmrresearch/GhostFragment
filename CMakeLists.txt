@@ -13,6 +13,7 @@ nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/
 
 ### Options ###
 option(BUILD_TESTING "Should we build the tests?" OFF)
+option(BUILD_PYBINDINGS "Should we build Python3 bindings?" ON)
 
 cpp_find_or_build_dependency(
     simde
@@ -29,6 +30,15 @@ cpp_add_library(
     INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include/${CMAKE_PROJECT_NAME}"
     DEPENDS nwx::simde
 )
+
+if("${BUILD_PYBINDINGS}")
+    include(nwx_python_mods)
+    cppyy_make_python_package(
+        PACKAGE ghostfragment
+        NAMESPACES ghostfragment
+        DEPPACKAGES simde
+    )
+endif()
 
 if("${BUILD_TESTING}")
     cpp_find_or_build_dependency(
