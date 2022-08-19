@@ -1,9 +1,6 @@
 from simde import simde, chemist, pluginplay
 import ghostfragment as gf
 
-#TODO: When simde.chemist is a submodule do: from simde.chemist import Atom
-Atom = chemist.Atom
-
 mm = pluginplay.ModuleManager()
 gf.ghostfragment.load_modules(mm)
 
@@ -11,17 +8,17 @@ def water_nmer(n, dz = 3.0):
 
     mol = chemist.Molecule()
 
-    zO = Atom.AtomicNumber(8)
-    zH = Atom.AtomicNumber(1)
+    zO = chemist.Atom.AtomicNumber(8)
+    zH = chemist.Atom.AtomicNumber(1)
 
     for i in range(n):
         z = i * dz
-        rO0 = Atom.coord_type([0.00000000000000, -0.07579039945857, z])
-        rH0 = Atom.coord_type([0.86681456860648, 0.60144316994806, z])
-        rH1 = Atom.coord_type([-0.86681456860648, 0.60144316994806, z])
-        mol.push_back(Atom("O", zO, rO0))
-        mol.push_back(Atom("H", zH, rH0))
-        mol.push_back(Atom("H", zH, rH1))
+        rO0 = chemist.Atom.coord_type([0.00000000000000, -0.07579039945857, z])
+        rH0 = chemist.Atom.coord_type([0.86681456860648, 0.60144316994806, z])
+        rH1 = chemist.Atom.coord_type([-0.86681456860648, 0.60144316994806, z])
+        mol.push_back(chemist.Atom("O", zO, rO0))
+        mol.push_back(chemist.Atom("H", zH, rH0))
+        mol.push_back(chemist.Atom("H", zH, rH1))
 
     return mol
 
