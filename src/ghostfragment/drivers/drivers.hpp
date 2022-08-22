@@ -26,6 +26,7 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
 
     mm.change_submod("FragmentedSystem Driver", "Fragmenter",
                      "Fragment Driver");
+    mm.change_submod("FragmentedSystem Driver", "Capper", "Atomic Capping");
     mm.change_submod("FragmentedSystem Driver", "Atom to AO Mapper",
                      "AO Center to Atom Mapper");
 
@@ -33,6 +34,11 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
                      "FragmentedSystem Driver");
     mm.change_submod("Fragment Based Method", "N-Mer Maker",
                      "NMerSystem Driver");
+    mm.change_submod("Fragment Based Method", "Expression generator",
+                     "Many-body expansion");
+
+    mm.change_submod("NMerSystem Driver", "NMer Screener",
+                     "Screen by minimum distance");
 }
 
 } // namespace ghostfragment::drivers
