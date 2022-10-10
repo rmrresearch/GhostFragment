@@ -40,6 +40,9 @@ if("${BUILD_PYBINDINGS}")
     )
 endif()
 
+set(BUILD_INTEGRATION_TESTS ON)
+set(TEST_DIR "${CMAKE_CURRENT_LIST_DIR}/tests")
+
 if("${BUILD_TESTING}")
     cpp_find_or_build_dependency(
         Catch2
@@ -49,10 +52,36 @@ if("${BUILD_TESTING}")
         VERSION v2.13.8
         FIND_TARGET Catch2::Catch2
     )
+
     cpp_add_tests(
         "test_${CMAKE_PROJECT_NAME}"
-        SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/tests/${CMAKE_PROJECT_NAME}"
+        SOURCE_DIR "${TEST_DIR}/unit/${CMAKE_PROJECT_NAME}"
         INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/src/${CMAKE_PROJECT_NAME}"
         DEPENDS Catch2::Catch2 ${CMAKE_PROJECT_NAME}
     )
+
+
+
+    if(FALSE)
+        find_package(Python3 REQUIRED COMPONENTS Interpreter)
+        cpp_find_or_build_dependency(
+            FriendZone
+            URL github.com/NWChemEx-Project/FriendZone
+            PRIVATE TRUE
+            BUILD_TARGET friendzone
+            FIND_TARGET nwx::friendzone
+            CMAKE_ARGS BUILD_TESTING=OFF
+        )
+        add_test(
+            NAME integration_tests
+            COMMAND ${Python3_Executable} "-m" "unittest"
+            WORKING_DIR "${TEST_DIR}/integration/${CMAKE_PROJECT_NAME}"
+        )
+        set_property(
+            TEST integration_tests
+            PROPERTY ENVIRONMENT
+                "PYTHONPATH=${CMAKE_BINARY_DIR}/Python"
+        )
+    endif()
+
 endif()
