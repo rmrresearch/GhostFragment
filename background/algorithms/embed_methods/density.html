@@ -85,11 +85,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
-          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
-          <li><a href="index.html">Embedding Algorithms</a> &raquo;</li>
-      <li>Density Embedding</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Algorithms for Fragment-Based Methods</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Embedding Algorithms</a></li>
+      <li class="breadcrumb-item active">Density Embedding</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/background/algorithms/embed_methods/density.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -102,7 +102,7 @@
   <div class="section" id="density-embedding">
 <h1>Density Embedding<a class="headerlink" href="#density-embedding" title="Permalink to this headline"></a></h1>
 <p>For fragment-based methods, density embedding was introduced in the context of
-the Pair-Interaction Molecular Orbital Method <span id="id1">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id8" title="Kazuo Kitaura, Takuya Sawai, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Pair interaction molecular orbital method: an approximate computational method for molecular interactions. Chemical Physics Letters, 312(2-4):319–324, 1999.">12</a></sup></span>. In density
+the Pair-Interaction Molecular Orbital Method <span id="id1">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id45" title="Kazuo Kitaura, Takuya Sawai, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Pair interaction molecular orbital method: an approximate computational method for molecular interactions. Chemical Physics Letters, 312(2-4):319–324, 1999.">31</a></sup></span>. In density
 embedding, <span class="math notranslate nohighlight">\(\widehat{V}_{IJ}\)</span> is the potential fragment <span class="math notranslate nohighlight">\(I\)</span> feels because
 of the electron density and nuclei of fragment <span class="math notranslate nohighlight">\(J\)</span>. Mathematically this is:</p>
 <div class="math notranslate nohighlight">
@@ -118,7 +118,7 @@ the remaining fragments, the densities must be solved for iteratively.</p>
 fragment densities and does not iterate using the <span class="math notranslate nohighlight">\(n\)</span>-mer Hamiltonians.</p>
 <div class="section" id="fmo02-embedding">
 <h2>FMO02 Embedding<a class="headerlink" href="#fmo02-embedding" title="Permalink to this headline"></a></h2>
-<p>The FMO02 embedding method <span id="id2">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id11" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Kaori Fukuzawa, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: use of approximate electrostatic potential. Chemical Physics Letters, 351(5-6):475–480, 2002.">18</a></sup></span>: introduces two approximations
+<p>The FMO02 embedding method <span id="id2">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id48" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Kaori Fukuzawa, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: use of approximate electrostatic potential. Chemical Physics Letters, 351(5-6):475–480, 2002.">47</a></sup></span>: introduces two approximations
 into traditional density embedding based on the separation between <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(J\)</span>.
 For moderately separated <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(J\)</span>:</p>
 <div class="math notranslate nohighlight">

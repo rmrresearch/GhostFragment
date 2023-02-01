@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FMO Screening Procedures &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>FEA Fragmentation Method &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -23,8 +23,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Fragments Vs N-Mers" href="../../fragment_vs_nmer.html" />
-    <link rel="prev" title="Screening Methods" href="index.html" /> 
+    <link rel="next" title="MFCC Fragmentation Method" href="mfcc.html" />
+    <link rel="prev" title="Fragmentation Algorithms" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,13 +53,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../../bsse/index.html">Basis Set Superposition Error</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../established_methods/index.html">Established Fragment Based Methods</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../frag_methods/index.html">Fragmentation Algorithms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../cap_methods/index.html">Capping Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">Screening Methods</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">FMO Screening Procedures</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Fragmentation Algorithms</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">FEA Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mfcc.html">MFCC Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mta.html">Molecular Tailoring Approach Fragmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dclc.html">Divide and Conquer Local Correlation Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gebf.html">GEBF Fragmentation Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other.html">Other Fragmentation Algorithms</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../cap_methods/index.html">Capping Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../screening_methods/index.html">Screening Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../fragment_vs_nmer.html">Fragments Vs N-Mers</a></li>
@@ -84,13 +90,13 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
-          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
-          <li><a href="index.html">Screening Methods</a> &raquo;</li>
-      <li>FMO Screening Procedures</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Algorithms for Fragment-Based Methods</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Fragmentation Algorithms</a></li>
+      <li class="breadcrumb-item active">FEA Fragmentation Method</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/background/algorithms/screening_methods/fmo.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/background/algorithms/frag_methods/fea.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -98,37 +104,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="fmo-screening-procedures">
-<h1>FMO Screening Procedures<a class="headerlink" href="#fmo-screening-procedures" title="Permalink to this headline"></a></h1>
-<div class="section" id="fmo00-screening">
-<h2>FMO00 Screening<a class="headerlink" href="#fmo00-screening" title="Permalink to this headline"></a></h2>
-<p>The orginal FMO procedure <span id="id1">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id9" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: application to polypeptides. Chemical Physics Letters, 318(6):614–618, 2000.">17</a></sup></span> for screening dimers involved
-distance cutoffs. If the shortest inter-atom distance between two monomers <span class="math notranslate nohighlight">\(I\)</span>
-and <span class="math notranslate nohighlight">\(J\)</span> is less than a threshold (default is 10 Bohr), then the dimer energy is
-approximated by:</p>
-<div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\newcommand{\vr}{\vec{r}}
-\newcommand{\vrp}{\vec{r}'}
-\newcommand{\density}[2]{rho_{#1}\left(#2\right)}\\E_{IJ} = E_{I} + E_{J} -
-         \int d\vr\int\vrp \frac{\density{I}{\vr}\density{J}{\vrp}}
-                            {\mid \vr -\vrp\mid}\end{aligned}\end{align} \]</div>
-</div>
-<div class="section" id="fmo04-screening">
-<h2>FMO04 Screening<a class="headerlink" href="#fmo04-screening" title="Permalink to this headline"></a></h2>
-<p>In the original formulation of three-body FMO <span id="id2"></span>, the FMO00
-screening procedure is extended to three-body terms. Instead of one shortest
-inter-atomic distance we now have three, one for each pair of monomers. The
-FMO04 screening method screens out a trimer if the <strong>second</strong> smallest distance
-is greater than a threshold (default is 2.0, in units of van der Waal radii).</p>
-</div>
+  <div class="section" id="fea-fragmentation-method">
+<span id="fea-frag-method"></span><h1>FEA Fragmentation Method<a class="headerlink" href="#fea-fragmentation-method" title="Permalink to this headline"></a></h1>
+<p>Introduced by <span id="id1">Li and Li<sup><a class="reference internal" href="../../../references.html#id56" title="Wei Li and Shuhua Li. A localized molecular-orbital assembler approach for hartree–fock calculations of large molecules. The Journal of Chemical Physics, 122(19):194109, 2005.">42</a></sup></span> as an extension of the
+<a class="reference internal" href="dclc.html#dclc-fragmentation-method"><span class="std std-ref">Divide and Conquer Local Correlation Fragmentation Method</span></a> method.
+The FEA fragmentation algorithm is quite simple:</p>
+<ol class="arabic simple">
+<li><p>Divide the system into pseudoatoms</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(P_I\)</span> be the :math:I`-th pseudoatom, fragment :math:I` consists of <span class="math notranslate nohighlight">\(P_I\)</span> and all
+pseudoatoms that are within some distance <span class="math notranslate nohighlight">\(R\)</span> of <span class="math notranslate nohighlight">\(P_I\)</span></p>
+<ul class="simple">
+<li><p>How the distance is measured is not discussed.</p></li>
+<li><p>A value of 2.5 Angstroms is recommended for <span class="math notranslate nohighlight">\(R\)</span></p></li>
+</ul>
+</li>
+</ol>
+<p>The difference between the FEA fragmentation algorithm and the DCLC
+fragmentation method is that the former uses distances, whereas the latter uses
+connectivity.</p>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Screening Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../../fragment_vs_nmer.html" class="btn btn-neutral float-right" title="Fragments Vs N-Mers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Fragmentation Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mfcc.html" class="btn btn-neutral float-right" title="MFCC Fragmentation Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

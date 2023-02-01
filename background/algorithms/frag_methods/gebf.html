@@ -24,7 +24,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Other Fragmentation Algorithms" href="other.html" />
-    <link rel="prev" title="Systematic Molecular Fragmentation Fragmentation Method" href="smf.html" /> 
+    <link rel="prev" title="Divide and Conquer Local Correlation Fragmentation Method" href="dclc.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,8 +54,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../established_methods/index.html">Established Fragment Based Methods</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">Fragmentation Algorithms</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="fea.html">FEA Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mfcc.html">MFCC Fragmentation Method</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mta.html">Molecular Tailoring Approach Fragmentation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dclc.html">Divide and Conquer Local Correlation Fragmentation Method</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">GEBF Fragmentation Methods</a></li>
 <li class="toctree-l4"><a class="reference internal" href="other.html">Other Fragmentation Algorithms</a></li>
 </ul>
@@ -87,11 +90,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
-          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
-          <li><a href="index.html">Fragmentation Algorithms</a> &raquo;</li>
-      <li>GEBF Fragmentation Methods</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Algorithms for Fragment-Based Methods</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Fragmentation Algorithms</a></li>
+      <li class="breadcrumb-item active">GEBF Fragmentation Methods</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/background/algorithms/frag_methods/gebf.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -103,7 +106,9 @@
              
   <div class="section" id="gebf-fragmentation-methods">
 <h1>GEBF Fragmentation Methods<a class="headerlink" href="#gebf-fragmentation-methods" title="Permalink to this headline"></a></h1>
-<p>With the original GEBF fragmentation method, <span id="id1">Li <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id19" title="Wei Li, Shuhua Li, and Yuansheng Jiang. Generalized energy-based fragmentation approach for computing the ground-state energies and properties of large molecules. The Journal of Physical Chemistry A, 111(11):2193–2199, 2007.">15</a></sup></span> presented a
+<div class="section" id="gebf07-fragmentation-method">
+<h2>GEBF07 Fragmentation Method<a class="headerlink" href="#gebf07-fragmentation-method" title="Permalink to this headline"></a></h2>
+<p>With the original GEBF fragmentation method, <span id="id1">Li <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id57" title="Wei Li, Shuhua Li, and Yuansheng Jiang. Generalized energy-based fragmentation approach for computing the ground-state energies and properties of large molecules. The Journal of Physical Chemistry A, 111(11):2193–2199, 2007.">43</a></sup></span> presented a
 fragmentation method. Using our terminology, this method is to:</p>
 <ol class="arabic simple">
 <li><p>Define pseudoatoms</p>
@@ -124,11 +129,6 @@ covalentally or with a hydrogen bond</p></li>
 (default is 3 Angstroms)</p></li>
 </ul>
 </li>
-<li><p>Cap fragments</p>
-<ul class="simple">
-<li><p>Original method specified with hydrogen atoms.</p></li>
-</ul>
-</li>
 <li><p>Remove fragments which are subsets of other fragments</p></li>
 <li><p>Determine intersections</p></li>
 </ol>
@@ -141,18 +141,14 @@ fragment. The multiplicity of this intersection is <span class="math notranslate
 is the number of fragments it appears in.</p></li>
 <li><p>Repeat the previous step for sets of :math`n-2, n-3, ldots, 1` pseudoatoms</p></li>
 </ul>
-<p>The presented fragmentation method contained an additional step meant to include
-some two-body interactions, namely dimers were considered if the distance
-between them is less than a threshold. The description presented implies that
-the fragments comprising the dimer should be disjoint, although this is not
-stated.</p>
+</div>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="smf.html" class="btn btn-neutral float-left" title="Systematic Molecular Fragmentation Fragmentation Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dclc.html" class="btn btn-neutral float-left" title="Divide and Conquer Local Correlation Fragmentation Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="other.html" class="btn btn-neutral float-right" title="Other Fragmentation Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

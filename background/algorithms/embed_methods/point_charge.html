@@ -85,11 +85,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
-          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
-          <li><a href="index.html">Embedding Algorithms</a> &raquo;</li>
-      <li>Point Charge Embedding</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Algorithms for Fragment-Based Methods</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Embedding Algorithms</a></li>
+      <li class="breadcrumb-item active">Point Charge Embedding</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/background/algorithms/embed_methods/point_charge.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -103,10 +103,19 @@
 <h1>Point Charge Embedding<a class="headerlink" href="#point-charge-embedding" title="Permalink to this headline"></a></h1>
 <div class="section" id="non-iterative">
 <h2>Non-Iterative<a class="headerlink" href="#non-iterative" title="Permalink to this headline"></a></h2>
-<div class="section" id="ee-mbe-a">
-<h3>EE-MBE-A<a class="headerlink" href="#ee-mbe-a" title="Permalink to this headline"></a></h3>
-<p>One of two charge embedding schemes proposed by <span id="id1">Dahlke and Truhlar<sup><a class="reference internal" href="../../../references.html#id6" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body expansion for large systems, with applications to water clusters. Journal of Chemical Theory and Computation, 3(1):46–53, 2006.">5</a></sup></span> for the
-EE-MBE method.</p>
+<div class="section" id="ec-mfcc-charges">
+<span id="id1"></span><h3>EC-MFCC Charges<a class="headerlink" href="#ec-mfcc-charges" title="Permalink to this headline"></a></h3>
+<p>Introduced by <span id="id2">Jiang <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id27" title="Nan Jiang, Jing Ma, and Yuansheng Jiang. Electrostatic field-adapted molecular fractionation with conjugated caps for energy calculations of charged biomolecules. The Journal of Chemical Physics, 124(11):114112, 2006.">27</a></sup></span>. The description is a bit vague, but the idea
+seems to be to only put charges on the most electronegative/electropositive
+atoms. In the original presentation proteins with charged termini were
+fragmented. When a terminus did not show up in the fragment it was replaced by
+a point charge. How this would generalize to other systems is not immediately
+clear.</p>
+</div>
+<div class="section" id="ee-mb-a">
+<span id="id3"></span><h3>EE-MB-A<a class="headerlink" href="#ee-mb-a" title="Permalink to this headline"></a></h3>
+<p>One of two charge embedding schemes proposed by <span id="id4">Dahlke and Truhlar<sup><a class="reference internal" href="../../../references.html#id28" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body expansion for large systems, with applications to water clusters. Journal of Chemical Theory and Computation, 3(1):46–53, 2007.">8</a></sup></span> for the
+EE-MB method.</p>
 <ol class="arabic simple">
 <li><p>Compute charges for the supersystem</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(Q_i\)</span> be the charge of atom <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(A_i\)</span></p></li>
@@ -114,9 +123,9 @@ EE-MBE method.</p>
 <span class="math notranslate nohighlight">\(n\)</span>-mer, place <span class="math notranslate nohighlight">\(Q_i\)</span> at the location of <span class="math notranslate nohighlight">\(A_i\)</span></p></li>
 </ol>
 </div>
-<div class="section" id="ee-mbe-b">
-<h3>EE-MBE-B<a class="headerlink" href="#ee-mbe-b" title="Permalink to this headline"></a></h3>
-<p>The second embedding scheme proposed by <span id="id2">Dahlke and Truhlar<sup><a class="reference internal" href="../../../references.html#id6" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body expansion for large systems, with applications to water clusters. Journal of Chemical Theory and Computation, 3(1):46–53, 2006.">5</a></sup></span>.</p>
+<div class="section" id="ee-mb-b">
+<span id="id5"></span><h3>EE-MB-B<a class="headerlink" href="#ee-mb-b" title="Permalink to this headline"></a></h3>
+<p>The second embedding scheme proposed by <span id="id6">Dahlke and Truhlar<sup><a class="reference internal" href="../../../references.html#id28" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body expansion for large systems, with applications to water clusters. Journal of Chemical Theory and Computation, 3(1):46–53, 2007.">8</a></sup></span>.</p>
 <ol class="arabic simple">
 <li><p>Compute charges for each monomer</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(Q_i\)</span> be the charge of atom <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(A_i\)</span></p></li>
@@ -125,8 +134,8 @@ EE-MBE method.</p>
 </ol>
 </div>
 </div>
-<div class="section" id="iterative">
-<h2>Iterative<a class="headerlink" href="#iterative" title="Permalink to this headline"></a></h2>
+<div class="section" id="iterative-point-charge-embedding">
+<h2>Iterative Point Charge Embedding<a class="headerlink" href="#iterative-point-charge-embedding" title="Permalink to this headline"></a></h2>
 <p>Iterative point charge embedding requires the use of point charges that in some
 shape or form respond to changes in the electronic structure. Typically this
 means one:</p>
@@ -141,25 +150,32 @@ charge.</p></li>
 <h3>Variations<a class="headerlink" href="#variations" title="Permalink to this headline"></a></h3>
 <p>For disjoint fragments the above is straightforward; however, when the fragments
 intersect there is some ambiguity as to what the charge of an atom is since it
-can appear in multiple fragments. In the context of GEBF <span id="id3"><sup><a class="reference internal" href="../../../references.html#id19" title="Wei Li, Shuhua Li, and Yuansheng Jiang. Generalized energy-based fragmentation approach for computing the ground-state energies and properties of large molecules. The Journal of Physical Chemistry A, 111(11):2193–2199, 2007.">15</a></sup></span> this
+can appear in multiple fragments. In the context of GEBF <span id="id7"><sup><a class="reference internal" href="../../../references.html#id57" title="Wei Li, Shuhua Li, and Yuansheng Jiang. Generalized energy-based fragmentation approach for computing the ground-state energies and properties of large molecules. The Journal of Physical Chemistry A, 111(11):2193–2199, 2007.">43</a></sup></span> this
 ambiguity is resolved by taking the point charges from the fragment which
 resulted from the pseudoatom which contains the atom. This assumes that the GEBF
 fragmentation method has been used.</p>
 </div>
 </div>
-<div class="section" id="point-charge-recommendations">
-<h2>Point Charge Recommendations<a class="headerlink" href="#point-charge-recommendations" title="Permalink to this headline"></a></h2>
-<p>In the context of GEBF applied to a medium sized water cluster (the cluster
-contained 22 normal water molecules, 5 hydroxide anions, and 5 hyrodnium
-cations) at the HF/6-311G(d) and MP2/6-311G(d) levels of theory,
-<span id="id4">Li <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id19" title="Wei Li, Shuhua Li, and Yuansheng Jiang. Generalized energy-based fragmentation approach for computing the ground-state energies and properties of large molecules. The Journal of Physical Chemistry A, 111(11):2193–2199, 2007.">15</a></sup></span> considered how different point charge choices affected how well
-GEBF replicated the supersystem calculation. Their results indicate that charges
-derived from a natural population analysis outperformed both Mulliken and
-electrostatic potential derived charges. All three charge schemes were better
-than no embedding at all. This study also notes that one iteration was
-sufficient to converge the charges. This study also considered water clusters
-and peptides, noting that not including charges leads to large errors (on the
-order of 50 mH) relative to the supersystem result.</p>
+<div class="section" id="screened-charge-model">
+<span id="id8"></span><h2>Screened Charge Model<a class="headerlink" href="#screened-charge-model" title="Permalink to this headline"></a></h2>
+<p>In the context of the EE-MB method, <span id="id9">Tempkin <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id36" title="Jeremy O. B. Tempkin, Hannah R. Leverentz, Bo Wang, and Donald G. Truhlar. Screened electrostatically embedded many-body method. The Journal of Physical Chemistry Letters, 2(17):2141–2144, 2011.">60</a></sup></span> introduced a screened
+point charge. For the <span class="math notranslate nohighlight">\(i\)</span>-th atom, <span class="math notranslate nohighlight">\(A_i\)</span>, the screened charge at a distance <span class="math notranslate nohighlight">\(r_i\)</span>
+from <span class="math notranslate nohighlight">\(A_i\)</span>, <span class="math notranslate nohighlight">\(q_i^*\left(r_i\right)\)</span>, is given by:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\zi}{Z_i}
+\newcommand{\Zei}{\zeta_{\zi}}
+\newcommand{\ri}{r_i}
+\newcommand{\fi}{f\left(\Zei\ri\right)}\\Q_i^*(\ri) = Q_i + m \fi\exp\left(-2\Zei\ri\right)\end{aligned}\end{align} \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Q_i\)</span> is the unscreened charge of <span class="math notranslate nohighlight">\(A_i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(m\)</span> is the number of electrons in the orbital</p></li>
+<li><p><span class="math notranslate nohighlight">\(Z_i\)</span> is the atomic number of <span class="math notranslate nohighlight">\(A_i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\zeta_{z_i}\)</span> is the exponent of the Slater orbital, and</p></li>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> is a polynomial that depends on the principal quantum number of <span class="math notranslate nohighlight">\(A_i\)</span></p></li>
+</ul>
+<p>N.B. the details of the polynomial, as well as values for <span class="math notranslate nohighlight">\(\zeta_{z_i}\)</span> are given in
+<span id="id10"><sup><a class="reference internal" href="../../../references.html#id34" title="Bo Wang and Donald G. Truhlar. Including charge penetration effects in molecular modeling. Journal of Chemical Theory and Computation, 6(11):3330–3342, 2010.">61</a></sup></span>.</p>
 </div>
 </div>
 

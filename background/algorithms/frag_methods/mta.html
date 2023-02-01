@@ -24,7 +24,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Systematic Molecular Fragmentation Fragmentation Method" href="smf.html" />
-    <link rel="prev" title="Fragmentation Algorithms" href="index.html" /> 
+    <link rel="prev" title="MFCC Fragmentation Method" href="mfcc.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,8 +54,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../established_methods/index.html">Established Fragment Based Methods</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">Fragmentation Algorithms</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="fea.html">FEA Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mfcc.html">MFCC Fragmentation Method</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Molecular Tailoring Approach Fragmentation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dclc.html">Divide and Conquer Local Correlation Fragmentation Method</a></li>
 <li class="toctree-l4"><a class="reference internal" href="gebf.html">GEBF Fragmentation Methods</a></li>
 <li class="toctree-l4"><a class="reference internal" href="other.html">Other Fragmentation Algorithms</a></li>
 </ul>
@@ -87,11 +90,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
-          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
-          <li><a href="index.html">Fragmentation Algorithms</a> &raquo;</li>
-      <li>Molecular Tailoring Approach Fragmentation</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Algorithms for Fragment-Based Methods</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Fragmentation Algorithms</a></li>
+      <li class="breadcrumb-item active">Molecular Tailoring Approach Fragmentation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/background/algorithms/frag_methods/mta.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -149,13 +152,56 @@ few more atoms, or by adding more atoms to make the region complete.</p></li>
 not described in detail and are thus open to some interpretation.</p>
 </div>
 </div>
+<div class="section" id="mta06-fragmentation">
+<h2>MTA06 Fragmentation<a class="headerlink" href="#mta06-fragmentation" title="Permalink to this headline"></a></h2>
+<p>Along with the rebranding of MTA to CG-MTA, <span id="id2">Ganesh <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id8" title="V. Ganesh, Rameshwar K. Dongare, P. Balanarayan, and Shridhar R. Gadre. Molecular tailoring approach for geometry optimization of large molecules: energy evaluation and parallelization strategies. The Journal of Chemical Physics, 125(10):104109, 2006.">21</a></sup></span> introduced a
+new fragmentation methodology with two user defined thresholds: a cut-off radius
+<span class="math notranslate nohighlight">\(R\)</span> and a maximum fragment size <span class="math notranslate nohighlight">\(N\)</span>. Using our terminology:</p>
+<ol class="arabic simple">
+<li><p>Establish pseudoatoms and connectivity</p></li>
+<li><p>Loop over pseudoatoms, for the <span class="math notranslate nohighlight">\(i\)</span>-th pseudoatom <span class="math notranslate nohighlight">\(A_i\)</span>, a corresponding
+fragment <span class="math notranslate nohighlight">\(F_i\)</span> is defined as the set of pseudoatoms which are within <span class="math notranslate nohighlight">\(R\)</span> from
+<span class="math notranslate nohighlight">\(A_i\)</span>.</p></li>
+<li><p>Merge fragments taking into account nearness and ensuring that the resulting
+fragments do not exceed <span class="math notranslate nohighlight">\(N\)</span>. Exactly how to merge the fragments is not
+described.</p>
+<ul class="simple">
+<li><p><span id="id3">Gadre <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id7" title="Shridhar R. Gadre, Anuja Rahalkar, and Shri V. Ganesh. Ab initio treatment of large molecules: cut-and-stitch the tailor's way. IANCAS Bulletin, 4:267–276, 2006.">18</a></sup></span> provides slightly more details about the merging
+procedure stating that it is a recursive process and that nearness and
+similarity are considered. Presuambly the merging is thus done by: find
+closest two fragments which can be merged to form a fragment of less than
+<span class="math notranslate nohighlight">\(N\)</span>. Two fragments are zero distance apart if they intersect, so merge the
+two with the highest overlap (most atoms in common). Repeat until no two
+fragments can be merged and still be less than <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+</ul>
+</li>
+</ol>
+<p>The manuscript also defines a concept termed “R-Goodness”. The “R-goodness” of
+<span class="math notranslate nohighlight">\(A_i\)</span> in <span class="math notranslate nohighlight">\(F_i\)</span> is the largest sphere which can be drawn around <span class="math notranslate nohighlight">\(A_i\)</span> such that all
+pseudoatoms in the sphere are in <span class="math notranslate nohighlight">\(F_i\)</span> and all pseuodoatoms outside the sphere
+are not in <span class="math notranslate nohighlight">\(F_i\)</span>. In general <span class="math notranslate nohighlight">\(A_i\)</span> will appear in multiple fragments and the
+R-goodness of <span class="math notranslate nohighlight">\(A_i\)</span> is defined as the maximum R-goodness of <span class="math notranslate nohighlight">\(A_i\)</span> in any fragment.
+The R-goodness of the fragmentation method is the minimum R-goodness of any
+atom. By construction the R-goodness of the CG-MTA 06 fragmentation method is
+minimally <span class="math notranslate nohighlight">\(R\)</span> (after merging fragments it could be higher).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method was potentially introduced earlier <span id="id4"><sup><a class="reference internal" href="../../../references.html#id6" title="Shridhar R. Gadre and V. Ganesh. Molecular tailoring approach: towards PC-based ab initio treatment of large molecules. Journal of Theoretical and Computational Chemistry, 05(04):835–855, 2006.">16</a></sup></span>; however, I
+am unable to access this reference to verify.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method can be viewed as the <a class="reference internal" href="fea.html#fea-frag-method"><span class="std std-ref">FEA Fragmentation Method</span></a> with some processing
+steps. To our knowledge the two were developed independently however.</p>
+</div>
+</div>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Fragmentation Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mfcc.html" class="btn btn-neutral float-left" title="MFCC Fragmentation Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="smf.html" class="btn btn-neutral float-right" title="Systematic Molecular Fragmentation Fragmentation Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

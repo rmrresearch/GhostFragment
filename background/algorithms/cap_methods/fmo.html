@@ -23,8 +23,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Systematic Molecular Fragmentation Capping Method" href="smf.html" />
-    <link rel="prev" title="Capping Methods" href="index.html" /> 
+    <link rel="next" title="Embedding Algorithms" href="../embed_methods/index.html" />
+    <link rel="prev" title="H Capping" href="h_capping.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -55,8 +55,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../frag_methods/index.html">Fragmentation Algorithms</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html">Capping Methods</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="h_capping.html">H Capping</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">FMO Capping Method</a></li>
-<li class="toctree-l4"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation Capping Method</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
@@ -85,11 +85,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
-          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
-          <li><a href="index.html">Capping Methods</a> &raquo;</li>
-      <li>FMO Capping Method</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Algorithms for Fragment-Based Methods</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Capping Methods</a></li>
+      <li class="breadcrumb-item active">FMO Capping Method</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/background/algorithms/cap_methods/fmo.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -112,7 +112,7 @@ contribute and make this section more accurate.</p>
 <p>In FMO calculations caps in the traditional sense are not used.</p>
 <div class="section" id="fmo99-capping">
 <h2>FMO99 Capping<a class="headerlink" href="#fmo99-capping" title="Permalink to this headline"></a></h2>
-<p>The initial FMO capping method <span id="id1">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id7" title="Kazuo Kitaura, Eiji Ikeo, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Fragment molecular orbital method: an approximate computational method for large molecules. Chemical Physics Letters, 313(3-4):701–706, 1999.">11</a></sup></span>, here labeled as FMO99,
+<p>The initial FMO capping method <span id="id1">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id44" title="Kazuo Kitaura, Eiji Ikeo, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Fragment molecular orbital method: an approximate computational method for large molecules. Chemical Physics Letters, 313(3-4):701–706, 1999.">30</a></sup></span>, here labeled as FMO99,
 assigned electrons unevenly to the fragments (<em>i.e.</em>, one of the fragments gets
 both of the bonding electrons). From this assignment, an initial density for
 fragment <span class="math notranslate nohighlight">\(I\)</span> is obtained by:</p>
@@ -134,13 +134,13 @@ the electrons are assigned)</p></li>
 <h2>FMO00 Capping<a class="headerlink" href="#fmo00-capping" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The language describing the FMO00 method <span id="id2">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id9" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: application to polypeptides. Chemical Physics Letters, 318(6):614–618, 2000.">17</a></sup></span> uses is:
+<p>The language describing the FMO00 method <span id="id2">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id46" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: application to polypeptides. Chemical Physics Letters, 318(6):614–618, 2000.">46</a></sup></span> uses is:
 “core” and “valence” orbitals; however, based on subsequent publications,
-such as <span id="id3">Fedorov and Kitaura<sup><a class="reference internal" href="../../../references.html#id17" title="Dmitri G. Fedorov and Kazuo Kitaura. The importance of three-body terms in the fragment molecular orbital method. The Journal of Chemical Physics, 120(15):6832–6840, 2004.">7</a></sup></span>, I believe what they are actually referring to
+such as <span id="id3">Fedorov and Kitaura<sup><a class="reference internal" href="../../../references.html#id54" title="Dmitri G. Fedorov and Kazuo Kitaura. The importance of three-body terms in the fragment molecular orbital method. The Journal of Chemical Physics, 120(15):6832–6840, 2004.">12</a></sup></span>, I believe what they are actually referring to
 would typically be termed “occupied” and “virtual” orbitals, respectively.
 The language in this section reflects this assumption.</p>
 </div>
-<p>A new capping method was proposed in a subsequent paper <span id="id4">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id9" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: application to polypeptides. Chemical Physics Letters, 318(6):614–618, 2000.">17</a></sup></span>,
+<p>A new capping method was proposed in a subsequent paper <span id="id4">Nakano <em>et al.</em><sup><a class="reference internal" href="../../../references.html#id46" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: application to polypeptides. Chemical Physics Letters, 318(6):614–618, 2000.">46</a></sup></span>,
 here denoted FMO00. In this method, for a bond <span class="math notranslate nohighlight">\(a-b\)</span>, the bonding
 electrons are assigned to one of the two atoms in the bond, say <span class="math notranslate nohighlight">\(a\)</span>. For
 clarity, we refer to the fragment which gets atom <span class="math notranslate nohighlight">\(a\)</span> as <span class="math notranslate nohighlight">\(A\)</span>, and that which
@@ -162,7 +162,7 @@ on <span class="math notranslate nohighlight">\(b\)</span> are kept.</p>
 </div>
 <div class="section" id="fmo04-capping">
 <h2>FMO04 Capping<a class="headerlink" href="#fmo04-capping" title="Permalink to this headline"></a></h2>
-<p>In describing a three-body FMO method <span id="id5">Fedorov and Kitaura<sup><a class="reference internal" href="../../../references.html#id17" title="Dmitri G. Fedorov and Kazuo Kitaura. The importance of three-body terms in the fragment molecular orbital method. The Journal of Chemical Physics, 120(15):6832–6840, 2004.">7</a></sup></span>, a new capping
+<p>In describing a three-body FMO method <span id="id5">Fedorov and Kitaura<sup><a class="reference internal" href="../../../references.html#id54" title="Dmitri G. Fedorov and Kazuo Kitaura. The importance of three-body terms in the fragment molecular orbital method. The Journal of Chemical Physics, 120(15):6832–6840, 2004.">12</a></sup></span>, a new capping
 method was pitched which is effectively a combination of <a class="reference internal" href="#fmo99-capping"><span class="std std-ref">FMO99 Capping</span></a>
 and <a class="reference internal" href="#fmo00-capping"><span class="std std-ref">FMO00 Capping</span></a>. In this study all severed bonds were carbon-carbon
 bonds. Thus the decision was made to use the occupied orbitals of a methane
@@ -180,8 +180,8 @@ was assigned based on user input, but this point was not clarified).</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Capping Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="smf.html" class="btn btn-neutral float-right" title="Systematic Molecular Fragmentation Capping Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="h_capping.html" class="btn btn-neutral float-left" title="H Capping" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../embed_methods/index.html" class="btn btn-neutral float-right" title="Embedding Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

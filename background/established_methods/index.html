@@ -23,7 +23,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Timeline of Fragmentation Methods" href="timeline.html" />
+    <link rel="next" title="Overview of Established Fragment Based Methods" href="overview.html" />
     <link rel="prev" title="History" href="../bsse/history.html" /> 
 </head>
 
@@ -52,13 +52,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../gmbe/index.html">GMBE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../bsse/index.html">Basis Set Superposition Error</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Established Fragment Based Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview.html">Overview of Established Fragment Based Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="timeline.html">Timeline of Fragmentation Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mta.html">Molecular Tailoring Approach (MTA)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dclc.html">Divide and Conquer Local Correlation (DCLC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ecmfcc.html">Energy-Corrected MFCC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eembe.html">Electorstatically-Embedded Many-Body Expansion (EE-MB)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="efamfcc.html">Electrostatic Field Adapted MFCC (EFA-MFCC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fea.html">Fragment Energy Assembler (FEA)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fmo.html">Fragment Molecular Orbital Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gebf.html">Generalized Energy Based Fragmentation (GEBF)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kem.html">Kernel Energy Method (KEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mta.html">Molecular Tailoring Approach (MTA)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mfcc.html">Molecular Fractionation with Conjugate Caps (MFCC)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eembe.html">Electorstatically-Embedded Many-Body Expansion (EE-MBE)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="gebf.html">Generalized Energy Based Fragmentation (GEBF)</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../algorithms/index.html">Algorithms for Fragment-Based Methods</a></li>
@@ -84,9 +90,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Theoretical Background</a> &raquo;</li>
-      <li>Established Fragment Based Methods</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Theoretical Background</a></li>
+      <li class="breadcrumb-item active">Established Fragment Based Methods</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/background/established_methods/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -98,30 +104,50 @@
              
   <div class="section" id="established-fragment-based-methods">
 <h1>Established Fragment Based Methods<a class="headerlink" href="#established-fragment-based-methods" title="Permalink to this headline"></a></h1>
-<p>Over the years a lot of fragment-based methods have been proposed. This section
-attempts to provide concise summaries of the history of these methods. For each
-method, we primarily focus on the methodology developments and the initial
-applications. As a disclaimer, these sections are unlikely to be exahustive;
-particularly for the more popular methods.</p>
+<p>As a disclaimer, these sections are unlikely to be exahustive; particularly for
+the more popular methods.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of Established Fragment Based Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeline.html">Timeline of Fragmentation Methods</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="timeline.html#id1">1994</a></li>
 <li class="toctree-l2"><a class="reference internal" href="timeline.html#id3">1999</a></li>
 <li class="toctree-l2"><a class="reference internal" href="timeline.html#id6">2003</a></li>
-<li class="toctree-l2"><a class="reference internal" href="timeline.html#id8">2005</a></li>
-<li class="toctree-l2"><a class="reference internal" href="timeline.html#id10">2007</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeline.html#id8">2004</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeline.html#id10">2005</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeline.html#id15">2006</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeline.html#id17">2007</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mta.html">Molecular Tailoring Approach (MTA)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mta.html#other-mta-results">Other MTA Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dclc.html">Divide and Conquer Local Correlation (DCLC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ecmfcc.html">Energy-Corrected MFCC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eembe.html">Electorstatically-Embedded Many-Body Expansion (EE-MB)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="eembe.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eembe.html#other-ee-mb-results">Other EE-MB Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eembe.html#ee-mb-reviews">EE-MB Reviews</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="efamfcc.html">Electrostatic Field Adapted MFCC (EFA-MFCC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fea.html">Fragment Energy Assembler (FEA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fmo.html">Fragment Molecular Orbital Method</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="fmo.html#origins">Origins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fmo.html#summary">Summary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fmo.html#other-fmo-development">Other FMO Development</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gebf.html">Generalized Energy Based Fragmentation (GEBF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gebf.html#gebf-summary">GEBF Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gebf.html#other-gebf-results">Other GEBF Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gebf.html#gebf-reviews">GEBF Reviews</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kem.html">Kernel Energy Method (KEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mta.html">Molecular Tailoring Approach (MTA)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mta.html#mta-method-development">MTA Method Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mta.html#mta-summary">MTA Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mta.html#other-mta-results">Other MTA Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mta.html#mta-reviews">MTA Reviews</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mfcc.html">Molecular Fractionation with Conjugate Caps (MFCC)</a><ul>
@@ -129,8 +155,6 @@ particularly for the more popular methods.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="eembe.html">Electorstatically-Embedded Many-Body Expansion (EE-MBE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gebf.html">Generalized Energy Based Fragmentation (GEBF)</a></li>
 </ul>
 </div>
 </div>
@@ -140,7 +164,7 @@ particularly for the more popular methods.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../bsse/history.html" class="btn btn-neutral float-left" title="History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="timeline.html" class="btn btn-neutral float-right" title="Timeline of Fragmentation Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="overview.html" class="btn btn-neutral float-right" title="Overview of Established Fragment Based Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

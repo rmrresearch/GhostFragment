@@ -1,20 +1,26 @@
+.. _MFCC:
+
 ##################################################
 Molecular Fractionation with Conjugate Caps (MFCC)
 ##################################################
 
-Introduced in 2003 MFCC :cite:`Zhang2003` focused on fragment-based 
-calculations of proteins. Using our terminology, the original method treated
-individual amino acids as groups. Fragments were then formed by growing the 
-groups by one atom along any severed bonds. Severed bonds which remain are then
-capped with hydrogens. Since it was always peptide bonds which were severed, 
-this amounts to adding a :math:`-NH_2` cap to the alpha carbon of the bond and a 
-:math:`-RCH2` group to the nitrogen of the peptide bond (R being the side chain 
-of the amino acid the cap is replacing). The resulting fragments intersect
-with the fragments they are bonded to. Instead of directly using the IEP, MFCC 
-corrects for intersections by combining the intersections into molecules. 
-Initial small basis SCF and DFT (with the B3LYP functional) results focused on 
-water-peptide interactions and were shown to be in excellent agreement with 
-supersystem results.
+.. |mfcc_f| replace:: :ref:`mfcc_frag_method`
+.. |h_cap|  replace:: :ref:`simple_replacement`
+
+Introduced in 2003, MFCC :cite:`Zhang2003` focused on fragment-based 
+calculations of proteins. The original MFCC method uses the |mfcc_f| and the
+|h_cap| capping method (or at least we assume it does since the manuscript only
+mentions adding hydrogen atoms). 
+The resulting fragments intersect with the fragments they are bonded to. Instead 
+of directly using the IEP, MFCC corrects for intersections by combining the 
+intersections into molecules (for each non-terminal amino acid, the left and
+right intersections are combined into a molecule). Initial small basis SCF and 
+DFT (with the B3LYP functional) results focused on water-peptide interactions 
+and were shown to be in excellent agreement with supersystem results.
+
+.. todo::
+   
+   The next two paragraphs do not seem to be consistent with our terminology.
 
 In a follow up study :cite:t:`Zhang2003b` considered how the cap choice and
 cutting location affected the error by looking at the potential energy surface
@@ -32,6 +38,12 @@ carbon bonds, the sulfide bonds were also severed. They considered two capping
 strategies for the severed sulfide bonds: hydrogen atoms, or methyls. The latter
 was found to afford better results. Sample calculations were at the SCF, B3LYP, 
 and MP2 levels of theory paired with several small basis sets (at most 6-31G). 
+
++-------------------+-------------+---------------+------------+---------------+
+| Name              | Fragments   | Embedding     | Caps       | Screening     |
++===================+=============+===============+============+===============+
+| MFCC              | |mfcc_f|    | N/A           | |h_cap|    | N/A           |
++-------------------+-------------+---------------+------------+---------------+
 
 ******************
 Other MFCC Results

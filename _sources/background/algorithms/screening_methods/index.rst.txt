@@ -10,4 +10,5 @@ need to be run.
    :caption: Contents:
    :maxdepth: 2
 
-   fmo 
+   distance
+   smf 

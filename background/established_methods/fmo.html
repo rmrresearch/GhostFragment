@@ -23,8 +23,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Molecular Fractionation with Conjugate Caps (MFCC)" href="mfcc.html" />
-    <link rel="prev" title="Molecular Tailoring Approach (MTA)" href="mta.html" /> 
+    <link rel="next" title="Generalized Energy Based Fragmentation (GEBF)" href="gebf.html" />
+    <link rel="prev" title="Fragment Energy Assembler (FEA)" href="fea.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,18 +52,24 @@
 <li class="toctree-l2"><a class="reference internal" href="../gmbe/index.html">GMBE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../bsse/index.html">Basis Set Superposition Error</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Established Fragment Based Methods</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">Overview of Established Fragment Based Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="timeline.html">Timeline of Fragmentation Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mta.html">Molecular Tailoring Approach (MTA)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dclc.html">Divide and Conquer Local Correlation (DCLC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ecmfcc.html">Energy-Corrected MFCC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eembe.html">Electorstatically-Embedded Many-Body Expansion (EE-MB)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="efamfcc.html">Electrostatic Field Adapted MFCC (EFA-MFCC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fea.html">Fragment Energy Assembler (FEA)</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Fragment Molecular Orbital Method</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#origins">Origins</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#summary">Summary</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#other-fmo-development">Other FMO Development</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="gebf.html">Generalized Energy Based Fragmentation (GEBF)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kem.html">Kernel Energy Method (KEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mta.html">Molecular Tailoring Approach (MTA)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mfcc.html">Molecular Fractionation with Conjugate Caps (MFCC)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="eembe.html">Electorstatically-Embedded Many-Body Expansion (EE-MBE)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="gebf.html">Generalized Energy Based Fragmentation (GEBF)</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../algorithms/index.html">Algorithms for Fragment-Based Methods</a></li>
@@ -89,10 +95,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Theoretical Background</a> &raquo;</li>
-          <li><a href="index.html">Established Fragment Based Methods</a> &raquo;</li>
-      <li>Fragment Molecular Orbital Method</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Established Fragment Based Methods</a></li>
+      <li class="breadcrumb-item active">Fragment Molecular Orbital Method</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/background/established_methods/fmo.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -112,7 +118,7 @@ this page is to describe the FMO method, and how the method has developed.</p>
 <div class="section" id="pimo">
 <h3>PIMO<a class="headerlink" href="#pimo" title="Permalink to this headline"></a></h3>
 <p>The FMO method arguably got its start as the pair interaction molecular orbital
-(PIMO) method <span id="id1">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../references.html#id8" title="Kazuo Kitaura, Takuya Sawai, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Pair interaction molecular orbital method: an approximate computational method for molecular interactions. Chemical Physics Letters, 312(2-4):319–324, 1999.">12</a></sup></span>. In the original paper, for a system split
+(PIMO) method <span id="id1">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../references.html#id45" title="Kazuo Kitaura, Takuya Sawai, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Pair interaction molecular orbital method: an approximate computational method for molecular interactions. Chemical Physics Letters, 312(2-4):319–324, 1999.">31</a></sup></span>. In the original paper, for a system split
 into <span class="math notranslate nohighlight">\(N\)</span> disjoint fragments, the Hamiltonian for the <span class="math notranslate nohighlight">\(I\)</span>-th fragment
 is written as:</p>
 <div class="math notranslate nohighlight">
@@ -135,7 +141,7 @@ interactions by about 0.1 kcal/mol.</p>
 </div>
 <div class="section" id="fmo99">
 <h3>FMO99<a class="headerlink" href="#fmo99" title="Permalink to this headline"></a></h3>
-<p>That same year, FMO proper was introduced <span id="id2">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../references.html#id7" title="Kazuo Kitaura, Eiji Ikeo, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Fragment molecular orbital method: an approximate computational method for large molecules. Chemical Physics Letters, 313(3-4):701–706, 1999.">11</a></sup></span>. Physically the
+<p>That same year, FMO proper was introduced <span id="id2">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../references.html#id44" title="Kazuo Kitaura, Eiji Ikeo, Toshio Asada, Tatsuya Nakano, and Masami Uebayasi. Fragment molecular orbital method: an approximate computational method for large molecules. Chemical Physics Letters, 313(3-4):701–706, 1999.">30</a></sup></span>. Physically the
 equations of FMO are the same as PIMO. The difference between FMO and PIMO is
 conceptual and has to do with the fragment orbitals. In PIMO each fragment was a
 closed-shell molecule, and the intial guess orbitals are simply obtained by
@@ -183,7 +189,7 @@ traditional density embedding, monomer <span class="math notranslate nohighlight
 monomer <span class="math notranslate nohighlight">\(J\)</span>. This amounts to a term analogous to the Coulomb build in SCF, but
 with the density of <span class="math notranslate nohighlight">\(J\)</span>. Like it’s SCF brethern, the computational complexity of
 this terms scale as <span class="math notranslate nohighlight">\(\mathcal{O}(N^4)\)</span>. To reduce the cost of the
-embedding, the <a class="reference internal" href="../algorithms/embed_methods/density.html#fmo02-embedding"><span class="std std-ref">FMO02 Embedding</span></a> method <span id="id3">Nakano <em>et al.</em><sup><a class="reference internal" href="../../references.html#id11" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Kaori Fukuzawa, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: use of approximate electrostatic potential. Chemical Physics Letters, 351(5-6):475–480, 2002.">18</a></sup></span>: was
+embedding, the <a class="reference internal" href="../algorithms/embed_methods/density.html#fmo02-embedding"><span class="std std-ref">FMO02 Embedding</span></a> method <span id="id3">Nakano <em>et al.</em><sup><a class="reference internal" href="../../references.html#id48" title="Tatsuya Nakano, Tsuguchika Kaminuma, Toshiyuki Sato, Kaori Fukuzawa, Yutaka Akiyama, Masami Uebayasi, and Kazuo Kitaura. Fragment molecular orbital method: use of approximate electrostatic potential. Chemical Physics Letters, 351(5-6):475–480, 2002.">47</a></sup></span>: was
 introduced. As a proof-of-concept, the study considered applications to proteins
 using the HF/STO-3G method. Errors, were similar to the FMO00 method, but
 results were obtained significantly faster.</p>
@@ -191,8 +197,8 @@ results were obtained significantly faster.</p>
 <div class="section" id="fmo04-three-body-fmo">
 <h3>FMO04 (Three-Body FMO)<a class="headerlink" href="#fmo04-three-body-fmo" title="Permalink to this headline"></a></h3>
 <p>The next development in FMO was an extension capable of handeling three-body
-terms <span id="id4">Fedorov and Kitaura<sup><a class="reference internal" href="../../references.html#id17" title="Dmitri G. Fedorov and Kazuo Kitaura. The importance of three-body terms in the fragment molecular orbital method. The Journal of Chemical Physics, 120(15):6832–6840, 2004.">7</a></sup></span>. This required introducing a screening method for
-three body terms, <em>i.e.</em>, <a class="reference internal" href="../algorithms/screening_methods/fmo.html#fmo04-screening"><span class="std std-ref">FMO04 Screening</span></a>, and also introduced a new
+terms <span id="id4">Fedorov and Kitaura<sup><a class="reference internal" href="../../references.html#id54" title="Dmitri G. Fedorov and Kazuo Kitaura. The importance of three-body terms in the fragment molecular orbital method. The Journal of Chemical Physics, 120(15):6832–6840, 2004.">12</a></sup></span>. This required introducing a screening method for
+three body terms, <em>i.e.</em>, <a class="reference internal" href="../algorithms/screening_methods/distance.html#fmo04-screening"><span class="std std-ref">FMO04 Screening</span></a>, and also introduced a new
 capping method, <a class="reference internal" href="../algorithms/cap_methods/fmo.html#fmo04-capping"><span class="std std-ref">FMO04 Capping</span></a>, which is essentially a combination of the
 <a class="reference internal" href="../algorithms/cap_methods/fmo.html#fmo99-capping"><span class="std std-ref">FMO99 Capping</span></a> and <a class="reference internal" href="../algorithms/cap_methods/fmo.html#fmo00-capping"><span class="std std-ref">FMO00 Capping</span></a> methods. Three-body results
 focused on water clusters and peptides with the SCF method and the STO-3G,
@@ -257,24 +263,24 @@ superposition error.</p>
 <div class="section" id="other-fmo-development">
 <h2>Other FMO Development<a class="headerlink" href="#other-fmo-development" title="Permalink to this headline"></a></h2>
 <p>Initial, approximate gradients for the FMO00 method were published in 2001
-<span id="id5">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../references.html#id10" title="Kazuo Kitaura, Sin-Ichirou Sugiki, Tatsuya Nakano, Yuto Komeiji, and Masami Uebayasi. Fragment molecular orbital method: analytical energy gradients. Chemical Physics Letters, 336(1-2):163–170, 2001.">13</a></sup></span>. This formulation neglected the coupled-perturbed
+<span id="id5">Kitaura <em>et al.</em><sup><a class="reference internal" href="../../references.html#id47" title="Kazuo Kitaura, Sin-Ichirou Sugiki, Tatsuya Nakano, Yuto Komeiji, and Masami Uebayasi. Fragment molecular orbital method: analytical energy gradients. Chemical Physics Letters, 336(1-2):163–170, 2001.">32</a></sup></span>. This formulation neglected the coupled-perturbed
 Hartree-Fock contribution to the gradient, which is necessary because the
 densities are not obtained variationally.</p>
-<p><span id="id6">Inadomi <em>et al.</em><sup><a class="reference internal" href="../../references.html#id12" title="Yuichi Inadomi, Tatsuya Nakano, Kazuo Kitaura, and Umpei Nagashima. Definition of molecular orbitals in fragment molecular orbital method. Chemical Physics Letters, 364(1-2):139–143, 2002.">10</a></sup></span> detailed a mechanism for retrieving orbital energies and
+<p><span id="id6">Inadomi <em>et al.</em><sup><a class="reference internal" href="../../references.html#id49" title="Yuichi Inadomi, Tatsuya Nakano, Kazuo Kitaura, and Umpei Nagashima. Definition of molecular orbitals in fragment molecular orbital method. Chemical Physics Letters, 364(1-2):139–143, 2002.">25</a></sup></span> detailed a mechanism for retrieving orbital energies and
 densities from FMO.</p>
-<p><span id="id7">Sekino <em>et al.</em><sup><a class="reference internal" href="../../references.html#id13" title="Hideo Sekino, Yasuo Sengoku, Shinichiro Sugiki, and Noriyuki Kurita. Molecular orbital analysis based on fragment molecular orbital scheme. Chemical Physics Letters, 378(5-6):589–597, 2003.">20</a></sup></span> used FMO to approximate a DFT calculation, PW91/STO-3G.
+<p><span id="id7">Sekino <em>et al.</em><sup><a class="reference internal" href="../../references.html#id50" title="Hideo Sekino, Yasuo Sengoku, Shinichiro Sugiki, and Noriyuki Kurita. Molecular orbital analysis based on fragment molecular orbital scheme. Chemical Physics Letters, 378(5-6):589–597, 2003.">57</a></sup></span> used FMO to approximate a DFT calculation, PW91/STO-3G.
 Also considered were the HOMO/LUMO energies, dipole moment, and quadrupole
 moment of the systems. Systems considered were water-ammonia clusters and DNA.
 Errors in energies were on the order of a millihartree, multipole moments
 matched to within a few tenths (units were not specified). A follow up paper
-<span id="id8">Sugiki <em>et al.</em><sup><a class="reference internal" href="../../references.html#id14" title="Sin-ichirou Sugiki, Noriyuki Kurita, Yasuo Sengoku, and Hideo Sekino. Fragment molecular orbital method with density functional theory and DIIS convergence acceleration. Chemical Physics Letters, 382(5-6):611–617, 2003.">21</a></sup></span> used DIIS to accelerate the convergence of the iterative
+<span id="id8">Sugiki <em>et al.</em><sup><a class="reference internal" href="../../references.html#id51" title="Sin-ichirou Sugiki, Noriyuki Kurita, Yasuo Sengoku, and Hideo Sekino. Fragment molecular orbital method with density functional theory and DIIS convergence acceleration. Chemical Physics Letters, 382(5-6):611–617, 2003.">59</a></sup></span> used DIIS to accelerate the convergence of the iterative
 charge procedure.</p>
-<p><span id="id9">Komeiji <em>et al.</em><sup><a class="reference internal" href="../../references.html#id15" title="Yuto Komeiji, Tatsuya Nakano, Kaori Fukuzawa, Yutaka Ueno, Yuichi Inadomi, Tadashi Nemoto, Masami Uebayasi, Dmitri G. Fedorov, and Kazuo Kitaura. Fragment molecular orbital method: application to molecular dynamics simulation, `ab initio FMO-MD'. Chemical Physics Letters, 372(3-4):342–347, 2003.">14</a></sup></span> used FMO to perform a molecular dynamics simulation of a
+<p><span id="id9">Komeiji <em>et al.</em><sup><a class="reference internal" href="../../references.html#id52" title="Yuto Komeiji, Tatsuya Nakano, Kaori Fukuzawa, Yutaka Ueno, Yuichi Inadomi, Tadashi Nemoto, Masami Uebayasi, Dmitri G. Fedorov, and Kazuo Kitaura. Fragment molecular orbital method: application to molecular dynamics simulation, `ab initio FMO-MD'. Chemical Physics Letters, 372(3-4):342–347, 2003.">33</a></sup></span> used FMO to perform a molecular dynamics simulation of a
 peptide at the HF/STO-3G level of theory.</p>
-<p><span id="id10">Fedorov <em>et al.</em><sup><a class="reference internal" href="../../references.html#id18" title="Dmitri G. Fedorov, Ryan M. Olson, Kazuo Kitaura, Mark S. Gordon, and Shiro Koseki. A new hierarchical parallelization scheme: generalized distributed data interface (GDDI), and an application to the fragment molecular orbital method (FMO). Journal of Computational Chemistry, 25(6):872–880, 2004.">8</a></sup></span> discussions about distributed computing of FMO with
+<p><span id="id10">Fedorov <em>et al.</em><sup><a class="reference internal" href="../../references.html#id55" title="Dmitri G. Fedorov, Ryan M. Olson, Kazuo Kitaura, Mark S. Gordon, and Shiro Koseki. A new hierarchical parallelization scheme: generalized distributed data interface (GDDI), and an application to the fragment molecular orbital method (FMO). Journal of Computational Chemistry, 25(6):872–880, 2004.">13</a></sup></span> discussions about distributed computing of FMO with
 GAMESS. Presensts some SCF/6-31G* and SCF/STO-3G calculations of large water
 clusters.</p>
-<p><span id="id11">Mochizuki <em>et al.</em><sup><a class="reference internal" href="../../references.html#id16" title="Yuji Mochizuki, Shigeru Koikegami, Tatsuya Nakano, Shinji Amari, and Kazuo Kitaura. Large scale MP2 calculations with fragment molecular orbital scheme. Chemical Physics Letters, 396(4-6):473–479, 2004.">16</a></sup></span> used the SCF orbitals from an FMO calculation to do MP2.
+<p><span id="id11">Mochizuki <em>et al.</em><sup><a class="reference internal" href="../../references.html#id53" title="Yuji Mochizuki, Shigeru Koikegami, Tatsuya Nakano, Shinji Amari, and Kazuo Kitaura. Large scale MP2 calculations with fragment molecular orbital scheme. Chemical Physics Letters, 396(4-6):473–479, 2004.">45</a></sup></span> used the SCF orbitals from an FMO calculation to do MP2.
 Also considered in this study were MP2 densities and partially renormalized MP2.
 Calculations used the 6-31G basis set and focused on a large water cluster and
 several proteins.</p>
@@ -285,8 +291,8 @@ several proteins.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="mta.html" class="btn btn-neutral float-left" title="Molecular Tailoring Approach (MTA)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="mfcc.html" class="btn btn-neutral float-right" title="Molecular Fractionation with Conjugate Caps (MFCC)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="fea.html" class="btn btn-neutral float-left" title="Fragment Energy Assembler (FEA)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gebf.html" class="btn btn-neutral float-right" title="Generalized Energy Based Fragmentation (GEBF)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Systematic Molecular Fragmentation Capping Method &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>SMF Screening Method &mdash; GhostFragment 1.0.0 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -23,8 +23,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Embedding Algorithms" href="../embed_methods/index.html" />
-    <link rel="prev" title="FMO Capping Method" href="fmo.html" /> 
+    <link rel="next" title="Fragments Vs N-Mers" href="../../fragment_vs_nmer.html" />
+    <link rel="prev" title="Distance Based Screening Procedures" href="distance.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,13 +54,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../established_methods/index.html">Established Fragment Based Methods</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../frag_methods/index.html">Fragmentation Algorithms</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="index.html">Capping Methods</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="fmo.html">FMO Capping Method</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Systematic Molecular Fragmentation Capping Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cap_methods/index.html">Capping Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Screening Methods</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="distance.html">Distance Based Screening Procedures</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">SMF Screening Method</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../screening_methods/index.html">Screening Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../fragment_vs_nmer.html">Fragments Vs N-Mers</a></li>
@@ -85,13 +85,13 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Theoretical Background</a> &raquo;</li>
-          <li><a href="../index.html">Algorithms for Fragment-Based Methods</a> &raquo;</li>
-          <li><a href="index.html">Capping Methods</a> &raquo;</li>
-      <li>Systematic Molecular Fragmentation Capping Method</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Algorithms for Fragment-Based Methods</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Screening Methods</a></li>
+      <li class="breadcrumb-item active">SMF Screening Method</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/background/algorithms/cap_methods/smf.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/background/algorithms/screening_methods/smf.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -99,24 +99,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="systematic-molecular-fragmentation-capping-method">
-<h1>Systematic Molecular Fragmentation Capping Method<a class="headerlink" href="#systematic-molecular-fragmentation-capping-method" title="Permalink to this headline"></a></h1>
-<p>As part of the SMF method <span id="id1">Deev and Collins<sup><a class="reference internal" href="../../../references.html#id25" title="Vitali Deev and Michael A. Collins. Approximateab initioenergies by systematic molecular fragmentation. The Journal of Chemical Physics, 122(15):154102, 2005. doi:10.1063/1.1879792.">6</a></sup></span> introduced a capping method. Say
-we are breaking a bond <span class="math notranslate nohighlight">\(X-Y\)</span> and that <span class="math notranslate nohighlight">\(X\)</span> is in the fragment, then a hydrogen
-atom is placed at the point <span class="math notranslate nohighlight">\(\mathbf{r}_H\)</span> given by:</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{r}_H = \mathbf{r}_X + c\left(\mathbf{r}_Y - \mathbf{r}_X\right),\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{r}_X\)</span> is the position of <span class="math notranslate nohighlight">\(X\)</span>, <span class="math notranslate nohighlight">\(\mathbf{r}_Y\)</span> is the
-position of <span class="math notranslate nohighlight">\(Y\)</span>, and <span class="math notranslate nohighlight">\(c\)</span> is the ratio of a normal <span class="math notranslate nohighlight">\(X-H\)</span> bond to a normal
-<span class="math notranslate nohighlight">\(X-Y\)</span> bond.</p>
+  <div class="section" id="smf-screening-method">
+<h1>SMF Screening Method<a class="headerlink" href="#smf-screening-method" title="Permalink to this headline"></a></h1>
+<div class="section" id="smf-screening-05">
+<h2>SMF Screening 05<a class="headerlink" href="#smf-screening-05" title="Permalink to this headline"></a></h2>
+<p>SMF as introduced by <span id="id1">Deev and Collins<sup><a class="reference internal" href="../../../references.html#id67" title="Vitali Deev and Michael A. Collins. Approximateab initioenergies by systematic molecular fragmentation. The Journal of Chemical Physics, 122(15):154102, 2005. doi:10.1063/1.1879792.">10</a></sup></span> can be thought of as a one-body GMBE.
+In turn, there are interactions which are neglected by this expansion. Letting
+<span class="math notranslate nohighlight">\(\mathbb{F}\)</span> be the set of fragments used for the one-body expansion. “cite:t:<cite>Deev2005</cite>
+suggest creating an auxiliary set of fragments <span class="math notranslate nohighlight">\(\mathbb{F}'\)</span>, such that if <span class="math notranslate nohighlight">\(f_i\)</span> and <span class="math notranslate nohighlight">\(f_j\)</span>
+are disjoint fragments in <span class="math notranslate nohighlight">\(\mathbb{F}'\)</span>, then their union, <span class="math notranslate nohighlight">\(f_{ij}\)</span>, must not appear in any
+fragment in <span class="math notranslate nohighlight">\(\mathbb{F}\)</span>. Given such an <span class="math notranslate nohighlight">\(\mathbb{F}'\)</span>, then subtracting the energies of <span class="math notranslate nohighlight">\(f_i\)</span> and
+<span class="math notranslate nohighlight">\(f_j\)</span> from the energy of <span class="math notranslate nohighlight">\(f_{ij}\)</span> yields a two-body correction.</p>
+<p>In their arcticle <span id="id2">Deev and Collins<sup><a class="reference internal" href="../../../references.html#id67" title="Vitali Deev and Michael A. Collins. Approximateab initioenergies by systematic molecular fragmentation. The Journal of Chemical Physics, 122(15):154102, 2005. doi:10.1063/1.1879792.">10</a></sup></span> specifically stated that <span class="math notranslate nohighlight">\(\mathbb{F}'\)</span> should be
+created by editing the fragments which result from a level one
+<a class="reference internal" href="../frag_methods/smf.html#smf-fragmentation-05"><span class="std std-ref">SMF Fragmentation 05</span></a> fragmentation method. The editing process is what
+ensures the fragments in <span class="math notranslate nohighlight">\(\mathbb{F}'\)</span> are disjoint and that their union does not appear
+in <span class="math notranslate nohighlight">\(\mathbb{F}\)</span>. The exact editing process appears to be somewhat ad hoc.</p>
+</div>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="fmo.html" class="btn btn-neutral float-left" title="FMO Capping Method" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../embed_methods/index.html" class="btn btn-neutral float-right" title="Embedding Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="distance.html" class="btn btn-neutral float-left" title="Distance Based Screening Procedures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../fragment_vs_nmer.html" class="btn btn-neutral float-right" title="Fragments Vs N-Mers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
