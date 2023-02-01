@@ -6,6 +6,9 @@ GEBF Fragmentation Methods
 .. |g| replace:: :math:`g`
 .. |Fg| replace:: :math:`F_g`
 
+***************************
+GEBF07 Fragmentation Method
+***************************
 
 With the original GEBF fragmentation method, :cite:t:`Li2007` presented a
 fragmentation method. Using our terminology, this method is to:
@@ -26,10 +29,6 @@ fragmentation method. Using our terminology, this method is to:
    - For clusters pseudoatoms within some distance |zeta| are considered close
      (default is 3 Angstroms)
 
-#. Cap fragments
-
-   - Original method specified with hydrogen atoms.
-
 #. Remove fragments which are subsets of other fragments
 
 #. Determine intersections
@@ -42,9 +41,3 @@ presented namely:
   fragment. The multiplicity of this intersection is :math:`1-k`, where :math`k`
   is the number of fragments it appears in.
 - Repeat the previous step for sets of :math`n-2, n-3, \ldots, 1` pseudoatoms 
-
-The presented fragmentation method contained an additional step meant to include
-some two-body interactions, namely dimers were considered if the distance
-between them is less than a threshold. The description presented implies that
-the fragments comprising the dimer should be disjoint, although this is not 
-stated.
