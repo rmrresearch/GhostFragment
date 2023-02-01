@@ -6,4 +6,5 @@ corrections.
 
 Primary features include:
 
+- Extensive background documentation.
 - Nothing yet!!!
