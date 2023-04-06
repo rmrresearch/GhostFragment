@@ -8,11 +8,17 @@ There are a lot of existing fragment-based methods. Many of these methods have
 coined their own terms for similar concepts. In order to provide a unified
 description of these methods we have settled on the following terminology.
 
+.. _dimer:
+
 dimer
    A subsystem made by taking the union of two monomers
 
+.. _fragment:
+
 fragment
    The inputs to the MBE and GMBE. Fragments are sets of pseudoatoms.
+
+.. _monomer:
 
 monomer
    Same as fragment, but preferred when subsystems are being distinguished by
@@ -24,8 +30,12 @@ multi-layer
    like manner. The layers can be different theories, different fragmentations, 
    etc. 
 
+.. _nmer:
+
 n-mer
    The generalization of monomer, dimer, *etc.* to the union of |n| fragments.
+
+.. _pseudoatom:
 
 pseudoatom
    In fragmenting the supersystem there are some "most fundamental" units, 
@@ -36,6 +46,8 @@ pseudoatom
    to take the molecules as the fundamental units. Regardless of their 
    composition, the most fundamental units of the fragmentation algorithm are 
    termed "pseudoatoms."
+
+.. _supersystem:
 
 supersystem
    This is the system whose properties are actually of interest. Its properties
@@ -48,13 +60,24 @@ Graph Theory Terminology
 Particularly when describing fragmentation algorithms we often treat the
 supersystem as a mathematical graph. 
 
+.. _edge:
+
 edge
    These are the connections between two nodes in the graph. They will usually
    correspond to covalent bonds, but exactly what defines an edge is usually
    left up to the user.
+
+.. _degree:
+
 degree
    This is the number of edges a node has. 
+
+.. _leaf:
+
 leaf
    This is a node with degree 1.
+
+.. _node:
+
 node
    In the context of a molecular graph nodes are typically pseudoatoms.
