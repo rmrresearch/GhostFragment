@@ -29,11 +29,6 @@ seeks to change this while also facilitating rapid-prototyping of new methods.
 GhostFragment Considerations
 ****************************
 
-There are a number of considerations that went into the design of
-GhostFragment, this section only summarizes the high-level, project-drivining
-considerations. The design discussions for each component track the
-component-level considerations.
-
 Performance
    Fragment-based methods are meant to be an approximation to traditional
    electronic structure methods. Most traditional methods have highly-performant
@@ -46,9 +41,17 @@ Accuracy
    Brought up in the performance consideration, general applicability of
    fragment-based methods requires the resulting approximation to be accurate.
 
+Generality.
+   We want GhostFragment to be able to house as many fragment-based methods as
+   possible. This requires having an overall architecture which is as applicable
+   as possible.
+
 ***********************
 Design of GhostFragment
 ***********************
+
+This section presents a top-down view of GhostFragment. Starting with the
+overall architcture.
 
 Architecture Overview
 =====================
@@ -58,18 +61,20 @@ Link to full discussion: :ref:`gf_architecture`.
 .. _fig_gf_arch:
 
 .. figure:: assets/overview.png
-   :align: center
-
-   GhostFragment is comprised of three components: the fragmenter, the engine,
-   and the computer. See text for more details.
+   GhostFragment is comprised of two components: an input driver, and an
+   engine.
 
 :numref:`fig_gf_arch` shows the high-level architecture of GhostFragment. The
 unifying theme of all fragment-methods is that they strive to approximate one
 large computation via a series of smaller computations. How one goes from the
-inputs (the colliquial "molecule" and "basis set") of the large computation, 
-to the inputs of each smaller computation is handled by the "Fragmenter"
+input (the colliquial "molecule" and "basis set") of the large computation, 
+to the inputs of each smaller computation is handled by the "input driver"
 component. Once we know the inputs for the smaller computations the "Engine"
-is used to run the smaller computations. Finally, once we have the results
-from each of each smaller computation we can assemble the target property for
-the larger system.
+is used to run the smaller computations. Once GhostFragment has all the
+subsystem properties, GhostFragment combines them to approximate the property
+for the larger system.
 
+Input Driver Overview
+=====================
+
+Link to full discussion :ref:`gf_input_driver_design`.
