@@ -46,6 +46,12 @@ Generality.
    possible. This requires having an overall architecture which is as applicable
    as possible.
 
+Multi-layer.
+   A promising variation on a traditional fragment-based method is to treat
+   part of the chemical system with one level of theory, and the rest with
+   another (in theory this can easily be extended to more than two levels,
+   but in practice is often limited to two).
+
 ***********************
 Design of GhostFragment
 ***********************
@@ -61,6 +67,8 @@ Link to full discussion: :ref:`gf_architecture`.
 .. _fig_gf_arch:
 
 .. figure:: assets/overview.png
+   :align: center
+   
    GhostFragment is comprised of two components: an input driver, and an
    engine.
 
@@ -77,4 +85,36 @@ for the larger system.
 Input Driver Overview
 =====================
 
+.. |n| replace:: :math:`n`
+
 Link to full discussion :ref:`gf_input_driver_design`.
+
+.. _fig_gf_input_driver:
+
+.. figure:: assets/input_driver.png
+   :align: center
+
+   Illustration of the three main steps of the input driver: fragment formation,
+   |n|-mer formation, and determination of the equation.
+
+:numref:`fig_gf_input_driver` shows an overview of how an input chemical 
+system (*i.e.*, the input of the large calculatoin) is mapped to a series of
+smaller sub-calculations. The first step is to divide the input system into
+:ref:`fragment`; this --- along with :ref:`capping`` the fragments, and 
+assigning basis functions --- is the job of the ``FragmentedSystem`` Driver. 
+After we have the fragmented system, the next step is to create :ref:`nmer` (it
+is assumed that the |n|-mers are also screened during this step). Finally, the
+"Equation Driver" determines the weights for each sub-calculation (potentially
+adding additional subcalculations to address overlaps among |n|-mers).
+
+Fragmented System Driver
+========================
+
+Link to full discussion :ref:`gf_fragmented_system_driver_design`.
+
+.. _fig_gf_fragmented_system_driver:
+
+.. figure:: assets/fragmented_system_driver.png
+   :align: center
+
+   The major components of the ``FragmentedSystem`` driver.

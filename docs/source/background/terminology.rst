@@ -8,19 +8,32 @@ There are a lot of existing fragment-based methods. Many of these methods have
 coined their own terms for similar concepts. In order to provide a unified
 description of these methods we have settled on the following terminology.
 
+.. _capping:
+
+capping
+   When fragmenting one usually tries to split the system across non-covalent
+   interactions; however, if one is to divide a large covalently bonded system
+   into fragments it becomes necessary to "break" covalent bonds (a covalent
+   bond is said to be broken when only one of the atoms involved in the bond 
+   appear in a fragment). When a fragment contains a broken bond, running the
+   computation as is will usually result in an unphysical electronic state
+   (the fragment will have a different spin state than the overall system).
+   Capping methods ensure the fragment has the same spin state as the parent
+   system (usually by adding a hydrogen atom).
+
 .. _dimer:
 
-dimer
+dimer(s)
    A subsystem made by taking the union of two monomers
 
 .. _fragment:
 
-fragment
+fragment(x)
    The inputs to the MBE and GMBE. Fragments are sets of pseudoatoms.
 
 .. _monomer:
 
-monomer
+monomer(s)
    Same as fragment, but preferred when subsystems are being distinguished by
    numerical prefix. *i.e.*, we use monomer, and not fragment, when we are also
    talking about dimers, trimers, *etc.*  
@@ -32,12 +45,12 @@ multi-layer
 
 .. _nmer:
 
-n-mer
+n-mer(s)
    The generalization of monomer, dimer, *etc.* to the union of |n| fragments.
 
 .. _pseudoatom:
 
-pseudoatom
+pseudoatom(s)
    In fragmenting the supersystem there are some "most fundamental" units, 
    *i.e.* units which themselves are never fragmented. In the most extreme limit 
    these fundamental units are the individual atoms; however, in most 
