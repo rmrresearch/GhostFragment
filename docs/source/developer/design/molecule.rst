@@ -73,7 +73,12 @@ AO Basis Set.
    ``FragmentedMolecule`` class. Another reason is to parallel the un-fragmented
    hierarchy where ``Molecule`` and ``AOBasisSet`` are separate classes.
 
+.. _fs_caps:
+
 Caps.
+
+   Full design discussion: :ref:`designing_the_caps_class`.
+
    When a large covalent molecule is fragmented, covalent bonds will usually be
    broken. There are several sub-considerations here:
    
