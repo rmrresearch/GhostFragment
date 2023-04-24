@@ -8,9 +8,22 @@ Designing the FragmentedMolecule Class
 What is a fragmented molecule?
 ******************************
 
+In computational chemistry parlance, a molecule is the set of atoms we are
+running a computation on. Sometimes we need to describe a "piece of a 
+molecule." These pieces are fragments, and when we decompose a molecules into
+a set of fragments, we say that the set forms a fragmented molecule if each
+atom in the original molecule appears in at least one of the fragments. 
+
 ************************************
 Why do we need fragmented molecules?
 ************************************
+
+In computational chemistry there are a number of methods which require breaking
+the molecule up into two or more pieces. While at some point many of these
+methods will rely on the fact that the fragments are themselves perfectly good
+molecules, most times the algorithm will also need to use the fact that the
+fragments are pieces of a larger system. In turn, we need a way to represent
+the fragments, while not forgetting the molecule the fragments come from.
 
 ***************************************
 FragmentedMolecule Class Considerations
@@ -21,7 +34,9 @@ FragmentedMolecule Class Considerations
 Molecule class.
    Chemist defines the ``Molecule`` class. A set of fragments should function
    like a series of views of the ``Molecule`` class. 
-   
+
+.. _fs_type_dispatch:
+
 Type dispatch.   
    Modules recieving ``Molecule`` objects as input do not need to worry about
    fragments, whereas modules recieving ``FragmentedMolecule`` objects do need
@@ -34,6 +49,13 @@ Charge and multiplicity.
    assigned to the fragments. In both cases, this is usually done by having
    the user assign the charge, or unpaired electrons, to one or more atoms.
 
+.. _fs_non_disjoint:
+
+Non-disjoint.
+   While many initial fragment-based techniques relied on disjoint fragments,
+   more modern techniques relax this requirement. The ``FragmentedMolecule``
+   class needs to be able to handle multiple fragments, even if those fragments
+   are non-disjoint.
 
 Ignored Considerations
 ======================
@@ -67,8 +89,14 @@ Caps.
    The first two points suggest it's better to treat the caps as a separate
    concern. The :ref:`fs_charge_mult` consideration suggests that since the
    user will need to set the charge/multiplicity for each fragment (usually by
-   specifying the charged atom(s), or the atom(s) with unpaired electrons) the
-   fact that without the caps the fragments in the ``FragmentedMolecule`` class 
-   will be radicals is somewhat material as it doesn't actually factor in to
+   specifying the charged atom(s), or the atom(s) with unpaired electrons), the
+   fact that the fragments in the ``FragmentedMolecule`` class  will be 
+   radicals, is somewhat material since it doesn't actually factor in to
    assingning the charge/multiplicity.
 
+Fields.
+   While we ultimately want to fragment the chemical system, which includes
+   the external fields, we want our fragmented chemical system class to
+   parallel the non-fragmented versions. Since the chemical system contains
+   a molecule, we want the fragmented chemical system to contain a fragmented
+   molecule. The point is that fragmenting the fields is handled elsewhere. 
