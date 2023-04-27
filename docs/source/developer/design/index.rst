@@ -15,3 +15,5 @@ section record the process of designing GhostFragment.
     architecture
     input_driver
     fragmented_system_driver
+    nmers
+    caps

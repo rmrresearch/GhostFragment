@@ -21,4 +21,5 @@ to the topics of basis-set superposition error and fragment-based methods.
     bsse/index
     established_methods/index
     algorithms/index
+    frag_v_nmer
     terminology

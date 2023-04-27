@@ -9,6 +9,16 @@ Designing the Caps Class
 What are caps?
 **************
 
+When fragmenting large covalently-bonded systems one needs to break
+covalent bonds. Say we break the bond A-B, such that A is in our fragment,
+but B is not. In breaking the bond we usually give one electron to A and the
+other to B. Consequently the fragment with A will usually be a radicals (and 
+the parent system is usualyl not a radical). Radicals have very different 
+electronic structure than non-radicals, and to minimize the perturbation
+arising from fragmenting, it is common to close the valency of A with a cap.
+In many cases, a cap is simply a hydrogen atom, placed along what was the A-B
+bond, although other possibilites exist. 
+
 ********************
 Why do we need caps?
 ********************
