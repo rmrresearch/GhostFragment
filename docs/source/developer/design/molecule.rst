@@ -29,33 +29,47 @@ the fragments, while not forgetting the molecule the fragments come from.
 FragmentedMolecule Class Considerations
 ***************************************
 
-.. _fs_molecule:
+.. _fm_molecule:
 
 Molecule class.
    Chemist defines the ``Molecule`` class. A set of fragments should function
-   like a series of views of the ``Molecule`` class. 
+   like a series of views of the ``Molecule`` class. This has two parts: nuclei
+   and the electrons (charge/multiplicity).
 
-.. _fs_type_dispatch:
-
-Type dispatch.   
-   Modules recieving ``Molecule`` objects as input do not need to worry about
-   fragments, whereas modules recieving ``FragmentedMolecule`` objects do need
-   to worry about the fact that there is (in general) a set of fragments.
-    
-.. _fs_charge_mult:
+.. _fm_charge_mult:
 
 Charge and multiplicity.
-   The total charge and multiplicity of the original molecule must somehow be
-   assigned to the fragments. In both cases, this is usually done by having
-   the user assign the charge, or unpaired electrons, to one or more atoms.
+   In fragmenting the molecule, the total charge and multiplicity of the o
+   riginal molecule must somehow be assigned to the fragments. In both cases, 
+   this is usually done by having the user assign the charge, or unpaired 
+   electrons, to one or more atoms. When those atoms appear in a fragment,
+   the fragment is charged/has unparied electrons too.
 
-.. _fs_non_disjoint:
+.. _fm_non_disjoint:
 
 Non-disjoint.
    While many initial fragment-based techniques relied on disjoint fragments,
    more modern techniques relax this requirement. The ``FragmentedMolecule``
    class needs to be able to handle multiple fragments, even if those fragments
    are non-disjoint.
+
+.. _fm_caps:
+
+Caps.
+   Usually the charge/multiplicity of a fragment is 0 singlet. This only makes
+   sense if one includes caps as part of the fragment (otherwise the fragments
+   would be radicals).
+
+   - Hypothesis: if we include caps for all intersections of fragments, that
+     set is also sufficient for capping |n|-mers of non-disjoint fragments.
+
+.. _fm_type_dispatch:
+
+Type dispatch.   
+   Modules recieving ``Molecule`` objects as input do not need to worry about
+   fragments, whereas modules recieving ``FragmentedMolecule`` objects do need
+   to worry about the fact that there is (in general) a set of fragments.
+
 
 Ignored Considerations
 ======================
@@ -73,31 +87,20 @@ AO Basis Set.
    ``FragmentedMolecule`` class. Another reason is to parallel the un-fragmented
    hierarchy where ``Molecule`` and ``AOBasisSet`` are separate classes.
 
-.. _fs_caps:
+NMers.
 
-Caps.
-
-   Full design discussion: :ref:`designing_the_caps_class`.
-
-   When a large covalent molecule is fragmented, covalent bonds will usually be
-   broken. There are several sub-considerations here:
+   Main discussion :ref:`gf_interaction_class_design`.
    
-   - For methods which go on to create |n|-mers, we want to take unions of
-     uncapped fragments (if you take unions of capped fragments, you can end
-     up with the cap and the atom it replaces in the same |n|-mer).
-   - Computing overlaps is much more difficult for reasons similar to the first
-     point, *i.e.*, if one fragment has a cap and another has the atom the cap
-     replaces, then those fragments actually overlap.
-   - If we ignore the caps at this stage, then the resulting fragments will be 
-     radicals if used directly from the ``FragmentedMolecule`` class. 
+   Many fragment-based methods require forming |n|-mers. Naive,
+   applications of the MBE suggest that |n|-mers are "just another system
+   we need to compute the energy of", suggesting |n|-mers should be treated 
+   similar to fragments. However, more complicated applications (*e.g.*, 
+   screened |n|-mers, multi-layer approaches, and BSSE-corrections) tend to
+   rely on interactions, which are more complicated than just an |n|-mer (they
+   inolve an |n|-mer and usually some overlaps/subsystems, along with linear-
+   expansion coefficients). Since interactions are more complicated we feel
+   they warrant another class.
 
-   The first two points suggest it's better to treat the caps as a separate
-   concern. The :ref:`fs_charge_mult` consideration suggests that since the
-   user will need to set the charge/multiplicity for each fragment (usually by
-   specifying the charged atom(s), or the atom(s) with unpaired electrons), the
-   fact that the fragments in the ``FragmentedMolecule`` class  will be 
-   radicals, is somewhat material since it doesn't actually factor in to
-   assingning the charge/multiplicity.
 
 Fields.
    While we ultimately want to fragment the chemical system, which includes

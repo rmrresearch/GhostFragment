@@ -1,6 +1,8 @@
-#########################
-Designing the NMers Class
-#########################
+.. _gf_interaction_class_design:
+
+################################
+Designing the Interactions Class
+################################
 
 .. |n| replace:: :math:`n`
 
@@ -31,9 +33,20 @@ method.
 NMers Class Considerations
 **************************
 
-.. n_frags:
+.. _n_frags:
 
 Fragments.
    The entire concept of an |n|-mer is predicated on the existence of the
    fragments. Depending on the application of the |n|-mers, we may need to
    record which fragments formed the |n|-mer. 
+
+.. _screening:
+
+Screening.
+   If we always wanted to iterate over the entire set of |n|-mers we could
+   use a generator (or something similar) to create the |n|-mers as needed,
+   *i.e.*, there would be no need to store the fragments. In practice, the
+   reason we need the NMers class is because we only want to store the
+   |n|-mers which passed screening. Screening based on energy (or distance)
+   requires us to have capped |n|-mers.
+
