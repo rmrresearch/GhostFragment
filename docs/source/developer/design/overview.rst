@@ -118,3 +118,11 @@ Link to full discussion :ref:`gf_fragmented_system_driver_design`.
    :align: center
 
    The major components of the ``FragmentedSystem`` driver.
+
+Fragment Driver
+===============
+
+.. figure:: assets/fragment_driver.png
+   :align: center
+
+   The major components of the ``FragmentDriver``.
