@@ -46,6 +46,14 @@ Generality.
    possible. This requires having an overall architecture which is as applicable
    as possible.
 
+Covalent systems.
+   GhostFragment should be applicable to not just clusters, but also large
+   covalently-bonded systems as well.
+
+Non-disjoint.
+   Early fragment-based methods assumed that fragments were disjoint. We do
+   not want to restrict ourselves to only disjoint fragments.
+
 Multi-layer.
    A promising variation on a traditional fragment-based method is to treat
    part of the chemical system with one level of theory, and the rest with
@@ -74,13 +82,12 @@ Link to full discussion: :ref:`gf_architecture`.
 
 :numref:`fig_gf_arch` shows the high-level architecture of GhostFragment. The
 unifying theme of all fragment-methods is that they strive to approximate one
-large computation via a series of smaller computations. How one goes from the
-input (the colliquial "molecule" and "basis set") of the large computation, 
-to the inputs of each smaller computation is handled by the "input driver"
+large computation via a series of smaller computations. How one maps the 
+target system to sub-computations is handled by the "input driver"
 component. Once we know the inputs for the smaller computations the "Engine"
-is used to run the smaller computations. Once GhostFragment has all the
-subsystem properties, GhostFragment combines them to approximate the property
-for the larger system.
+is used to run the smaller computations. Given the results of the smaller
+computations, GhostFragment approximates the property of interest for the 
+larger system.
 
 Input Driver Overview
 =====================
@@ -94,18 +101,22 @@ Link to full discussion :ref:`gf_input_driver_design`.
 .. figure:: assets/input_driver.png
    :align: center
 
-   Illustration of the three main steps of the input driver: fragment formation,
-   |n|-mer formation, and determination of the equation.
+   Illustration of the three main steps of the input driver: 
+   ``FragmentedSystem`` formation,  |n|-mer formation, and determination of the
+   final set of inputs.
 
 :numref:`fig_gf_input_driver` shows an overview of how an input chemical 
 system (*i.e.*, the input of the large calculatoin) is mapped to a series of
-smaller sub-calculations. The first step is to divide the input system into
-:ref:`fragment`; this --- along with :ref:`capping`` the fragments, and 
-assigning basis functions --- is the job of the ``FragmentedSystem`` Driver. 
-After we have the fragmented system, the next step is to create :ref:`nmer` (it
-is assumed that the |n|-mers are also screened during this step). Finally, the
-"Equation Driver" determines the weights for each sub-calculation (potentially
-adding additional subcalculations to address overlaps among |n|-mers).
+smaller sub-calculations. The first step is to divide the input system
+into members of a ``FragmentedSystem``; this is the responsibility of the
+``FragmentedSystem`` Driver. After we have fragmented the system, the next step 
+is to create |n|-mers. This process also usually screens the |n|-mers (*i.e.*,
+determines which |n|-body interactions are important, so this step is handled
+by a "screener". Finally, the "Interaction Driver" is responsible for using
+the |n|-mers to determine the full set of sub-calculations which must be
+performed to compute the interaction. During this process, the interaction
+driver adds additional subcalculations needed to address overlaps among the 
+|n|-mers, adds caps to severed bonds, and assigns AO basis sets.
 
 Fragmented System Driver
 ========================
@@ -117,7 +128,8 @@ Link to full discussion :ref:`gf_fragmented_system_driver_design`.
 .. figure:: assets/fragmented_system_driver.png
    :align: center
 
-   The major components of the ``FragmentedSystem`` driver.
+   The three major components of the ``FragmentedSystem`` driver include: the
+   "fragment driver", the "Charge/Multiplicity driver", and the "field driver". 
 
 Fragment Driver
 ===============
