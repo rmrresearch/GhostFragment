@@ -129,12 +129,32 @@ Link to full discussion :ref:`gf_fragmented_system_driver_design`.
    :align: center
 
    The three major components of the ``FragmentedSystem`` driver include: the
-   "fragment driver", the "Charge/Multiplicity driver", and the "field driver". 
+   "fragment driver", the "Charge/Multiplicity driver", and the "field driver".
+
+:numref:`fig_gf_fragmented_system_driver` shows an overview of how the input
+chemical system is broken into fragments. The first step is to create subsets of
+nuclei from the nuclei of the original system via a ``FragmentDriver`` module.
+Then a "Charge/Mult" driver assigns charges and multiplicites to each of the 
+fragments resulting in a series of molecules stored in a ``FragmentedMolecule``
+object. From their the ``FieldDriver`` assigns fields to each of the molecules
+in the ``FragmentedMolecule`` resulting in the ``FragmentedSystem`` object.
 
 Fragment Driver
 ===============
 
+Link to the full discussion :ref:`gf_fragment_driver`.
+
 .. figure:: assets/fragment_driver.png
    :align: center
 
-   The major components of the ``FragmentDriver``.
+   The major components of the ``FragmentDriver`` are the ``Atomizer``, the
+   ``Grapher``, and the ``Fragmenter``.
+
+:numref:`fig_gf_fragment_driver` shows an overview of the ``FragmentDriver`` 
+which is responsible for breaking the input chemical system into fragments. To
+do this the ``Atomizer`` first breaks the input chemical system
+into pseudoatoms, *i.e.*, the most fundamental units of the chemical system.
+From this point everything is expressed in terms of pseudoatoms. Next, the
+connectivity of the pseudoatoms is assessed by the ``Grapher`` module. The
+result is a connectivity table for the pseudoatoms. Finally, the ``Fragmenter``
+module breaks the graph into subgraphs, each of which is a set of nuclei. 
