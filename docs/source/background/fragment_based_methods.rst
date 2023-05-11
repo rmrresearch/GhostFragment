@@ -2,6 +2,11 @@
 Fragment Based Methods
 ######################
 
+Fragment-based methods are a series of reduced-scaling quantum chemistry 
+approximations which rely on the near-sighted nature of electronic matter to
+circumvent the highly non-linear scaling of traditional electronic structure
+methods. This page is meant as a general introduction to the concept.
+
 .. |n|  replace:: :math:`N`
 .. |n3| replace:: :math:`\mathcal{O}\left(N^3\right)`
 .. |n5| replace:: :math:`\mathcal{O}\left(N^5\right)`
@@ -20,6 +25,10 @@ Fragment Based Methods
    energy of water hexamer as the sum of the energies of each water molecule. 
    Right. The 1-body MBE approximation is dramatically cheaper to compute than
    the energy of the water hexamer.   
+
+***********
+The Problem
+***********
 
 The goal of quantum chemistry is to be able to predict and explain 
 computational phenomenona using rigorous physical models that contain little
@@ -46,4 +55,39 @@ times longer than computing the energy of a single water molecule.
 ***********
 A solution?
 ***********
+
+While the exact electronic Hamiltonian is a pair-wise operator, for a given
+basis set the exact electron wavefunction has contributions arising from all 
+possible excitations out of a reference state. In practice, excitations tend
+to contribute more to the wavefunction if the orbitals involved in the 
+excitation are spatially local to one another. Thus, to reduce the scaling of
+an electronic structure method, one may somehow restrict the set of excitations
+considered to spatially local sets. 
+
+Conceptually one of the easiest ways to establish local sets is to fragment a
+molecule. In the full water hexamer calculation shown on the left side 
+:numref:`fig_hexamer_1b` each electron can see each orbital. The middle panel
+of :numref:`fig_hexamer_1b` suggests that we instead treat water hexamer as six
+separate water molecules. By separate we mean the electrons in each water
+molecule can now only see the orbitals associated with that water molecule. In
+practice, this is somewhat trivial to implement, as it just amounts to running 
+six individual calculations (one for each water molecule). As shown on the 
+right side of :numref:`fig_hexamer_1b`, by fragmenting water hexamer, we can 
+approximate the energy of the water hexamer at a cost of six times |t1|. Even
+for SCF this represents a reduction of two orders of magnitude in the time to
+solution; the savings are even more remarkable for high-accuracy CCSD(T) which
+sees a reduction in time of five orders of magnitude!
+
+The approximation just described is known as a one-body method because the
+target system is broken up into fragments and those fragments are not allowed
+to interact with one another. As this description suggests the one-body
+approximation is usually not particularly accurate on account of neglecting the
+interactions among the various fragments. Unfortunately, for most use cases, a 
+reduction in computational cost is only useful if the corresponding 
+approximation is sufficiently accurate, and one-body fragment-based methods
+are rarely of interest.
+
+*****************
+The real solution
+*****************
 
