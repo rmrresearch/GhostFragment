@@ -14,6 +14,7 @@ section record the process of designing GhostFragment.
     considerations
     architecture
     fragment_driver
+    fragmented_molecule
     fragmented_system_driver
     input_driver
     nmers
