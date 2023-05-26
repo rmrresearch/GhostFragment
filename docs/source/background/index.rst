@@ -13,13 +13,14 @@ to the topics of basis-set superposition error and fragment-based methods.
    occurrence).
 
 .. toctree::
-    :maxdepth: 2
-    :caption: Contents:
+   :maxdepth: 2
+   :caption: Contents:
 
-    mbe/index
-    gmbe/index
-    bsse/index
-    established_methods/index
-    algorithms/index
-    fragment_vs_nmer
-    terminology
+   fragment_based_methods
+   mbe/index
+   gmbe/index
+   bsse/index
+   established_methods/index
+   algorithms/index
+   frag_v_nmer
+   terminology
