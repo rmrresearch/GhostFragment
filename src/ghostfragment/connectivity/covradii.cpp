@@ -69,9 +69,9 @@ MODULE_RUN(CovRadii) {
         const auto atom_i  = mol[i];
         const auto sigma_i = detail_::cov_radii[atom_i.Z() - 1];
         for(size_type j = i + 1; j < natoms; ++j) {
-            const auto atom_j   = mol[j];
+            const auto atom_j   = mol[j].as_nucleus();
             const auto sigma_j  = detail_::cov_radii[atom_j.Z() - 1];
-            const auto rij      = atomic_distance(atom_i, atom_j);
+            const auto rij      = (atom_i.as_nucleus() - atom_j).magnitude();
             const auto max_bond = tau_plus_1 * (sigma_i + sigma_j);
             if(rij <= max_bond) ct.add_bond(i, j);
         }

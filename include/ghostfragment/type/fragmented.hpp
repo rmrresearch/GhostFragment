@@ -12,7 +12,7 @@ using set_of_fragments = chemist::set_theory::FamilyOfSets<T>;
 
 using fragment_set = set_of_fragments<simde::type::molecule>;
 
-using nmer_set = set_of_fragments<fragmented_molecule>;
+// using nmer_set = set_of_fragments<fragmented_molecule>;
 
 using fragmented_ao_set = set_of_fragments<simde::type::ao_basis_set>;
 

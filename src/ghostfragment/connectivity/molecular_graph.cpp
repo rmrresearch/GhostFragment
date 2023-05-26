@@ -27,8 +27,8 @@ MODULE_RUN(MolecularGraph) {
 
     const auto& [frags] = my_pt::unwrap_inputs(inputs);
 
-    auto& conn_mod           = submods.at("Atomic connectivity");
-    const auto& [atom_conns] = conn_mod.run_as<conn_pt>(frags.object());
+    auto& conn_mod         = submods.at("Atomic connectivity");
+    const auto& atom_conns = conn_mod.run_as<conn_pt>(frags.object());
 
     const auto nnodes = frags.size();
     std::decay_t<decltype(atom_conns)> edges(nnodes);

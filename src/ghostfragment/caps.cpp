@@ -19,15 +19,13 @@ Caps::const_reference Caps::operator[](size_type i) const noexcept {
 
 Caps::const_reference Caps::at(size_type i) const {
     assert_offset_(i);
-    return m_caps_.at(i);
+    return m_caps_[i];
 }
 
 Caps::size_type Caps::replaced_atom(size_type i) const {
     assert_offset_(i);
     return m_atom_replaced_.at(i);
 }
-
-void Caps::hash(type::Hasher& h) const { h(m_caps_, m_atom_replaced_); }
 
 bool Caps::operator==(const Caps& rhs) const noexcept {
     return std::tie(m_caps_, m_atom_replaced_) ==

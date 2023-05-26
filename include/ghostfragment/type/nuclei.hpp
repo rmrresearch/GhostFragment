@@ -14,6 +14,6 @@ using fragmented_molecule = chemist::set_theory::FamilyOfSets<nuclei_set>;
 using atom_set = typename fragmented_molecule::value_type;
 
 /// Type of the nmers
-using nmers = chemist::set_theory::FamilyOfSets<fragmented_molecule>;
+// using nmers = chemist::set_theory::FamilyOfSets<fragmented_molecule>;
 
 } // namespace ghostfragment::type

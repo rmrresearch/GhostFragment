@@ -287,15 +287,6 @@ public:
      */
     bool operator==(const FragmentedSystem& rhs) const noexcept;
 
-    /** @brief Hashes the current instance.
-     *
-     *  @param[in] h The object which will be hashing the state of this
-     *               instance. After this call, the internal state of @p h will
-     *               be updated to contain a hash of the present instance's
-     *               state.
-     */
-    void hash(type::Hasher& h) const;
-
 protected:
     /// Wraps asserting that the instance has a PIMPL, returns it if it does
     pimpl_reference pimpl_();

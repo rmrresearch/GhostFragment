@@ -28,7 +28,7 @@ inline auto sto3g(const ghostfragment::type::nuclei_set& mol) {
     ao_basis_set bs;
     for(const auto& atom_i : mol) {
         atomic_basis_set c;
-        for(std::size_t i = 0; i < 3; ++i) c.coord(i) = atom_i.coords()[i];
+        for(std::size_t i = 0; i < 3; ++i) c.coord(i) = atom_i.coord(i);
         if(atom_i.Z() == 1) {
             c.add_shell(pure, 0, c0, a0);
         } else if(atom_i.Z() == 8) {

@@ -5,13 +5,7 @@ namespace ghostfragment::detail_ {
 
 inline auto atomic_distance(const simde::type::atom& ai,
                             const simde::type::atom& aj) {
-    using size_type = typename simde::type::atom::size_type;
-    double dr       = 0.0;
-    for(size_type q = 0; q < 3; ++q) {
-        const auto dq = ai[q] - aj[q];
-        dr += dq * dq;
-    }
-    return std::sqrt(dr);
+    return (ai.nucleus() - aj.nucleus()).magnitude();
 }
 
 } // namespace ghostfragment::detail_

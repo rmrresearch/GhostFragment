@@ -8,7 +8,7 @@
 
 namespace ghostfragment {
 
-void load_modules(pluginplay::ModuleManager& mm) {
+DEFINE_PLUGIN(ghostfragment) {
     capping::load_modules(mm);
     connectivity::load_modules(mm);
     drivers::load_modules(mm);

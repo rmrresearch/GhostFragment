@@ -17,8 +17,6 @@ struct MolecularGraphPIMPL {
         return std::tie(m_nodes, m_edges) == std::tie(rhs.m_nodes, rhs.m_edges);
     }
 
-    void hash(pluginplay::Hasher& h) const { h(m_nodes, m_edges); }
-
     partitioned_mol_type m_nodes;
 
     connectivity_type m_edges;
@@ -101,13 +99,6 @@ bool MolecularGraph::operator==(const MolecularGraph& rhs) const noexcept {
     else if(!m_pimpl_ && !rhs.m_pimpl_)
         return true;
     return false; // One has a PIMPL other doesn't
-}
-
-void MolecularGraph::hash(pluginplay::Hasher& h) const {
-    if(m_pimpl_)
-        h(*m_pimpl_);
-    else
-        h(nullptr);
 }
 
 void MolecularGraph::print(std::ostream& os) const {

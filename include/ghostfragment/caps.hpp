@@ -40,11 +40,14 @@ namespace ghostfragment {
 class Caps {
 private:
     /// The type used to store the caps
-    using cap_set_type = type::nuclei_set;
+    using cap_set_type = std::vector<chemist::Atom>;
 
 public:
     /// A type like chemist::Atom
     using value_type = cap_set_type::value_type;
+
+    /// Type of a read/write reference to a cap
+    using reference = value_type&;
 
     /// Type of a read-only reference to a cap
     using const_reference = const value_type&;
@@ -161,8 +164,6 @@ public:
      *  @throw None No throw guarantee.
      */
     bool operator==(const Caps& rhs) const noexcept;
-
-    void hash(type::Hasher& h) const;
 
 private:
     /// Code factorization for asserting @p i is in the range [0, size())
