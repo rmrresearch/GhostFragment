@@ -42,23 +42,23 @@ TEST_CASE("STO-3G") {
         auto mol = water(1);
 
         atomic_basis_set O0;
-        O0.coord(0) = mol[0].coords()[0];
-        O0.coord(1) = mol[0].coords()[1];
-        O0.coord(2) = mol[0].coords()[2];
+        O0.coord(0) = mol[0].coord(0);
+        O0.coord(1) = mol[0].coord(1);
+        O0.coord(2) = mol[0].coord(2);
         O0.add_shell(pure, 0, c0_o, a0_o);
         O0.add_shell(pure, 0, c1, a1);
         O0.add_shell(pure, 1, c2, a1);
 
         atomic_basis_set H0;
-        H0.coord(0) = mol[1].coords()[0];
-        H0.coord(1) = mol[1].coords()[1];
-        H0.coord(2) = mol[1].coords()[2];
+        H0.coord(0) = mol[1].coord(0);
+        H0.coord(1) = mol[1].coord(1);
+        H0.coord(2) = mol[1].coord(2);
         H0.add_shell(pure, 0, c0, a0);
 
         atomic_basis_set H1;
-        H1.coord(0) = mol[2].coords()[0];
-        H1.coord(1) = mol[2].coords()[1];
-        H1.coord(2) = mol[2].coords()[2];
+        H1.coord(0) = mol[2].coord(0);
+        H1.coord(1) = mol[2].coord(1);
+        H1.coord(2) = mol[2].coord(2);
         H1.add_shell(pure, 0, c0, a0);
 
         corr.add_center(O0);
@@ -72,43 +72,43 @@ TEST_CASE("STO-3G") {
         auto mol = water(2);
 
         atomic_basis_set O0;
-        O0.coord(0) = mol[0].coords()[0];
-        O0.coord(1) = mol[0].coords()[1];
-        O0.coord(2) = mol[0].coords()[2];
+        O0.coord(0) = mol[0].coord(0);
+        O0.coord(1) = mol[0].coord(1);
+        O0.coord(2) = mol[0].coord(2);
         O0.add_shell(pure, 0, c0_o, a0_o);
         O0.add_shell(pure, 0, c1, a1);
         O0.add_shell(pure, 1, c2, a1);
 
         atomic_basis_set H0;
-        H0.coord(0) = mol[1].coords()[0];
-        H0.coord(1) = mol[1].coords()[1];
-        H0.coord(2) = mol[1].coords()[2];
+        H0.coord(0) = mol[1].coord(0);
+        H0.coord(1) = mol[1].coord(1);
+        H0.coord(2) = mol[1].coord(2);
         H0.add_shell(pure, 0, c0, a0);
 
         atomic_basis_set H1;
-        H1.coord(0) = mol[2].coords()[0];
-        H1.coord(1) = mol[2].coords()[1];
-        H1.coord(2) = mol[2].coords()[2];
+        H1.coord(0) = mol[2].coord(0);
+        H1.coord(1) = mol[2].coord(1);
+        H1.coord(2) = mol[2].coord(2);
         H1.add_shell(pure, 0, c0, a0);
 
         atomic_basis_set O1;
-        O1.coord(0) = mol[3].coords()[0];
-        O1.coord(1) = mol[3].coords()[1];
-        O1.coord(2) = mol[3].coords()[2];
+        O1.coord(0) = mol[3].coord(0);
+        O1.coord(1) = mol[3].coord(1);
+        O1.coord(2) = mol[3].coord(2);
         O1.add_shell(pure, 0, c0_o, a0_o);
         O1.add_shell(pure, 0, c1, a1);
         O1.add_shell(pure, 1, c2, a1);
 
         atomic_basis_set H2;
-        H2.coord(0) = mol[4].coords()[0];
-        H2.coord(1) = mol[4].coords()[1];
-        H2.coord(2) = mol[4].coords()[2];
+        H2.coord(0) = mol[4].coord(0);
+        H2.coord(1) = mol[4].coord(1);
+        H2.coord(2) = mol[4].coord(2);
         H2.add_shell(pure, 0, c0, a0);
 
         atomic_basis_set H3;
-        H3.coord(0) = mol[5].coords()[0];
-        H3.coord(1) = mol[5].coords()[1];
-        H3.coord(2) = mol[5].coords()[2];
+        H3.coord(0) = mol[5].coord(0);
+        H3.coord(1) = mol[5].coord(1);
+        H3.coord(2) = mol[5].coord(2);
         H3.add_shell(pure, 0, c0, a0);
 
         corr.add_center(O0);
@@ -122,10 +122,10 @@ TEST_CASE("STO-3G") {
 
     SECTION("Throws if given a bad Z") {
         using molecule_type = ghostfragment::type::nuclei_set;
-        using atom_type     = typename molecule_type::value_type;
+        using atom_type     = typename molecule_type::atom_type;
         using cart_type     = typename atom_type::coord_type;
         molecule_type mol;
-        mol.push_back(atom_type{"U", 92ul, cart_type{0.0, 0.0, 0.0}});
+        mol.push_back(atom_type{"U", 92ul, 238.0, 0.0, 0.0, 0.0});
         REQUIRE_THROWS_AS(sto3g(mol), std::out_of_range);
     }
 }
