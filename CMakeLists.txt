@@ -1,18 +1,46 @@
+# Copyright 2023 GhostFragment
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 cmake_minimum_required(VERSION 3.14)
-file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" VERSION)
+set(VERSION 1.0.0) #TODO: get from git
 project(ghostfragment VERSION "${VERSION}" LANGUAGES CXX)
 
+include(FetchContent)
+FetchContent_Declare(
+    nwx_cmake
+    GIT_REPOSITORY https://github.com/NWChemEx-Project/NWXCMake
+)
+FetchContent_MakeAvailable(nwx_cmake)
 set(
-    CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${PROJECT_SOURCE_DIR}/cmake"
-    CACHE STRING "" FORCE
+    CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${nwx_cmake_SOURCE_DIR}/cmake"
+    CACHE STRING ""
+    FORCE
 )
 
-include(get_cpp)
-include(nwx_cxx_api_docs)
-nwx_cxx_api_docs("${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/include")
+include(get_cmaize)
 
 ### Options ###
 option(BUILD_TESTING "Should we build the tests?" OFF)
+option(BUILD_PYBIND11_PYBINDINGS "Use pybind11 to build Python3 bindings?" ON)
+
+
+# Work out the project paths
+set(project_inc_dir "${CMAKE_CURRENT_LIST_DIR}/include")
+set(project_src_dir "${CMAKE_CURRENT_LIST_DIR}/src")
+
+include(nwx_cxx_api_docs)
+nwx_cxx_api_docs("${project_src_dir}" "${project_inc_dir}")
 
 cpp_find_or_build_dependency(
     simde
@@ -21,16 +49,27 @@ cpp_find_or_build_dependency(
     BUILD_TARGET simde
     FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
+               BUILD_PYBIND11_PYBINDINGS=ON
 )
 
 cpp_add_library(
-    ${CMAKE_PROJECT_NAME}
-    SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/src/${CMAKE_PROJECT_NAME}"
-    INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/include/${CMAKE_PROJECT_NAME}"
+    ${PROJECT_NAME}
+    SOURCE_DIR "${project_src_dir}/${PROJECT_NAME}"
+    INCLUDE_DIRS "${project_inc_dir}"
     DEPENDS nwx::simde
 )
 
+include(nwx_pybind11)
+nwx_add_pybind11_module(
+    ${PROJECT_NAME}
+    SOURCE_DIR "${project_src_dir}/python"
+    DEPENDS ${PROJECT_NAME}
+)
+
 if("${BUILD_TESTING}")
+    set(cxx_tests_dir "${CMAKE_CURRENT_LIST_DIR}/tests/cxx")
+    set(python_tests_dir "${CMAKE_CURRENT_LIST_DIR}/tests/python")
+
     cpp_find_or_build_dependency(
         Catch2
         VERSION v2.x
@@ -40,9 +79,15 @@ if("${BUILD_TESTING}")
         FIND_TARGET Catch2::Catch2
     )
     cpp_add_tests(
-        "test_${CMAKE_PROJECT_NAME}"
-        SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/tests/${CMAKE_PROJECT_NAME}"
-        INCLUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/src/${CMAKE_PROJECT_NAME}"
-        DEPENDS Catch2::Catch2 ${CMAKE_PROJECT_NAME}
+        "test_${PROJECT_NAME}"
+        SOURCE_DIR "${cxx_tests_dir}/unit_tests/${PROJECT_NAME}"
+        INCLUDE_DIR "${project_src_dir}"
+        DEPENDS Catch2::Catch2 ${PROJECT_NAME}
     )
+    nwx_pybind11_tests(
+        py_ghostfragment
+        ${python_tests_dir}/integration_tests/test_ghostfragment.py
+        SUBMODULES simde chemist pluginplay parallelzone
+    )
+
 endif()

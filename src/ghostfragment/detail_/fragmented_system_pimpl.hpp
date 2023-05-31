@@ -61,10 +61,6 @@ struct FragmentedSystemPIMPL {
                                               rhs.m_atom2ne, rhs.m_cap2ne);
     }
 
-    void hash(type::Hasher& h) const {
-        h(m_frags, m_frag2caps, m_atom2aos, m_cap2aos, m_atom2ne, m_cap2ne);
-    }
-
     /// FamilyOfSets<Molecule> representing the fragments
     fragment_set_type m_frags;
 

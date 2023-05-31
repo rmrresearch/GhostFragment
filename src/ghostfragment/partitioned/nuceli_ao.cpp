@@ -36,7 +36,7 @@ MODULE_RUN(NucleiAO) {
     const auto& mol          = frags.object();
 
     // Step 1: Map atoms to AOs
-    const auto& [atom_ao] =
+    const auto& atom_ao =
       submods.at("Atom to Center").run_as<atom2center_pt>(mol, aos);
 
     typename Frag2AOTraits::fos_value_type fragged_aos(aos);

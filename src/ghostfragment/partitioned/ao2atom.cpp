@@ -41,11 +41,11 @@ MODULE_RUN(AO2Atom) {
 
         const auto& ao = aos[ao_i];
         for(std::size_t atom_i = 0; atom_i < mol.size(); ++atom_i) {
-            const auto& xyz = mol[atom_i].coords();
-            double dx       = ao.x() - xyz[0];
-            double dy       = ao.y() - xyz[1];
-            double dz       = ao.z() - xyz[2];
-            double temp     = std::sqrt(dx * dx + dy * dy + dz * dz);
+            const auto& ai = mol[atom_i];
+            double dx      = ao.x() - ai.x();
+            double dy      = ao.y() - ai.y();
+            double dz      = ao.z() - ai.z();
+            double temp    = std::sqrt(dx * dx + dy * dy + dz * dz);
             if(temp >= dist) continue;
             winner = atom_i;
             dist   = temp;

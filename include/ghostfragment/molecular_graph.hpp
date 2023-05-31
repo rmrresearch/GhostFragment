@@ -206,14 +206,6 @@ public:
      */
     bool operator==(const MolecularGraph& rhs) const noexcept;
 
-    /** @brief Hashes the state of this instance.
-     *
-     *  @param[in,out] h The instance to use to do the hashing. After this call
-     *                   the internal state of @p h will be updated to include a
-     *                   hash of this instance.
-     */
-    void hash(pluginplay::Hasher& h) const;
-
     void print(std::ostream& os) const;
 
 private:

@@ -107,13 +107,6 @@ bool FragmentedSystem::operator==(const FragmentedSystem& rhs) const noexcept {
     return false;
 }
 
-void FragmentedSystem::hash(pluginplay::Hasher& h) const {
-    if(m_pimpl_)
-        h(*m_pimpl_);
-    else
-        h(nullptr);
-}
-
 //------------------------------------------------------------------------------
 //                             Private Members
 //------------------------------------------------------------------------------

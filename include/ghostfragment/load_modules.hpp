@@ -3,6 +3,6 @@
 
 namespace ghostfragment {
 
-void load_modules(pluginplay::ModuleManager& mm);
+DECLARE_PLUGIN(ghostfragment);
 
 }

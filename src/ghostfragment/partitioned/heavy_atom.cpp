@@ -42,7 +42,7 @@ MODULE_RUN(HeavyAtom) {
     const auto& [mol] = frags_pt::unwrap_inputs(inputs);
 
     auto& con_mod       = submods.at("Connectivity");
-    const auto& [conns] = con_mod.run_as<conn_pt>(mol);
+    const auto& conns = con_mod.run_as<conn_pt>(mol);
 
     fragmented_molecule frags(mol);
 
