@@ -33,16 +33,4 @@ class Atom{
 		float *getPosition();
 		std::string toString();
 };
-/*
-class System{
-	private:
-		Atom *atoms;
-		int num;
-	public:
-		System(Atom *a, int n);
-
-		Atom *getAtoms();
-		int getNum();
-};
-*/
 #endif

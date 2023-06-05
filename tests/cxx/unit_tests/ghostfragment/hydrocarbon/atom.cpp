@@ -74,16 +74,3 @@ std::string Atom::toString(){
 
 	return msg;
 }
-/*
-System::System(Atom *a, int n){
-	atoms = a;
-	num = n;
-}
-
-Atom* System::getAtoms(){
-	return atoms;
-}
-
-int System::getNum(){
-	return num;
-}*/
