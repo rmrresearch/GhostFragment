@@ -3,55 +3,55 @@
 Atom::Atom(int n, std::string s) {
     symbol = s;
     id     = n;
-    xPos   = 0;
-    yPos   = 0;
-    zPos   = 0;
+    x_pos  = 0;
+    y_pos  = 0;
+    z_pos  = 0;
 }
 
 Atom::Atom(int n, std::string s, float x, float y, float z) {
     id     = n;
     symbol = s;
-    xPos   = x;
-    yPos   = y;
-    zPos   = z;
+    x_pos  = x;
+    y_pos  = y;
+    z_pos  = z;
 }
 
-int Atom::getId() { return id; }
+int Atom::get_id() { return id; }
 
-std::string Atom::getSymbol() { return symbol; }
+std::string Atom::get_symbol() { return symbol; }
 
-float Atom::getX() { return xPos; }
+float Atom::get_x() { return x_pos; }
 
-float Atom::getY() { return yPos; }
+float Atom::get_y() { return y_pos; }
 
-float Atom::getZ() { return zPos; }
+float Atom::get_z() { return z_pos; }
 
-void Atom::setSymbol(std::string s) { symbol = s; }
+void Atom::set_symbol(std::string s) { symbol = s; }
 
-void Atom::setX(float x) { xPos = x; }
+void Atom::set_x(float x) { x_pos = x; }
 
-void Atom::setY(float y) { yPos = y; }
+void Atom::set_y(float y) { y_pos = y; }
 
-void Atom::setZ(float z) { zPos = z; }
+void Atom::set_z(float z) { z_pos = z; }
 
-float* Atom::getPosition() {
+float* Atom::get_position() {
     float* position = (float*)calloc(3, sizeof(float));
-    position[0]     = xPos;
-    position[1]     = yPos;
-    position[2]     = zPos;
+    position[0]     = x_pos;
+    position[1]     = y_pos;
+    position[2]     = z_pos;
 
     return position;
 }
 
-std::string Atom::toString() {
+std::string Atom::to_string() {
     std::string msg = "   ";
     msg.append(symbol);
     msg.append("   ");
-    msg.append(std::to_string(xPos));
+    msg.append(std::to_string(x_pos));
     msg.append(" ");
-    msg.append(std::to_string(yPos));
+    msg.append(std::to_string(y_pos));
     msg.append(" ");
-    msg.append(std::to_string(zPos));
+    msg.append(std::to_string(z_pos));
     msg.append("\n");
 
     return msg;

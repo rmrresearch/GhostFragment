@@ -11,48 +11,48 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    int numCarbon;
+    int num_carbon;
     if(argc == 2) {
-        numCarbon = stoi(argv[1]);
+        num_carbon = stoi(argv[1]);
     } else {
         cout << "How many carbons would you like this molecule to have? ";
-        cin >> numCarbon;
+        cin >> num_carbon;
     }
 
-    int numAtoms = numCarbon * 3 + 2;
+    int num_atoms = num_carbon * 3 + 2;
 
-    Atom* atoms = (Atom*)calloc(numAtoms, sizeof(Atom));
+    Atom* atoms = (Atom*)calloc(num_atoms, sizeof(Atom));
 
-    int atomsCreated = 0;
+    int atoms_created = 0;
 
-    Atom source(atomsCreated, "C");
-    atoms[atomsCreated] = source;
-    atomsCreated++;
+    Atom source(atoms_created, "C");
+    atoms[atoms_created] = source;
+    atoms_created++;
 
-    for(; atomsCreated < numCarbon; atomsCreated++) {
-        Atom a(atomsCreated, "C");
-        positionCarbon(&a, (atoms + atomsCreated - 1), 1.53, 109.5);
-        atoms[atomsCreated] = a;
+    for(; atoms_created < num_carbon; atoms_created++) {
+        Atom a(atoms_created, "C");
+        position_carbon(&a, (atoms + atoms_created - 1), 1.53, 109.5);
+        atoms[atoms_created] = a;
     }
 
-    for(int i = 0; i < numCarbon; i++) {
+    for(int i = 0; i < num_carbon; i++) {
         Atom* c = atoms + i;
-        if(i == 0 || i == numCarbon - 1) {
-            Atom h(atomsCreated, "H");
-            positionHydrogen(&h, c, 0, 1.09, 109.5);
-            atoms[atomsCreated++] = h;
+        if(i == 0 || i == num_carbon - 1) {
+            Atom h(atoms_created, "H");
+            position_hydrogen(&h, c, 0, 1.09, 109.5);
+            atoms[atoms_created++] = h;
         }
 
-        Atom h1(atomsCreated, "H");
-        positionHydrogen(&h1, c, 1, 1.09, 109.5);
-        atoms[atomsCreated++] = h1;
+        Atom h1(atoms_created, "H");
+        position_hydrogen(&h1, c, 1, 1.09, 109.5);
+        atoms[atoms_created++] = h1;
 
-        Atom h2(atomsCreated, "H");
-        positionHydrogen(&h2, c, -1, 1.09, 109.5);
-        atoms[atomsCreated++] = h2;
+        Atom h2(atoms_created, "H");
+        position_hydrogen(&h2, c, -1, 1.09, 109.5);
+        atoms[atoms_created++] = h2;
     }
 
-    printPositions("hydrocarbon.xyz", atoms, atomsCreated);
+    printPositions("hydrocarbon.xyz", atoms, atoms_created);
 
     return 0;
 }

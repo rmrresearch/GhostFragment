@@ -7,9 +7,9 @@ class Atom {
 private:
     int id;
     std::string symbol;
-    float xPos;
-    float yPos;
-    float zPos;
+    float x_pos;
+    float y_pos;
+    float z_pos;
 
 public:
     // Constructors
@@ -17,20 +17,20 @@ public:
     Atom(int n, std::string s, float x, float y, float z);
 
     // Getters
-    int getId();
-    std::string getSymbol();
-    float getX();
-    float getY();
-    float getZ();
+    int get_id();
+    std::string get_symbol();
+    float get_x();
+    float get_y();
+    float get_z();
 
     // Setters
-    void setSymbol(std::string s);
-    void setX(float x);
-    void setY(float y);
-    void setZ(float z);
+    void set_symbol(std::string s);
+    void set_x(float x);
+    void set_y(float y);
+    void set_z(float z);
 
     // Special Functions
-    float* getPosition();
-    std::string toString();
+    float* get_position();
+    std::string to_string();
 };
 #endif
