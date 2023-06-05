@@ -1,12 +1,16 @@
 #include "atom.h"
 #include <math.h>
 
-void createHydrocarbon(Atom* atoms, int numCarbon);
+void create_hydrocarbon(Atom* atoms, int num_carbon);
 
-void createCarbons(Atom* atoms, int numCarbon, int* atomsCreated);
+void create_carbons(Atom* atoms, int num_carbon, int* atoms_created,
+                    float carbon_bond, float angle_deg);
 
-void positionCarbon(Atom* c, Atom* source, float r, float theta);
+void position_carbon(Atom* new_carbon, Atom* source_carbon, float carbon_bond,
+                     float angle_deg);
 
-void createHydrogens(Atom* atoms, int numCarbon, int* atomsCreated);
+void create_hydrogens(Atom* atoms, int num_carbon, int* atoms_created,
+                      float hydrogen_bond, float angle_deg);
 
-void positionHydrogen(Atom* h, Atom* source, int pos, float r, float theta);
+void position_hydrogen(Atom* h, Atom* source, int pos, float hydrogen_bond,
+                       float angle_deg);
