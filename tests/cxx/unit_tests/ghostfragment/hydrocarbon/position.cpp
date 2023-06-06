@@ -5,7 +5,7 @@ float* position_carbon(float* source_coords, float carbon_bond, int num,
     // Creates the pointer for positions
     float* coords = (float*)calloc(3, sizeof(float));
     // Convert degrees to radians
-    float angle_rad = angle_deg * (3.14159 / 180);
+    float angle_rad = angle_deg * (3.14159265358979 / 180);
 
     // Sets the distance in each axis from the source coordinates
     // X: r*sin(theta)
@@ -35,7 +35,7 @@ float* position_hydrogen(float* source_coords, int flag,
     // defined by which place they are taking
     switch(flag) {
         // Goes behind the carbon (z is negative)
-        case -1:
+        case 0:
             // X: 0
             // Y: r*cos(theta)
             // Z: r*sin(theta)
@@ -62,11 +62,18 @@ float* position_hydrogen(float* source_coords, int flag,
             coords[1] *= (num % 2 == 0) ? -1 : 1;
             break;
 
-        // Goes next to the carbon in the x-axis
-        // To the left and up if it is the first carbon,
-        // To the right and down if it is the last
-        case 0:
-            // Sets the distance in each axis from the source coordinates
+        // Goes to the left of the first carbon
+        case 2:
+            // X: r*sin(theta)
+            // Y: r*cos(theta)
+            // Z: 0
+            coords[0] = (-1) * hydrogen_bond * sin(angle_rad / 2);
+            coords[1] = hydrogen_bond * cos(angle_rad / 2);
+            coords[2] = 0;
+            break;
+
+        // Goes to the right of the last carbon
+        case 3:
             // X: r*sin(theta)
             // Y: r*cos(theta)
             // Z: 0
@@ -74,10 +81,9 @@ float* position_hydrogen(float* source_coords, int flag,
             coords[1] = hydrogen_bond * cos(angle_rad / 2);
             coords[2] = 0;
 
-            // Either the x or y distance must be negative
-            //based on if it is the first atom or not
-            int negative = (num == 0) ? 0 : 1;
-            coords[negative] * -1;
+            // If the last carbon is even, the hydrogen must be above, otherwise,
+            // it must be below
+            coords[1] *= (num % 2 == 0) ? 1 : -1;
             break;
     }
 

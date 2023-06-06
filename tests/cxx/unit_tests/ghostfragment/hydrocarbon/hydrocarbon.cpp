@@ -1,7 +1,5 @@
 #include <cmath>
 #include <cstdlib>
-#include <fstream>
-#include <iostream>
 #include <string>
 
 //#include "atom.h"
@@ -25,8 +23,6 @@ using namespace chemist;
 Molecule hydrocarbon(int num_carbon) {
     Molecule m;
 
-    int num_atoms = num_carbon * 3 + 2;
-
     // A log of all carbon atom positions.
     // Used to determine the position of the next carbon and connected hydrogens
     float* source_coords = (float*)calloc(num_carbon * 3, sizeof(float));
@@ -35,10 +31,10 @@ Molecule hydrocarbon(int num_carbon) {
     m.push_back(Atom("C", C_NPROTON, C_MASS, 0, 0, 0));
 
     // Positions each of the following carbon atoms
-    for(int i = 0; i < num_carbon; i++) {
+    for(int i = 1; i < num_carbon; i++) {
         // Finds the new coordinates using the previous ones
-        float* coords =
-          position_carbon(source_coords + (3 + i), C_C_BOND, i, ANGLE);
+        float* coords = position_carbon(source_coords + (3 + (i - 1)), C_C_BOND,
+                                        i - 1, ANGLE);
 
         // Adds the new atom
         m.push_back(
@@ -48,22 +44,38 @@ Molecule hydrocarbon(int num_carbon) {
         for(int j = 0; j < 3; j++) { source_coords[(3 * i) + j] = coords[j]; }
     }
 
-    //Positions each connected hydrogen atom
+    // Positions each connected hydrogen atom
     for(int i = 0; i < num_carbon; i++) {
-        //Will skip a side hydrogen if carbon is one of the middle ones
-        //If the carbon atom is the first or last, 
-        //it must not skip the side hydrogen
-        int step = (i == 0 || i == num_carbon-1) ? 1 : 2;
-
-        //Creates each hydrogen necessary
-        for(int h = 1; h >= -1; h -= step){
-            // Finds the new coordinates using the previous ones
+        // Creates the first hydrogen in the chain
+        if(i == 0) {
+            // Finds the coordinates using the carbon
             float* coords =
-            position_hydrogen(source_coords + (3 + i), h, H_C_BOND, i, ANGLE);
+              position_hydrogen(source_coords + (3 + i), 2, H_C_BOND, i, ANGLE);
 
             // Adds the new atom
             m.push_back(
-            Atom("H", H_NPROTON, H_MASS, coords[0], coords[1], coords[2]));
+              Atom("H", H_NPROTON, H_MASS, coords[0], coords[1], coords[2]));
+        }
+
+        // Creates the side hydrogens
+        for(int j = 0; j <= 1; j++) {
+            // Finds the coordinates using the carbon
+            float* coords =
+              position_hydrogen(source_coords + (3 + i), j, H_C_BOND, i, ANGLE);
+
+            // Adds the new atom
+            m.push_back(
+              Atom("H", H_NPROTON, H_MASS, coords[0], coords[1], coords[2]));
+        }
+
+        if(i == num_carbon - 1) {
+            // Finds the coordinates using the carbon
+            float* coords =
+              position_hydrogen(source_coords + (3 + i), 3, H_C_BOND, i, ANGLE);
+
+            // Adds the new atom
+            m.push_back(
+              Atom("H", H_NPROTON, H_MASS, coords[0], coords[1], coords[2]));
         }
     }
 
