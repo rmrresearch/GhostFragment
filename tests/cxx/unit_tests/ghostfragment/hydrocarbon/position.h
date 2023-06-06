@@ -1,5 +1,4 @@
-//#include "atom.h"
-#include <math.h>
+#include <cmath>
 
 float* position_carbon(float* source_coords, float carbon_bond, int num,
                        float angle_deg);
