@@ -2,6 +2,9 @@
 
 #include <chemist/molecule/atom.hpp>
 #include <chemist/molecule/molecule.hpp>
+#include <chemist/nucleus/nuclei.hpp>
+
+#include <iostream>
 
 namespace testing {
 // Methane Molecule (1 carbon)
@@ -94,7 +97,56 @@ chemist::Molecule Propane() {
 }
 
 bool AreMoleculesEqual(chemist::Molecule m1, chemist::Molecule m2) {
-    if(m1.size() != m2.size()) return false;
+    int size1 = m1.size();
+    int size2 = m2.size();
+
+    // First checks that the molecules have the same number of atoms
+    if(size1 != size2) {
+        std::cout << "Size 1: " << size1 << " does not equal Size 2: " << size2
+                  << "." << std::endl;
+        return false;
+    }
+
+    // Grabs the nuclei of each molecule to check each atom individually
+    chemist::Molecule::const_nuclei_reference nuclei1 = m1.nuclei();
+    chemist::Molecule::const_nuclei_reference nuclei2 = m2.nuclei();
+
+    for(int i = 0; i < size1; i++) {
+        // Each atom must be checked against each other for name and position
+        chemist::Nuclei::const_reference atom1 = nuclei1.at(i);
+        chemist::Nuclei::const_reference atom2 = nuclei2.at(i);
+
+        // Checking the name
+        if(atom1.name() != atom2.name()) {
+            std::cout << "Name 1: " << atom1.name()
+                      << " is not equal to Name 2: " << atom2.name() << "."
+                      << std::endl;
+            return false;
+        }
+
+        // Checking coordinates using a tolerance of 8 digits
+        // X coordinate
+        if((atom1.x() - atom2.x()) > 0.0000001) {
+            std::cout << atom1.name() << " " << i << " x: " << atom1.x()
+                      << " is not equal to " << atom2.name() << " " << i
+                      << " x: " << atom2.x() << "." << std::endl;
+            return false;
+        }
+        // Y coordinate
+        if((atom1.y() - atom2.y()) > 0.0000001) {
+            std::cout << atom1.name() << " " << i << " y: " << atom1.y()
+                      << " is not equal to " << atom2.name() << " " << i
+                      << " y: " << atom2.y() << "." << std::endl;
+            return false;
+        }
+        // Z coordinate
+        if((atom1.z() - atom2.z()) > 0.0000001) {
+            std::cout << atom1.name() << " " << i << " z: " << atom1.z()
+                      << " is not equal to " << atom2.name() << " " << i
+                      << " z: " << atom2.z() << "." << std::endl;
+            return false;
+        }
+    }
 
     return true;
 }

@@ -24,8 +24,8 @@ float* position_carbon(float* source_coords, float carbon_bond, int num,
     return coords;
 }
 
-float* position_hydrogen(float* source_coords, int flag,
-                       int num, float hydrogen_bond, float angle_deg) {
+float* position_hydrogen(float* source_coords, int flag, int num,
+                         float hydrogen_bond, float angle_deg) {
     // Creates the pointer for positions
     float* coords = (float*)calloc(3, sizeof(float));
     // Convert degrees to radians
@@ -81,8 +81,8 @@ float* position_hydrogen(float* source_coords, int flag,
             coords[1] = hydrogen_bond * cos(angle_rad / 2);
             coords[2] = 0;
 
-            // If the last carbon is even, the hydrogen must be above, otherwise,
-            // it must be below
+            // If the last carbon is even, the hydrogen must be above,
+            // otherwise, it must be below
             coords[1] *= (num % 2 == 0) ? 1 : -1;
             break;
     }

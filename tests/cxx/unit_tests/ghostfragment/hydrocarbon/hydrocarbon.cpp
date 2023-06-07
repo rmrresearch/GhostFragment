@@ -1,4 +1,5 @@
-#include <hydrocarbon.h>
+#include "hydrocarbon.h"
+#include <iostream>
 
 Molecule hydrocarbon(int num_carbon) {
     Molecule m;
@@ -13,7 +14,7 @@ Molecule hydrocarbon(int num_carbon) {
     // Positions each of the following carbon atoms
     for(int i = 1; i < num_carbon; i++) {
         // Finds the new coordinates using the previous ones
-        float* coords = position_carbon(source_coords + (3 + (i - 1)), C_C_BOND,
+        float* coords = position_carbon(source_coords + (3 * (i - 1)), C_C_BOND,
                                         i - 1, ANGLE);
 
         // Adds the new atom
@@ -30,7 +31,7 @@ Molecule hydrocarbon(int num_carbon) {
         if(i == 0) {
             // Finds the coordinates using the carbon
             float* coords =
-              position_hydrogen(source_coords + (3 + i), 2, H_C_BOND, i, ANGLE);
+              position_hydrogen(source_coords + (3 * i), 2, i, H_C_BOND, ANGLE);
 
             // Adds the new atom
             m.push_back(
@@ -41,7 +42,7 @@ Molecule hydrocarbon(int num_carbon) {
         for(int j = 0; j <= 1; j++) {
             // Finds the coordinates using the carbon
             float* coords =
-              position_hydrogen(source_coords + (3 + i), j, H_C_BOND, i, ANGLE);
+              position_hydrogen(source_coords + (3 * i), j, i, H_C_BOND, ANGLE);
 
             // Adds the new atom
             m.push_back(
@@ -51,7 +52,7 @@ Molecule hydrocarbon(int num_carbon) {
         if(i == num_carbon - 1) {
             // Finds the coordinates using the carbon
             float* coords =
-              position_hydrogen(source_coords + (3 + i), 3, H_C_BOND, i, ANGLE);
+              position_hydrogen(source_coords + (3 * i), 3, i, H_C_BOND, ANGLE);
 
             // Adds the new atom
             m.push_back(
