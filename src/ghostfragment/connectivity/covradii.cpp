@@ -1,7 +1,7 @@
 #include "connectivity.hpp"
 #include "distance.hpp"
 #include <simde/simde.hpp>
-#include <utilities/iter_tools/combinations.hpp>
+//#include <utilities/iter_tools/combinations.hpp>
 
 namespace ghostfragment::connectivity {
 namespace detail_ {
@@ -57,28 +57,28 @@ MODULE_CTOR(CovRadii) {
 }
 
 MODULE_RUN(CovRadii) {
-    const auto& [mol]     = simde::Connectivity::unwrap_inputs(inputs);
-    const auto tau        = inputs.at("tau").value<double>();
-    const auto tau_plus_1 = tau + 1.0;
-    const auto natoms     = mol.size();
-    simde::type::connectivity_table ct(mol.size());
+    // const auto& [mol]     = simde::Connectivity::unwrap_inputs(inputs);
+    // const auto tau        = inputs.at("tau").value<double>();
+    // const auto tau_plus_1 = tau + 1.0;
+    // const auto natoms     = mol.size();
+    // simde::type::connectivity_table ct(mol.size());
 
-    using size_type = typename std::decay_t<decltype(mol)>::size_type;
-    using ghostfragment::detail_::atomic_distance;
-    for(size_type i = 0; i < natoms; ++i) {
-        const auto atom_i  = mol[i];
-        const auto sigma_i = detail_::cov_radii[atom_i.Z() - 1];
-        for(size_type j = i + 1; j < natoms; ++j) {
-            const auto atom_j   = mol[j].as_nucleus();
-            const auto sigma_j  = detail_::cov_radii[atom_j.Z() - 1];
-            const auto rij      = (atom_i.as_nucleus() - atom_j).magnitude();
-            const auto max_bond = tau_plus_1 * (sigma_i + sigma_j);
-            if(rij <= max_bond) ct.add_bond(i, j);
-        }
-    }
+    // using size_type = typename std::decay_t<decltype(mol)>::size_type;
+    // using ghostfragment::detail_::atomic_distance;
+    // for(size_type i = 0; i < natoms; ++i) {
+    //     const auto atom_i  = mol[i];
+    //     const auto sigma_i = detail_::cov_radii[atom_i.Z() - 1];
+    //     for(size_type j = i + 1; j < natoms; ++j) {
+    //         const auto atom_j   = mol[j].as_nucleus();
+    //         const auto sigma_j  = detail_::cov_radii[atom_j.Z() - 1];
+    //         const auto rij      = (atom_i.as_nucleus() - atom_j).magnitude();
+    //         const auto max_bond = tau_plus_1 * (sigma_i + sigma_j);
+    //         if(rij <= max_bond) ct.add_bond(i, j);
+    //     }
+    // }
 
-    auto rv = results();
-    return simde::Connectivity::wrap_results(rv, ct);
+    // auto rv = results();
+    // return simde::Connectivity::wrap_results(rv, ct);
 }
 
 } // namespace ghostfragment::connectivity
