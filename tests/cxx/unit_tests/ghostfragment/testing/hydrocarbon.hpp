@@ -3,6 +3,7 @@
 #include <chemist/molecule/atom.hpp>
 #include <chemist/molecule/molecule.hpp>
 #include <chemist/nucleus/nuclei.hpp>
+#include <catch2/catch.hpp>
 
 #include <iostream>
 
@@ -16,17 +17,17 @@ chemist::Molecule Methane() {
 
     // First Hydrogen
     methane.push_back(
-      chemist::Atom("H", 1, 1837.289, -0.8901392951, 0.6290882571, 0));
+      chemist::Atom("H", 1, 1837.289, -1.682281604, 1.188919091, 0));
 
     // Side Hydrogens
     methane.push_back(
-      chemist::Atom("H", 1, 1837.289, 0, -0.6290882571, -0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 0, -1.188919091, -1.682281604));
     methane.push_back(
-      chemist::Atom("H", 1, 1837.289, 0, -0.6290882571, 0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 0, -1.188919091, 1.682281604));
 
     // Last Hydrogen
     methane.push_back(
-      chemist::Atom("H", 1, 1837.289, 0.8901392951, 0.6290882571, 0));
+      chemist::Atom("H", 1, 1837.289, 1.682281604, 1.188919091, 0));
 
     return methane;
 }
@@ -38,25 +39,25 @@ chemist::Molecule Ethane() {
     // Carbon Atoms
     ethane.push_back(chemist::Atom("C", 6, 21874.662, 0, 0, 0));
     ethane.push_back(
-      chemist::Atom("C", 6, 21874.662, 1.249461579, 0.8830321408, 0));
+      chemist::Atom("C", 6, 21874.662, 2.360094094, 1.667949599, 0));
 
     // First Hydrogen
     ethane.push_back(
-      chemist::Atom("H", 1, 1837.289, -0.8901392951, 0.6290882571, 0));
+      chemist::Atom("H", 1, 1837.289, -1.682281604, 1.188919091, 0));
 
     // Side Hydrogens
     ethane.push_back(
-      chemist::Atom("H", 1, 1837.289, 0, -0.6290882571, -0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 0, -1.188919091, -1.682281604));
     ethane.push_back(
-      chemist::Atom("H", 1, 1837.289, 0, -0.6290882571, 0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 0, -1.188919091, 1.682281604));
     ethane.push_back(
-      chemist::Atom("H", 1, 1837.289, 1.249461579, 1.512120398, -0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 2.360094094, 2.85686869, -1.682281604));
     ethane.push_back(
-      chemist::Atom("H", 1, 1837.289, 1.249461579, 1.512120398, 0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 2.360094094, 2.85686869, 1.682281604));
 
     // Last Hydrogen
     ethane.push_back(
-      chemist::Atom("H", 1, 1837.289, 2.139600874, 0.2539438837, 0));
+      chemist::Atom("H", 1, 1837.289, 4.042375698, 0.4790305075, 0));
 
     return ethane;
 }
@@ -68,30 +69,30 @@ chemist::Molecule Propane() {
     // Carbon Atoms
     propane.push_back(chemist::Atom("C", 6, 21874.662, 0, 0, 0));
     propane.push_back(
-      chemist::Atom("C", 6, 21874.662, 1.249461579, 0.8830321408, 0));
-    propane.push_back(chemist::Atom("C", 6, 21874.662, 2.498923159, 0, 0));
+      chemist::Atom("C", 6, 21874.662, 2.360094094, 1.667949599, 0));
+    propane.push_back(chemist::Atom("C", 6, 21874.662, 4.720188189, 0, 0));
 
     // First Hydrogen
     propane.push_back(
-      chemist::Atom("H", 1, 1837.289, -0.8901392951, 0.6290882571, 0));
+      chemist::Atom("H", 1, 1837.289, -1.682281604, 1.188919091, 0));
 
     // Side Hydrogens
     propane.push_back(
-      chemist::Atom("H", 1, 1837.289, 0, -0.6290882571, -0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 0, -1.188919091, -1.682281604));
     propane.push_back(
-      chemist::Atom("H", 1, 1837.289, 0, -0.6290882571, 0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 0, -1.188919091, 1.682281604));
     propane.push_back(
-      chemist::Atom("H", 1, 1837.289, 1.249461579, 1.512120398, -0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 2.360094094, 2.85686869, -1.682281604));
     propane.push_back(
-      chemist::Atom("H", 1, 1837.289, 1.249461579, 1.512120398, 0.8901392951));
-    propane.push_back(chemist::Atom("H", 1, 1837.289, 2.498923159,
-                                    -0.6290882571, -0.8901392951));
-    propane.push_back(chemist::Atom("H", 1, 1837.289, 2.498923159,
-                                    -0.6290882571, 0.8901392951));
+      chemist::Atom("H", 1, 1837.289, 2.360094094, 2.85686869, 1.682281604));
+    propane.push_back(chemist::Atom("H", 1, 1837.289, 4.720188189,
+                                    -1.188919091, -1.682281604));
+    propane.push_back(chemist::Atom("H", 1, 1837.289, 4.720188189,
+                                    -1.188919091, 1.682281604));
 
     // Last Hydrogen
     propane.push_back(
-      chemist::Atom("H", 1, 1837.289, 3.389062454, 0.6290882571, 0));
+      chemist::Atom("H", 1, 1837.289, 6.402469793, 1.188919091, 0));
 
     return propane;
 }
@@ -101,11 +102,7 @@ bool AreMoleculesEqual(chemist::Molecule m1, chemist::Molecule m2) {
     int size2 = m2.size();
 
     // First checks that the molecules have the same number of atoms
-    if(size1 != size2) {
-        std::cout << "Size 1: " << size1 << " does not equal Size 2: " << size2
-                  << "." << std::endl;
-        return false;
-    }
+    REQUIRE(size1 == size2);
 
     // Grabs the nuclei of each molecule to check each atom individually
     chemist::Molecule::const_nuclei_reference nuclei1 = m1.nuclei();
@@ -117,35 +114,15 @@ bool AreMoleculesEqual(chemist::Molecule m1, chemist::Molecule m2) {
         chemist::Nuclei::const_reference atom2 = nuclei2.at(i);
 
         // Checking the name
-        if(atom1.name() != atom2.name()) {
-            std::cout << "Name 1: " << atom1.name()
-                      << " is not equal to Name 2: " << atom2.name() << "."
-                      << std::endl;
-            return false;
-        }
+        REQUIRE(atom1.name() == atom2.name());
 
         // Checking coordinates using a tolerance of 8 digits
         // X coordinate
-        if((atom1.x() - atom2.x()) > 0.0000001) {
-            std::cout << atom1.name() << " " << i << " x: " << atom1.x()
-                      << " is not equal to " << atom2.name() << " " << i
-                      << " x: " << atom2.x() << "." << std::endl;
-            return false;
-        }
+        REQUIRE(atom1.x() == Approx(atom2.x()).margin(0.000001));
         // Y coordinate
-        if((atom1.y() - atom2.y()) > 0.0000001) {
-            std::cout << atom1.name() << " " << i << " y: " << atom1.y()
-                      << " is not equal to " << atom2.name() << " " << i
-                      << " y: " << atom2.y() << "." << std::endl;
-            return false;
-        }
+        REQUIRE(atom1.y() == Approx(atom2.y()).margin(0.000001));
         // Z coordinate
-        if((atom1.z() - atom2.z()) > 0.0000001) {
-            std::cout << atom1.name() << " " << i << " z: " << atom1.z()
-                      << " is not equal to " << atom2.name() << " " << i
-                      << " z: " << atom2.z() << "." << std::endl;
-            return false;
-        }
+        REQUIRE(atom1.y() == Approx(atom2.y()).margin(0.000001));
     }
 
     return true;

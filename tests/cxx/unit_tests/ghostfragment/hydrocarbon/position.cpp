@@ -1,9 +1,10 @@
 #include "position.h"
 
-float* position_carbon(float* source_coords, float carbon_bond, int num,
-                       float angle_deg) {
+std::array<float, 3> position_carbon(const std::vector<float>& source_coords,
+                                     float carbon_bond, int num,
+                                     float angle_deg) {
     // Creates the pointer for positions
-    float* coords = (float*)calloc(3, sizeof(float));
+    std::array<float, 3> coords{0.0, 0.0, 0.0};
     // Convert degrees to radians
     float angle_rad = angle_deg * (3.14159265358979 / 180);
 
@@ -19,15 +20,16 @@ float* position_carbon(float* source_coords, float carbon_bond, int num,
     // it must go down
     coords[1] *= (num % 2 == 0) ? 1 : -1;
 
-    for(int i = 0; i < 3; i++) { coords[i] += source_coords[i]; }
+    for(int i = 0; i < 3; i++) { coords[i] += source_coords[(3 * num) + i]; }
 
     return coords;
 }
 
-float* position_hydrogen(float* source_coords, int flag, int num,
-                         float hydrogen_bond, float angle_deg) {
+std::array<float, 3> position_hydrogen(const std::vector<float>& source_coords,
+                                       int flag, int num, float hydrogen_bond,
+                                       float angle_deg) {
     // Creates the pointer for positions
-    float* coords = (float*)calloc(3, sizeof(float));
+    std::array<float, 3> coords{0.0, 0.0, 0.0};
     // Convert degrees to radians
     float angle_rad = angle_deg * (3.14159 / 180);
 
@@ -87,7 +89,7 @@ float* position_hydrogen(float* source_coords, int flag, int num,
             break;
     }
 
-    for(int i = 0; i < 3; i++) { coords[i] += source_coords[i]; }
+    for(int i = 0; i < 3; i++) { coords[i] += source_coords[(3 * num) + i]; }
 
     return coords;
 }
