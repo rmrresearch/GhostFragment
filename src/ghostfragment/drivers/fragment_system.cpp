@@ -31,8 +31,8 @@
 
 // auto assign_electrons(const type::nuclei_set& mol) {
 //     typename pimpl_type::idx2ne_map_type a2ne(mol.size());
-//     for(decltype(a2ne.size()) i = 0; i < a2ne.size(); ++i) a2ne[i] = mol[i].Z();
-//     return a2ne;
+//     for(decltype(a2ne.size()) i = 0; i < a2ne.size(); ++i) a2ne[i] =
+//     mol[i].Z(); return a2ne;
 // }
 
 // } // namespace
@@ -41,9 +41,9 @@
 // FragmentedSystem Driver
 // -----------------------
 
-// This module is responsible for wrapping the process of turning a ChemicalSystem
-// and AOBasisSet instance into a FragmentedSystem instance. This has the
-// following steps:
+// This module is responsible for wrapping the process of turning a
+// ChemicalSystem and AOBasisSet instance into a FragmentedSystem instance. This
+// has the following steps:
 
 // #. Fragment the system.
 // #. Cap the fragments
@@ -52,10 +52,10 @@
 // #. Assign AOs to atoms.
 // #. Assign electrons to fragments.
 
-// Step 1 is done by a submodule of type simde::FragmentedMolecule. Step 2 is done
-// by a submodule of type pt::Frag2AO. For the moment Step 3 is done by the module,
-// and in a naive manner (simply assuming each atom has Z electrons, where Z is
-// that atom's atomic number).
+// Step 1 is done by a submodule of type simde::FragmentedMolecule. Step 2 is
+// done by a submodule of type pt::Frag2AO. For the moment Step 3 is done by the
+// module, and in a naive manner (simply assuming each atom has Z electrons,
+// where Z is that atom's atomic number).
 // )";
 
 // MODULE_CTOR(FragmentedSystem) {

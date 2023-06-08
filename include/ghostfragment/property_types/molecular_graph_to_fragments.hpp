@@ -1,7 +1,6 @@
 #pragma once
+#include <chemist/nucleus/fragmented_nuclei.hpp>
 #include <ghostfragment/molecular_graph.hpp>
-#include <ghostfragment/type/type.hpp>
-#include <simde/simde.hpp>
 
 namespace ghostfragment::pt {
 
@@ -10,7 +9,7 @@ struct MolecularGraphToFragmentsTraits {
     using graph_type = ghostfragment::MolecularGraph;
 
     /// Type of result from a MolecularGraphToFragments module
-    using fragment_type = type::fragmented_molecule;
+    using fragment_type = chemist::FragmentedNuclei;
 };
 
 DECLARE_PROPERTY_TYPE(MolecularGraphToFragments);

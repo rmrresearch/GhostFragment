@@ -1,10 +1,11 @@
 #include "connectivity.hpp"
+#include <ghostfragment/property_types/connectivity_table.hpp>
 #include <ghostfragment/property_types/molecular_graph.hpp>
 
 namespace ghostfragment::connectivity {
 
 using my_pt   = ghostfragment::pt::MolecularGraph;
-using conn_pt = simde::Connectivity;
+using conn_pt = ghostfragment::ConnectivityTable;
 
 const auto module_desc = R"(
 Molecular Graph From Atomic Connectivity
@@ -28,7 +29,7 @@ MODULE_RUN(MolecularGraph) {
     const auto& [frags] = my_pt::unwrap_inputs(inputs);
 
     auto& conn_mod         = submods.at("Atomic connectivity");
-    const auto& atom_conns = conn_mod.run_as<conn_pt>(frags.object());
+    const auto& atom_conns = conn_mod.run_as<conn_pt>(frags.supersystem());
 
     const auto nnodes = frags.size();
     std::decay_t<decltype(atom_conns)> edges(nnodes);

@@ -1,11 +1,12 @@
 #include "partitioned.hpp"
 
+#include <ghostfragment/property_types/connectivity_table.hpp>
 #include <ghostfragment/type/type.hpp>
 
 namespace ghostfragment::partitioned {
 
 using frags_pt = simde::FragmentedMolecule;
-using conn_pt  = simde::Connectivity;
+using conn_pt  = ghostfragment::ConnectivityTable;
 
 const auto mod_desc = R"(
 Fragmentation by Heavy Atom
@@ -41,8 +42,8 @@ MODULE_RUN(HeavyAtom) {
 
     const auto& [mol] = frags_pt::unwrap_inputs(inputs);
 
-    auto& con_mod       = submods.at("Connectivity");
-    const auto& conns = con_mod.run_as<conn_pt>(mol);
+    auto& con_mod     = submods.at("Connectivity");
+    const auto& conns = con_mod.run_as<conn_pt>(mol.nuclei());
 
     fragmented_molecule frags(mol);
 
