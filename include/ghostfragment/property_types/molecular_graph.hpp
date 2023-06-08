@@ -1,11 +1,11 @@
 #pragma once
+#include <chemist/nucleus/fragmented_nuclei.hpp>
 #include <ghostfragment/molecular_graph.hpp>
-#include <ghostfragment/type/type.hpp>
 
 namespace ghostfragment::pt {
 
 struct MolecularGraphTraits {
-    using input_type  = type::fragmented_molecule;
+    using input_type  = chemist::FragmentedNuclei;
     using result_type = ghostfragment::MolecularGraph;
 };
 
