@@ -1,4 +1,4 @@
-#include "../testing/water.hpp"
+#include "../test_ghostfragment.hpp"
 #include <ghostfragment/property_types/connectivity_table.hpp>
 #include <ghostfragment/property_types/molecular_graph.hpp>
 
@@ -99,7 +99,7 @@ TEST_CASE("MolecularGraph from atomic connectivity") {
     }
 
     SECTION("Three nodes") {
-        const auto nodes = testing::fragmented_water(3);
+        const auto nodes = testing::water_fragmented_nuclei(3);
         conn_type atom_cons(9);
         atom_cons.add_bond(0, 1);
         atom_cons.add_bond(0, 2);

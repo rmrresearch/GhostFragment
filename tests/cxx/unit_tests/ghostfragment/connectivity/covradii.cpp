@@ -93,7 +93,7 @@ TEST_CASE("CovRadii Module") {
 
     SECTION("Water monomer") {
         auto h2o = testing::water(1);
-        auto ct  = mod.run_as<pt>(h2o);
+        auto ct  = mod.run_as<pt>(h2o.nuclei());
 
         ct_type corr(3);
         corr.add_bond(0, 1);
@@ -103,7 +103,7 @@ TEST_CASE("CovRadii Module") {
 
     SECTION("Water dimer") {
         auto h2o2 = testing::water(2);
-        auto ct   = mod.run_as<pt>(h2o2);
+        auto ct   = mod.run_as<pt>(h2o2.nuclei());
 
         ct_type corr(6);
         corr.add_bond(0, 1);
