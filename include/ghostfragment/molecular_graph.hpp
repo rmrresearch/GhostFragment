@@ -1,6 +1,6 @@
 #pragma once
-#include <ghostfragment/type/type.hpp>
-#include <simde/simde.hpp>
+#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <chemist/topology/connectivity_table.hpp>
 
 namespace ghostfragment {
 namespace detail_ {
@@ -29,10 +29,10 @@ class MolecularGraphPIMPL;
 class MolecularGraph {
 public:
     /// Type used to input the partitioned molecular system
-    using partitioned_mol_type = type::fragmented_molecule;
+    using partitioned_mol_type = chemist::FragmentedNuclei;
 
     /// Type used to model the Molecule
-    using molecule_type = partitioned_mol_type::superset_type;
+    using molecule_type = partitioned_mol_type::supersystem_type;
 
     /// Read-only reference to the Molecule
     using const_molecule_reference = const molecule_type&;
@@ -44,7 +44,7 @@ public:
     using const_node_reference = const node_type&;
 
     /// Type used to input the connectivity
-    using connectivity_type = simde::type::connectivity_table;
+    using connectivity_type = chemist::topology::ConnectivityTable;
 
     /// Type used for edges of the graph
     using edge_type = connectivity_type::pair_type;

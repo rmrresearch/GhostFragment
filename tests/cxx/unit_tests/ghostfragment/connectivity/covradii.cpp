@@ -1,100 +1,116 @@
-// #include "../test_ghostfragment.hpp"
+#include "../test_ghostfragment.hpp"
+#include "../testing/water.hpp"
+#include <ghostfragment/connectivity/connectivity.hpp>
+#include <ghostfragment/property_types/connectivity_table.hpp>
 
-// TEST_CASE("CovRadii Module") {
-//     using pt            = simde::Connectivity;
-//     using molecule_type = simde::type::molecule;
-//     using atom_type     = typename molecule_type::value_type;
-//     using cart_type     = typename atom_type::coord_type;
-//     using ct_type       = simde::type::connectivity_table;
+using namespace ghostfragment;
 
-//     auto mm   = testing::initialize();
-//     auto& mod = mm.at("Covalent Radius");
+TEST_CASE("CovRadii Module") {
+    using pt            = ConnectivityTable;
+    using molecule_type = ConnectivityTableTraits::input_type;
+    using atom_type     = typename molecule_type::value_type;
+    using ct_type       = ConnectivityTableTraits::result_type;
 
-//     const auto sigma_h = 0.585815;
-//     const auto sigma_o = 1.247219;
+    auto mm   = testing::initialize();
+    auto& mod = mm.at("Covalent Radius");
 
-//     SECTION("Default tau") {
-//         atom_type h0{"H", 1ul, cart_type{0.0, 0.0, 0.0}};
-//         SECTION("Two H atoms") {
-//             SECTION("Less than tau * sigma") {
-//                 cart_type r1{0.0, 0.0, 0.9 * (sigma_h + sigma_h)};
-//                 molecule_type h2{h0, atom_type{"H", 1ul, r1}};
+    const auto sigma_h = connectivity::covalent_radius(1);
+    const auto sigma_o = connectivity::covalent_radius(8);
+    const atom_type h0("H", 1ul, 1837.289, 0.0, 0.0, 0.0);
 
-//                 auto [ct] = mod.run_as<pt>(h2);
-//                 ct_type corr(2);
-//                 corr.add_bond(0, 1);
-//                 REQUIRE(ct == corr);
-//             }
+    SECTION("Default tau") {
+        SECTION("Two H atoms") {
+            SECTION("Less than tau * sigma") {
+                atom_type h1(h0);
+                h1.z() = 0.9 * (sigma_h + sigma_h);
+                molecule_type h2{h0, h1};
 
-//             SECTION("At tau * sigma") {
-//                 cart_type r1{0.0, 0.0, 1.1 * (sigma_h + sigma_h)};
-//                 molecule_type h2{h0, atom_type{"H", 1ul, r1}};
+                auto ct = mod.run_as<pt>(h2);
+                ct_type corr(2);
+                corr.add_bond(0, 1);
+                REQUIRE(ct == corr);
+            }
 
-//                 auto [ct] = mod.run_as<pt>(h2);
-//                 ct_type corr(2);
-//                 corr.add_bond(0, 1);
-//                 REQUIRE(ct == corr);
-//             }
+            SECTION("At tau * sigma") {
+                atom_type h1(h0);
+                h1.z() = 1.1 * (sigma_h + sigma_h);
+                molecule_type h2{h0, h1};
 
-//             SECTION("Longer than tau * sigma") {
-//                 cart_type r1{0.0, 0.0, 2.0 * (sigma_h + sigma_h)};
-//                 molecule_type h2{h0, atom_type{"H", 1ul, r1}};
+                auto ct = mod.run_as<pt>(h2);
+                ct_type corr(2);
+                corr.add_bond(0, 1);
+                REQUIRE(ct == corr);
+            }
 
-//                 auto [ct] = mod.run_as<pt>(h2);
-//                 ct_type corr(2);
-//                 REQUIRE(ct == corr);
-//             }
-//         }
-//     }
+            SECTION("Longer than tau * sigma") {
+                atom_type h1(h0);
+                h1.z() = 2.0 * (sigma_h + sigma_h);
+                molecule_type h2{h0, h1};
 
-//     SECTION("Non-default tau") {
-//         mod.change_input("tau", 1.0);
-//         atom_type h0{"H", 1ul, cart_type{0.0, 0.0, 0.0}};
-//         SECTION("Two H atoms") {
-//             SECTION("Less than tau * sigma") {
-//                 cart_type r1{0.0, 0.0, 0.9 * (sigma_h + sigma_h)};
-//                 molecule_type h2{h0, atom_type{"H", 1ul, r1}};
+                auto ct = mod.run_as<pt>(h2);
+                ct_type corr(2);
+                REQUIRE(ct == corr);
+            }
+        }
+    }
 
-//                 auto [ct] = mod.run_as<pt>(h2);
-//                 ct_type corr(2);
-//                 corr.add_bond(0, 1);
-//                 REQUIRE(ct == corr);
-//             }
+    SECTION("Non-default tau") {
+        mod.change_input("tau", 1.0);
+        SECTION("Two H atoms") {
+            SECTION("Less than tau * sigma") {
+                atom_type h1(h0);
+                h1.z() = 0.9 * (sigma_h + sigma_h);
+                molecule_type h2{h0, h1};
 
-//             SECTION("At tau * sigma") {
-//                 cart_type r1{0.0, 0.0, 2.0 * (sigma_h + sigma_h)};
-//                 molecule_type h2{h0, atom_type{"H", 1ul, r1}};
+                auto ct = mod.run_as<pt>(h2);
+                ct_type corr(2);
+                corr.add_bond(0, 1);
+                REQUIRE(ct == corr);
+            }
 
-//                 auto [ct] = mod.run_as<pt>(h2);
-//                 ct_type corr(2);
-//                 corr.add_bond(0, 1);
-//                 REQUIRE(ct == corr);
-//             }
+            SECTION("At tau * sigma") {
+                atom_type h1(h0);
+                h1.z() = 2.0 * (sigma_h + sigma_h);
+                molecule_type h2{h0, h1};
 
-//             SECTION("Longer than tau * sigma") {
-//                 cart_type r1{0.0, 0.0, 3.0 * (sigma_h + sigma_h)};
-//                 molecule_type h2{h0, atom_type{"H", 1ul, r1}};
+                auto ct = mod.run_as<pt>(h2);
+                ct_type corr(2);
+                corr.add_bond(0, 1);
+                REQUIRE(ct == corr);
+            }
 
-//                 auto [ct] = mod.run_as<pt>(h2);
-//                 ct_type corr(2);
-//                 REQUIRE(ct == corr);
-//             }
-//         }
-//     }
+            SECTION("Longer than tau * sigma") {
+                atom_type h1(h0);
+                h1.z() = 3.0 * (sigma_h + sigma_h);
+                molecule_type h2{h0, h1};
 
-//     SECTION("Water monomer") {
-//         cart_type rO{0.00000000000000, -0.07579039945857, 0.00000000000000};
-//         cart_type rH0{0.86681456860648, 0.60144316994806, 0.00000000000000};
-//         cart_type rH1{-0.86681456860648, 0.60144316994806, 0.00000000000000};
-//         atom_type O{"O", 8ul, rO};
-//         atom_type H0{"H", 1ul, rH0};
-//         atom_type H1{"H", 1ul, rH1};
-//         molecule_type h2o{O, H0, H1};
+                auto ct = mod.run_as<pt>(h2);
+                ct_type corr(2);
+                REQUIRE(ct == corr);
+            }
+        }
+    }
 
-//         auto [ct] = mod.run_as<pt>(h2o);
-//         ct_type corr(3);
-//         corr.add_bond(0, 1);
-//         corr.add_bond(0, 2);
-//         REQUIRE(ct == corr);
-//     }
-// }
+    SECTION("Water monomer") {
+        auto h2o = testing::water(1);
+        auto ct  = mod.run_as<pt>(h2o.nuclei());
+
+        ct_type corr(3);
+        corr.add_bond(0, 1);
+        corr.add_bond(0, 2);
+        REQUIRE(ct == corr);
+    }
+
+    SECTION("Water dimer") {
+        auto h2o2 = testing::water(2);
+        auto ct   = mod.run_as<pt>(h2o2.nuclei());
+
+        ct_type corr(6);
+        corr.add_bond(0, 1);
+        corr.add_bond(0, 2);
+        corr.add_bond(3, 4);
+        corr.add_bond(3, 5);
+
+        REQUIRE(ct == corr);
+    }
+}

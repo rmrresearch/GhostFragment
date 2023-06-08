@@ -9,9 +9,8 @@ using namespace testing;
  */
 
 TEST_CASE("water") {
-    using molecule_type = ghostfragment::type::nuclei_set;
+    using molecule_type = chemist::Molecule;
     using atom_type     = typename molecule_type::atom_type;
-    using cart_type     = typename atom_type::coord_type;
     const unsigned long OZ{8}, HZ{1};
     const double Om{16.0}, Hm{1.0};
     const double Ox{0.00000000000000}, Oy{-0.07579039945857};
@@ -70,5 +69,35 @@ TEST_CASE("water") {
         corr.push_back(atom_type{"H", HZ, Hm, Hx, Hy, 9.0});
         corr.push_back(atom_type{"H", HZ, Hm, -Hx, Hy, 9.0});
         REQUIRE(corr == water(4));
+    }
+}
+
+TEST_CASE("water_fragmented_nuclei") {
+    using corr_type = decltype(water_fragmented_nuclei(0));
+
+    SECTION("Zero Waters") {
+        corr_type corr(water(0).nuclei());
+        REQUIRE(water_fragmented_nuclei(0) == corr);
+    }
+
+    SECTION("One Water") {
+        corr_type corr(water(1).nuclei());
+        corr.add_fragment({0, 1, 2});
+        REQUIRE(water_fragmented_nuclei(1) == corr);
+    }
+
+    SECTION("Two Waters") {
+        corr_type corr(water(2).nuclei());
+        corr.add_fragment({0, 1, 2});
+        corr.add_fragment({3, 4, 5});
+        REQUIRE(water_fragmented_nuclei(2) == corr);
+    }
+
+    SECTION("Three Waters") {
+        corr_type corr(water(3).nuclei());
+        corr.add_fragment({0, 1, 2});
+        corr.add_fragment({3, 4, 5});
+        corr.add_fragment({6, 7, 8});
+        REQUIRE(water_fragmented_nuclei(3) == corr);
     }
 }
