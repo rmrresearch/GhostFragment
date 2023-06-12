@@ -1,7 +1,7 @@
-#include "broken_bonds.hpp"
 #include <ghostfragment/property_types/broken_bonds.hpp>
 #include <ghostfragment/property_types/connectivity_table.hpp>
 #include <ghostfragment/property_types/molecular_graph.hpp>
+#include <simde/simde.hpp>
 
 namespace ghostfragment::connectivity {
 
@@ -51,12 +51,12 @@ MODULE_RUN(BrokenBonds) {
             // molecule graph
             for(const auto existing_bonds : edges) {
                 // If the index is in the first, that means its pair is bigger
-                if(atom_i == existing_bonds.first) {
+                if(atom_i == existing_bonds[0]) {
                     auto in_current_frag = false;
 
                     // Checks to see if the pair is already in the fragment
                     for(const auto atom_j : nukes) {
-                        if(atom_j == existing_bonds.second) {
+                        if(atom_j == existing_bonds[1]) {
                             in_current_frag = true;
                             break;
                         }
@@ -65,18 +65,18 @@ MODULE_RUN(BrokenBonds) {
                     // If the pair is not already in the fragment,
                     // then it is a broken bond and must be added to the set
                     if(!in_current_frag) {
-                        bond_type broken(atom_i, atom_j);
+                        bond_type broken(atom_i, existing_bonds[1]);
                         frag_set.insert(broken);
                     }
                 }
 
                 // If the index is in the second, that means its pair is smaller
-                if(atom_i == existing_bonds.second) {
+                if(atom_i == existing_bonds[1]) {
                     auto in_current_frag = false;
 
                     // Checks to see if the pair is already in the fragment
                     for(const auto atom_j : nukes) {
-                        if(atom_j == existing_bonds.first) {
+                        if(atom_j == existing_bonds[0]) {
                             in_current_frag = true;
                             break;
                         }
@@ -85,7 +85,7 @@ MODULE_RUN(BrokenBonds) {
                     // If the pair is not already in the fragment,
                     // then it is a broken bond and must be added to the set
                     if(!in_current_frag) {
-                        bond_type broken(atom_j, atom_i);
+                        bond_type broken(existing_bonds[0], atom_i);
                         frag_set.insert(broken);
                     }
                 }
