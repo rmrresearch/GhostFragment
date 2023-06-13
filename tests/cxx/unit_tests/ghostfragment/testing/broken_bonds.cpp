@@ -5,7 +5,7 @@
 using namespace testing;
 
 TEST_CASE("Broken Bonds") {
-    using pt = ghostfragment::pt::BrokenBonds;
+    using pt         = ghostfragment::pt::BrokenBonds;
     using input_type = chemist::FragmentedNuclei;
 
     using size_type   = typename input_type::size_type;

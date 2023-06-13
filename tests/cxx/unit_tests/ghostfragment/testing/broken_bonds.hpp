@@ -64,5 +64,4 @@ inline auto bonds_propane_two() {
     return bonds;
 }
 
-
 } // namespace testing

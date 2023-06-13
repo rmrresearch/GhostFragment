@@ -1,12 +1,12 @@
+#include "connectivity.hpp"
 #include <ghostfragment/property_types/broken_bonds.hpp>
 #include <ghostfragment/property_types/connectivity_table.hpp>
 #include <ghostfragment/property_types/molecular_graph.hpp>
-#include "connectivity.hpp"
 #include <simde/simde.hpp>
 
 namespace ghostfragment::connectivity {
 
-using my_pt    = ghostfragment::pt::BrokenBonds;
+using my_pt   = ghostfragment::pt::BrokenBonds;
 using conn_pt = ghostfragment::ConnectivityTable;
 // using conn_pt  = ghostfragment::ConnectivityTable;
 
