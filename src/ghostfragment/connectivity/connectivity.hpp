@@ -32,15 +32,18 @@ inline double covalent_radius(std::size_t z) {
 
 DECLARE_MODULE(CovRadii);
 DECLARE_MODULE(MolecularGraph);
+DECLARE_MODULE(BrokenBonds);
 
 inline void load_modules(pluginplay::ModuleManager& mm) {
     mm.add_module<CovRadii>("Covalent Radius");
     mm.add_module<MolecularGraph>("Molecular Graph");
+    mm.add_module<BrokenBonds>("Broken Bonds");
 }
 
 inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Molecular Graph", "Atomic connectivity",
                      "Covalent Radius");
+    mm.change_submod("Broken Bonds", "Molecular Graph", "Molecular Graph");
 }
 
 } // namespace ghostfragment::connectivity

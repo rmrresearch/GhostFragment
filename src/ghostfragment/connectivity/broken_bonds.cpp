@@ -1,13 +1,15 @@
 #include <ghostfragment/property_types/broken_bonds.hpp>
 #include <ghostfragment/property_types/connectivity_table.hpp>
 #include <ghostfragment/property_types/molecular_graph.hpp>
+#include "connectivity.hpp"
 #include <simde/simde.hpp>
+#include <iostream>
 
 namespace ghostfragment::connectivity {
 
 using my_pt    = ghostfragment::pt::BrokenBonds;
 using graph_pt = ghostfragment::pt::MolecularGraph;
-using conn_pt  = ghostfragment::ConnectivityTable;
+// using conn_pt  = ghostfragment::ConnectivityTable;
 
 const auto module_desc = R"(
 Broken Bonds from Fragmented Nuclei
@@ -20,8 +22,6 @@ fragments.
 
 MODULE_CTOR(BrokenBonds) {
     satisfies_property_type<my_pt>();
-
-    add_submodule<conn_pt>("Atomic connectivity");
     add_submodule<graph_pt>("Molecular Graph");
 }
 
@@ -44,6 +44,7 @@ MODULE_RUN(BrokenBonds) {
         // The set of bonds for a specific fragment
         set_type frag_set;
         const auto nukes = frags[i];
+        std::cout << "Fragment size is " << nukes.size() << std::endl;
 
         // Looks at each nucleus index within the fragment
         for(const auto atom_i : nukes) {
@@ -52,6 +53,7 @@ MODULE_RUN(BrokenBonds) {
             for(const auto existing_bonds : edges) {
                 // If the index is in the first, that means its pair is bigger
                 if(atom_i == existing_bonds[0]) {
+                    std::cout << "Atom " << atom_i << " found in bond [" << existing_bonds[0] << "][" << existing_bonds[1] << "]" << std::endl;
                     auto in_current_frag = false;
 
                     // Checks to see if the pair is already in the fragment
@@ -66,12 +68,14 @@ MODULE_RUN(BrokenBonds) {
                     // then it is a broken bond and must be added to the set
                     if(!in_current_frag) {
                         bond_type broken(atom_i, existing_bonds[1]);
+                        std::cout << "Logging bond [" << broken.first << "][" << broken.second << "]" << std::endl;
                         frag_set.insert(broken);
                     }
                 }
 
                 // If the index is in the second, that means its pair is smaller
                 if(atom_i == existing_bonds[1]) {
+                    std::cout << "Atom " << atom_i << " found in bond [" << existing_bonds[0] << "][" << existing_bonds[1] << "]" << std::endl;
                     auto in_current_frag = false;
 
                     // Checks to see if the pair is already in the fragment
@@ -86,6 +90,7 @@ MODULE_RUN(BrokenBonds) {
                     // then it is a broken bond and must be added to the set
                     if(!in_current_frag) {
                         bond_type broken(existing_bonds[0], atom_i);
+                        std::cout << "Logging bond [" << broken.first << "][" << broken.second << "]" << std::endl;
                         frag_set.insert(broken);
                     }
                 }
@@ -94,7 +99,9 @@ MODULE_RUN(BrokenBonds) {
 
         // Adding the fragment's set of broken bonds to the system-wide vector
         bonds.push_back(frag_set);
+        std::cout << std::endl;
     }
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
     // Returning the results
     auto rv = results();

@@ -23,11 +23,7 @@ PROPERTY_TYPE_INPUTS(BrokenBonds) {
 
 PROPERTY_TYPE_RESULTS(BrokenBonds) {
     using result_type = BrokenBondsTraits::result_type;
-    return pluginplay::declare_result().add_field<result_type>("Broken bonds");
+    return pluginplay::declare_result().add_field<result_type>("Broken Bonds");
 }
 
 } // namespace ghostfragment::pt
-
-namespace ghostfragment::connectivity{
-    DECLARE_MODULE(BrokenBonds);
-}
