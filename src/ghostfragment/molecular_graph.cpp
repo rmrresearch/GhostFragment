@@ -64,7 +64,7 @@ MolecularGraph::~MolecularGraph() noexcept = default;
 
 MolecularGraph::const_molecule_reference MolecularGraph::molecule() const {
     assert_pimpl_();
-    return m_pimpl_->m_nodes.object();
+    return m_pimpl_->m_nodes.supersystem();
 }
 
 MolecularGraph::size_type MolecularGraph::nnodes() const noexcept {
@@ -103,7 +103,7 @@ bool MolecularGraph::operator==(const MolecularGraph& rhs) const noexcept {
 
 void MolecularGraph::print(std::ostream& os) const {
     if(!m_pimpl_) return;
-    os << m_pimpl_->m_nodes << std::endl;
+    for(const auto& nuke_i : m_pimpl_->m_nodes) os << nuke_i << std::endl;
     os << m_pimpl_->m_edges;
 }
 

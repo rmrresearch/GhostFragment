@@ -3,10 +3,10 @@
 
 namespace ghostfragment::expressions {
 
-DECLARE_MODULE(MBE);
+// DECLARE_MODULE(MBE);
 
 inline void load_modules(pluginplay::ModuleManager& mm) {
-    mm.add_module<MBE>("Many-body expansion");
+    // mm.add_module<MBE>("Many-body expansion");
 }
 
 inline void set_defaults(pluginplay::ModuleManager& mm) {}

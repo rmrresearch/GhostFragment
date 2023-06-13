@@ -96,10 +96,10 @@ MODULE_RUN(Cluster) {
     }
 
     for(const auto& [tag, patoms] : patom2frag) {
-        subset_type new_mol(frags.data());
+        std::set<std::size_t> new_mol;
         for(auto patom_i : patoms)
             for(auto atom_i : graph.node(patom_i)) new_mol.insert(atom_i);
-        frags.insert(new_mol);
+        frags.add_fragment(new_mol.begin(), new_mol.end());
     }
 
     auto rv = results();
