@@ -53,10 +53,10 @@ inline auto bonds_propane_two() {
     result_type bonds;
 
     bond_set set1;
-    set1.insert(bond_type(0, 1));
+    set1.insert(bond_type(1, 2));
 
     bond_set set2;
-    set2.insert(bond_type(1, 2));
+    set2.insert(bond_type(0, 1));
 
     bonds.push_back(set1);
     bonds.push_back(set2);
