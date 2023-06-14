@@ -7,6 +7,13 @@
 #include <chemist/nucleus/fragmented_nuclei.hpp>
 
 namespace testing {
+// Methane Molecule with fragment size 1
+inline auto frag_methane_one(){
+    auto hc = hydrocarbon(1);
+    chemist::FragmentedNuclei frags(hc.nuclei());
+    frags.add_fragment({0, 1, 2, 3, 4});
+    return frags;
+}
 // Ethane Molecule with fragments size 1
 inline auto frag_ethane_one() {
     auto hc = hydrocarbon(2);

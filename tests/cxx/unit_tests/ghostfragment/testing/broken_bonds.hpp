@@ -13,6 +13,18 @@ using size_type   = typename input_type::size_type;
 using bond_type   = std::pair<size_type, size_type>;
 using bond_set    = std::set<bond_type>;
 using result_type = std::vector<bond_set>;
+
+// Broken bonds of an ethane molecule with fragment size 1
+inline auto bonds_methane_one() {
+    result_type bonds;
+
+    bond_set set1;
+
+    bonds.push_back(set1);
+
+    return bonds;
+}
+
 // Broken bonds of an ethane molecule with fragments of size 1
 inline auto bonds_ethane_one() {
     result_type bonds;

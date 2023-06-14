@@ -16,6 +16,13 @@ TEST_CASE("Broken Bonds") {
     auto mm   = testing::initialize();
     auto& mod = mm.at("Broken Bonds");
 
+    SECTION("Methane fragment (size 1)") {
+        auto corr = bonds_methane_one();
+        input_type hc{hydrocarbon_fragmented_nuclei(1, 1)};
+        result_type test = mod.run_as<pt>(hc);
+        REQUIRE(corr == test);
+    }
+
     SECTION("Ethane fragment (size 1)") {
         auto corr = bonds_ethane_one();
         input_type hc{hydrocarbon_fragmented_nuclei(2, 1)};
