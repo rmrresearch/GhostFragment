@@ -1,7 +1,7 @@
 #pragma once
 #include <chemist/molecule/molecule.hpp>
 #include <chemist/nucleus/fragmented_nuclei.hpp>
-#include <ghostfragment/connectivity/hydrocarbon/hydrocarbon.h>
+#include "hydrocarbon.h"
 
 namespace testing {
 

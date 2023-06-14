@@ -21,7 +21,7 @@ fragments.
 
 MODULE_CTOR(BrokenBonds) {
     satisfies_property_type<my_pt>();
-    add_submodule<conn_pt>("Covalent Radius");
+    add_submodule<conn_pt>("Atomic connectivity");
 }
 
 MODULE_RUN(BrokenBonds) {
@@ -34,7 +34,7 @@ MODULE_RUN(BrokenBonds) {
 
     result_type bonds;
 
-    auto& conn_mod         = submods.at("Covalent Radius");
+    auto& conn_mod         = submods.at("Atomic connectivity");
     const auto& atom_conns = conn_mod.run_as<conn_pt>(frags.supersystem());
 
     // Looks at each fragment
@@ -83,7 +83,7 @@ MODULE_RUN(BrokenBonds) {
                     // If the pair is not already in the fragment,
                     // then it is a broken bond and must be added to the set
                     if(!in_current_frag) {
-                        bond_type broken(existing_bonds[0], atom_i);
+                        bond_type broken(atom_i, existing_bonds[0]);
                         frag_set.insert(broken);
                     }
                 }

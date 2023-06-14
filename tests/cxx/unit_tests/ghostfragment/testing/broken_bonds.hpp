@@ -1,5 +1,5 @@
 #pragma once
-#include "ghostfragment/connectivity/hydrocarbon/hydrocarbon.h"
+#include "hydrocarbon/hydrocarbon.h"
 #include "ghostfragment/property_types/broken_bonds.hpp"
 #include <catch2/catch.hpp>
 #include <chemist/molecule/atom.hpp>
@@ -21,7 +21,7 @@ inline auto bonds_ethane_one() {
     set1.insert(bond_type(0, 1));
 
     bond_set set2;
-    set2.insert(bond_type(0, 1));
+    set2.insert(bond_type(1, 0));
 
     bonds.push_back(set1);
     bonds.push_back(set2);
@@ -36,11 +36,11 @@ inline auto bonds_propane_one() {
     set1.insert(bond_type(0, 1));
 
     bond_set set2;
-    set2.insert(bond_type(0, 1));
+    set2.insert(bond_type(1, 0));
     set2.insert(bond_type(1, 2));
 
     bond_set set3;
-    set3.insert(bond_type(1, 2));
+    set3.insert(bond_type(2, 1));
 
     bonds.push_back(set1);
     bonds.push_back(set2);
@@ -56,7 +56,7 @@ inline auto bonds_propane_two() {
     set1.insert(bond_type(1, 2));
 
     bond_set set2;
-    set2.insert(bond_type(0, 1));
+    set2.insert(bond_type(1, 0));
 
     bonds.push_back(set1);
     bonds.push_back(set2);

@@ -43,7 +43,7 @@ inline void load_modules(pluginplay::ModuleManager& mm) {
 inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Molecular Graph", "Atomic connectivity",
                      "Covalent Radius");
-    mm.change_submod("Broken Bonds", "Covalent Radius", "Covalent Radius");
+    mm.change_submod("Broken Bonds", "Atomic connectivity", "Covalent Radius");
 }
 
 } // namespace ghostfragment::connectivity

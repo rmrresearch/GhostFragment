@@ -1,6 +1,6 @@
 #include "../test_ghostfragment.hpp"
 #include "broken_bonds.hpp"
-#include "ghostfragment/connectivity/hydrocarbon_fragment.hpp"
+#include "hydrocarbon/hydrocarbon_fragment.hpp"
 
 using namespace testing;
 

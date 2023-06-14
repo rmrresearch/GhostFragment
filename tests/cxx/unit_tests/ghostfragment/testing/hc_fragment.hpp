@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ghostfragment/connectivity/hydrocarbon/hydrocarbon.h"
+#include "hydrocarbon/hydrocarbon.h"
 #include <catch2/catch.hpp>
 #include <chemist/molecule/atom.hpp>
 #include <chemist/molecule/molecule.hpp>

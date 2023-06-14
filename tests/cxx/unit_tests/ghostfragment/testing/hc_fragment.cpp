@@ -1,4 +1,4 @@
-#include "ghostfragment/connectivity/hydrocarbon_fragment.hpp"
+#include "hydrocarbon/hydrocarbon_fragment.hpp"
 #include "hc_fragment.hpp"
 
 using namespace testing;
