@@ -1,6 +1,7 @@
 #pragma once
 #include <chemist/nucleus/fragmented_nuclei.hpp>
 #include <ghostfragment/molecular_graph.hpp>
+#include <pluginplay/pluginplay.hpp>
 
 namespace ghostfragment::pt {
 
@@ -16,13 +17,13 @@ struct BrokenBondsTraits {
 DECLARE_PROPERTY_TYPE(BrokenBonds);
 
 PROPERTY_TYPE_INPUTS(BrokenBonds) {
-    using input_type = BrokenBondTraits::input_type;
+    using input_type = BrokenBondsTraits::input_type;
     return pluginplay::declare_input().add_field<input_type>("Fragments");
 }
 
 PROPERTY_TYPE_RESULTS(BrokenBonds) {
-    using result_type = BrokenBondTraits::result_type;
-    return pluginplay::declare_result().add_field<result_type>("Broken bonds");
+    using result_type = BrokenBondsTraits::result_type;
+    return pluginplay::declare_result().add_field<result_type>("Broken Bonds");
 }
 
 } // namespace ghostfragment::pt

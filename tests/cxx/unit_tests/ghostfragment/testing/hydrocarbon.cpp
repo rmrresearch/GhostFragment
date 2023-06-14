@@ -1,4 +1,4 @@
-#include "../hydrocarbon/hydrocarbon.h"
+#include "hydrocarbon/hydrocarbon.h"
 #include "hydrocarbon.hpp"
 
 using namespace testing;

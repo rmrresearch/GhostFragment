@@ -5,7 +5,7 @@ chemist::Molecule hydrocarbon(int num_carbon) {
 
     // A log of all carbon atom positions.
     // Used to determine the position of the next carbon and connected hydrogens
-    std::vector<float> source_coords {0.0, 0.0, 0.0};
+    std::vector<float> source_coords{0.0, 0.0, 0.0};
     source_coords.reserve(num_carbon * 3);
 
     // The first carbon atom positioned at {0, 0, 0}
