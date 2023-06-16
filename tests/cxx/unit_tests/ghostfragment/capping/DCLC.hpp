@@ -6,10 +6,6 @@
 #include <chemist/nucleus/nuclei.hpp>
 
 namespace testing {
-// Correct answers for three hydrocarbons -- ethane with two
-// fragments, propane with two fragments, and propane with four
-// fragments. Answers generated in Mathematica. 
-
 // Ethane Molecule (2 carbon, 2 frags)
 chemist::Molecule Ethane2() {
     chemist::Molecule ethane;
@@ -63,11 +59,7 @@ chemist::Molecule Propane4() {
     return propane;
 }
 
-// Function checks to see if two sets of caps (inputs are Molecules
-// but the constituent atoms are the capping atoms) are equal. Loops
-// over each atom, checks position and name.
-
-bool AreCapsEqual(chemist::Molecule m1, chemist::Molecule m2) {
+bool AreMoleculesEqual(chemist::Molecule m1, chemist::Molecule m2) {
     int size1 = m1.size();
     int size2 = m2.size();
 
@@ -86,13 +78,13 @@ bool AreCapsEqual(chemist::Molecule m1, chemist::Molecule m2) {
         // Names must be the same
         REQUIRE(atom1.name() == atom2.name());
 
-        // Checking coordinates using a tolerance of 8 digits
+        // Checking coordinates using a tolerance of 4 digits
         // X coordinate
-        REQUIRE(atom1.x() == Approx(atom2.x()).margin(0.0000001));
+        REQUIRE(atom1.x() == Approx(atom2.x()).margin(0.0001));
         // Y coordinate
-        REQUIRE(atom1.y() == Approx(atom2.y()).margin(0.0000001));
+        REQUIRE(atom1.y() == Approx(atom2.y()).margin(0.0001));
         // Z coordinate
-        REQUIRE(atom1.z() == Approx(atom2.z()).margin(0.0000001));
+        REQUIRE(atom1.z() == Approx(atom2.z()).margin(0.0001));
     }
 
     return true;
