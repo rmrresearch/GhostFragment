@@ -19,7 +19,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_cmake_targets_defined "")
 set(_cmake_targets_not_defined "")
 set(_cmake_expected_targets "")
-foreach(_cmake_expected_target IN ITEMS TiledArray_Eigen TiledArray_UMPIRE blacspp scalapackpp TiledArray_SCALAPACK tiledarray)
+foreach(_cmake_expected_target IN ITEMS TiledArray_Eigen TiledArray_UMPIRE TiledArray_SCALAPACK tiledarray)
   list(APPEND _cmake_expected_targets "${_cmake_expected_target}")
   if(TARGET "${_cmake_expected_target}")
     list(APPEND _cmake_targets_defined "${_cmake_expected_target}")
@@ -67,31 +67,14 @@ add_library(TiledArray_UMPIRE INTERFACE IMPORTED)
 
 set_target_properties(TiledArray_UMPIRE PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "/Users/isaacvanorman/nwchemex/GhostFragment/install/include"
-  INTERFACE_LINK_LIBRARIES "/Users/isaacvanorman/nwchemex/GhostFragment/install/lib/libumpire.dylib"
-)
-
-# Create imported target blacspp
-add_library(blacspp SHARED IMPORTED)
-
-set_target_properties(blacspp PROPERTIES
-  INTERFACE_COMPILE_FEATURES "cxx_std_11"
-  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "ScaLAPACK::ScaLAPACK;MPI::MPI_C"
-)
-
-# Create imported target scalapackpp
-add_library(scalapackpp SHARED IMPORTED)
-
-set_target_properties(scalapackpp PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "blacspp"
+  INTERFACE_LINK_LIBRARIES "/Users/isaacvanorman/nwchemex/GhostFragment/install/lib/libumpire"
 )
 
 # Create imported target TiledArray_SCALAPACK
 add_library(TiledArray_SCALAPACK INTERFACE IMPORTED)
 
 set_target_properties(TiledArray_SCALAPACK PROPERTIES
-  INTERFACE_LINK_LIBRARIES "scalapackpp;blacspp"
+  INTERFACE_LINK_LIBRARIES "scalapackpp::scalapackpp;blacspp::blacspp"
 )
 
 # Create imported target tiledarray
@@ -101,7 +84,7 @@ set_target_properties(tiledarray PROPERTIES
   INTERFACE_COMPILE_FEATURES "cxx_std_17"
   INTERFACE_COMPILE_OPTIONS "-DOMPI_SKIP_MPICXX;-DOMPI_SKIP_MPICXX"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;/usr/local/opt/openblas/include"
-  INTERFACE_LINK_LIBRARIES "MADworld;TiledArray_Eigen;BTAS::BTAS;blaspp_headers;TiledArray_UMPIRE;TiledArray_SCALAPACK;-L/usr/local/opt/openblas/lib;-lblas;-llapack;MADworld;Boost::boost"
+  INTERFACE_LINK_LIBRARIES "MADworld;TiledArray_Eigen;BTAS::BTAS;blaspp_headers;TiledArray_UMPIRE;TiledArray_SCALAPACK;-L/usr/local/opt/openblas/lib -lblas -llapack;MADworld;Boost::boost"
 )
 
 if(CMAKE_VERSION VERSION_LESS 3.0.0)
@@ -143,7 +126,7 @@ unset(_cmake_import_check_targets)
 # Make sure the targets which have been exported in some other
 # export set exist.
 unset(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE_targets)
-foreach(_target "MADworld" "BTAS::BTAS" "blaspp_headers" )
+foreach(_target "MADworld" )
   if(NOT TARGET "${_target}" )
     set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE_targets "${${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE_targets} ${_target}")
   endif()
