@@ -1,0 +1,6 @@
+Name: tiledarray
+Description: A modern C++ library for block-sparse tensor computation
+Version: 1.0.0
+URL: https://github.com/ValeevGroup/tiledarray
+Cflags: -I/Users/isaacvanorman/nwchemex/GhostFragment/install/include  -DOMPI_SKIP_MPICXX -DOMPI_SKIP_MPICXX 
+Libs: -L/Users/isaacvanorman/nwchemex/GhostFragment/install/lib   

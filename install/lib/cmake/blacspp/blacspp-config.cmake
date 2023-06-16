@@ -1,0 +1,35 @@
+cmake_minimum_required( VERSION 3.13 FATAL_ERROR )
+
+get_filename_component( blacspp_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH )
+
+list( APPEND CMAKE_MODULE_PATH ${blacspp_CMAKE_DIR}/linalg-cmake-modules )
+if( NOT TARGET ScaLAPACK::ScaLAPACK )
+  include( CMakeFindDependencyMacro )
+  set(ScaLAPACK_LIBRARIES "/opt/homebrew/lib/libscalapack.dylib;MPI::MPI_C;-L/usr/local/opt/openblas/lib -lblas -llapack") # Already discovered CMake
+
+  # Propagate ILP64
+  set(SCALAPACK_IS_ILP64     )
+  if( SCALAPACK_IS_ILP64 )
+    set( ScaLAPACK_IS_LP64 FALSE )
+  else()
+    set( ScaLAPACK_IS_LP64 TRUE )
+  endif()
+
+  find_dependency( MPI )
+
+  enable_language( C )
+  if( OpenMP::OpenMP_C IN_LIST ScaLAPACK_LIBRARIES )
+    find_dependency( OpenMP )
+  endif()
+  find_dependency( ScaLAPACK MODULE )
+
+endif()
+
+
+list(REMOVE_AT CMAKE_MODULE_PATH -1)
+
+if(NOT TARGET blacspp::blacspp)
+    include("${blacspp_CMAKE_DIR}/blacspp-targets.cmake")
+endif()
+
+set(blacspp_LIBRARIES blacspp::blacspp)

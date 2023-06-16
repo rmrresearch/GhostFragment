@@ -1,0 +1,18 @@
+prefix=
+exec_prefix=
+libdir=
+includedir=
+
+cc=
+cxx=
+cppflags=
+cxxflags=
+ldflags=
+libs=
+fortran_integer_width=
+
+Name: MADNESS
+Description: Multiresolution Adaptive Numerical Environment for Scientific Simulation
+Version: 
+Libs: -L -lMADmra -lMADlinalg -lMADtensor -lMADmisc -lMADmuparser -lMADtinyxml -lMADworld 
+Cflags: -I
