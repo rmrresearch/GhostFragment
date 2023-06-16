@@ -38,4 +38,3 @@ Release/
 
 # Users commonly store their specific CMake settings in a toolchain file
 toolchain.cmake
-.DS_Store
