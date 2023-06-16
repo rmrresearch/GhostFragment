@@ -13,6 +13,7 @@ set(
 
 find_dependency(MADNESS COMPONENTS MADworld)
 find_dependency(spdlog)
+find_dependency(cereal)
 
 list(LENGTH parallelzone_FIND_COMPONENTS parallelzone_FIND_COMPONENTS_len)
 if(parallelzone_FIND_COMPONENTS_len LESS_EQUAL 0)
