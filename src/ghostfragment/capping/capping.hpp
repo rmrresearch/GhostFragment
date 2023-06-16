@@ -11,6 +11,7 @@ inline void load_modules(pluginplay::ModuleManager& mm) {
     mm.add_module<DCLC>("DCLC Capping");
 }
 
-inline void set_defaults(pluginplay::ModuleManager& mm) {}
+inline void set_defaults(pluginplay::ModuleManager& mm) {
+}
 
 } // namespace ghostfragment::capping
