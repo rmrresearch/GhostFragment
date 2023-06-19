@@ -19,42 +19,24 @@ TEST_CASE("DCLC Capping") {
     auto& mod      = mm.at("DCLC Capping");
 
     SECTION("Ethane (2 carbon 2 frags)") {
-        chemist::Molecule corr(Ethane2());
+        result_type corr(Ethane2());
         input_type hc{hydrocarbon_fragmented_nuclei(2,1)};
         // mod.change_submod("Connectivity", "Covalent Radius");
         result_type caps = mod.run_as<the_pt>(hc);
-        chemist::Molecule test;
-        for(auto cap_i : caps){
-            for(std::size_t i = 0; i < cap_i.size(); ++i){
-                test.push_back(cap_i[i].cap_atom(0));
-            }
-        }
-        REQUIRE(AreCapsEqual(corr, test));
+        REQUIRE(AreCapsEqual(corr, caps));
     }
 
     SECTION("Propane (3 carbon 2 frags)") {
-        chemist::Molecule corr(Propane2());
+        result_type corr(Propane2());
         input_type hc{hydrocarbon_fragmented_nuclei(3,2)};
         result_type caps = mod.run_as<the_pt>(hc);
-        chemist::Molecule test;
-        for(const auto& cap_i : caps){
-            for(std::size_t i = 0; i < cap_i.size(); ++i){
-                test.push_back(cap_i[i].cap_atom(0));
-            }
-        }
-        REQUIRE(AreCapsEqual(corr, test));
+        REQUIRE(AreCapsEqual(corr, caps));
     }
 
     SECTION("Propane (3 carbon 4 frags)") {
-        chemist::Molecule corr(Propane4());
+        result_type corr(Propane4());
         input_type hc{hydrocarbon_fragmented_nuclei(3,1)};
         result_type caps = mod.run_as<the_pt>(hc);
-        chemist::Molecule test;
-        for(const auto& cap_i : caps){
-            for(std::size_t i = 0; i < cap_i.size(); ++i){
-                test.push_back(cap_i[i].cap_atom(0));
-            }
-        }
-        REQUIRE(AreCapsEqual(corr, test));
+        REQUIRE(AreCapsEqual(corr, caps));
     }
 }
