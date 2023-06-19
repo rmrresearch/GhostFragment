@@ -52,6 +52,36 @@ MODULE_RUN(DCLC) {
     float existing_bonds   = 0;
     float original_bond    = 0;
 
+    // Computes the average X-C bond length in the molecule, where X is in
+    // the fragment and C is the cap. Takes in molecule m, and the atomic
+    // number of X and C.
+    double average_bond_length(Molecule m, size_type z_x, size_type z_c){
+        int existing_bonds = 0;
+        double bond_length = 0;
+        for(size_t atom_k = 0; atom_k < m.size(); ++atom_k){
+            if(m[atom_k].Z() == z_x){
+                for(size_t atom_l : conns.bonded_atoms(atom_k)){
+                    if(mol[atom_l].Z() == z_c){
+                        bond_length += (mol[atom_l].as_nucleus()
+                        - mol[atom_k].as_nucleus()).magnitude();
+                        existing_bonds ++;
+                    }
+                }
+            }
+        }
+        // If no bonds, defaults to standard distance
+        if(existing_bonds == 0){
+            return(
+                ghostfragment::connectivity::covalent_radius(z_x) 
+              + ghostfragment::connectivity::covalent_radius(z_c)
+            );
+        }
+        // If bonds exist, return their average length
+        if(existing_bonds > 0){
+            return(bond_length/existing_bonds);
+        }
+    }
+
     // Step 1. Generate atomic connectivity
     const auto& mol   = frags.supersystem();
     const auto& conns = submods.at("Connectivity").run_as<connect_pt>(mol);
@@ -69,39 +99,16 @@ MODULE_RUN(DCLC) {
                 // Check if atom_j is in the fragment, if so no cap is needed
                 if(frag_i.count(mol[atom_j])) continue;
 
-                // Determine the bond length
-                existing_bonds = 0;
-                bond_length = 0;
-                for(size_t atom_k = 0; atom_k < mol.size(); ++atom_k){
-                    if(mol[atom_k].name() == mol[atom_i].name()){
-                        for(size_t atom_l : conns.bonded_atoms(atom_k)){
-                            if(mol[atom_l].name() == cap.name()){
-                                bond_length += (mol[atom_l].as_nucleus()
-                                - mol[atom_k].as_nucleus()).magnitude();
-                                existing_bonds ++;
-                            }
-                        }
-                    }
-                }
-
                 // Make the cap
                 atom_type new_cap(cap);
                 original_bond = (mol[atom_i].as_nucleus()
                 - mol[atom_j].as_nucleus()).magnitude();
                 for(atom_type::size_type i = 0; i < 3; ++i){
-                    if(existing_bonds == 0){
-                        new_cap.coord(i) = mol[atom_i].coord(i)
-                        + (mol[atom_j].coord(i) - mol[atom_i].coord(i))
-                        * (ghostfragment::connectivity::covalent_radius(
-                            mol[atom_i].Z()) 
-                        + ghostfragment::connectivity::covalent_radius(
-                            mol[atom_j].Z()))
-                        / original_bond;
-                    } else {
-                        new_cap.coord(i) = mol[atom_i].coord(i)
-                        + (mol[atom_j].coord(i) - mol[atom_i].coord(i))
-                        * (bond_length/existing_bonds) / original_bond;
-                    }
+                    new_cap.coord(i) = mol[atom_i].coord(i)
+                    + (mol[atom_j].coord(i) - mol[atom_i].coord(i))
+                    * average_bond_length(mol, atom_i,
+                    inputs.at("capping atom").value<atom_type>().Z())
+                    / original_bond;
                 }
 
                 // Add the cap to the set of caps for this fragment
