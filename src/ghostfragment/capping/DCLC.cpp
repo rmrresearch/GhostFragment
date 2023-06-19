@@ -1,14 +1,48 @@
 #include "capping.hpp"
-#include <src/ghostfragment/connectivity/connectivity.hpp>
 #include <ghostfragment/property_types/capped.hpp>
 #include <ghostfragment/property_types/connectivity_table.hpp>
+#include <src/ghostfragment/connectivity/connectivity.hpp>
+
+namespace ghostfragment::capping {
 
 using my_pt      = ghostfragment::pt::Capped;
 using connect_pt = ghostfragment::ConnectivityTable;
 using traits_t   = ghostfragment::pt::CappedTraits;
 using atom_type  = traits_t::result_type::value_type::atom_type;
 
-namespace ghostfragment::capping {
+
+// Computes the average X-C bond length in the molecule, where X is in
+// the fragment and C is the cap. Takes in Nuclei m, and the atomic
+// numbers of X and C.
+double average_bond_length(chemist::Nuclei m,
+const chemist::topology::ConnectivityTable connections,
+std::size_t z_x, std::size_t z_c){
+    int existing_bonds = 0;
+    double bond_lengths = 0;
+    double ave_length = 0;
+    for(size_t atom_k = 0; atom_k < m.size(); ++atom_k){
+        if(m[atom_k].Z() == z_x){
+            for(size_t atom_l : connections.bonded_atoms(atom_k)){
+                if(m[atom_l].Z() == z_c){
+                    bond_lengths += (m[atom_l].as_nucleus()
+                    - m[atom_k].as_nucleus()).magnitude();
+                    existing_bonds ++;
+                }
+            }
+        }
+    }
+    // If no bonds, defaults to standard distance
+    if(existing_bonds == 0){
+        ave_length =
+            ghostfragment::connectivity::covalent_radius(z_x) 
+            + ghostfragment::connectivity::covalent_radius(z_c);
+    }
+    // If bonds exist, return their average length
+    if(existing_bonds > 0){
+        ave_length = bond_lengths/existing_bonds;
+    }
+    return ave_length;
+}
 
 namespace {
 constexpr auto module_desc = R"""(
@@ -52,36 +86,6 @@ MODULE_RUN(DCLC) {
     float existing_bonds   = 0;
     float original_bond    = 0;
 
-    // Computes the average X-C bond length in the molecule, where X is in
-    // the fragment and C is the cap. Takes in molecule m, and the atomic
-    // number of X and C.
-    double average_bond_length(Molecule m, size_type z_x, size_type z_c){
-        int existing_bonds = 0;
-        double bond_length = 0;
-        for(size_t atom_k = 0; atom_k < m.size(); ++atom_k){
-            if(m[atom_k].Z() == z_x){
-                for(size_t atom_l : conns.bonded_atoms(atom_k)){
-                    if(mol[atom_l].Z() == z_c){
-                        bond_length += (mol[atom_l].as_nucleus()
-                        - mol[atom_k].as_nucleus()).magnitude();
-                        existing_bonds ++;
-                    }
-                }
-            }
-        }
-        // If no bonds, defaults to standard distance
-        if(existing_bonds == 0){
-            return(
-                ghostfragment::connectivity::covalent_radius(z_x) 
-              + ghostfragment::connectivity::covalent_radius(z_c)
-            );
-        }
-        // If bonds exist, return their average length
-        if(existing_bonds > 0){
-            return(bond_length/existing_bonds);
-        }
-    }
-
     // Step 1. Generate atomic connectivity
     const auto& mol   = frags.supersystem();
     const auto& conns = submods.at("Connectivity").run_as<connect_pt>(mol);
@@ -106,7 +110,7 @@ MODULE_RUN(DCLC) {
                 for(atom_type::size_type i = 0; i < 3; ++i){
                     new_cap.coord(i) = mol[atom_i].coord(i)
                     + (mol[atom_j].coord(i) - mol[atom_i].coord(i))
-                    * average_bond_length(mol, atom_i,
+                    * average_bond_length(mol, conns, mol[atom_i].Z(),
                     inputs.at("capping atom").value<atom_type>().Z())
                     / original_bond;
                 }
