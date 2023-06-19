@@ -29,11 +29,11 @@ inline auto caps_ethane_one() {
     result_type caps;
 
     set_type cap_set1;
-    cap_set1.add_cap(0, 1, atom_type("H", 1ul, 1837.289, 1.68228, 1.18892, 0.0));
+    cap_set1.add_cap(0, 1, atom_type("H", 1ul, 1837.289, 1.66138, 1.17415, 0.0));
     caps.emplace_back(std::move(cap_set1));
 
     set_type cap_set2;
-    cap_set2.add_cap(1, 0, atom_type("H", 1ul, 1837.289, 0.677812, 0.479031, 0.0));
+    cap_set2.add_cap(1, 0, atom_type("H", 1ul, 1837.289, 0.698712, 0.493801, 0.0));
     caps.emplace_back(std::move(cap_set2));
 
     return caps;    
@@ -43,16 +43,16 @@ inline auto caps_propane_one() {
     result_type caps;
 
     set_type cap_set1;
-    cap_set1.add_cap(0, 1, atom_type("H", 1ul, 1837.289, 1.68228, 1.18892, 0.0));
+    cap_set1.add_cap(0, 1, atom_type("H", 1ul, 1837.289, 1.66138, 1.17415, 0.0));
     caps.emplace_back(std::move(cap_set1));
 
     set_type cap_set2;
-    cap_set2.add_cap(1, 0, atom_type("H", 1ul, 1837.289, 0.677812, 0.479031, 0.0));
-    cap_set2.add_cap(1, 2, atom_type("H", 1ul, 1837.289, 4.04238, 0.479031, 0.0));
+    cap_set2.add_cap(1, 0, atom_type("H", 1ul, 1837.289, 0.698712, 0.493801, 0.0));
+    cap_set2.add_cap(1, 2, atom_type("H", 1ul, 1837.289, 4.02148, 0.493801, 0.0));
     caps.emplace_back(std::move(cap_set2));
 
     set_type cap_set3;
-    cap_set3.add_cap(2, 1, atom_type("H", 1ul, 1837.289, 3.03791, 1.18892, 0.0));
+    cap_set3.add_cap(2, 1, atom_type("H", 1ul, 1837.289, 3.05881, 1.17415, 0.0));
     caps.emplace_back(std::move(cap_set3));
 
     return caps;
@@ -62,11 +62,11 @@ inline auto caps_propane_two() {
     result_type caps;
 
     set_type cap_set1;
-    cap_set1.add_cap(1, 2, atom_type("H", 1ul, 1837.289, 4.04238, 0.479031, 0.0));
+    cap_set1.add_cap(1, 2, atom_type("H", 1ul, 1837.289, 4.02148, 0.493801, 0.0));
     caps.emplace_back(std::move(cap_set1));
 
     set_type cap_set2;
-    cap_set2.add_cap(1, 0, atom_type("H", 1ul, 1837.289, 0.677812, 0.479031, 0.0));
+    cap_set2.add_cap(1, 0, atom_type("H", 1ul, 1837.289, 0.698712, 0.493801, 0.0));
     caps.emplace_back(std::move(cap_set2));
 
     return caps;
@@ -87,16 +87,16 @@ inline auto are_caps_equal(result_type caps1, result_type caps2) {
 
             atom_type cap1 = cap_set1[j].cap_atom(0);
             atom_type cap2 = cap_set2[j].cap_atom(0);
-            std::cout << "Cap " << j << " from fragment " << i << " Coordinates: " << cap2.x() << ", " << cap2.y() << ", " << cap2.z() << std::endl;
+            //std::cout << "Cap " << j << " from fragment " << i << " Coordinates: " << cap2.x() << ", " << cap2.y() << ", " << cap2.z() << std::endl;
 
             REQUIRE(cap1.name() == cap2.name());
             REQUIRE(cap1.Z() == cap2.Z());
             REQUIRE(cap1.mass() == cap2.mass());
 
             // Commented out to print position of each cap. Should be brought back eventually.
-            // REQUIRE(cap1.x() == Approx(cap2.x()).margin(0.0001));
-            // REQUIRE(cap1.y() == Approx(cap2.y()).margin(0.0001));
-            // REQUIRE(cap1.z() == Approx(cap2.z()).margin(0.0001));
+            REQUIRE(cap1.x() == Approx(cap2.x()).margin(0.0001));
+            REQUIRE(cap1.y() == Approx(cap2.y()).margin(0.0001));
+            REQUIRE(cap1.z() == Approx(cap2.z()).margin(0.0001));
         }
     }
     return true;
