@@ -107,12 +107,14 @@ MODULE_RUN(DCLC) {
                 atom_type new_cap(cap);
                 original_bond = (mol[atom_i].as_nucleus()
                 - mol[atom_j].as_nucleus()).magnitude();
-                for(atom_type::size_type i = 0; i < 3; ++i){
-                    new_cap.coord(i) = mol[atom_i].coord(i)
-                    + (mol[atom_j].coord(i) - mol[atom_i].coord(i))
-                    * average_bond_length(mol, conns, mol[atom_i].Z(),
-                    inputs.at("capping atom").value<atom_type>().Z())
-                    / original_bond;
+                 const auto cap_Z = new_cap.Z();
+                 const auto Zi    = mol[atom_i].Z();
+                 const auto r0 =average_bond_length(mol, conns, Zi, cap_Z);
+                 for(atom_type::size_type i = 0; i < 3; ++i){
+                    const auto qi = mol[atom_i].coord(i);
+                    const auto dq = mol[atom_j].coord(i) - qi;
+                    
+                    new_cap.coord(i) = qi + dq * (r0 / original_bond);
                 }
 
                 // Add the cap to the set of caps for this fragment
