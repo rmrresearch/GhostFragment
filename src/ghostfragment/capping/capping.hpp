@@ -11,7 +11,7 @@ inline void load_modules(pluginplay::ModuleManager& mm) {
     mm.add_module<DCLC>("DCLC Capping");
 }
 
-double average_bond_length(chemist::Nuclei m,
+double average_bond_length(const chemist::Nuclei& m,
 const chemist::topology::ConnectivityTable& connections,
 std::size_t z_x, std::size_t z_c);
 
