@@ -14,7 +14,7 @@ using atom_type  = traits_t::result_type::value_type::atom_type;
 // Computes the average X-C bond length in the molecule, where X is in
 // the fragment and C is the cap. Takes in Nuclei m, and the atomic
 // numbers of X and C.
-double average_bond_length(chemist::Nuclei m,
+double average_bond_length(const chemist::Nuclei& m,
 const chemist::topology::ConnectivityTable& connections,
 std::size_t z_x, std::size_t z_c){
     int existing_bonds = 0;
