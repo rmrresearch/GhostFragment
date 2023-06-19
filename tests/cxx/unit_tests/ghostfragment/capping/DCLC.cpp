@@ -39,4 +39,25 @@ TEST_CASE("DCLC Capping") {
         result_type caps = mod.run_as<the_pt>(hc);
         REQUIRE(AreCapsEqual(corr, caps));
     }
+
+    SECTION("Average Bond Length Calculation"){
+        // Tests the HC bond in propane
+        chemist::Nuclei propane = hydrocarbon(3).nuclei();
+        chemist::topology::ConnectivityTable con;
+        con.set_n_atoms(11);
+        con.add_bond(0,1);
+        con.add_bond(1,2);
+        con.add_bond(0,3);
+        con.add_bond(0,4);
+        con.add_bond(0,5);
+        con.add_bond(1,6);
+        con.add_bond(1,7);
+        con.add_bond(2,8);
+        con.add_bond(2,9);
+        con.add_bond(2,10);
+        double corr = 2.06;
+        double test = ghostfragment::capping::average_bond_length(
+            propane, con, 1, 6);
+        REQUIRE(corr == Approx(test).margin(0.0001));
+    }
 }

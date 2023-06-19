@@ -4,6 +4,7 @@
 #include <chemist/molecule/atom.hpp>
 #include <chemist/molecule/molecule.hpp>
 #include <chemist/nucleus/nuclei.hpp>
+#include <src/ghostfragment/capping/DCLC.cpp>
 
 namespace testing {
 // Correct answers for three hydrocarbons -- ethane with two
