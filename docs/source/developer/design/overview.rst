@@ -86,8 +86,8 @@ large computation via a series of smaller computations. How one maps the
 target system to sub-computations is handled by the "input driver"
 component. Once we know the inputs for the smaller computations the "Engine"
 is used to run the smaller computations. Given the results of the smaller
-computations, GhostFragment approximates the property of interest for the 
-larger system.
+computations, GhostFragment can then approximate the property of interest for 
+the larger system.
 
 Input Driver Overview
 =====================
@@ -109,14 +109,12 @@ Link to full discussion :ref:`gf_input_driver_design`.
 system (*i.e.*, the input of the large calculatoin) is mapped to a series of
 smaller sub-calculations. The first step is to divide the input system
 into members of a ``FragmentedSystem``; this is the responsibility of the
-``FragmentedSystem`` Driver. After we have fragmented the system, the next step 
-is to create |n|-mers. This process also usually screens the |n|-mers (*i.e.*,
-determines which |n|-body interactions are important, so this step is handled
-by a "screener". Finally, the "Interaction Driver" is responsible for using
-the |n|-mers to determine the full set of sub-calculations which must be
-performed to compute the interaction. During this process, the interaction
-driver adds additional subcalculations needed to address overlaps among the 
-|n|-mers, adds caps to severed bonds, and assigns AO basis sets.
+``FragmentedSystem`` Driver. The fragments that emerge from 
+the ``FragmentedSystem`` driver are assumed to be the final set of subsysetms,
+*i.e.*, they may actually be |n|-mers. The "Interaction Driver" is responsible 
+for determining what sub-calculations are necessary, what weights those
+calculations should have, and assigning the AO basis sets to each sub-
+calculation.
 
 Fragmented System Driver
 ========================
