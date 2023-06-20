@@ -11,10 +11,7 @@ What is GhostFragment?
 **********************
 
 GhostFragment is a software package designed to facilitate developing and
-running fragment-based methods. It is now known that to use fragment-based
-methods to accurately approximate traditional methods one must also account
-for basis-set superposition error. GhostFragment also includes functionality to
-correct for basis-set superposition error.
+running fragment-based methods.
 
 *****************************
 Why do we need GhostFragment?
@@ -25,9 +22,13 @@ structure packages have implementations of one or a few methods, but no
 package readily provides acccess to a large number of methods. GhostFragment
 seeks to change this while also facilitating rapid-prototyping of new methods.
 
+.. _gf_considerations:
+
 ****************************
 GhostFragment Considerations
 ****************************
+
+.. _gf_perfomance:
 
 Performance
    Fragment-based methods are meant to be an approximation to traditional
@@ -37,40 +38,63 @@ Performance
    implementations of the fragment-based methods are accurate and also
    performant.
 
+.. _gf_accuracy:
+
 Accuracy
    Brought up in the performance consideration, general applicability of
    fragment-based methods requires the resulting approximation to be accurate.
+   We are specifically referring to having the fragment-based method faithfully
+   replicate the traditional method it is approximating. The accuracy of the
+   traditional method (compared to say experiment or the time-independent
+   Schrodinger equation) is beyond our scope.
+
+   - As a corrollary we note that it is now known that basis-set superposition
+     error plays a role in the convergence of most fragment-based methods. Thus
+     to implement accurate fragment-based methods we need to be able to correct
+     for BSSE. 
+
+.. _gf_generality:
 
 Generality.
    We want GhostFragment to be able to house as many fragment-based methods as
    possible. This requires having an overall architecture which is as applicable
    as possible.
 
-Covalent systems.
-   GhostFragment should be applicable to not just clusters, but also large
-   covalently-bonded systems as well.
-
-Non-disjoint.
-   Early fragment-based methods assumed that fragments were disjoint. We do
-   not want to restrict ourselves to only disjoint fragments.
+   - A corollary is that we want to be able to interface with other electronic
+     structure packages as well.
 
 Multi-layer.
    A promising variation on a traditional fragment-based method is to treat
    part of the chemical system with one level of theory, and the rest with
    another (in theory this can easily be extended to more than two levels,
-   but in practice is often limited to two).
+   but in practice is often limited to two). GhostFragment should be designed
+   in a nestable fashion to support recursive invocations such as those
+   necessary for a multi-layer approach.
 
 ***********************
 Design of GhostFragment
 ***********************
 
-This section presents a top-down view of GhostFragment. Starting with the
-overall architcture.
+The :ref:`gf_perfomance` and :ref:`gf_generality` considerations have led us to
+implement GhostFragment as an NWChemEx plugin. More specifically, NWChemEx's
+PluginPlay framework is designed to faciliate writing software which can easily
+be customized and extended. This in turn makes it easier to modularize the
+pieces of GhostFragment which are responsible for the major algorithms like:
+fragmenting, capping, embedding, and screening. 
 
-Architecture Overview
-=====================
+Generally speaking, we expect the algorithms which live in GhostFragment to be 
+substantially cheaper than the electronic structure methods we will run on
+each sub-calculation. Thus, our main performance consideration is expected to
+be effeciently parallelizing the sub-computations, while also maximizing the
+re-use of common information among sub-compuations (*e.g.*, common guesses
+for the SCF). We assume that the electronic structure method we are calling is
+peformant already.
 
-Link to full discussion: :ref:`gf_architecture`.
+Architecture of GhostFragment
+=============================
+
+The remaining considerations from :ref:`gf_considerations` fall under the
+architecture of GhostFragment.
 
 .. _fig_gf_arch:
 
@@ -89,70 +113,7 @@ is used to run the smaller computations. Given the results of the smaller
 computations, GhostFragment can then approximate the property of interest for 
 the larger system.
 
-Input Driver Overview
-=====================
-
-.. |n| replace:: :math:`n`
-
-Link to full discussion :ref:`gf_input_driver_design`.
-
-.. _fig_gf_input_driver:
-
-.. figure:: assets/input_driver.png
-   :align: center
-
-   Illustration of the three main steps of the input driver: 
-   ``FragmentedSystem`` formation,  |n|-mer formation, and determination of the
-   final set of inputs.
-
-:numref:`fig_gf_input_driver` shows an overview of how an input chemical 
-system (*i.e.*, the input of the large calculatoin) is mapped to a series of
-smaller sub-calculations. The first step is to divide the input system
-into members of a ``FragmentedSystem``; this is the responsibility of the
-``FragmentedSystem`` Driver. The fragments that emerge from 
-the ``FragmentedSystem`` driver are assumed to be the final set of subsysetms,
-*i.e.*, they may actually be |n|-mers. The "Interaction Driver" is responsible 
-for determining what sub-calculations are necessary, what weights those
-calculations should have, and assigning the AO basis sets to each sub-
-calculation.
-
-Fragmented System Driver
-========================
-
-Link to full discussion :ref:`gf_fragmented_system_driver_design`.
-
-.. _fig_gf_fragmented_system_driver:
-
-.. figure:: assets/fragmented_system_driver.png
-   :align: center
-
-   The three major components of the ``FragmentedSystem`` driver include: the
-   "fragment driver", the "Charge/Multiplicity driver", and the "field driver".
-
-:numref:`fig_gf_fragmented_system_driver` shows an overview of how the input
-chemical system is broken into fragments. The first step is to create subsets of
-nuclei from the nuclei of the original system via a ``FragmentDriver`` module.
-Then a "Charge/Mult" driver assigns charges and multiplicites to each of the 
-fragments resulting in a series of molecules stored in a ``FragmentedMolecule``
-object. From their the ``FieldDriver`` assigns fields to each of the molecules
-in the ``FragmentedMolecule`` resulting in the ``FragmentedSystem`` object.
-
-Fragment Driver
-===============
-
-Link to the full discussion :ref:`gf_fragment_driver`.
-
-.. figure:: assets/fragment_driver.png
-   :align: center
-
-   The major components of the ``FragmentDriver`` are the ``Atomizer``, the
-   ``Grapher``, and the ``Fragmenter``.
-
-:numref:`fig_gf_fragment_driver` shows an overview of the ``FragmentDriver`` 
-which is responsible for breaking the input chemical system into fragments. To
-do this the ``Atomizer`` first breaks the input chemical system
-into pseudoatoms, *i.e.*, the most fundamental units of the chemical system.
-From this point everything is expressed in terms of pseudoatoms. Next, the
-connectivity of the pseudoatoms is assessed by the ``Grapher`` module. The
-result is a connectivity table for the pseudoatoms. Finally, the ``Fragmenter``
-module breaks the graph into subgraphs, each of which is a set of nuclei. 
+The "input driver" is discussed in more detail at :ref:`gf_input_driver_design`.
+The "input driver" will ultimately control the accuracy (relative to the
+traditional full system method) of the fragment-based
+method since it is the component which generates the inputs.
