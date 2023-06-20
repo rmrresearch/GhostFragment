@@ -14,8 +14,6 @@ TEST_CASE("DCLC Capping") {
     using conn_pt      = ghostfragment::ConnectivityTable;
 
     auto mm        = initialize();
-    mm.change_submod("DCLC Capping", "Connectivity", 
-                     "Covalent Radius");
     auto& mod      = mm.at("DCLC Capping");
 
     SECTION("Ethane (2 carbon 2 frags)") {
