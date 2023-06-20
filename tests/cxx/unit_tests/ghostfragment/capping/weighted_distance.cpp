@@ -1,7 +1,9 @@
 #include "../test_ghostfragment.hpp"
 #include <hydrocarbon/hydrocarbon_fragment.hpp>
 #include "weighted_distance.hpp"
+#include <testing/are_caps_equal.hpp>
 
+using namespace testing::weighted;
 using namespace testing;
 
 TEST_CASE("Weighted Distance Capping") {
