@@ -19,7 +19,7 @@ TEST_CASE("DCLC Capping") {
     auto& mod      = mm.at("DCLC Capping");
 
     SECTION("Ethane (2 carbon 2 frags)") {
-        result_type corr(Ethane2());
+        result_type corr(ethane_dclc_caps());
         input_type hc{hydrocarbon_fragmented_nuclei(2,1)};
         // mod.change_submod("Connectivity", "Covalent Radius");
         result_type caps = mod.run_as<the_pt>(hc);
@@ -27,14 +27,14 @@ TEST_CASE("DCLC Capping") {
     }
 
     SECTION("Propane (3 carbon 2 frags)") {
-        result_type corr(Propane2());
+        result_type corr(propane_dclc_2_caps());
         input_type hc{hydrocarbon_fragmented_nuclei(3,2)};
         result_type caps = mod.run_as<the_pt>(hc);
         REQUIRE(AreCapsEqual(corr, caps));
     }
 
     SECTION("Propane (3 carbon 4 frags)") {
-        result_type corr(Propane4());
+        result_type corr(propane_dclc_3_caps());
         input_type hc{hydrocarbon_fragmented_nuclei(3,1)};
         result_type caps = mod.run_as<the_pt>(hc);
         REQUIRE(AreCapsEqual(corr, caps));

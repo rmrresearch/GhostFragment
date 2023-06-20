@@ -12,7 +12,7 @@ namespace testing {
 // fragments. Answers generated in Mathematica. 
 
 // Ethane CapSets (2 carbon, 2 frags)
-std::vector<chemist::CapSet> Ethane2() {
+std::vector<chemist::CapSet> ethane_dclc_caps() {
     std::vector<chemist::CapSet> ethane;
     chemist::CapSet caps1;
     chemist::CapSet caps2;
@@ -31,7 +31,7 @@ std::vector<chemist::CapSet> Ethane2() {
 }
 
 // Propane CapSet (3 carbon, 2 frags)
-std::vector<chemist::CapSet> Propane2() {
+std::vector<chemist::CapSet> propane_dclc_2_caps() {
     std::vector<chemist::CapSet> propane;
     chemist::CapSet caps1;
     chemist::CapSet caps2;
@@ -50,7 +50,7 @@ std::vector<chemist::CapSet> Propane2() {
 }
 
 // Propane CapSet (3 carbon, 4 frags)
-std::vector<chemist::CapSet> Propane4() {
+std::vector<chemist::CapSet> propane_dclc_3_caps() {
     std::vector<chemist::CapSet> propane;
     chemist::CapSet caps1;
     chemist::CapSet caps2;
