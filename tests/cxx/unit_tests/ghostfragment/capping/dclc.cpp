@@ -17,6 +17,14 @@ TEST_CASE("DCLC Capping") {
     auto mm        = initialize();
     auto& mod      = mm.at("DCLC Capping");
 
+    SECTION("Methane (1 carbon 1 frag") {
+        result_type corr(methane_dclc_caps());
+        input_type hc{hydrocarbon_fragmented_nuclei(1,1)};
+        // mod.change_submod("Connectivity", "Covalent Radius");
+        result_type caps = mod.run_as<the_pt>(hc);
+        REQUIRE(are_caps_equal(corr, caps));
+    }
+
     SECTION("Ethane (2 carbon 2 frags)") {
         result_type corr(ethane_dclc_caps());
         input_type hc{hydrocarbon_fragmented_nuclei(2,1)};

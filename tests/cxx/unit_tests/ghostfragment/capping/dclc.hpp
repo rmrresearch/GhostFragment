@@ -11,6 +11,15 @@ namespace testing {
 // fragments, propane with two fragments, and propane with four
 // fragments. Answers generated in Mathematica. 
 
+// Methane CapSet (1 carbon, 1 frag)
+
+std::vector<chemist::CapSet> methane_dclc_caps() {
+    std::vector<chemist::CapSet> methane;
+    chemist::CapSet caps;
+    methane.push_back(caps);
+    return(methane);
+}
+
 // Ethane CapSets (2 carbon, 2 frags)
 std::vector<chemist::CapSet> ethane_dclc_caps() {
     std::vector<chemist::CapSet> ethane;
