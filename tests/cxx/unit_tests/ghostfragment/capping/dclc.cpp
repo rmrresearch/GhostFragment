@@ -2,6 +2,7 @@
 #include "DCLC.hpp"
 #include <ghostfragment/property_types/connectivity_table.hpp>
 #include <hydrocarbon/hydrocarbon_fragment.hpp>
+#include <testing/are_caps_equal.hpp>
 
 TEST_CASE("DCLC Capping") {
 
@@ -21,21 +22,21 @@ TEST_CASE("DCLC Capping") {
         input_type hc{hydrocarbon_fragmented_nuclei(2,1)};
         // mod.change_submod("Connectivity", "Covalent Radius");
         result_type caps = mod.run_as<the_pt>(hc);
-        REQUIRE(AreCapsEqual(corr, caps));
+        REQUIRE(are_caps_equal(corr, caps));
     }
 
     SECTION("Propane (3 carbon 2 frags)") {
         result_type corr(propane_dclc_2_caps());
         input_type hc{hydrocarbon_fragmented_nuclei(3,2)};
         result_type caps = mod.run_as<the_pt>(hc);
-        REQUIRE(AreCapsEqual(corr, caps));
+        REQUIRE(are_caps_equal(corr, caps));
     }
 
     SECTION("Propane (3 carbon 4 frags)") {
         result_type corr(propane_dclc_3_caps());
         input_type hc{hydrocarbon_fragmented_nuclei(3,1)};
         result_type caps = mod.run_as<the_pt>(hc);
-        REQUIRE(AreCapsEqual(corr, caps));
+        REQUIRE(are_caps_equal(corr, caps));
     }
 
     SECTION("Average Bond Length Calculation"){
