@@ -1,10 +1,15 @@
 #include "../test_ghostfragment.hpp"
 #include <ghostfragment/property_types/connectivity_table.hpp>
+#include <hydrocarbon/hydrocarbon_fragment.hpp>
+#include "single_atom.hpp"
+#include <testing/are_caps_equal.hpp>
 
 using namespace ghostfragment;
+using namespace testing::single;
 using namespace testing;
 
 using the_pt      = pt::Capped;
+using input_type  = const chemist::FragmentedNuclei&;
 using connect_pt  = ConnectivityTable;
 using ct_t        = ConnectivityTableTraits::result_type;
 using return_type = pt::CappedTraits::result_type;
@@ -35,6 +40,32 @@ TEST_CASE("SingleAtom") {
     }
 
     SECTION("Hydrocarbon monomers") {
-        // TODO: Write me!!!
+        SECTION("Methane fragment (size 1)") {
+            auto corr = caps_methane_one();
+            input_type hc{hydrocarbon_fragmented_nuclei(1, 1)};
+            result_type test = mod.run_as<the_pt>(hc);
+            REQUIRE(are_caps_equal(corr, test));
+        }
+
+        SECTION("Ethane fragment (size 1)") {
+            auto corr = caps_ethane_one();
+            input_type hc{hydrocarbon_fragmented_nuclei(2, 1)};
+            result_type test = mod.run_as<the_pt>(hc);
+            REQUIRE(are_caps_equal(corr, test));
+        }
+
+        SECTION("Propane fragment (size 1)") {
+            auto corr = caps_propane_one();
+            input_type hc{hydrocarbon_fragmented_nuclei(3, 1)};
+            result_type test = mod.run_as<the_pt>(hc);
+            REQUIRE(are_caps_equal(corr, test));
+        }
+
+        SECTION("Propane fragment (size 2)") {
+            auto corr = caps_propane_two();
+            input_type hc{hydrocarbon_fragmented_nuclei(3, 2)};
+            result_type test = mod.run_as<the_pt>(hc);
+            REQUIRE(are_caps_equal(corr, test));
+        }
     }
 }
