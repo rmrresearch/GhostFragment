@@ -8,7 +8,6 @@ namespace ghostfragment::connectivity {
 
 using my_pt   = ghostfragment::pt::BrokenBonds;
 using conn_pt = ghostfragment::ConnectivityTable;
-// using conn_pt  = ghostfragment::ConnectivityTable;
 
 const auto module_desc = R"(
 Broken Bonds from Fragmented Nuclei
