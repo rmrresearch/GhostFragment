@@ -1,7 +1,7 @@
 #pragma once
 #include <simde/simde.hpp>
 
-namespace ghostfragment::partitioned {
+namespace ghostfragment::fragmenting {
 
 DECLARE_MODULE(Cluster);
 DECLARE_MODULE(HeavyAtom);
@@ -22,4 +22,4 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Heavy Atom Partition", "Connectivity", "Covalent Radius");
 }
 
-} // namespace ghostfragment::partitioned
+} // namespace ghostfragment::fragmenting
