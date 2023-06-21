@@ -1,5 +1,5 @@
 #include "../test_ghostfragment.hpp"
-#include "DCLC.hpp"
+#include "dclc.hpp"
 #include <ghostfragment/property_types/connectivity_table.hpp>
 #include <hydrocarbon/hydrocarbon_fragment.hpp>
 #include <testing/are_caps_equal.hpp>
