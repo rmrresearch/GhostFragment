@@ -63,6 +63,8 @@ Generality.
    - A corollary is that we want to be able to interface with other electronic
      structure packages as well.
 
+.. _gf_multi_layer:
+
 Multi-layer.
    A promising variation on a traditional fragment-based method is to treat
    part of the chemical system with one level of theory, and the rest with
@@ -90,9 +92,6 @@ re-use of common information among sub-compuations (*e.g.*, common guesses
 for the SCF). We assume that the electronic structure method we are calling is
 peformant already.
 
-Architecture of GhostFragment
-=============================
-
 The remaining considerations from :ref:`gf_considerations` fall under the
 architecture of GhostFragment.
 
@@ -114,6 +113,13 @@ computations, GhostFragment can then approximate the property of interest for
 the larger system.
 
 The "input driver" is discussed in more detail at :ref:`gf_input_driver_design`.
-The "input driver" will ultimately control the accuracy (relative to the
-traditional full system method) of the fragment-based
-method since it is the component which generates the inputs.
+The "input driver" controls the creation of the inputs to the engine. The 
+accuracy of a fragment-based method (relative to the method it is approximating)
+is determined primarily by those inputs. Hence addressing the 
+:ref:`gf_accuracy` consideration falls to the input driver. The final high-level
+consideration, :ref:`gf_multi_layer`, can easily be addressed by nesting calls
+to GhostFragment. In terms of architecture, the :ref:`gf_multi_layer`
+consideration means GhostFragment needs to be written in a manner which is
+ammenable to being nested. This is somewhat trivially satisfiable by making
+GhostFragment's top-level a PluginPlay module, and by then relying on the fact
+that PluginPlay modules can be nested.
