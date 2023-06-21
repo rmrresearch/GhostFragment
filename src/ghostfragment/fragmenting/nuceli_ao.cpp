@@ -1,9 +1,9 @@
-#include "partitioned.hpp"
+#include "fragmenting.hpp"
 #include <ghostfragment/property_types/subset_map.hpp>
 
 using namespace ghostfragment::pt;
 
-namespace ghostfragment::partitioned {
+namespace ghostfragment::fragmenting {
 
 using my_pt          = Frag2AO;
 using atom2center_pt = simde::AtomToAO;
@@ -54,4 +54,4 @@ MODULE_RUN(NucleiAO) {
     return my_pt::wrap_results(rv, frag2aos);
 }
 
-} // namespace ghostfragment::partitioned
+} // namespace ghostfragment::fragmenting

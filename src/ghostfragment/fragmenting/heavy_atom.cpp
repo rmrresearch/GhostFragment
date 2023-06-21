@@ -1,10 +1,10 @@
-#include "partitioned.hpp"
+#include "fragmenting.hpp"
 
 #include <ghostfragment/property_types/connectivity_table.hpp>
 #include <chemist/nucleus/fragmented_nuclei.hpp>
 #include <ghostfragment/type/type.hpp>
 
-namespace ghostfragment::partitioned {
+namespace ghostfragment::fragmenting {
 
 using frags_pt = partitioned::HeavyAtom;
 using conn_pt  = ghostfragment::ConnectivityTable;

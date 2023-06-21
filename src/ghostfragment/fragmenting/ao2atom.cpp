@@ -1,9 +1,9 @@
-#include "partitioned.hpp"
+#include "fragmenting.hpp"
 #include <cmath>
 #include <ghostfragment/type/type.hpp>
 #include <limits>
 
-namespace ghostfragment::partitioned {
+namespace ghostfragment::fragmenting {
 
 using my_pt = simde::AtomToAO;
 
@@ -57,4 +57,4 @@ MODULE_RUN(AO2Atom) {
     return my_pt::wrap_results(rv, atom2center);
 }
 
-} // namespace ghostfragment::partitioned
+} // namespace ghostfragment::fragmenting

@@ -1,8 +1,8 @@
-#include "partitioned.hpp"
+#include "fragmenting.hpp"
 #include <ghostfragment/property_types/property_types.hpp>
 #include <simde/simde.hpp>
 
-namespace ghostfragment::partitioned {
+namespace ghostfragment::fragmenting {
 namespace detail_ {
 
 using bond_list_t = typename simde::type::connectivity_table::bond_list_type;
