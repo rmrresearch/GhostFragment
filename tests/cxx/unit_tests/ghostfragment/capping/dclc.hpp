@@ -11,6 +11,14 @@ namespace testing {
 // fragments, propane with two fragments, and propane with four
 // fragments. Answers generated in Mathematica. 
 
+// Methane CapSet (1 carbon, 1 frag)
+
+std::vector<chemist::CapSet> methane_dclc_caps() {
+    std::vector<chemist::CapSet> methane;
+    chemist::CapSet caps;
+    methane.push_back(caps);
+    return(methane);
+}
 // Ethane CapSets (2 carbon, 2 frags)
 std::vector<chemist::CapSet> ethane_dclc_caps() {
     std::vector<chemist::CapSet> ethane;
@@ -76,46 +84,4 @@ std::vector<chemist::CapSet> propane_dclc_3_caps() {
     return propane;
 }
 
-// Function checks to see if two sets of caps (inputs are Molecules
-// but the constituent atoms are the capping atoms) are equal. Loops
-// over each atom, checks position and name.
-
-bool AreCapsEqual(std::vector<chemist::CapSet> m1,
-std::vector<chemist::CapSet> m2) {
-    int size1 = m1.size();
-    int size2 = m2.size();
-    int cap_size1 = 0;
-    int cap_size2 = 0;
-
-    // First checks that the cap sets are equal in size
-    REQUIRE(size1 == size2);
-
-    // Loops over the vector of CapSets
-    for(int i = 0; i < size1; i++) {
-        cap_size1 = m1[i].size();
-        cap_size2 = m2[i].size();
-
-        // Corresponding CapSets must be the same size
-        REQUIRE(cap_size1 == cap_size2);
-
-        // Loops through the CapSets
-        for(int j = 0; j < cap_size1; j++) {
-          // Must share atomic number
-          REQUIRE(m1[i][j].cap_atom(0).Z() == m2[i][j].cap_atom(0).Z());
-
-          // Checking coordinates using a tolerance of 8 digits
-          // X coordinate
-          REQUIRE(m1[i][j].cap_atom(0).x() == 
-          Approx(m2[i][j].cap_atom(0).x()).margin(0.0000001));
-          // Y coordinate
-          REQUIRE(m1[i][j].cap_atom(0).y() == 
-          Approx(m2[i][j].cap_atom(0).y()).margin(0.0000001));
-          // Z coordinate
-          REQUIRE(m1[i][j].cap_atom(0).z() == 
-          Approx(m2[i][j].cap_atom(0).z()).margin(0.0000001));
-        }
-    }
-
-    return true;
-}
 } // namespace testing
