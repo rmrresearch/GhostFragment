@@ -24,7 +24,7 @@ TEST_CASE("DCLC Capping") {
         result_type caps = mod.run_as<the_pt>(hc);
         REQUIRE(are_caps_equal(corr, caps));
     }
-
+  
     SECTION("Ethane (2 carbon 2 frags)") {
         result_type corr(ethane_dclc_caps());
         input_type hc{hydrocarbon_fragmented_nuclei(2,1)};

@@ -19,7 +19,6 @@ std::vector<chemist::CapSet> methane_dclc_caps() {
     methane.push_back(caps);
     return(methane);
 }
-
 // Ethane CapSets (2 carbon, 2 frags)
 std::vector<chemist::CapSet> ethane_dclc_caps() {
     std::vector<chemist::CapSet> ethane;
@@ -84,4 +83,5 @@ std::vector<chemist::CapSet> propane_dclc_3_caps() {
 
     return propane;
 }
+
 } // namespace testing
