@@ -1,3 +1,5 @@
+.. _gf_design_overview:
+
 #############################
 GhostFragment Design Overview
 #############################
@@ -55,7 +57,7 @@ Accuracy
 
 .. _gf_generality:
 
-Generality.
+Generality
    We want GhostFragment to be able to house as many fragment-based methods as
    possible. This requires having an overall architecture which is as applicable
    as possible.
@@ -65,13 +67,23 @@ Generality.
 
 .. _gf_multi_layer:
 
-Multi-layer.
+Multi-layer
    A promising variation on a traditional fragment-based method is to treat
    part of the chemical system with one level of theory, and the rest with
    another (in theory this can easily be extended to more than two levels,
    but in practice is often limited to two). GhostFragment should be designed
    in a nestable fashion to support recursive invocations such as those
    necessary for a multi-layer approach.
+
+.. _gf_supersystem_pt:
+
+Supersystem property type
+   The user actually cares about some property of the supersystem. The 
+   fragment-based method should be a module which can be used as a drop-in
+   replacement for the traditional calculation. For example, if we want to
+   approximate calling a module satisfying the ``Energy`` property type with
+   a fragment-based method, the module implementing the fragment-based method 
+   should also satisfy the ``Energy`` property type.
 
 ***********************
 Design of GhostFragment
@@ -110,7 +122,11 @@ target system to sub-computations is handled by the "input driver"
 component. Once we know the inputs for the smaller computations the "Engine"
 is used to run the smaller computations. Given the results of the smaller
 computations, GhostFragment can then approximate the property of interest for 
-the larger system.
+the larger system. While not shown explicitly the input to GhostFragment being
+a chemical system and the result being an energy, is consistent with a module
+satisfying the ``Energy`` property type, consistent with 
+:ref:`gf_supersystem_pt`. Similar top-level designs could be made for any
+property type taking a chemical system.
 
 The "input driver" is discussed in more detail at :ref:`gf_input_driver_design`.
 The "input driver" controls the creation of the inputs to the engine. The 
