@@ -68,23 +68,33 @@ std::vector<std::set<std::size_t>> graph_to_frags(const ghostfragment::Molecular
 std::size_t nbonds) {
    std::vector<std::set<std::size_t>> indices;  // vector of sets of indices denoting fragments
    std::set<std::size_t> current_frag;
-   std::size_t duplicates = 0;
+   std::size_t supersets = 0;
+   std::size_t subsets = 0;
 
    for(std::size_t i = 0; i < graph.nnodes(); ++i) {
 
        current_frag = frag_nodes(graph, i, nbonds);
-
-       for(std::size_t j = 0; j < indices.size(); ++j) {
-           if(indices[j] == current_frag) {
-               duplicates ++;
+       std::size_t j = 0;
+       while(j < indices.size()) {
+           if(std::includes(indices[j].begin(), indices[j].end(), current_frag.begin(), current_frag.end())) {
+               supersets ++;
            }
+           if(std::includes(current_frag.begin(), current_frag.end(), indices[j].begin(), indices[j].end())) {
+               indices.erase(indices.begin()+j);
+               j --;
+               subsets ++;
+           }
+           j ++;
        }
 
-       if(duplicates == 0) {
+       if(supersets == 0) {
+           indices.push_back(current_frag);
+       } else if(subsets > 0) {
            indices.push_back(current_frag);
        }
 
-       duplicates = 0;
+       supersets = 0;
+       subsets = 0;
    }
    return(indices);
 }
