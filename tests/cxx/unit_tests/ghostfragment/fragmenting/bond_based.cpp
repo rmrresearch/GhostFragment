@@ -219,4 +219,30 @@ TEST_CASE("Bond-Based Fragmenter") {
         return_t corr = frag;
         REQUIRE(corr.operator==(rv));
     }
+
+    SECTION("Propane, nbonds = 1, nodes are methyl groups") {
+        // Tests propane (three carbon hydrocarbon) with fragments containing all nodes 
+        // within 1 bond of the fragment's central node. 
+        chemist::Molecule propane = hydrocarbon(3);
+        chemist::FragmentedNuclei frag = chemist::FragmentedNuclei(propane.nuclei());
+        frag.add_fragment({0, 1, 3, 4, 5, 6, 7});
+        frag.add_fragment({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+        frag.add_fragment({1, 2, 6, 7, 8, 9, 10});
+
+        connect_t bonds = chemist::topology::ConnectivityTable(3);
+        bonds.add_bond(0,1);
+        bonds.add_bond(1,2);
+
+        chemist::FragmentedNuclei fragment_nodes = chemist::FragmentedNuclei(propane.nuclei());
+        fragment_nodes.add_fragment({0, 3, 4, 5});
+        fragment_nodes.add_fragment({1, 6, 7});
+        fragment_nodes.add_fragment({2, 8, 9, 10});
+
+        nodes_t nodes(fragment_nodes);
+        graph input(nodes, bonds);
+        mod.change_input("nbonds", std::size_t(1));
+        const auto& rv = mod.run_as<my_pt>(input);
+        return_t corr = frag;
+        REQUIRE(corr.operator==(rv));
+    }
 }

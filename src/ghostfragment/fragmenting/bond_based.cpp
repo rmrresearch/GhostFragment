@@ -5,7 +5,7 @@
 namespace ghostfragment::fragmenting {
 
 // This function takes a MolecularGraph, a node and a parameter nbonds and returns
-// all nodes that are within nbonds bonds of the given node. Uses a stack nodeStack
+// all nuclei that are within nbonds bonds of the given node. Uses a stack nodeStack
 // to perform a depth-first search, where the elements of nodeStack are pairs
 // containing the indices of nodes and their distance from the root node. The function
 // loops over the stack, adding the nodes with distance <= nbonds to a set.
@@ -47,7 +47,17 @@ std::size_t root_node, std::size_t nbonds) {
            }
        }
    }
-   return(visited);
+
+   // Convert nodes (which could consist of multiple nuclei) to their constituent nuclei
+   std::set<std::size_t> nuclei; 
+   for(std::size_t i : visited) {
+        for(std::size_t j : graph.node(i)) {
+            if(nuclei.count(j) == 0) {
+                nuclei.insert(j);
+            }
+        }
+   }
+   return(nuclei);
 }
 
 // This function takes a MolecularGraph and a parameter nbonds, and loops
