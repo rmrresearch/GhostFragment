@@ -2,9 +2,7 @@
 #include <ghostfragment/property_types/property_types.hpp>
 #include <simde/simde.hpp>
 
-
 namespace ghostfragment::fragmenting {
-
 
 // This function takes a MolecularGraph, a node and a parameter nbonds and returns
 // all nodes that are within nbonds bonds of the given node. Uses a stack nodeStack
@@ -12,43 +10,35 @@ namespace ghostfragment::fragmenting {
 // containing the indices of nodes and their distance from the root node. The function
 // loops over the stack, adding the nodes with distance <= nbonds to a set.
 
-
 std::set<size_t> frag_nodes(const ghostfragment::MolecularGraph graph,
 std::size_t root_node, std::size_t nbonds) {
    const auto& bonds = graph.edges();
    std::set<std::size_t> visited;
    std::stack<std::pair<std::size_t, std::size_t>> nodeStack;
 
-
    nodeStack.push(std::make_pair(root_node, 0));
-
 
    while (!nodeStack.empty()) {
        std::size_t currentNode = nodeStack.top().first;
        std::size_t currentDistance = nodeStack.top().second;
        nodeStack.pop();
 
-
        if (visited.count(currentNode) > 0) {
            continue;  // Skip if node has already been counted
        }
 
-
        visited.insert(currentNode);
-
 
        if (currentDistance >= nbonds) {
            continue;  // Skip if node is beyond distance nbonds
        }
 
-
        for (auto bond : bonds) {
            if(bond[0] == currentNode) {  // If first index is current node
-               if (visited.count(bond[0]) == 0) {  // If bonded node is new
+               if (visited.count(bond[1]) == 0) {  // If bonded node is new
                    nodeStack.push(std::make_pair(bond[1], currentDistance + 1));
                }
            }
-
 
            if(bond[1] == currentNode) {  // If second index is current node
                if (visited.count(bond[0]) == 0) {  // If bonded node is new
@@ -60,11 +50,9 @@ std::size_t root_node, std::size_t nbonds) {
    return(visited);
 }
 
-
 // This function takes a MolecularGraph and a parameter nbonds, and loops
 // over all nodes in MolecularGraph, calling frag_nodes for each. If the set
 // of indices is novel, then it is added to a vector of sets to be returned.
-
 
 std::vector<std::set<std::size_t>> graph_to_frags(const ghostfragment::MolecularGraph graph,
 std::size_t nbonds) {
@@ -72,12 +60,9 @@ std::size_t nbonds) {
    std::set<std::size_t> current_frag;
    std::size_t duplicates = 0;
 
-
    for(std::size_t i = 0; i < graph.nnodes(); ++i) {
 
-
        current_frag = frag_nodes(graph, i, nbonds);
-
 
        for(std::size_t j = 0; j < indices.size(); ++j) {
            if(indices[j] == current_frag) {
@@ -85,22 +70,18 @@ std::size_t nbonds) {
            }
        }
 
-
        if(duplicates == 0) {
            indices.push_back(current_frag);
        }
-
 
        duplicates = 0;
    }
    return(indices);
 }
 
-
 const auto mod_desc = R"(
 Bond-Based Fragmenter
 -------------------
-
 
 This module takes as input a MolecularGraph representation of the molecular system
 and an integer parameter nbonds, and outputs a FragmentedNuclei object. The fragments
@@ -109,20 +90,17 @@ distance of nbonds or less away from the node in question into a fragment. Each 
 fragment will be output exactly once (i.e. no repeats).
 )";
 
-
-using my_pt    = ghostfragment::pt::MolecularGraphToFragments;
-using graph_pt = ghostfragment::pt::MolecularGraph;
-
+using my_pt     = ghostfragment::pt::MolecularGraphToFragments;
+using graph_pt  = ghostfragment::pt::MolecularGraph;
 
 MODULE_CTOR(BondBased) {
-   description(mod_desc);
-   satisfies_property_type<my_pt>();
+    description(mod_desc);
+    satisfies_property_type<my_pt>();
 
-
-   add_input<std::size_t>("nbonds")
-     .set_description("parameter for size of fragments");
+    add_input<std::size_t>("nbonds")
+    .set_description("bond width of fragment")
+    .set_default(std::size_t(0));
 }
-
 
 MODULE_RUN(BondBased) {
    using result_type   = pt::MolecularGraphToFragmentsTraits::fragment_type;
@@ -130,24 +108,24 @@ MODULE_RUN(BondBased) {
    using input_type    = pt::MolecularGraphToFragmentsTraits::graph_type;
    using molecule_type = typename input_type::molecule_type;
 
+   const auto& [graph] = my_pt::unwrap_inputs(inputs);
+   const auto& nbonds = inputs.at("nbonds").value<std::size_t>();
 
-   const auto& [graph]    = my_pt::unwrap_inputs(inputs);
-   auto nbonds               = inputs.at("nbonds").value<std::size_t>();
-  
+    if(graph.nnodes() == 0) { // Handles trivial mol edge-case
+        auto rv = results();
+        return my_pt::wrap_results(rv, result_type{molecule_type{}});
+    }
+
    result_type frags(graph.molecule()); // Will be the fragments
 
-
    const auto& indices = graph_to_frags(graph, nbonds);
-
 
    for(std::size_t i = 0; i < indices.size(); ++i) {
        frags.add_fragment(indices[i].begin(), indices[i].end());
    }
 
-
    auto rv = results();
    return my_pt::wrap_results(rv, frags);
 }
-
 
 } // namespace ghostfragment::partitioned
