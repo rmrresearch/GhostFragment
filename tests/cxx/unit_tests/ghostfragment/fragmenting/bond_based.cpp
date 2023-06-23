@@ -277,4 +277,40 @@ TEST_CASE("Bond-Based Fragmenter") {
         return_t corr = frag;
         REQUIRE(corr.operator==(rv));
     }
+
+    SECTION("triangle ring, nbonds = 4") {
+        // Tests a fictitious construction of nuclei to make sure BondBased can handle
+        // rings. Bonds are arranged such that there is a triangular ring at the center
+        // with chains extending from two of the nuclei in the triangle.
+        chemist::Molecule triangle = chemist::Molecule();
+        // atoms are carbons (arbitrary), positions are made different such that they aren't 
+        // all compressed into a single atom
+        for(std::size_t i = 0; i < 11; ++i) {
+            triangle.push_back(chemist::Atom("C", 6, 21874.662, i, 0, 0));
+        }
+        chemist::FragmentedNuclei frag = chemist::FragmentedNuclei(triangle.nuclei());
+        frag.add_fragment({0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
+        frag.add_fragment({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+
+        connect_t bonds = chemist::topology::ConnectivityTable(11);
+        for(std::size_t i = 0; i < 10; ++i) {
+            bonds.add_bond(i, i + 1);
+        }
+        bonds.add_bond(4,6);
+
+        chemist::FragmentedNuclei fragment_nodes = chemist::FragmentedNuclei(triangle.nuclei());
+        for(std::size_t i = 0; i < 11; ++i) {
+            fragment_nodes.add_fragment({i});
+        }
+
+        nodes_t nodes(fragment_nodes);
+        graph input(nodes, bonds);
+        mod.change_input("nbonds", std::size_t(4));
+        const auto& rv = mod.run_as<my_pt>(input);
+        return_t corr = frag;
+        REQUIRE(corr[0] == rv[0]);
+        REQUIRE(corr[1] == rv[1]);
+        REQUIRE(corr.size() == rv.size());
+        REQUIRE(corr.operator==(rv));
+    }
 }
