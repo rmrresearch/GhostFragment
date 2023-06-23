@@ -245,7 +245,7 @@ TEST_CASE("Bond-Based Fragmenter") {
             anthracene.push_back(chemist::Atom("H", 1, 1837.289, 0, i, 0));
         }
         chemist::FragmentedNuclei frag = chemist::FragmentedNuclei(anthracene.nuclei());
-        frag.add_fragment({0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23});
+        frag.add_fragment({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23});
 
         connect_t bonds = chemist::topology::ConnectivityTable(24);
         for(std::size_t i = 0; i < 13; ++i) {
@@ -275,6 +275,6 @@ TEST_CASE("Bond-Based Fragmenter") {
         mod.change_input("nbonds", std::size_t(7));
         const auto& rv = mod.run_as<my_pt>(input);
         return_t corr = frag;
-        // REQUIRE(corr.operator==(rv));
+        REQUIRE(corr.operator==(rv));
     }
 }
