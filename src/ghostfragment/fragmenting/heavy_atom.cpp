@@ -2,11 +2,12 @@
 
 #include <ghostfragment/property_types/connectivity_table.hpp>
 #include <chemist/nucleus/fragmented_nuclei.hpp>
-#include <ghostfragment/type/type.hpp>
+#include <ghostfragment/property_types/fragmented_nuclei.hpp>
+#include <iostream>
 
 namespace ghostfragment::fragmenting {
 
-using frags_pt = partitioned::HeavyAtom;
+using frags_pt = pt::FragmentedNuclei;
 using conn_pt  = ghostfragment::ConnectivityTable;
 
 const auto mod_desc = R"(
@@ -43,7 +44,7 @@ MODULE_RUN(HeavyAtom) {
     const auto& [mol] = frags_pt::unwrap_inputs(inputs);
 
     auto& con_mod     = submods.at("Connectivity");
-    const auto& conns = con_mod.run_as<conn_pt>(mol.nuclei());
+    const auto& conns = con_mod.run_as<conn_pt>(mol);
 
     fragmented_nuclei frags(mol);
 
@@ -52,7 +53,13 @@ MODULE_RUN(HeavyAtom) {
         std::vector<size_type> fragment;
         const auto Zi     = mol[atom_i].Z();
         const auto conn_i = conns.bonded_atoms(atom_i);
+        // std::cout << "Atom " << atom_i << " is bonded to";
+        // for(const auto n : conn_i){
+        //     std::cout << " " << n; 
+        // }
+        std::cout << std::endl;
         if(Zi > 1) {
+            // std::cout << "New heavy atom: " << atom_i << " is " <<mol[atom_i].name() << std::endl;
             fragment.push_back(atom_i);
 
             // Add hydrogens bonded to atom_i to the subset
@@ -61,6 +68,11 @@ MODULE_RUN(HeavyAtom) {
                 if(Zj == 1) fragment.push_back(atom_j);
             }
             frags.add_fragment(fragment.begin(), fragment.end());
+            std::cout << "Adding fragment ";
+            for(auto a = 0; a < fragment.size(); a++)
+                std::cout << fragment[a] << " ";
+            std::cout << std::endl;
+            std::cout << "Fragmented Nuclei now has " << frags.size() << " fragments" << std::endl;
         } else if(Zi == 1) {
             if(conn_i.size() > 1)
                 throw std::runtime_error("Wasn't expecting hydrogen to make "
@@ -68,6 +80,11 @@ MODULE_RUN(HeavyAtom) {
             if(conn_i.size() == 0) {
                 fragment.push_back(atom_i);
                 frags.add_fragment(fragment.begin(), fragment.end());
+                std::cout << "Adding fragment ";
+                for(auto a = 0; a < fragment.size(); a++)
+                    std::cout << fragment[a] << " ";
+                std::cout << std::endl;
+                std::cout << "Fragmented Nuclei now has " << frags.size() << " fragments" << std::endl;
             } else { // size == 1
                 const auto atom_j = *conn_i.begin();
 
@@ -80,12 +97,19 @@ MODULE_RUN(HeavyAtom) {
                 fragment.push_back(atom_i);
                 fragment.push_back(atom_j);
                 frags.add_fragment(fragment.begin(), fragment.end());
+                std::cout << "Adding fragment ";
+                for(auto a = 0; a < fragment.size(); a++)
+                    std::cout << fragment[a] << " ";
+                std::cout << std::endl;
+                std::cout << "Fragmented Nuclei now has " << frags.size() << " fragments" << std::endl;
             }
         } else {
             // I guess it's element zero...
             throw std::runtime_error("What does Z == 0 mean?");
         }
     }
+
+    std::cout << "Final fragmented nuclei has size " << frags.size() << std::endl;
 
     auto rv = results();
     return frags_pt::wrap_results(rv, frags);

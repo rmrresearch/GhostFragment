@@ -29,6 +29,18 @@ inline auto some_atoms() {
     return std::make_tuple(H, He, O);
 }
 
+// Makes a H, He, and O atom centered at the origin
+// Temporary second function during the transition
+// from simde types to ghostfragment/chemist.
+inline auto some_nuclei() {
+    using nuclei = chemist::Nuclei;
+    using atom = nuclei::value_type;
+    atom H("H", 1ul, 1.0, 0.0, 0.0, 0.0);
+    atom He("He", 2ul, 4.0, 0.0, 0.0, 0.0);
+    atom O("O", 8ul, 16.0, 0.0, 0.0, 0.0);
+    return std::make_tuple(H, He, O);
+}
+
 // inline auto make_nmers(ghostfragment::type::fragmented_molecule water_n,
 //                        std::size_t n) {
 //     const auto N = water_n.size();
