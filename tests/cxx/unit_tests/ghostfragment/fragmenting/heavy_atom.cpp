@@ -10,6 +10,7 @@ using connect_t  = simde::type::connectivity_table;
 using return_t   = ghostfragment::type::fragmented_molecule;
 
 using input_type = chemist::Nuclei;
+using value_type = input_type::value_type;
 using result_type = chemist::FragmentedNuclei;
 
 namespace {
@@ -43,7 +44,10 @@ TEST_CASE("HeavyAtom") {
     }
 
     SECTION("Throws if H makes more than one bond") {
-        input_type mol({H, H, O});
+        value_type H1("H", 1ul, 1.0, 1.0, 2.0, 3.0);
+        value_type H2("H", 1ul, 1.0, 4.0, 5.0, 6.0);
+        value_type O1("O", 8ul, 16.0, 7.0, 8.0, 9.0);
+        input_type mol({H1, H2, O1});
 
         connect_t c(3);
         c.add_bond(0, 1);
@@ -63,9 +67,12 @@ TEST_CASE("HeavyAtom") {
     }
 
 SECTION("H2 and H2O") {
-        input_type mol({H, H, H, O, H});
-
-        std::cout << "H2 and H20" << std::endl;
+        value_type H1("H", 1ul, 1.0, 1.0, 2.0, 3.0);
+        value_type H2("H", 1ul, 1.0, 4.0, 5.0, 6.0);
+        value_type H3("H", 1ul, 1.0, 7.0, 8.0, 9.0);
+        value_type O1("O", 8ul, 16.0, 10.0, 11.0, 12.0);
+        value_type H4("H", 1ul, 1.0, 13.0, 14.0, 15.0);
+        input_type mol({H1, H2, H3, O1, H4});
 
         connect_t c(5);
         c.add_bond(0, 1);
@@ -74,16 +81,6 @@ SECTION("H2 and H2O") {
 
         mod.change_submod("Connectivity", make_lambda(mol, c));
         const auto& test = mod.run_as<my_pt>(mol);
-        std::cout << "Recieved fragmented nuclei has size " << test.size() << std::endl;
-
-        for(auto a : test){
-            std::cout << "Fragment " << a << " has atoms";
-            for(auto b : a){
-                std::cout << " " << b;
-            }
-            std::cout << std::endl;
-        }
-
         result_type corr(mol);
         corr.add_fragment({0, 1});
         corr.add_fragment({2, 3, 4});
@@ -91,9 +88,11 @@ SECTION("H2 and H2O") {
     }
 
 SECTION("Isolated H") {
-        input_type mol({H, H, O, H});
-
-        std::cout << "Isolated H" << std::endl;
+        value_type H1("H", 1ul, 1.0, 4.0, 5.0, 6.0);
+        value_type H2("H", 1ul, 1.0, 7.0, 8.0, 9.0);
+        value_type O1("O", 8ul, 16.0, 10.0, 11.0, 12.0);
+        value_type H3("H", 1ul, 1.0, 13.0, 14.0, 15.0);
+        input_type mol({H1, H2, O1, H3});
 
         connect_t c(4);
         c.add_bond(1, 2);
@@ -101,15 +100,6 @@ SECTION("Isolated H") {
 
         mod.change_submod("Connectivity", make_lambda(mol, c));
         const auto& test = mod.run_as<my_pt>(mol);
-        std::cout << "Recieved fragmented nuclei has size " << test.size() << std::endl;
-
-        for(auto a : test){
-            std::cout << "Fragment " << a << " has atoms";
-            for(auto b : a){
-                std::cout << " " << b;
-            }
-            std::cout << std::endl;
-        }
         result_type corr(mol);
         corr.add_fragment({0});
         corr.add_fragment({1, 2, 3});
@@ -117,9 +107,13 @@ SECTION("Isolated H") {
     }
 
 SECTION("Bunch of heavy atoms") {
-        input_type mol({O, O, O, O, O, O});
-
-        std::cout << "Bunch of heavy atoms" << std::endl;
+        value_type O1("O", 8ul, 16.0, 0.0, 1.0, 2.0);
+        value_type O2("O", 8ul, 16.0, 1.0, 1.0, 2.0);
+        value_type O3("O", 8ul, 16.0, 0.0, 1.0, 1.0);
+        value_type O4("O", 8ul, 16.0, 1.0, 1.0, 1.0);
+        value_type O5("O", 8ul, 16.0, 2.0, 1.0, 2.0);
+        value_type O6("O", 8ul, 16.0, 2.0, 1.0, 1.0);
+        input_type mol({O1, O2, O3, O4, O5, O6});
 
         connect_t c(6);
         c.add_bond(0, 1);
@@ -128,15 +122,7 @@ SECTION("Bunch of heavy atoms") {
 
         mod.change_submod("Connectivity", make_lambda(mol, c));
         const auto& test = mod.run_as<my_pt>(mol);
-        std::cout << "Recieved fragmented nuclei has size " << test.size() << std::endl;
 
-        for(auto a : test){
-            std::cout << "Fragment " << a << " has atoms";
-            for(auto b : a){
-                std::cout << " " << b;
-            }
-            std::cout << std::endl;
-        }
         result_type corr(mol);
         corr.add_fragment({0});
         corr.add_fragment({1});
