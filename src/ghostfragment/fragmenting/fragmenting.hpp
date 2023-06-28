@@ -1,9 +1,6 @@
 #pragma once
 #include <simde/simde.hpp>
 
-#pragma once
-#include <simde/simde.hpp>
-
 namespace ghostfragment::fragmenting {
 
 DECLARE_MODULE(Cluster);

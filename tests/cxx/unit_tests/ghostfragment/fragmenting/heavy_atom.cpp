@@ -28,10 +28,6 @@ TEST_CASE("HeavyAtom") {
     auto mm   = testing::initialize();
     auto& mod = mm.at("Heavy Atom Partition");
 
-    // Since we are hard-coding the connectivity tables the coordinates don't
-    // matter
-    auto [H, He, O] = testing::some_nuclei();
-
     SECTION("Empty Molecule") {
         input_type mol;
 
