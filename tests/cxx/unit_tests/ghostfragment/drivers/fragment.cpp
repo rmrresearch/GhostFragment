@@ -1,78 +1,64 @@
-// #include "../test_ghostfragment.hpp"
+#include "../test_ghostfragment.hpp"
+#include "hydrocarbon/hydrocarbon.h"
+#include <ghostfragment/property_types/fragmented_nuclei.hpp>
 
-// using namespace ghostfragment;
-// using namespace testing;
+using namespace ghostfragment;
+using namespace testing;
 
-// using frags_pt       = simde::FragmentedMolecule;
-// using graph_pt       = pt::MolecularGraph;
-// using graph2frags_pt = pt::MolecularGraphToFragments;
+using frags_pt       = pt::FragmentedNuclei;
+using graph_pt       = pt::MolecularGraph;
+using graph2frags_pt = pt::MolecularGraphToFragments;
 
-// using frags_type = type::fragmented_molecule;
-// using graph_type = MolecularGraph;
-// using conns_type = graph_type::connectivity_type;
-// using mol_type   = typename frags_type::superset_type;
-// namespace {
+using frags_type = chemist::FragmentedNuclei;
+using graph_type = MolecularGraph;
+using conns_type = graph_type::connectivity_type;
+using mol_type   = chemist::Molecule;
 
-// auto make_patom_module(const mol_type& mol, const frags_type& rv) {
-//     return pluginplay::make_lambda<frags_pt>([=](auto&& mol_in) {
-//         REQUIRE(mol_in == mol);
-//         return rv;
-//     });
-// }
+/* Testing strategy:
+ *
+ * The FragmentDriver module is purely a driver. If we assume the modules it
+ * calls work correctly, the only thing we need to test is that the data flows.
+ * Testing is done using the default modules (Heavy Atom for pseudoatom generation,
+ * Bond-Based for fragmentation).
+ */
 
-// auto make_graph_module(const frags_type& patoms, const graph_type& g) {
-//     return pluginplay::make_lambda<graph_pt>([=](auto&& patom_in) {
-//         REQUIRE(patom_in == patoms);
-//         return g;
-//     });
-// }
+TEST_CASE("Fragment Driver") {
+    auto mm   = initialize();
+    auto& mod = mm.at("Fragment Driver");
 
-// auto make_g2frag_module(const graph_type& g, const frags_type& rv) {
-//     return pluginplay::make_lambda<graph2frags_pt>([=](auto&& graph_in) {
-//         REQUIRE(graph_in == g);
-//         return rv;
-//     });
-// }
+    // Factor out so change_submod fits on one line
+    const auto g2f_key = "Molecular graph to fragments";
 
-// } // namespace
+    SECTION("Empty Molecule") {
+        chemist::Molecule mol;
+        frags_type corr(mol.nuclei());
+        const auto& rv = mod.run_as<frags_pt>(mol.nuclei());
+        REQUIRE(corr == rv);
+    }
 
-// /* Testing strategy:
-//  *
-//  * The FragmentDriver module is purely a driver. If we assume the modules it
-//  * calls work correctly, the only thing we need to test is that the data flow.
-//  * This is done with some facade modules, which verify they receive the correct
-//  * inputs, and by verifying that the correct result is returned from the module.
-//  */
+    SECTION("Single Atom") {
+        chemist::Molecule mol;
+        mol.push_back(chemist::Atom("H", 1, 1837.289, 0, 0, 0));
+        frags_type corr(mol.nuclei());
+        corr.add_fragment({0});
+        const auto& rv = mod.run_as<frags_pt>(mol.nuclei());
+        REQUIRE(corr == rv);
+    }
 
-// TEST_CASE("Fragment Driver") {
-//     auto mm   = initialize();
-//     auto& mod = mm.at("Fragment Driver");
+    SECTION("Methane") {
+        auto methane = hydrocarbon(1);
+        frags_type corr(methane.nuclei());
+        corr.add_fragment({0, 1, 2, 3, 4});
+        const auto& rv = mod.run_as<frags_pt>(methane.nuclei());
+        REQUIRE(corr == rv);
+    }
 
-//     // Factor out so change_submod fits on one line
-//     const auto g2f_key = "Molecular graph to fragments";
-
-//     // For water molecules the patoms are the same as the correct answer
-//     SECTION("One molecule") {
-//         auto mol = water(1);
-//         frags_type corr(mol, {{0, 1, 2}});
-//         graph_type graph(corr, conns_type(1));
-
-//         mod.change_submod("Pseudoatoms", make_patom_module(mol, corr));
-//         mod.change_submod("Molecular graph", make_graph_module(corr, graph));
-//         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
-//         const auto& [frags] = mod.run_as<frags_pt>(mol);
-//         REQUIRE(corr == frags);
-//     }
-
-//     SECTION("Two molecules") {
-//         auto mol = water(2);
-//         frags_type corr(mol, {{0, 1, 2}, {3, 4, 5}});
-//         graph_type graph(corr, conns_type(2));
-
-//         mod.change_submod("Pseudoatoms", make_patom_module(mol, corr));
-//         mod.change_submod("Molecular graph", make_graph_module(corr, graph));
-//         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
-//         const auto& [frags] = mod.run_as<frags_pt>(mol);
-//         REQUIRE(corr == frags);
-//     }
-// }
+    SECTION("Ethane") {
+        auto ethane = hydrocarbon(2);
+        frags_type corr(ethane.nuclei());
+        corr.add_fragment({0, 2, 3, 4});
+        corr.add_fragment({1, 5, 6, 7});
+        const auto& rv = mod.run_as<frags_pt>(ethane.nuclei());
+        REQUIRE(corr == rv);
+    }
+}
