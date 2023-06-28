@@ -1,11 +1,13 @@
 #include "fragmenting.hpp"
 
 #include <ghostfragment/property_types/connectivity_table.hpp>
-#include <ghostfragment/type/type.hpp>
+#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <ghostfragment/property_types/fragmented_nuclei.hpp>
+#include <iostream>
 
 namespace ghostfragment::fragmenting {
 
-using frags_pt = simde::FragmentedMolecule;
+using frags_pt = pt::FragmentedNuclei;
 using conn_pt  = ghostfragment::ConnectivityTable;
 
 const auto mod_desc = R"(
@@ -36,40 +38,36 @@ MODULE_CTOR(HeavyAtom) {
 }
 
 MODULE_RUN(HeavyAtom) {
-    using fragmented_molecule = type::fragmented_molecule;
-    using size_type           = typename simde::type::molecule::size_type;
-    using subset_type         = type::fragmented_molecule::value_type;
+    using fragmented_nuclei = chemist::FragmentedNuclei;
+    using size_type           = typename chemist::FragmentedNuclei::size_type;
 
     const auto& [mol] = frags_pt::unwrap_inputs(inputs);
 
     auto& con_mod     = submods.at("Connectivity");
-    const auto& conns = con_mod.run_as<conn_pt>(mol.nuclei());
+    const auto& conns = con_mod.run_as<conn_pt>(mol);
 
-    fragmented_molecule frags(mol);
-
-    std::map<size_type, subset_type> subsets;
+    fragmented_nuclei frags(mol);
 
     for(size_type atom_i = 0; atom_i < mol.size(); ++atom_i) {
+        std::vector<size_type> fragment;
         const auto Zi     = mol[atom_i].Z();
         const auto conn_i = conns.bonded_atoms(atom_i);
         if(Zi > 1) {
-            auto ss = frags.new_subset();
-            ss.insert(atom_i);
+            fragment.push_back(atom_i);
 
             // Add hydrogens bonded to atom_i to the subset
             for(const auto atom_j : conn_i) {
                 const auto Zj = mol[atom_j].Z();
-                if(Zj == 1) ss.insert(atom_j);
+                if(Zj == 1) fragment.push_back(atom_j);
             }
-            subsets.emplace(atom_i, ss);
-        } else if(Zi == 1) {
+            frags.add_fragment(fragment.begin(), fragment.end());
+        }else if(Zi == 1) {
             if(conn_i.size() > 1)
                 throw std::runtime_error("Wasn't expecting hydrogen to make "
                                          "more than one bond...");
             if(conn_i.size() == 0) {
-                auto ss = frags.new_subset();
-                ss.insert(atom_i);
-                subsets.emplace(atom_i, ss);
+                fragment.push_back(atom_i);
+                frags.add_fragment(fragment.begin(), fragment.end());
             } else { // size == 1
                 const auto atom_j = *conn_i.begin();
 
@@ -79,17 +77,15 @@ MODULE_RUN(HeavyAtom) {
 
                 // It's a H-H molecule and we haven't already seen one of the
                 // hydrogen atoms in it
-                auto ss = frags.new_subset();
-                ss.insert(atom_i);
-                ss.insert(atom_j);
-                subsets.emplace(atom_i, ss);
+                fragment.push_back(atom_i);
+                fragment.push_back(atom_j);
+                frags.add_fragment(fragment.begin(), fragment.end());
             }
         } else {
             // I guess it's element zero...
             throw std::runtime_error("What does Z == 0 mean?");
         }
     }
-    for(const auto& [_, v] : subsets) frags.insert(v);
 
     auto rv = results();
     return frags_pt::wrap_results(rv, frags);
