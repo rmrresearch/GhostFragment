@@ -16,7 +16,7 @@ This module assigns a charge of zero to each input fragment.
 
 The inputs to this module are fragments, a cap set, and the original molecule.
 )""";
-} //end namespace
+} // end namespace
 
 MODULE_CTOR(Neutral) {
     satisfies_property_type<my_pt>();
@@ -28,6 +28,7 @@ MODULE_RUN(Neutral) {
     using result_type = traits_t::result_type;
     result_type charges;
 
+    // Simply sets each fragment's charge to zero
     for(const auto& frag_i : frags) {
         charges.push_back(0);
     }
