@@ -5,19 +5,27 @@
 namespace ghostfragment::pt {
 
 struct MultiplicityAssignerTraits {
-    using system_type = chemist::FragmentedNuclei;
+    using frag_type = chemist::FragmentedNuclei;
+    using cap_type = std::vector<chemist::CapSet>;
+    using mol_type = chemist::Molecule;
 
-    using size_type = chemist::Molecule::size_type;
+    using size_type = mol_type::size_type;
     using result_type = std::vector<size_type>;
 };
 
 DECLARE_PROPERTY_TYPE(MultiplicityAssigner);
 
 PROPERTY_TYPE_INPUTS(MultiplicityAssigner) {
-    using traits_type = MultiplicityAssignerTraits;
-    using input_type = traits_type::system_type;
+    using traits_type = ChargeAssignerTraits;
+    using frag_type = traits_type::frag_type;
+    using cap_type = traits_type::cap_type;
+    using mol_type = traits_type::mol_type;
 
-    return pluginplay::declare_input().add_field<input_type>("Fragments to assign multiplicity");
+    return pluginplay::declare_input()
+            .add_field<frag_type>("Fragments to assign multiplicity")
+            .template add_field<caps_type>("Set of caps for each fragment")
+            .template add_field<mol_type>("The original molecule");
+
 }
 
 PROPERTY_TYPE_RESULTS(MultiplicityAssigner) {
