@@ -11,11 +11,8 @@ section record the process of designing GhostFragment.
     :caption: Contents:
 
     overview
-    considerations
-    architecture
-    fragment_driver
-    fragmented_molecule
-    fragmented_system_driver
     input_driver
+    fragmented_system_driver
+    fragment_driver
     nmers
     caps

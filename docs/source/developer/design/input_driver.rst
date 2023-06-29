@@ -4,6 +4,8 @@
 Designing GhostFragment's Input Driver
 ######################################
 
+.. |n| replace:: :math:`n``
+
 *************************
 What is the Input Driver?
 *************************
@@ -21,7 +23,11 @@ Input Driver Considerations
 
 Accuracy
    :ref:`gf_design_overview` delegated the accuracy consideration to the input
-   driver.
+   driver. At this level accuracy primarily entails:
+
+   - Ensuring that the final set of sub-systems contains all important 
+     interactions, *i.e.*, all important |n|-mers are present.
+   - Being able to correct for BSSE.
 
 .. _gf_input_driver_pt:
 
@@ -66,8 +72,15 @@ A full discussion of the "Fragmented System Driver" is derferred to
 System Driver is responsible for taking an input ``ChemicalSystem`` and
 producing the final set of sub-systems to use. These sub-systems are returned
 as a ``FragmentedMoleculeSystem`` object and do NOT include the overlaps (as
-dictated by consideration :ref:`gf_overlap`).
+dictated by consideration :ref:`gf_overlap`). Forming of |n|-mers will
+happen in the fragmented system driver and thus satisfying consideration
+:ref:`gf_input_driver_accuracy` will be partially addressed here.
 
 The exact contents of the "Interaction Driver" will depend on the approximation
 being used. If the user wants the traditional (G)MBE, the input will be the
-set of n-mers which survived the screening process
+set of n-mers which survived the screening process and the module will be
+responsible for working out the overlaps (including their weights), capping the
+overlaps, and assigning AOs to each |n|-mer and overlap. If the user instead
+wants a BSSE-corrected interaction, then assigning the AOs becomes more 
+complicated. A full discussion of the Interaction driver is beyond our current
+scope.
