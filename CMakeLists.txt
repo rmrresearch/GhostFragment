@@ -49,7 +49,7 @@ cpp_find_or_build_dependency(
     BUILD_TARGET simde
     FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
-               BUILD_PYBIND11_PYBINDINGS=OFF
+               BUILD_PYBIND11_PYBINDINGS=${BUILD_PYBIND11_PYBINDINGS}
 )
 
 cpp_add_library(
@@ -59,12 +59,12 @@ cpp_add_library(
     DEPENDS nwx::simde
 )
 
-# include(nwx_pybind11)
-# nwx_add_pybind11_module(
-#     ${PROJECT_NAME}
-#     SOURCE_DIR "${project_src_dir}/python"
-#     DEPENDS ${PROJECT_NAME}
-# )
+include(nwx_pybind11)
+nwx_add_pybind11_module(
+    ${PROJECT_NAME}
+    SOURCE_DIR "${project_src_dir}/python"
+    DEPENDS ${PROJECT_NAME}
+)
 
 if("${BUILD_TESTING}")
     set(cxx_tests_dir "${CMAKE_CURRENT_LIST_DIR}/tests/cxx")
@@ -84,10 +84,10 @@ if("${BUILD_TESTING}")
         INCLUDE_DIR "${project_src_dir}"
         DEPENDS Catch2::Catch2 ${PROJECT_NAME}
     )
-    # nwx_pybind11_tests(
-    #     py_ghostfragment
-    #     ${python_tests_dir}/integration_tests/test_ghostfragment.py
-    #     SUBMODULES simde chemist pluginplay parallelzone
-    # )
+    nwx_pybind11_tests(
+        py_ghostfragment
+        ${python_tests_dir}/integration_tests/test_ghostfragment.py
+        SUBMODULES simde chemist pluginplay parallelzone
+    )
 
 endif()
