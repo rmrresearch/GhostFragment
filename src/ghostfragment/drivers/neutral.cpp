@@ -1,5 +1,8 @@
 #include "drivers.hpp"
 #include <ghostfragment/property_types/charge_assigner.hpp>
+#include <chemist/molecule/molecule.hpp>
+#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <chemist/capping/cap_set.hpp>
 
 using my_pt = ghostfragment::pt::ChargeAssigner;
 using traits_t = ghostfragment::pt::ChargeAssignerTraits;

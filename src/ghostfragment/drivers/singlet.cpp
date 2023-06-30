@@ -1,7 +1,7 @@
 #include "drivers.hpp"
 #include <ghostfragment/property_types/multiplicity_assigner.hpp>
 
-using my_pt = ghostfragment::MultiplicityAssigner;
+using my_pt = ghostfragment::pt::MultiplicityAssigner;
 using traits_t = ghostfragment::pt::MultiplicityAssignerTraits;
 
 namespace ghostfragment::drivers {
@@ -47,7 +47,7 @@ MODULE_RUN(Singlet) {
         for(auto cap_i = 0; cap_i < cap_set.size(); cap_i++) {
             const auto& cap = cap_set[cap_i];
             for(auto atom_i = 0; atom_i < cap.size(); atom_i++) {
-                num_electrons += cap.cap_atom(atom_i);
+                num_electrons += cap.cap_atom(atom_i).Z();
             }
         }
 

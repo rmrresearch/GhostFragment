@@ -7,6 +7,8 @@ namespace ghostfragment::drivers {
 // DECLARE_MODULE(FragmentBasedMethod);
 // DECLARE_MODULE(FragmentedSystem);
 // DECLARE_MODULE(NMerSystem);
+DECLARE_MODULE(Neutral);
+DECLARE_MODULE(Singlet);
 
 /// Loads all the modules in the Drivers library into the provided ModuleManager
 inline void load_modules(pluginplay::ModuleManager& mm) {
@@ -14,6 +16,8 @@ inline void load_modules(pluginplay::ModuleManager& mm) {
     // mm.add_module<FragmentBasedMethod>("Fragment Based Method");
     // mm.add_module<FragmentedSystem>("FragmentedSystem Driver");
     // mm.add_module<NMerSystem>("NMerSystem Driver");
+    mm.add_module<Neutral>("Neutral Charge");
+    mm.add_module<Singlet>("Single Multiplicity");
 }
 
 /// Sets the defaults for submodules in the Drivers library, when a suitable
