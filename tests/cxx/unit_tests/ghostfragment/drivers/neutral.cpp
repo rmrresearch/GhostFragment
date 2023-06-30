@@ -44,13 +44,7 @@ TEST_CASE("Neutral Singlet") {
         frags.add_fragment({1, 2});
 
         SECTION("No caps") {
-            cap_type caps;
-            for(auto i = 0; i < frags.size(); i++) {
-                chemist::CapSet cap_set;
-                chemist::Cap c;
-                cap_set.push_back(c);
-                caps.push_back(cap_set);
-            }
+            cap_type caps(frags.size(), chemist::CapSet{});
 
             charge_result_type charge_corr(frags.size(), 0);
             mult_result_type mult_corr(frags.size(), 1);
