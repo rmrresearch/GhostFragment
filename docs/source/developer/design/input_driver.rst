@@ -26,7 +26,7 @@ Accuracy
    driver. At this level accuracy primarily entails:
 
    - Ensuring that the final set of sub-systems contains all important 
-     interactions, *i.e.*, all important |n|-mers are present.
+     interactions, *e.g.*, all important |n|-mers are present.
    - Being able to correct for BSSE.
 
 .. _gf_input_driver_pt:
