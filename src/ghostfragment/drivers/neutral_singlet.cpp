@@ -1,34 +1,40 @@
 #include "drivers.hpp"
-#include <ghostfragment/property_types/multiplicity_assigner.hpp>
+#include <ghostfragment/property_types/charge_multiplicity_assigner.hpp>
+#include <chemist/molecule/molecule.hpp>
+#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <chemist/capping/cap_set.hpp>
 
-using my_pt = ghostfragment::pt::MultiplicityAssigner;
-using traits_t = ghostfragment::pt::MultiplicityAssignerTraits;
+using my_pt = ghostfragment::pt::ChargeMultiplicityAssigner;
+using traits_t = ghostfragment::pt::ChargeMultiplicityAssignerTraits;
 
 namespace ghostfragment::drivers {
 
 namespace {
 constexpr auto module_desc = R"""(
 #######################
-Neutral Charge Assigner
+Neutral Singlet Charge Assigner
 #######################
 
-This module assigns a multiplicity of one to each input fragment.
-Provided that the fragment has an even number of atoms.
-Otherwise, throws error.
+This module assigns a charge of zero
+and a multiplicity of one to each input fragment.
 
 The inputs to this module are fragments, a cap set, and the original molecule.
 )""";
 } // end namespace
 
-MODULE_CTOR(Singlet) {
+MODULE_CTOR(NeutralSinglet) {
     satisfies_property_type<my_pt>();
 }
 
-MODULE_RUN(Singlet) {
+MODULE_RUN(NeutralSinglet) {
     const auto& [frags, caps, mol] = my_pt::unwrap_inputs(inputs);
 
-    using result_type = traits_t::result_type;
-    result_type multiplicities;
+    using charge_result_type = traits_t::charge_result_type;
+    using mult_result_type = traits_t::mult_result_type;
+    // Charge vector is only populated with 0s
+    charge_result_type charges(frags.size(), 0);
+    mult_result_type multiplicities;
+
 
     // Goes over every fragment and attempts
     // to set each one's multiplicity to one.
@@ -63,6 +69,6 @@ MODULE_RUN(Singlet) {
     }
 
     auto rv = results();
-    return my_pt::wrap_results(rv, multiplicities);
+    return my_pt::wrap_results(rv, charges, multiplicities);
 }
-}
+} // namespace ghostfragment::drivers
