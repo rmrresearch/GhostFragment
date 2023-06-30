@@ -34,7 +34,7 @@ TEST_CASE("Neutral Charge") {
     SECTION("Two fragments") {
         atom_type C1("C", 6ul, 12.0, 0.0, 0.0, 0.0);
         atom_type C2("C", 6ul, 12.0, 1.0, 0.0, 0.0);
-        atom_type C3("C", 6ul, 12.0, 1.0, 0.0, 0.0);
+        atom_type C3("C", 6ul, 12.0, 2.0, 0.0, 0.0);
         mol_type mol({C1, C2, C3});
         frag_type frags(mol.nuclei());
         frags.add_fragment({0, 1});
@@ -59,8 +59,8 @@ TEST_CASE("Neutral Charge") {
         }
 
         SECTION("Two caps") {
-            atom_type Cap1("C", 6ul, 12.0, 0.5, 0.0, 0.0);
-            atom_type Cap2("C", 6ul, 12.0, 0.5, 0.0, 0.0);
+            atom_type Cap1("H", 1ul, 2.0, 1.5, 0.0, 0.0);
+            atom_type Cap2("H", 1ul, 2.0, 0.5, 0.0, 0.0);
 
             cap_type caps;
 

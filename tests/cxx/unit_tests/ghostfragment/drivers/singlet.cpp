@@ -31,6 +31,94 @@ TEST_CASE("Single Multiplicity") {
     }
 
     SECTION("Two fragments") {
-        
+        atom_type C1("C", 6ul, 12.0, 0.0, 0.0, 0.0);
+        atom_type C2("C", 6ul, 12.0, 1.0, 0.0, 0.0);
+        atom_type C3("C", 6ul, 12.0, 2.0, 0.0, 0.0);
+        mol_type mol({C1, C2, C3});
+        frag_type frags(mol.nuclei());
+        frags.add_fragment({0, 1});
+        frags.add_fragment({1, 2});
+
+        SECTION("No caps") {
+            cap_type caps;
+            for(auto i = 0; i < frags.size(); i++) {
+                chemist::CapSet cap_set;
+                chemist::Cap c;
+                cap_set.push_back(c);
+                caps.push_back(cap_set);
+            }
+
+            result_type corr;
+            corr.push_back(1);
+            corr.push_back(1);
+
+            const auto& test = mod.run_as<my_pt>(frags, caps, mol);
+
+            REQUIRE(test == corr);
+        }
+
+        SECTION("Two caps") {
+            atom_type Cap1("C", 6ul, 12.0, 1.5, 0.0, 0.0);
+            atom_type Cap2("C", 6ul, 12.0, 0.5, 0.0, 0.0);
+
+            cap_type caps;
+
+            chemist::CapSet cap_set1;
+            cap_set1.add_cap(1, 2, Cap1);
+            caps.push_back(cap_set1);
+
+            chemist::CapSet cap_set2;
+            cap_set2.add_cap(1, 0, Cap2);
+            caps.push_back(cap_set2);
+
+            result_type corr;
+            corr.push_back(1);
+            corr.push_back(1);
+
+            const auto& test = mod.run_as<my_pt>(frags, caps, mol);
+
+            REQUIRE(test == corr);
+        }
+    }
+
+    SECTION("Odd number of elections") {
+        atom_type H1("H", 1ul, 2.0, -1.0, 0.0, 0.0);
+        atom_type C1("C", 6ul, 12.0, 0.0, 0.0, 0.0);
+        atom_type C2("C", 6ul, 12.0, 1.0, 0.0, 0.0);
+        atom_type C3("C", 6ul, 12.0, 2.0, 0.0, 0.0);
+        atom_type H2("H", 1ul, 2.0, 3.0, 0.0, 0.0);
+        mol_type mol({H1, C1, C2, C3, H2});
+        frag_type frags(mol.nuclei());
+        frags.add_fragment({0, 1, 2});
+        frags.add_fragment({2, 3, 4});
+
+        SECTION("No caps") {
+            cap_type caps;
+            for(auto i = 0; i < frags.size(); i++) {
+                chemist::CapSet cap_set;
+                chemist::Cap c;
+                cap_set.push_back(c);
+                caps.push_back(cap_set);
+            }
+            
+            REQUIRE_THROWS_AS(mod.run_as<my_pt>(frags, caps, mol), std::runtime_error);
+        }
+
+        SECTION("Two caps") {
+            atom_type Cap1("C", 6ul, 12.0, 1.5, 0.0, 0.0);
+            atom_type Cap2("C", 6ul, 12.0, 0.5, 0.0, 0.0);
+
+            cap_type caps;
+
+            chemist::CapSet cap_set1;
+            cap_set1.add_cap(2, 3, Cap1);
+            caps.push_back(cap_set1);
+
+            chemist::CapSet cap_set2;
+            cap_set2.add_cap(2, 1, Cap2);
+            caps.push_back(cap_set2);
+
+            REQUIRE_THROWS_AS(mod.run_as<my_pt>(frags, caps, mol), std::runtime_error);
+        }
     }
 }
