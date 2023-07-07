@@ -27,8 +27,6 @@ Fragment Method Considerations
    pseudoatoms
 #. For disjoint fragments, the fragments themselves can be considered 
    pseudoatoms
-#. Mapping of AOs and number of electrons needs to be done from pseudoatoms to
-   work with intersecting fragments
 
 
 ******************************

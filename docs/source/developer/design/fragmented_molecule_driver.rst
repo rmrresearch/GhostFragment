@@ -4,6 +4,8 @@
 Designing the FragmentedMolecule Driver
 #######################################
 
+.. |n| replace:: :math:`n`
+
 This page captures the design process of the ``FragmentedMolecule`` driver
 component of GhostFragment.
 
@@ -52,6 +54,16 @@ Charge and multiplicity
    to the ``FragmentedNuclei`` class a set of charges and multiplicities,
    namely the charge and multiplicity of each fragment.
 
+.. _fmd_nmers:
+
+|n|-mers
+   From the perspective of the GMBE, there is no real destinction between 
+   fragments and |n|-mers. Ultimately, the coefficients we need for the final
+   energy expression simply depend on the overlaps of the final subsystems we
+   want to run computations on. The ``FragmentedMolecule`` driver should be
+   designed so that the the ``FragmentedNuclei`` which enter into it could be
+   either fragments or |n|-mers.
+
 ********************************
 FragmentedMolecule Driver Design
 ********************************
@@ -62,3 +74,13 @@ FragmentedMolecule Driver Design
    :align: center
 
    The architecture of the ``FragmentedMolecule`` Driver. 
+
+:ref:`fig_gf_fragmented_molecule_driver` shows the architecture of the
+``FragmentedMolecule`` driver. Following from consideration 
+:ref:`fmd_hierarchical`, the first step is to fragment the input ``Molecule``
+into a ``FragmentedNuclei`` object. The resulting fragments will in general
+contain broken bonds. As stated in consideration :ref:`fmd_capping` we need
+to address the broken bonds before we can accurately assign charges and
+multiplicities to the fragments. Once we have capped fragments, the final
+step in creating a ``FragmentedMolecule`` object is to assign the charges and
+multiplicities to the fragments, satisfying :ref:`fmd_charge_mult`.

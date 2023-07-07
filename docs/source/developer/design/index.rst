@@ -13,6 +13,6 @@ section record the process of designing GhostFragment.
     overview
     input_driver
     fragmented_system_driver
-    fragment_driver
+    fragmented_molecule_driver
+    fragmented_nuclei_driver
     nmers
-    caps
