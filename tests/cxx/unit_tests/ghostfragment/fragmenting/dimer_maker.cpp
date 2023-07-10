@@ -31,7 +31,7 @@ TEST_CASE("Dimer Maker") {
         result_type corr(nukes);
         mod.change_submod("Fragmentation", make_frag_module(nukes, corr));
         result_type frags = mod.run_as<my_pt>(nukes);
-        REQUIRE(corr.operator==(frags));
+        REQUIRE(corr == frags);
     }
 
     SECTION("Single Nucleus") {
@@ -44,7 +44,7 @@ TEST_CASE("Dimer Maker") {
 
         mod.change_submod("Fragmentation", make_frag_module(nukes, fragments));
         result_type frags = mod.run_as<my_pt>(nukes);
-        REQUIRE(corr.operator==(frags));
+        REQUIRE(corr == frags);
     }
 
     SECTION("Methane") {
@@ -65,6 +65,24 @@ TEST_CASE("Dimer Maker") {
 
         mod.change_submod("Fragmentation", make_frag_module(nukes, fragments));
         result_type frags = mod.run_as<my_pt>(nukes);
-        REQUIRE(corr.operator==(frags));
+        REQUIRE(corr == frags);
+    }
+
+    SECTION("Methane (alternative fragmentation)") {
+        input_type nukes(hydrocarbon(1).nuclei());
+        result_type fragments(nukes);
+        fragments.add_fragment({0, 1});
+        fragments.add_fragment({1, 3});
+        fragments.add_fragment({2, 3});
+        fragments.add_fragment({0, 4});
+
+        result_type corr(nukes);
+        corr.add_fragment({0, 1, 2, 3});
+        corr.add_fragment({0, 1, 3, 4});
+        corr.add_fragment({0, 2, 3, 4});
+
+        mod.change_submod("Fragmentation", make_frag_module(nukes, fragments));
+        result_type frags = mod.run_as<my_pt>(nukes);
+        REQUIRE(corr == frags);
     }
 }

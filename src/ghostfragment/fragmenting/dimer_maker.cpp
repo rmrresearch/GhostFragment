@@ -5,23 +5,71 @@
 
 namespace ghostfragment::fragmenting {
 
+// Returns true if one vector is a subset of the other
+bool is_subset(const std::vector<std::size_t>& subset, const std::vector<std::size_t>& vector) {
+    std::unordered_set<std::size_t> uniqueVector(vector.begin(), vector.end());
+    return std::all_of(subset.begin(), subset.end(), [&](const std::size_t& element) {
+        return uniqueVector.count(element) > 0;
+    });
+}
+
+// This function determines if a vector of indices is a subset of an existing fragment
+bool is_contained(const std::vector<std::vector<std::size_t>> vecs, 
+const std::vector<std::size_t> subset) {
+    std::set<std::size_t> subset_elements(subset.begin(), subset.end());
+    for(const auto& vector : vecs) {
+        if(is_subset(subset, vector)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// This function returns the indices of all vectors that are subsets of the input vector
+std::vector<std::size_t> subsets(const std::vector<std::vector<std::size_t>> vecs, 
+const std::vector<std::size_t> input) {
+    std::vector<std::size_t> indcs;
+    for(std::size_t i = 0; i < vecs.size(); ++i) { 
+        if(is_subset(vecs[i], input)) {
+            if(input != vecs[i]) {
+                indcs.push_back(i);
+            }
+        }
+    }
+    return(indcs);
+}
+
 // This function takes as argument a FragmentedNuclei object, and returns
 // a FragmentedNuclei object consisting of all possible pairs of fragments.
 chemist::FragmentedNuclei nuke_pairs(const chemist::FragmentedNuclei& frags) {
     chemist::FragmentedNuclei pairs(frags.supersystem());
-    std::vector<std::size_t> indices;
+    std::vector<std::vector<std::size_t>> indices;
+    std::vector<std::size_t> single_frag;
+    std::vector<std::size_t> indxs;
 
     for(std::size_t frag_i = 0; frag_i < frags.size(); ++ frag_i) {
         for(std::size_t frag_j = frag_i + 1; frag_j < frags.size(); ++ frag_j) {
             for(const auto atom_i : frags[frag_i]) {
-                indices.push_back(atom_i);
+                single_frag.push_back(atom_i);
             }
             for(const auto atom_j : frags[frag_j]) {
-                indices.push_back(atom_j);
+                single_frag.push_back(atom_j);
             }
-            pairs.add_fragment(indices.begin(), indices.end());
-            indices.clear();
+            if(!is_contained(indices, single_frag)) {
+                indices.push_back(single_frag);
+            }
+            indxs = subsets(indices, single_frag);
+            std::sort(indxs.rbegin(), indxs.rend());
+            for (std::size_t i = 0; i < indxs.size(); ++i) {
+                std::size_t indx = indxs[indxs.size() - 1 - i];
+                indices.erase(indices.begin() + indx);
+            }
+            single_frag.clear();
         }
+    }
+
+    for(std::size_t i = 0; i < indices.size(); ++i) {
+        pairs.add_fragment(indices[i].begin(), indices[i].end());
     }
 
     return(pairs);
