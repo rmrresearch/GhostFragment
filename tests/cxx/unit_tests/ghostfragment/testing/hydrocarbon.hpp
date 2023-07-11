@@ -1,11 +1,9 @@
 #pragma once
 
+#include <catch2/catch.hpp>
 #include <chemist/molecule/atom.hpp>
 #include <chemist/molecule/molecule.hpp>
 #include <chemist/nucleus/nuclei.hpp>
-#include <catch2/catch.hpp>
-
-#include <iostream>
 
 namespace testing {
 // Methane Molecule (1 carbon)
@@ -85,10 +83,10 @@ chemist::Molecule Propane() {
       chemist::Atom("H", 1, 1837.289, 2.360094094, 2.85686869, -1.682281604));
     propane.push_back(
       chemist::Atom("H", 1, 1837.289, 2.360094094, 2.85686869, 1.682281604));
-    propane.push_back(chemist::Atom("H", 1, 1837.289, 4.720188189,
-                                    -1.188919091, -1.682281604));
-    propane.push_back(chemist::Atom("H", 1, 1837.289, 4.720188189,
-                                    -1.188919091, 1.682281604));
+    propane.push_back(
+      chemist::Atom("H", 1, 1837.289, 4.720188189, -1.188919091, -1.682281604));
+    propane.push_back(
+      chemist::Atom("H", 1, 1837.289, 4.720188189, -1.188919091, 1.682281604));
 
     // Last Hydrogen
     propane.push_back(

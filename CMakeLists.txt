@@ -32,7 +32,7 @@ include(get_cmaize)
 
 ### Options ###
 option(BUILD_TESTING "Should we build the tests?" OFF)
-option(BUILD_PYBIND11_PYBINDINGS "Use pybind11 to build Python3 bindings?" ON)
+option(BUILD_PYBIND11_PYBINDINGS "Use pybind11 to build Python3 bindings?" OFF)
 
 
 # Work out the project paths
@@ -49,7 +49,7 @@ cpp_find_or_build_dependency(
     BUILD_TARGET simde
     FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
-               BUILD_PYBIND11_PYBINDINGS=ON
+               BUILD_PYBIND11_PYBINDINGS=${BUILD_PYBIND11_PYBINDINGS}
 )
 
 cpp_add_library(
