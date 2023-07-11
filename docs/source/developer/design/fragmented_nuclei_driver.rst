@@ -43,6 +43,20 @@ Generality
    to vary the most among existing fragment methods. Many existing fragment-
    based methods differ only in how the initial fragments are formed.
 
+.. _fnd_chemical_system:
+
+Chemical system input
+   While it may seem logical to take a ``Nuclei`` object as the input, by 
+   taking a ``ChemicalSystem`` we open up the possibility for the 
+   ``FragmentedNuclei`` driver to use additional information to choose the
+   ``Nuclei`` sets. For example, using the charge could be helpful for assigning
+   connectivity, and for prescreening fragments based on energetic 
+   contributions.
+
+   - Put another way, the ``FragmentedNuclei`` chosen by the driver need to be
+     representative of the system being fragmented. This requires the driver to
+     have knowledge of the entire system, not just the nuclei.
+
 ******************************
 FragmentedNuclei Driver Design
 ******************************
@@ -55,7 +69,13 @@ FragmentedNuclei Driver Design
    The architecture of the ``FragmentedNuclei`` Driver. 
 
 :numref:`fig_gf_fragmented_nuclei_driver` shows the main pieces of the
-``FragmentedNuclei`` driver. While the input to the driver may reasonably be
-expected to be a ``Nuclei`` object, the actual input to the driver is a
-``Molecule`` object. This is because the driver may conceivably need the charge
-of the system to assign connectivity
+``FragmentedNuclei`` driver. Following from consideration :ref:`fnd_psudoatoms`,
+the first step is the creation of "pseudoatoms" by the ``Atomizer`` component. 
+The ``Atomizer`` ultimately defines the smallest units for the fragmentation 
+algorithm. With the pseduoatoms established, the next consideration is
+:ref:`fnd_connectivity`, *i.e.*, determining which pseudoatoms are bonded to
+eachother. The pseudoatoms plus the connectivity establishes a molecular graph.
+It is this moleculer graph which is ultimately decomposed by the ``Fragmenter``
+module. The ``Fragmenter`` module is responsible for addressing the
+:ref:`fnd_generality` consideration; in particular it is the ``Fragmenter``
+module which will usually be substituted out to change how fragments are formed.

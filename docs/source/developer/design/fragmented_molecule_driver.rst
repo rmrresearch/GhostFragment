@@ -16,7 +16,7 @@ What is the FragmentedMolecule Driver?
 The first step of the :ref:`gf_fragmented_system_driver_design` required
 creating a ``FragmentedMolecule`` object. The responsibility for creating that
 object was punted to the ``FragmentedMolecule`` driver. The 
-``FragmentedMolecule`` driver is responsible for taking a ``Molecule`` as
+``FragmentedMolecule`` driver is responsible for taking a ``ChemicalSystem`` as
 input and returning a ``FragmentedMolecule`` object.
 
 ****************************************
@@ -77,7 +77,8 @@ FragmentedMolecule Driver Design
 
 :ref:`fig_gf_fragmented_molecule_driver` shows the architecture of the
 ``FragmentedMolecule`` driver. Following from consideration 
-:ref:`fmd_hierarchical`, the first step is to fragment the input ``Molecule``
+:ref:`fmd_hierarchical`, the first step is to fragment the input 
+``ChemicalSystem``
 into a ``FragmentedNuclei`` object. The resulting fragments will in general
 contain broken bonds. As stated in consideration :ref:`fmd_capping` we need
 to address the broken bonds before we can accurately assign charges and
