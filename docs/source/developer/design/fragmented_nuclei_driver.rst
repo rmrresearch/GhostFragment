@@ -8,6 +8,10 @@ Designing GhostFragment's FragmentedNuclei Driver
 What is the FragmentedNuclei Driver?
 ************************************
 
+The ``FragmentedNuclei`` driver is responsible for dividing the nuclei of a
+molecular system into fragments. The resulting fragments will then be further
+processed by the ``FragmentedMolecule`` driver.
+
 **************************************
 FragmentedNuclei Driver Considerations
 **************************************
@@ -36,7 +40,8 @@ Connectivity
 
 Generality
    The ``FragmentedNuclei`` driver is envisioned as being the piece which needs
-   to vary the most among existing fragment methods.
+   to vary the most among existing fragment methods. Many existing fragment-
+   based methods differ only in how the initial fragments are formed.
 
 ******************************
 FragmentedNuclei Driver Design
@@ -48,3 +53,9 @@ FragmentedNuclei Driver Design
    :align: center
 
    The architecture of the ``FragmentedNuclei`` Driver. 
+
+:numref:`fig_gf_fragmented_nuclei_driver` shows the main pieces of the
+``FragmentedNuclei`` driver. While the input to the driver may reasonably be
+expected to be a ``Nuclei`` object, the actual input to the driver is a
+``Molecule`` object. This is because the driver may conceivably need the charge
+of the system to assign connectivity
