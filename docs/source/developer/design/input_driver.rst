@@ -41,11 +41,8 @@ Supersystem property type
 .. _gf_overlap:
 
 Overlap
-   We assume that the sub-systems we are working with are non-disjoint. We also
-   note that many BSSE methods need to track which sub-systems contributed to 
-   an overlap in order to work out what the basis set should be for that 
-   overlap. Thus the process of working out overlaps must be tied to the
-   exact approximation being made.
+   We assume that the sub-systems we are working with are non-disjoint. It is
+   necessary to determine the overlaps of the sub-systems and correct for them.
 
 *******************
 Input Driver Design
@@ -63,18 +60,25 @@ Following from consideration :ref:`gf_input_driver_pt` the inputs to the driver
 match those of the module it's meant to be approximating (here it's assumed to
 be ``AOEnergy``, but a similar idea holds for gradients or frequencies). Inside
 the input driver we decompose the process of preparing the sub-calculation 
-inputs into two steps: the "Fragmented System Driver" prepares the chemical 
-systems for the sub-calculations and the "Interaction Driver" uses those 
-chemical systems to form the entire set of sub-calculations.
+inputs into several steps. 
+
+The first step is the creation of the fragments, which is handled by the
+``FragmentedNuclei`` driver. It is worth noting, that here we use the term
+fragment loosely since the outputs could be actual fragments or |n|-mers. A
+more detailed discussion of the ``FragmentedNuclei`` driver is deferred to
+:ref:`gf_fragmented_nuclei_driver_design`.
+
+
+
 
 A full discussion of the "Fragmented System Driver" is derferred to 
 :ref:`gf_fragmented_system_driver_design`. For now we note, the Fragmented
-System Driver is responsible for taking an input ``ChemicalSystem`` and
-producing the final set of sub-systems to use. These sub-systems are returned
-as a ``FragmentedMoleculeSystem`` object and do NOT include the overlaps (as
-dictated by consideration :ref:`gf_overlap`). Forming of |n|-mers will
-happen in the fragmented system driver and thus satisfying consideration
-:ref:`gf_input_driver_accuracy` will be partially addressed here.
+System Driver is responsible for taking an input set of ``FragmentedNuclei``
+and a ``ChemicalSystem`` and creating the final set of sub-systems to use. These
+sub-systems are returned as a ``FragmentedMoleculeSystem`` object and do NOT 
+include the overlaps (as dictated by consideration :ref:`gf_overlap`). Forming 
+of |n|-mers will happen in the fragmented system driver and thus satisfying
+consideration :ref:`gf_input_driver_accuracy` will be partially addressed here.
 
 The exact contents of the "Interaction Driver" will depend on the approximation
 being used. If the user wants the traditional (G)MBE, the input will be the

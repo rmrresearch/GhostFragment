@@ -35,8 +35,8 @@ Hierarchical
    Like the ``FragmentedSystem`` driver we again want the ``FragmentedMolecule``
    driver to be designed in a hierchical manner that mirrors the hierarchy of
    the ``ChemicalSystem`` and ``FragmentedSystem`` classes. For the 
-   ``FragmentedMolecule`` driver this means calling a ``FragmentedNuclei``
-   driver.
+   ``FragmentedMolecule`` driver this means turning a ``FragmentedNuclei``
+   object into a ``FragmentedMolecule``.
 
 .. _fmd_capping:
 
@@ -45,6 +45,10 @@ Capping
    bond must be dealt with in some manner. 
 
    - Capping must be done before charges/multiplicities can be assigned.
+   - By doing the capping at the ``Molecule``-level we are able to distinguish
+     between the "real" atoms (those which are also part of the supersystem)
+     and the caps, since the former live in the ``FragmentedNuclei`` object and
+     the latter live in the ``FragmentedMolecule`` object.
 
 .. _fmd_charge_mult:
 
@@ -77,9 +81,8 @@ FragmentedMolecule Driver Design
 
 :ref:`fig_gf_fragmented_molecule_driver` shows the architecture of the
 ``FragmentedMolecule`` driver. Following from consideration 
-:ref:`fmd_hierarchical`, the first step is to fragment the input 
-``ChemicalSystem``
-into a ``FragmentedNuclei`` object. The resulting fragments will in general
+:ref:`fmd_hierarchical`, the inputs to the driver is a ``FragmentedNuclei`` 
+object. The input fragments will in general
 contain broken bonds. As stated in consideration :ref:`fmd_capping` we need
 to address the broken bonds before we can accurately assign charges and
 multiplicities to the fragments. Once we have capped fragments, the final
