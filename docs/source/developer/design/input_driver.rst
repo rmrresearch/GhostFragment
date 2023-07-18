@@ -38,11 +38,37 @@ Supersystem property type
    user's input, we can skip a pre-processing step by having the input driver's
    API be a subset of the target property type's inputs.
 
+   - We assume that we are approximating something that takes a 
+     ``ChemicalSystem`` and an ``AOBasisSet``.
+
 .. _gf_overlap:
 
 Overlap
    We assume that the sub-systems we are working with are non-disjoint. It is
    necessary to determine the overlaps of the sub-systems and correct for them.
+
+   - When taking overlaps, we need to consider caps too. A cap
+     overlaps with the atom(s) it replaces.
+
+.. _gf_opaque_fragmentation:
+
+Opaque fragmentation
+   At the level of the input driver we assume that a submodule prepares the
+   final set of fragments and the input driver can be agnostic to how the
+   fragments were formed other than that they may overlap
+   (consideration :ref:`gf_overlap`).
+
+.. _gf_inclusion_exclusion_principle:
+
+Inclusion exclusion principle
+   Somewhat of a corallary of :ref:`gf_opaque_fragmentation`, we assume that 
+   the inclusion-exclusion principle can be used to determine the coefficients 
+   of the fragments.
+
+   - This allows us to decouple how the fragments are formed, from the energy
+     equation.
+
+
 
 *******************
 Input Driver Design
@@ -67,6 +93,14 @@ The first step is the creation of the fragments, which is handled by the
 fragment loosely since the outputs could be actual fragments or |n|-mers. A
 more detailed discussion of the ``FragmentedNuclei`` driver is deferred to
 :ref:`gf_fragmented_nuclei_driver_design`.
+
+Once we have the fragments, we need to find the overlaps, and in the process
+we also obtain the weights for the overlaps. 
+
+Next, the fragments and the overlaps are turned into a ``FragmentedSystem``
+object (the inputs needed for running a calculation). With the final set of
+sysetms established, the ``InteractionDriver`` pairs each fragment with its
+corresponding basis set, creating the final set of inputs.
 
 
 

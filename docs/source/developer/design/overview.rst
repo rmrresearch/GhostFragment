@@ -64,6 +64,8 @@ Generality
 
    - A corollary is that we want to be able to interface with other electronic
      structure packages as well.
+   - Most methods can be seen as differing in only a couple key algorithmic
+     choices.
 
 .. _gf_multi_layer:
 
