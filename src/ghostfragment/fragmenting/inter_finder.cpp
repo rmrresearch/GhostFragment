@@ -1,4 +1,5 @@
 #include "inter_finder.hpp"
+#include <iostream>
 
 using namespace ghostfragment::fragmenting;
 
@@ -49,12 +50,14 @@ void ghostfragment::fragmenting::find_pair_intersections(
     }
 }
 
-void create_system(const mol_type& mol, system_type& fragments) {
+
+void ghostfragment::fragmenting::create_system(const mol_type& mol, system_type& fragments) {
     const nuke_type f_nuclei = mol.fragmented_nuclei();
     for(std::size_t i = 0; i < f_nuclei.size(); ++i) {
         auto nukes = f_nuclei[i];
         frag_type fragment;
         for(const auto atom_i : nukes) { fragment.push_back(atom_i); }
+        fragments.push_back(fragment);
     }
 }
 
