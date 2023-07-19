@@ -1,9 +1,12 @@
 #include "inter_finder.hpp"
 #include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
 
 using namespace ghostfragment::fragmenting;
 
-void ghostfragment::fragmenting::find_group_intersections(
+void find_group_intersections(
   const system_type& fragments, inter_type inter, std::size_t recent_add,
   res_type& m, log_type& log, group_type& group) {
     if(group.size() > 2) {
@@ -33,12 +36,14 @@ void ghostfragment::fragmenting::find_group_intersections(
     }
 }
 
-void ghostfragment::fragmenting::find_pair_intersections(
-  const system_type& fragments, log_type& log) {
+const log_type find_pair_intersections(
+  const system_type& fragments) {
+    log_type log;
     inter_type::iterator it;
     for(std::size_t i = 0; i < fragments.size(); ++i) {
         for(std::size_t j = i + 1; j < fragments.size(); ++j) {
-            inter_type inter(20);
+            std::size_t smaller = (fragments[i].size() < fragments[j].size()) ? fragments[i].size() : fragments[j].size();
+            inter_type inter(smaller);
             it = set_intersection(fragments[i].begin(), fragments[i].end(),
                                   fragments[j].begin(), fragments[j].end(),
                                   inter.begin());
@@ -48,10 +53,11 @@ void ghostfragment::fragmenting::find_pair_intersections(
                 log.insert(std::make_pair(std::make_pair(i, j), inter));
         }
     }
+    return log;
 }
 
 
-void ghostfragment::fragmenting::create_system(const mol_type& mol, system_type& fragments) {
+void create_system(const mol_type& mol, system_type& fragments) {
     const nuke_type f_nuclei = mol.fragmented_nuclei();
     for(std::size_t i = 0; i < f_nuclei.size(); ++i) {
         auto nukes = f_nuclei[i];
@@ -63,10 +69,9 @@ void ghostfragment::fragmenting::create_system(const mol_type& mol, system_type&
 
 res_type ghostfragment::fragmenting::intersections(const mol_type& mol) {
     res_type m;
-    log_type log;
     system_type fragments;
     create_system(mol, fragments);
-    find_pair_intersections(fragments, log);
+    log_type log = find_pair_intersections(fragments);
     for(std::size_t i = 0; i < fragments.size(); ++i) {
         inter_type inter(fragments[i]);
         group_type group({i});
