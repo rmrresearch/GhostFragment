@@ -30,9 +30,10 @@ res_type find_group_intersections(const system_type& fragments,
         inter.resize(it - inter.begin());
     } else if(group.size() == 2) {
         std::pair<int, int> p(group[0], group[1]);
-        try {
+        if(log.count(p))
             inter = log.at(p);
-        } catch(...) { inter.clear(); }
+        else
+            inter.clear();
     }
 
     if(!(inter.empty())) {
@@ -56,14 +57,8 @@ res_type find_group_intersections(const system_type& fragments,
             ++new_frag) {
             group_type new_group(group);
             new_group.push_back(new_frag);
-            res_type new_m = find_group_intersections(
-              fragments, inter, new_frag, m, log, new_group);
-            for(auto p : new_m) {
-                if(m.count(p.first) > 0)
-                    m[p.first] = new_m[p.first];
-                else
-                    m.insert(p);
-            }
+            m = find_group_intersections(fragments, inter, new_frag,
+                                         std::move(m), log, new_group);
         }
     }
     return m;
@@ -108,14 +103,8 @@ res_type ghostfragment::fragmenting::intersections(const mol_type& mol) {
     for(std::size_t i = 0; i < fragments.size(); ++i) {
         inter_type inter(fragments[i]);
         group_type group({i});
-        res_type new_m =
-          find_group_intersections(fragments, inter, i, m, log, group);
-        for(auto p : new_m) {
-            if(m.count(p.first) > 0)
-                m[p.first] = new_m[p.first];
-            else
-                m.insert(p);
-        }
+        m = find_group_intersections(fragments, inter, i, std::move(m), log,
+                                     group);
     }
     return m;
 }
