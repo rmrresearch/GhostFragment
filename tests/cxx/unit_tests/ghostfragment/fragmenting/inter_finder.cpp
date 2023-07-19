@@ -159,7 +159,7 @@ TEST_CASE("Intersection Finder") {
             corr.insert({{2, 3}, -1.0});
             corr.insert({{2, 4}, -1.0});
             corr.insert({{2, 6}, -1.0});
-            
+
             REQUIRE(intersections(mol) == corr);
         }
     }
