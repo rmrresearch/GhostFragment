@@ -6,6 +6,13 @@
 
 using namespace ghostfragment::fragmenting;
 
+using frag_type   = std::vector<std::size_t>;
+using system_type = std::vector<frag_type>;
+
+using group_type = std::vector<std::size_t>;
+
+using log_type = std::map<std::pair<std::size_t, std::size_t>, inter_type>;
+
 void find_group_intersections(
   const system_type& fragments, inter_type inter, std::size_t recent_add,
   res_type& m, log_type& log, group_type& group) {
