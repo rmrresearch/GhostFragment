@@ -37,21 +37,10 @@ res_type find_group_intersections(const system_type& fragments,
     }
 
     if(!(inter.empty())) {
-        if(m.count(inter) > 0) {
+        if(m.count(inter) > 0)
             m[inter] += (group.size() % 2 == 0) ? -1 : 1;
-            std::cout << "Existing intersection from [";
-            for(auto n : group) std::cout << n << ", ";
-            std::cout << "]: {";
-            for(auto n : inter) std::cout << n << ", ";
-            std::cout << "} found. Weight is now " << m[inter] << std::endl;
-        } else if(group.size() > 1) {
+        else if(group.size() > 1)
             m[inter] = (group.size() % 2 == 0) ? -1 : 1;
-            std::cout << "New intersection from [";
-            for(auto n : group) std::cout << n << ", ";
-            std::cout << "]: {";
-            for(auto n : inter) std::cout << n << ", ";
-            std::cout << "} found. Weight is now " << m[inter] << std::endl;
-        }
 
         for(std::size_t new_frag = recent_add + 1; new_frag < fragments.size();
             ++new_frag) {
