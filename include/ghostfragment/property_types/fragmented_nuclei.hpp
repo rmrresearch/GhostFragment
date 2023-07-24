@@ -7,7 +7,7 @@ namespace ghostfragment::pt {
 /// Used to conveniently propagate types associated with FragmentedNuclei PT
 struct FragmentedNucleiTraits {
     /// Expected input type of the molecular system
-    using system_type = chemist::Nuclei;
+    using system_type = chemist::ChemicalSystem;
 
     /// How the fragmented system is returned.
     using result_type = chemist::FragmentedNuclei;
