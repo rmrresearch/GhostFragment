@@ -9,14 +9,15 @@ using frags_pt       = pt::FragmentedNuclei;
 using graph_pt       = pt::MolecularGraph;
 using graph2frags_pt = pt::MolecularGraphToFragments;
 
-using frags_type = chemist::FragmentedNuclei;
-using graph_type = MolecularGraph;
-using conns_type = simde::type::connectivity_table;
-using mol_type   = chemist::Molecule;
+using system_type = chemist::ChemicalSystem;
+using frags_type  = chemist::FragmentedNuclei;
+using graph_type  = MolecularGraph;
+using conns_type  = simde::type::connectivity_table;
+using mol_type    = chemist::Molecule;
 
 namespace { 
 
-auto make_patom_module(const chemist::Nuclei& mol, const frags_type& rv) {
+auto make_patom_module(const system_type& mol, const frags_type& rv) {
     return pluginplay::make_lambda<frags_pt>([=](auto&& mol_in) {
         REQUIRE(mol_in == mol);
         return rv;
@@ -55,45 +56,49 @@ TEST_CASE("Fragment Driver") {
 
     SECTION("Empty Molecule") {
         chemist::Molecule mol;
+        system_type system(mol);
         frags_type corr(mol.nuclei());
         graph_type graph(corr, {});
 
-        mod.change_submod("Pseudoatoms", make_patom_module(mol.nuclei(), corr));
+        mod.change_submod("Pseudoatoms", make_patom_module(system, corr));
         mod.change_submod("Molecular graph", make_graph_module(corr, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
-        const auto& rv = mod.run_as<frags_pt>(mol.nuclei());
+        const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
 
     SECTION("Single Atom") {
         chemist::Molecule mol;
         mol.push_back(chemist::Atom("H", 1, 1837.289, 0, 0, 0));
+        system_type system(mol);
         frags_type corr(mol.nuclei());
         corr.add_fragment({0});
         graph_type graph(corr, {});
 
-        mod.change_submod("Pseudoatoms", make_patom_module(mol.nuclei(), corr));
+        mod.change_submod("Pseudoatoms", make_patom_module(system, corr));
         mod.change_submod("Molecular graph", make_graph_module(corr, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
-        const auto& rv = mod.run_as<frags_pt>(mol.nuclei());
+        const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
 
     SECTION("Methane") {
         auto methane = hydrocarbon(1);
+        system_type system(methane);
         frags_type corr(methane.nuclei());
         corr.add_fragment({0, 1, 2, 3, 4});
         graph_type graph(corr, {});
 
-        mod.change_submod("Pseudoatoms", make_patom_module(methane.nuclei(), corr));
+        mod.change_submod("Pseudoatoms", make_patom_module(system, corr));
         mod.change_submod("Molecular graph", make_graph_module(corr, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
-        const auto& rv = mod.run_as<frags_pt>(methane.nuclei());
+        const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
 
     SECTION("Ethane") {
         auto ethane = hydrocarbon(2);
+        system_type system(ethane);
         frags_type corr(ethane.nuclei());
         corr.add_fragment({0, 2, 3, 4});
         corr.add_fragment({1, 5, 6, 7});
@@ -101,10 +106,10 @@ TEST_CASE("Fragment Driver") {
         c.add_bond(0, 1);
         graph_type graph(corr, c);
 
-        mod.change_submod("Pseudoatoms", make_patom_module(ethane.nuclei(), corr));
+        mod.change_submod("Pseudoatoms", make_patom_module(system, corr));
         mod.change_submod("Molecular graph", make_graph_module(corr, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
-        const auto& rv = mod.run_as<frags_pt>(ethane.nuclei());
+        const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
 }

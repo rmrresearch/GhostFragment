@@ -12,9 +12,8 @@ const auto mod_desc = R"(
 Fragment Driver
 ---------------
 
-This module is responsible for going from a simde::type::molecule object to
-a simde::type::fragmented_molecule object. Generally speaking this occurrs
-by:
+This module is responsible for going from a chemist::ChemicalSystem object to
+a chemist::FragmentedNuclei object. Generally speaking this occurs by:
 
 #. Forming pseudoatoms
 #. Determining the connectivity of the pseudoatoms
