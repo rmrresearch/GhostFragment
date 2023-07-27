@@ -102,10 +102,10 @@ MODULE_RUN(DimerMaker) {
     using result_type = pt::FragmentedNucleiTraits::result_type;
     using input_type  = pt::FragmentedNucleiTraits::system_type;
 
-    const auto& [nuclei] = my_pt::unwrap_inputs(inputs);
+    const auto& [system] = my_pt::unwrap_inputs(inputs);
 
     auto& frag_mod    = submods.at("Fragmentation");
-    const auto& frags = frag_mod.run_as<frag_pt>(nuclei);
+    const auto& frags = frag_mod.run_as<frag_pt>(system);
 
     chemist::FragmentedNuclei frag_pairs(nuke_pairs(frags));
 

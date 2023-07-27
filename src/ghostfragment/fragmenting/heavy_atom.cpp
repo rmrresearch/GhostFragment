@@ -39,9 +39,10 @@ MODULE_CTOR(HeavyAtom) {
 
 MODULE_RUN(HeavyAtom) {
     using fragmented_nuclei = chemist::FragmentedNuclei;
-    using size_type           = typename chemist::FragmentedNuclei::size_type;
+    using size_type         = typename chemist::FragmentedNuclei::size_type;
 
-    const auto& [mol] = frags_pt::unwrap_inputs(inputs);
+    const auto& [system] = frags_pt::unwrap_inputs(inputs);
+    const auto& mol      = system.molecule().nuclei();
 
     auto& con_mod     = submods.at("Connectivity");
     const auto& conns = con_mod.run_as<conn_pt>(mol);
