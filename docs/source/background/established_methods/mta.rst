@@ -109,7 +109,7 @@ original manuscripts.
 
 .. |Frag3| replace:: :ref:`mta03 fragmentation`
 .. |Frag6| replace:: :ref:`mta06 fragmentation`
-.. |Hcap| replace:: :ref:`mta capping`
+.. |Hcap| replace:: :ref:`standard_distance_capping`
 .. |Sc10| replace:: :ref:`SMF Screening 05`
 
 +--------+-----------+-----------+--------+-----------+

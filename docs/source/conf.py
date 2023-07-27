@@ -7,10 +7,8 @@ import os
 project = u'GhostFragment'
 copyright = u'2020, Ryan M Richard'
 author = u'Ryan M Richard'
+version = '0.0.1'
 
-# Get the version from version.txt
-with open('../../version.txt', 'r') as file:
-    version = file.read().replace('\n', '')
 # The full version, including alpha/beta/rc tags
 release = version
 
@@ -35,7 +33,6 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.githubpages',
-    'sphinx.ext.autosectionlabel',
     'sphinx_togglebutton',
     'sphinxcontrib.bibtex',
     'sphinx_rtd_theme'

@@ -22,7 +22,7 @@ capping scheme adds a hydrogen atom to |F| at the location of |Y|.
 Standard Distance
 *****************
 
-This capping scheme is a slight variation on :ref:`simple replacement`. Given a 
+This capping scheme is a slight variation on :ref:`simple_replacement`. Given a 
 bond  between an atom |X| and an atom |Y| which has been severed such that |X| 
 is in the fragment |F|, but |Y| is not, this capping scheme adds a hydrogen atom
 to |F| such that the |X|-H bond length corresponds to the length of a "typical 
