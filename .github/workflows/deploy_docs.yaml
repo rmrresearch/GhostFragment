@@ -26,7 +26,7 @@ jobs:
         with:
           docs-folder: "docs/"
       - name: Move C++ documentation into Sphinx Tree
-        run: sudo mv build/html build/docs/html/cxx_api
+        run: sudo mv build/html docs/build/html/cxx_api
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
