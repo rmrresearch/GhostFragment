@@ -9,6 +9,8 @@ Molecular Tailoring Approach Fragmentation
 .. |Ni| replace:: :math:`N_i`
 .. |i| replace:: :math:`i`
 
+.. _mta03_fragmentation:
+
 *******************
 MTA03 Fragmentation
 *******************
@@ -55,7 +57,9 @@ The resulting set of fragments is then postprocessed. This includes:
 
    Unlike the body of the fragmentation algorithm, the postprocessing steps are
    not described in detail and are thus open to some interpretation.
-   
+
+.. _mta06_fragmentation:
+
 *******************   
 MTA06 Fragmentation
 *******************

@@ -48,6 +48,7 @@ The second embedding scheme proposed by :cite:t:`Dahlke2006`.
 #. For each |n|-mer, loop over atoms in the supersystem. If |Ai| is not in the
    |n|-mer, place |Qi| at the location of |Ai|
 
+.. _iterative_point_charge_embedding:
 
 ********************************
 Iterative Point Charge Embedding

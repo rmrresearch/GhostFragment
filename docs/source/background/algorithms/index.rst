@@ -7,7 +7,7 @@ common sub-algorithms. For example, at one point or another all such methods
 must define a set of fragments. Our intent here is to allow the user to mix-and-
 match sub-algorithms as they see fit. For that reason, the presentations of the
 algorithms in this section are more generalized than many of the original
-manuscripts. As part of :ref:`Established Fragment Based Methods`, we provide
+manuscripts. As part of :ref:`established_fragment_based_methods`, we provide
 context on how to recover the original methods, as faithfully as GhostFragment 
 allows.
 

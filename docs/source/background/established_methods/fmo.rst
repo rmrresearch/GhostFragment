@@ -27,7 +27,7 @@ is written as:
 
 where :math:`\widehat{H}_I^0` is the Hamiltonian of the |I|-th fragment 
 and :math:`\widehat{V}^I_{J}` is the interaction of |I| with :math:`J`. 
-:math:`\widehat{V}_{IJ}` is given by :ref:`Density Embedding`. The PIMO method
+:math:`\widehat{V}_{IJ}` is given by :ref:`density_embedding`. The PIMO method
 considers up to two-body terms, with the Hamiltonian of dimer |IJ| given
 by:
 
@@ -99,7 +99,7 @@ traditional density embedding, monomer |I| interacts with the density of each
 monomer |J|. This amounts to a term analogous to the Coulomb build in SCF, but 
 with the density of |J|. Like it's SCF brethern, the computational complexity of 
 this terms scale as :math:`\mathcal{O}(N^4)`. To reduce the cost of the 
-embedding, the :ref:`FMO02 embedding` method :cite:t:`Nakano2002`: was 
+embedding, the :ref:`fmo02_embedding` method :cite:t:`Nakano2002`: was 
 introduced. As a proof-of-concept, the study considered applications to proteins
 using the HF/STO-3G method. Errors, were similar to the FMO00 method, but 
 results were obtained significantly faster.
@@ -110,9 +110,9 @@ FMO04 (Three-Body FMO)
 
 The next development in FMO was an extension capable of handeling three-body
 terms :cite:t:`Fedorov2004a`. This required introducing a screening method for
-three body terms, *i.e.*, :ref:`FMO04 Screening`, and also introduced a new
-capping method, :ref:`FMO04 Capping`, which is essentially a combination of the
-:ref:`FMO99 Capping` and :ref:`FMO00 Capping` methods. Three-body results 
+three body terms, *i.e.*, :ref:`fmo04_screening`, and also introduced a new
+capping method, :ref:`fmo04_capping`, which is essentially a combination of the
+:ref:`fmo99_capping` and :ref:`fmo00_capping` methods. Three-body results 
 focused on water clusters and peptides with the SCF method and the STO-3G, 
 3-21G, 6-31G\*, and 6-31++G\*\* basis sets. Notably this study was one of the
 first to show that FMO performs best with small basis sets, postulating that

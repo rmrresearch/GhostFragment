@@ -18,7 +18,7 @@ is not converged, comparisons are made against the supersystem's density matrix
 and electrostatic potential, as opposed to the usual absolute energy. 
 
 In a follow-up study :cite:t:`Babu2003` proposed the
-:ref:`mta03 fragmentation` method and with it the MTA 03 variant of MTA. Like in
+:ref:`mta03_fragmentation` method and with it the MTA 03 variant of MTA. Like in
 the original MTA study:cite:`Gadre1994`, the density matrix of the supersystem 
 is assembled from the density matrices of the fragments. Unlike, in the original 
 manuscript an algorithm for doing so is provided. Applications focused on three 
@@ -31,7 +31,7 @@ could be used to compute the energy, and energy derivatives, of a fragmented
 system. Initial applications focused on replicating the energy of 
 medium-sized organic molecules using small-basis HF, MP2, and B3LYP. Also
 considered were geometry optimizations, and vibrational frequencies. This study
-is also one of the earliest applications of :ref:`mta06 fragmentation` and with
+is also one of the earliest applications of :ref:`mta06_fragmentation` and with
 it the MTA 06 variant of MTA.
 
 .. |E_SCF_HB| replace:: :math:`E_{SCF/High}`
@@ -45,7 +45,7 @@ method which amounts to manually adding back in two-, three-, etc. body
 interactions which do not appear in the 1-body MTA expansion. For larger
 benzene clusters (hexamers, for example) these higher-body corrections can be
 more than a kcal/mol. Conceptually this correction is very similar to 
-:ref:`SMF Screening 05`. The accompanying numerical results demonstrated that 
+:ref:`smf_screening_05`. The accompanying numerical results demonstrated that 
 BSSE was quite prevelant in the benzene tetramers. Despite this fact, results 
 for larger clusters did not correct for BSSE.
 
@@ -107,10 +107,10 @@ The following table summarizes the variants of MTA, which have appeared. Note
 that the names of the variants are our names, and were not present in the
 original manuscripts.
 
-.. |Frag3| replace:: :ref:`mta03 fragmentation`
-.. |Frag6| replace:: :ref:`mta06 fragmentation`
+.. |Frag3| replace:: :ref:`mta03_fragmentation`
+.. |Frag6| replace:: :ref:`mta06_fragmentation`
 .. |Hcap| replace:: :ref:`standard_distance_capping`
-.. |Sc10| replace:: :ref:`SMF Screening 05`
+.. |Sc10| replace:: :ref:`smf_screening_05`
 
 +--------+-----------+-----------+--------+-----------+
 | Name   | Fragments | Embedding | Caps   | Screening |
@@ -138,7 +138,7 @@ HF/STO-3G and HF/6-31G(d,p) levels of theory. Comparisons between the
 supersystem density matrices were made at the HF/STO-3G level of theory.
 
 :cite:t:`Gadre2006a` provided additional details about the 
-:ref:`mta06 fragmentation` procedure and saw the MTA 06 variant of MTA be 
+:ref:`mta06_fragmentation` procedure and saw the MTA 06 variant of MTA be 
 applied to additional studies of organic molecules. Calulations used the HF 
 and B3LYP methods with the 6-31G(d) and 6-31G(d, p) basis sets.
 Absolute energies, gradients, optimized geometries, and molecular electorstatic

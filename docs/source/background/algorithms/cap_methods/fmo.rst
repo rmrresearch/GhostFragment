@@ -79,6 +79,7 @@ only decribed by the AOs on the |b|, which is to say, that after localizing
 :math:`\ket{i}` only the matrix elements :math:`C_{\mu i}` where :math:`\mu` is
 on |b| are kept.
 
+.. _fmo04_capping:
 
 *************
 FMO04 Capping
