@@ -8,6 +8,7 @@ DECLARE_MODULE(Fragment);
 // DECLARE_MODULE(FragmentedSystem);
 // DECLARE_MODULE(NMerSystem);
 DECLARE_MODULE(NeutralSinglet);
+DECLARE_MODULE(InputQueue);
 
 /// Loads all the modules in the Drivers library into the provided ModuleManager
 inline void load_modules(pluginplay::ModuleManager& mm) {
@@ -16,6 +17,7 @@ inline void load_modules(pluginplay::ModuleManager& mm) {
     // mm.add_module<FragmentedSystem>("FragmentedSystem Driver");
     // mm.add_module<NMerSystem>("NMerSystem Driver");
     mm.add_module<NeutralSinglet>("Neutral Singlet");
+    mm.add_module<InputQueue>("Input Queue");
 }
 
 /// Sets the defaults for submodules in the Drivers library, when a suitable

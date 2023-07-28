@@ -24,7 +24,7 @@ inline void load_modules(pluginplay::ModuleManager& mm) {
 
 inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Heavy Atom Partition", "Connectivity", "Covalent Radius");
-    mm.change_submod("Dimer Maker", "Fragmentation", "Fragment Driver");
+    // mm.change_submod("Dimer Maker", "Fragmentation", "Fragment Driver");
 }
 
 } // namespace ghostfragment::fragmenting

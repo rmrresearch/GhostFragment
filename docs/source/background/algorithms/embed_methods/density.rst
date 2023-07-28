@@ -1,3 +1,5 @@
+.. _density_embedding:
+
 #################
 Density Embedding
 #################
@@ -24,7 +26,7 @@ the remaining fragments, the densities must be solved for iteratively.
 For embedding higher-order :math:`n`-mers, one typically uses the converged
 fragment densities and does not iterate using the :math:`n`-mer Hamiltonians.
 
-
+.. _fmo02_embedding:
 
 ***************
 FMO02 Embedding

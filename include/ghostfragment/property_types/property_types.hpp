@@ -6,6 +6,7 @@
 #include <ghostfragment/property_types/nmer_screener.hpp>
 #include <ghostfragment/property_types/nmer_system.hpp>
 #include <ghostfragment/property_types/subset_map.hpp>
+#include <ghostfragment/property_types/input_queue.hpp>
 #include <ghostfragment/type/type.hpp>
 #include <simde/simde.hpp>
 
@@ -26,7 +27,7 @@ using AtomicOrbitals = simde::AtomicOrbitals;
 using frag_traits = simde::FragmentedTraits<type::nuclei_set>;
 
 /// PT for fragmenting a Molecule object
-using FragmentedMolecule = simde::FragmentedMolecule;
+// using FragmentedMolecule = simde::FragmentedMolecule;
 
 /// Traits associated with the PT for NMers
 using nmer_traits = simde::FragmentedTraits<typename frag_traits::return_type>;

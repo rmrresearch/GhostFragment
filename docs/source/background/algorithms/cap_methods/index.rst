@@ -14,4 +14,5 @@ electronic environment.
    :maxdepth: 2
 
    h_capping
+   other_caps
    fmo

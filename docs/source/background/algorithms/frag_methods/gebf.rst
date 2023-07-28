@@ -6,6 +6,8 @@ GEBF Fragmentation Methods
 .. |g| replace:: :math:`g`
 .. |Fg| replace:: :math:`F_g`
 
+.. _gebf07_fragmentation_method:
+
 ***************************
 GEBF07 Fragmentation Method
 ***************************

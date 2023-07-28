@@ -10,7 +10,7 @@ and vibrational frequencies were computed and compared to the supersystem
 counterparts.
 
 In a follow-up paper :cite:t:`Collins2006` presented the original SMF Algorithm
-in more detail. New this time were the :ref:`Ring Repair Variation` and an 
+in more detail. New this time were the :ref:`ring_repair_variation` and an 
 approximate treatment of the non-bonded interactions between distant fragments. 
 To test the new SMF algorithm, structures were taken from the Cambridge 
 Structural Database. Compared to the initial study the resulting molecules were 

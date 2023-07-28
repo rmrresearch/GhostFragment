@@ -7,7 +7,7 @@ Energy-Corrected MFCC
 .. |dclc_frag| replace:: :ref:`DCLC_fragmentation_method`
 .. |dclc_cap| replace:: :ref:`DCLC_capping_method`
 .. |mfcc_screen| replace:: :ref:`ec_mfcc_screening`
-.. |mfcc_embed| replace: :ref:`ec_mfcc_charges`
+.. |mfcc_embed| replace:: :ref:`ec_mfcc_charges`
 
 EC-MFCC was introduced by :cite:t:`Li_2005` as a follow-up to the :ref:`DCLC`
 fragment-based method. EC-MFCC differs from DCLC in that it also inclues 
