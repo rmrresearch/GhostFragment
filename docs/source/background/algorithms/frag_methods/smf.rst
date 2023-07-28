@@ -33,6 +33,8 @@ Systematic Molecular Fragmentation Fragmentation Method
 .. |Fi| replace:: :math`F_i`
 .. |Fp| replace:: :math`F'`
 
+.. _smf_fragmentation_05:
+
 ********************
 SMF Fragmentation 05
 ********************
@@ -78,6 +80,8 @@ The original presentation contains a few other details we have omitted, namely:
   for these rules stems from their capping method choice. To be more general we
   instead adopt the view that if a ring shouldn't be broken, it should be 
   protected as a pseudoatom.
+
+.. _ring_repair_variation:
 
 *********************
 Ring Repair Variation

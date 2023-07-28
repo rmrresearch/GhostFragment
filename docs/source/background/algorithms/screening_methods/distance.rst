@@ -9,6 +9,7 @@ Weak interactions die off quickly with respect to the separation distance
 between the interacting units. Perhaps unsurprisingly a number of groups have
 proposed screening methods which are distance based.
 
+.. _fmo00_screening:
 
 ***************
 FMO00 Screening
@@ -27,6 +28,8 @@ approximated by:
    E_{IJ} = E_{I} + E_{J} -
             \int d\vr\int\vrp \frac{\density{I}{\vr}\density{J}{\vrp}}
                                {\mid \vr -\vrp\mid}
+
+.. _fmo04_screening:
 
 ***************
 FMO04 Screening
@@ -59,6 +62,7 @@ for a charged molecule if only |R2| is used. Our guess is that |R1| is used
 when the fragments in the pair are neutral and |R2| is used when one or both
 fragmnts are charged.
 
+.. _smf06_screening:
 
 ***************
 SMF06 Screening

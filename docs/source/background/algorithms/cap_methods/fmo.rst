@@ -14,6 +14,8 @@ In FMO calculations caps in the traditional sense are not used.
 
 .. |I| replace:: :math:`I`
 
+.. _fmo99_capping:
+
 *************
 FMO99 Capping
 *************
@@ -38,6 +40,8 @@ fragment |I| is obtained by:
 .. |A| replace:: :math:`A`
 .. |b| replace:: :math:`b`
 .. |B| replace:: :math:`B`
+
+.. _fmo00_capping:
 
 *************
 FMO00 Capping
@@ -75,14 +79,15 @@ only decribed by the AOs on the |b|, which is to say, that after localizing
 :math:`\ket{i}` only the matrix elements :math:`C_{\mu i}` where :math:`\mu` is
 on |b| are kept.
 
+.. _fmo04_capping:
 
 *************
 FMO04 Capping
 *************
 
 In describing a three-body FMO method :cite:t:`Fedorov2004a`, a new capping 
-method was pitched which is effectively a combination of :ref:`FMO99 Capping`
-and :ref:`FMO00 Capping`. In this study all severed bonds were carbon-carbon 
+method was pitched which is effectively a combination of :ref:`fmo99_capping`
+and :ref:`fmo00_capping`. In this study all severed bonds were carbon-carbon 
 bonds. Thus the decision was made to use the occupied orbitals of a methane 
 molecule instead of the actual occupied orbitals. The methane orbitals were 
 split so that one atom, call it |a|, gets one of the :math:`sp^3` orbitals 

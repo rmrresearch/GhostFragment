@@ -2,10 +2,10 @@
 Generalized Energy Based Fragmentation (GEBF)
 #############################################
 
-.. |Frag7| replace:: :ref:`gebf07 fragmentation method`
-.. |ItrPC| replace:: :ref:`iterative point charge embedding`
-.. |stdH|  replace:: :ref:`standard distance`
-.. |smf06| replace:: :ref:`smf06 screening`
+.. |Frag7| replace:: :ref:`gebf07_fragmentation_method`
+.. |ItrPC| replace:: :ref:`iterative_point_charge_embedding`
+.. |stdH|  replace:: :ref:`standard_distance_capping`
+.. |smf06| replace:: :ref:`smf06_screening`
 
 GEBF is the culmanation of the :ref:`DCLC` methods.
 

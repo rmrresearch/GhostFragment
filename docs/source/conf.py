@@ -7,10 +7,8 @@ import os
 project = u'GhostFragment'
 copyright = u'2020, Ryan M Richard'
 author = u'Ryan M Richard'
+version = '0.0.1'
 
-# Get the version from version.txt
-with open('../../version.txt', 'r') as file:
-    version = file.read().replace('\n', '')
 # The full version, including alpha/beta/rc tags
 release = version
 
@@ -35,7 +33,6 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.githubpages',
-    'sphinx.ext.autosectionlabel',
     'sphinx_togglebutton',
     'sphinxcontrib.bibtex',
     'sphinx_rtd_theme'
@@ -75,6 +72,7 @@ exclude_patterns = []
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
+# Enable/disable numbered figures
 numfig  = True
 
 # -- Options for HTML output -------------------------------------------------
@@ -88,7 +86,16 @@ html_theme = 'sphinx_rtd_theme'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'vcs_pageview_mode' : 'edit'
+}
+
+html_context = {
+  'display_github': True,
+  'github_user': 'rmrresearch',
+  'github_repo': 'ghostfragment',
+  'github_version': 'master/docs/source/',
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -140,24 +147,6 @@ latex_documents = [
 ]
 
 
-# -- Options for manual page output ------------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, project.lower(), project + ' Documentation', [author], 1)
-]
-
-
-# -- Options for Texinfo output ----------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-texinfo_documents = [
-    (master_doc, project, project + ' Documentation',
-     author, project, 'One line description of project.', 'Miscellaneous'),
-]
 
 
 # -- Extension configuration -------------------------------------------------

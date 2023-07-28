@@ -60,7 +60,7 @@ FragmentedSystem Driver Design
 
    High-level overivew of the components of the ``FragmentedSystem`` driver.
 
-:numref:`_fig_gf_fragmented_system_driver` shows the high-level design of the
+:numref:`fig_gf_fragmented_system_driver` shows the high-level design of the
 Fragmentedsystem driver. Because of :ref:`fsd_hierarchical` the first step of 
 the driver is to form a ``FragmentedMolecule`` (the class one rung lower in
 the ``FragmentedSystem`` hierarchy) from the input ``FragmentedNuclei`` and
