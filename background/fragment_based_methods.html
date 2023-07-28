@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fragment Based Methods &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script >let toggleHintShow = 'Click to show';</script>
+        <script >let toggleHintHide = 'Click to hide';</script>
+        <script >let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Many-Body Expansion" href="mbe/index.html" />
+    <link rel="prev" title="Theoretical Background" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            GhostFragment
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Fragment Based Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-problem">The Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-solution">A solution?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-many-body-expansion-mbe">The many-body expansion (MBE)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms/index.html">Algorithms for Fragment-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frag_v_nmer.html">Difference between fragments and n-mers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Theoretical Background</a></li>
+      <li class="breadcrumb-item active">Fragment Based Methods</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/rmrresearch/ghostfragment/edit/master/docs/source/background/fragment_based_methods.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="fragment-based-methods">
+<h1>Fragment Based Methods<a class="headerlink" href="#fragment-based-methods" title="Permalink to this headline"></a></h1>
+<p>Fragment-based methods are a series of reduced-scaling quantum chemistry
+approximations which rely on the near-sighted nature of electronic matter to
+circumvent the highly non-linear scaling of traditional electronic structure
+methods. This page is meant as a non-rigorous introduction to the concept.
+Other sections in this documentation present the methods in a more rigorous
+manner.</p>
+<div class="section" id="the-problem">
+<h2>The Problem<a class="headerlink" href="#the-problem" title="Permalink to this headline"></a></h2>
+<div class="figure align-center" id="id1">
+<span id="fig-hexamer-1b"></span><img alt="../_images/water_hexamer_1b.png" src="../_images/water_hexamer_1b.png" />
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Left. If <span class="math notranslate nohighlight">\(t_1\)</span> is the time it takes to compute the energy of a single water
+molecule, then <span class="math notranslate nohighlight">\(t_6\)</span> is the time required to compute the energy of water
+hexamer. Middle. In a 1-body many-body expansion (MBE), we approximate the
+energy of water hexamer as the sum of the energies of each water molecule.
+Right. The 1-body MBE approximation is dramatically cheaper to compute than
+the energy of the water hexamer.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</div>
+<p>The goal of quantum chemistry is to be able to predict and explain
+computational phenomenona using rigorous physical models that contain little
+to no emperical parameters. Unfortunately quantum chemistry methods exhibit
+steep computational scaling with respect to system size, <span class="math notranslate nohighlight">\(N\)</span>. For example most
+modern self-consistent field (SCF) methods (<em>e.g.</em>, Hartree-Fock or density
+functional theory) exhibit <span class="math notranslate nohighlight">\(\mathcal{O}\left(N^3\right)\)</span> scaling, which is to say that the time to
+solution for SCF methods increases cubically with respect to <span class="math notranslate nohighlight">\(N\)</span>.</p>
+<p>To better understand computational complexity, assume that for a particular
+quantum chemistry method <span class="math notranslate nohighlight">\(t_1\)</span> is the time to solution for computing the energy
+of a single water molecule. The left side of <a class="reference internal" href="#fig-hexamer-1b"><span class="std std-numref">Fig. 1</span></a> shows how
+the time to solution for computing the energy of water hexamer, <span class="math notranslate nohighlight">\(t_6\)</span>, compares
+to <span class="math notranslate nohighlight">\(t_1\)</span>, for three quantum chemistry methods. For the purposes of
+<a class="reference internal" href="#fig-hexamer-1b"><span class="std std-numref">Fig. 1</span></a> we assume that SCF scales as <span class="math notranslate nohighlight">\(\mathcal{O}\left(N^3\right)\)</span>, second-order
+Moller-Plesset perturbation theory (MP2) scales as <span class="math notranslate nohighlight">\(\mathcal{O}\left(N^5\right)\)</span>, and coupled cluster
+with single, double, and perturbative triple excitations, CCSD(T), scales as
+<span class="math notranslate nohighlight">\(\mathcal{O}\left(N^7\right)\)</span>. For SCF, this means that <span class="math notranslate nohighlight">\(t_6 = 6^3 t_1 =216 t_1\)</span>. That is to say,
+an SCF calculation on water hexamer will take 216 times longer than an SCF
+calculation on a single water molecule. The situation is markedly worse for
+CCSD(T) where we expect computing the energy of water hexamer to be 279,936
+times longer than computing the energy of a single water molecule.</p>
+</div>
+<div class="section" id="a-solution">
+<h2>A solution?<a class="headerlink" href="#a-solution" title="Permalink to this headline"></a></h2>
+<p>While the exact electronic Hamiltonian is a pair-wise operator, for a given
+basis set the exact electron wavefunction has contributions arising from all
+possible excitations out of a reference state. In practice, excitations tend
+to contribute more to the wavefunction if the orbitals involved in the
+excitation are spatially local to one another. Thus, to reduce the scaling of
+an electronic structure method, one may somehow restrict the set of excitations
+considered to spatially local sets.</p>
+<p>Conceptually one of the easiest ways to establish local sets is to fragment a
+molecule. In the full water hexamer calculation shown on the left side
+<a class="reference internal" href="#fig-hexamer-1b"><span class="std std-numref">Fig. 1</span></a> each electron can see each orbital. The middle panel
+of <a class="reference internal" href="#fig-hexamer-1b"><span class="std std-numref">Fig. 1</span></a> suggests that we instead treat water hexamer as six
+separate water molecules. By separate we mean the electrons in each water
+molecule can now only see the orbitals associated with that water molecule. In
+practice, this is somewhat trivial to implement, as it just amounts to running
+six individual calculations (one for each water molecule). As shown on the
+right side of <a class="reference internal" href="#fig-hexamer-1b"><span class="std std-numref">Fig. 1</span></a>, by fragmenting water hexamer, we can
+approximate the energy of the water hexamer at a cost of six times <span class="math notranslate nohighlight">\(t_1\)</span>. Even
+for SCF this represents a reduction of two orders of magnitude in the time to
+solution; the savings are even more remarkable for high-accuracy CCSD(T) which
+sees a reduction in time of five orders of magnitude!</p>
+<p>The approximation just described is known as a one-body method because the
+target system is broken up into fragments and those fragments are not allowed
+to interact with one another. As this description suggests the one-body
+approximation is usually not particularly accurate on account of neglecting the
+interactions among the various fragments. Unfortunately, for most use cases, a
+reduction in computational cost is only useful if the corresponding
+approximation is sufficiently accurate, and one-body fragment-based methods
+are rarely of interest.</p>
+</div>
+<div class="section" id="the-many-body-expansion-mbe">
+<h2>The many-body expansion (MBE)<a class="headerlink" href="#the-many-body-expansion-mbe" title="Permalink to this headline"></a></h2>
+<div class="figure align-center" id="id2">
+<span id="fig-hexamer-2b"></span><img alt="../_images/water_hexamer_2b.png" src="../_images/water_hexamer_2b.png" />
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Left. Time to solution <span class="math notranslate nohighlight">\(t_6\)</span> for water hexamer as a multiple of the time to
+solution for a single water molecule at the same level of theory <span class="math notranslate nohighlight">\(t_1\)</span>.
+Middle. Three of the 15 possible dimers. Right. The time to solution for
+the two-body approximation.</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</div>
+<p>As discussed at the end of the previous section, a one-body approximation is
+an insufficiently accurate approximation to energy of the target system on
+account of neglecting many-body interactions. Of the neglected interactions,
+the most important are the pair-wise interactions among the fragments, <em>i.e.</em>,
+the two-body interactions.</p>
+<p>Most fragment-based methods compute two-body interactions via a supersystem
+approach. Let <span class="math notranslate nohighlight">\(IJ\)</span> be the system formed from the union of fragments <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(J\)</span>,
+then using a supersystem approach we can compute the two-body interaction
+between <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(J\)</span> by computing the energy of <span class="math notranslate nohighlight">\(IJ\)</span> and subtracting from it
+the sum of the energies of <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(J\)</span>. Put another way, we remove the one-body
+contributions to the energy of <span class="math notranslate nohighlight">\(IJ\)</span> and what remains must be the two-body
+interaction. This is pictorially shown in the center of
+<a class="reference internal" href="#fig-hexamer-2b"><span class="std std-numref">Fig. 2</span></a>.</p>
+<p>For water hexamer there is 6 choose 2, or 15, dimers (a dimer being a pair of
+fragments). Each pair of water molecules, or dimer, represents a system which
+is two times larger than a single fragment. Thus at the SCF level of theory,
+for example, the time to compute the energy of a dimer is <span class="math notranslate nohighlight">\(2^3t_1=8t_1\)</span>.
+Since there are 6 fragments and 15 dimers involved in approximating the energy
+of the hexamer, the total time to approximate the energy of the water hexamer
+is now 126|t_1|.</p>
+<p>While at the SCF level of theory the two-body approximation is two orders of
+magnitude more expensive than the one-body approximation, the resulting
+approximate energy is much better. Furthermore, the 15 dimer, and 6 monomer,
+calculations represent 21 separate calculations, which can easily be
+parallelized. Thus with access to sufficient parallel resources, at the SCF
+level of theory, the time for the two-body approximation can be reduced to
+<span class="math notranslate nohighlight">\(8t_1\)</span> with little trouble.</p>
+<p>While the two-body approximation tends to be more accurate than the one-body
+approximation, for high-accuracy work the two-body approximation tends to still
+be insufficient. Using the supersystem method it is straightforward to
+compute three-body interactions by taking unions of three fragments, computing
+the energy, and then subtracting from that energy the two- and one-body
+contributions. The result is a three-body method. The superystem method can be
+extended to computing four-, five-, and six-body interactions. The resulting
+equation represents a formally exact energy expansion of the hexamer’s energy
+known as the many-body expansion (MBE). The MBE (and the closely related
+generalized MBE) is at the heart of all fragment-based methods.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Theoretical Background" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mbe/index.html" class="btn btn-neutral float-right" title="The Many-Body Expansion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

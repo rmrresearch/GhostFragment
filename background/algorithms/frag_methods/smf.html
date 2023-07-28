@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Systematic Molecular Fragmentation Fragmentation Method &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script >let toggleHintShow = 'Click to show';</script>
+        <script >let toggleHintHide = 'Click to hide';</script>
+        <script >let toggleOpenOnPrint = 'true';</script>
+        <script src="../../../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Divide and Conquer Local Correlation Fragmentation Method" href="dclc.html" />
+    <link rel="prev" title="Molecular Tailoring Approach Fragmentation" href="mta.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            GhostFragment
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../fragment_based_methods.html">Fragment Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Algorithms for Fragment-Based Methods</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Fragmentation Algorithms</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="fea.html">FEA Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mfcc.html">MFCC Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mta.html">Molecular Tailoring Approach Fragmentation</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Systematic Molecular Fragmentation Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dclc.html">Divide and Conquer Local Correlation Fragmentation Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="gebf.html">GEBF Fragmentation Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other.html">Other Fragmentation Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cap_methods/index.html">Capping Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embed_methods/index.html">Embedding Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../screening_methods/index.html">Screening Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../frag_v_nmer.html">Difference between fragments and n-mers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/index.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Algorithms for Fragment-Based Methods</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Fragmentation Algorithms</a></li>
+      <li class="breadcrumb-item active">Systematic Molecular Fragmentation Fragmentation Method</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/rmrresearch/ghostfragment/edit/master/docs/source/background/algorithms/frag_methods/smf.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="systematic-molecular-fragmentation-fragmentation-method">
+<h1>Systematic Molecular Fragmentation Fragmentation Method<a class="headerlink" href="#systematic-molecular-fragmentation-fragmentation-method" title="Permalink to this headline"></a></h1>
+<div class="section" id="smf-fragmentation-05">
+<span id="id1"></span><h2>SMF Fragmentation 05<a class="headerlink" href="#smf-fragmentation-05" title="Permalink to this headline"></a></h2>
+<p><span id="id2">Deev and Collins<sup><a class="reference internal" href="../../../references.html#id67" title="Vitali Deev and Michael A. Collins. Approximateab initioenergies by systematic molecular fragmentation. The Journal of Chemical Physics, 122(15):154102, 2005. doi:10.1063/1.1879792.">10</a></sup></span> introduced a means of fragmenting large covalently bonded
+molecules. As originally presented, the SMF fragmentation method was used to
+define the fragments, intersections, and energy expansion coefficients. The
+procedure is parameterized by a non-zero integer <span class="math notranslate nohighlight">\(\ell\)</span> and is refered to as a
+level <span class="math notranslate nohighlight">\(\ell\)</span> procedure. Using our terminology the level <span class="math notranslate nohighlight">\(\ell\)</span> procedure is:</p>
+<ol class="arabic simple">
+<li><p>Assign pseudoatoms</p></li>
+<li><p>Establish connectivity, the result is the graph <span class="math notranslate nohighlight">\(G_0\)</span></p></li>
+<li><p>Find the pseudoatom in <span class="math notranslate nohighlight">\(G_0\)</span> which has the highest degree and that is at least
+<span class="math notranslate nohighlight">\(\ell\)</span> edges away from two different pseudoatoms. Define this pseudoatom as
+<span class="math notranslate nohighlight">\(A_0\)</span>. If no such pseudoatom exists, then <span class="math notranslate nohighlight">\(G_0\)</span> is a fragment and not
+considered further.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(B_i\)</span> be the set of pseduoatoms which are <span class="math notranslate nohighlight">\(i\)</span> edges away from <span class="math notranslate nohighlight">\(A_0\)</span>.
+Starting from <span class="math notranslate nohighlight">\(B_1\)</span> select the two pseudoatoms of highest degree. Let these
+pseudoatoms be <span class="math notranslate nohighlight">\(A_1\)</span> and <span class="math notranslate nohighlight">\(A_1'\)</span>.</p></li>
+<li><p>From <span class="math notranslate nohighlight">\(B_2\)</span> select the pseudoatom which has the hightest degree and is
+bonded to <span class="math notranslate nohighlight">\(A_1\)</span>. This is atom <span class="math notranslate nohighlight">\(A_2\)</span>. Similarly, from <span class="math notranslate nohighlight">\(B_2\)</span> select the pseudoatom
+which has the highest degree and is bonded to <span class="math notranslate nohighlight">\(A_1'\)</span>. This is atom <span class="math notranslate nohighlight">\(A_2'\)</span>.</p></li>
+<li><p>Repeat the above for pseudoatoms in <span class="math notranslate nohighlight">\(B_3\)</span> through <span class="math notranslate nohighlight">\(B_{\ell -1}\)</span>.</p></li>
+<li><p>Finally from <span class="math notranslate nohighlight">\(B_{\ell}\)</span> select the pseudoatom with the <strong>lowest</strong> degree that is
+bonded to pseudo atom <span class="math notranslate nohighlight">\(A_{\ell -1}\)</span>; this is atom <span class="math notranslate nohighlight">\(A_\ell\)</span>. Similarly, <span class="math notranslate nohighlight">\(A_\ell'\)</span> is the
+pseudoatom in <span class="math notranslate nohighlight">\(B_{\ell}\)</span> that is bonded to pseudoatom <span class="math notranslate nohighlight">\(A_{\ell - 1}'\)</span>. The result is a
+path of 2|l| edges that is centered on <span class="math notranslate nohighlight">\(A_0\)</span>.</p></li>
+<li><p>Break the <span class="math notranslate nohighlight">\(A_{\ell -1}\)</span>-<span class="math notranslate nohighlight">\(A_\ell\)</span> bond. The resulting graphs are <span class="math notranslate nohighlight">\(G_1\)</span> and <span class="math notranslate nohighlight">\(G_2\)</span>.</p></li>
+<li><p>Break the <span class="math notranslate nohighlight">\(A_{\ell - 1}'\)</span> - <span class="math notranslate nohighlight">\(A_\ell'\)</span> bond. The resulting graphs are <span class="math notranslate nohighlight">\(G_3\)</span> and <span class="math notranslate nohighlight">\(G_4\)</span>.</p></li>
+<li><p>Break both the <span class="math notranslate nohighlight">\(A_{\ell -1}\)</span>-<span class="math notranslate nohighlight">\(A_\ell\)</span> and <span class="math notranslate nohighlight">\(A_{\ell - 1}'\)</span>-<span class="math notranslate nohighlight">\(A_\ell'\)</span> bonds. The resulting graphs are
+<span class="math notranslate nohighlight">\(G_5\)</span>, <span class="math notranslate nohighlight">\(G_6\)</span>, and <span class="math notranslate nohighlight">\(G_7\)</span>.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(G\)</span> be the set of graphs which is in either the set “<span class="math notranslate nohighlight">\(G_1\)</span>, <span class="math notranslate nohighlight">\(G_2\)</span>, <span class="math notranslate nohighlight">\(G_3\)</span>,
+<span class="math notranslate nohighlight">\(G_4\)</span>” or the set “<span class="math notranslate nohighlight">\(G_5\)</span>, <span class="math notranslate nohighlight">\(G_6\)</span>, <span class="math notranslate nohighlight">\(G_7\)</span>” (<em>i.e.</em> ignore graphs which appear in
+both sets), repeat steps 3-11 for each graph in <span class="math notranslate nohighlight">\(G\)</span></p></li>
+<li><p>The previous step terminates when none of the graphs generated in step 11
+survive step 3 of the next cycle. The resulting set of fragments is <span class="math notranslate nohighlight">\(F\)</span>.</p></li>
+</ol>
+<p>The original presentation contains a few other details we have omitted, namely:</p>
+<ul class="simple">
+<li><p>How to calculate the coefficients of the fragments; we instead opt to use the
+IEP.</p></li>
+<li><p>Restrictions on what size rings can be broken for a given <span class="math notranslate nohighlight">\(\ell\)</span>. The motivation
+for these rules stems from their capping method choice. To be more general we
+instead adopt the view that if a ring shouldn’t be broken, it should be
+protected as a pseudoatom.</p></li>
+</ul>
+</div>
+<div class="section" id="ring-repair-variation">
+<span id="id3"></span><h2>Ring Repair Variation<a class="headerlink" href="#ring-repair-variation" title="Permalink to this headline"></a></h2>
+<p>In a subsequent paper <span id="id4">Collins and Deev<sup><a class="reference internal" href="../../../references.html#id68" title="Michael A. Collins and Vitali A. Deev. Accuracy and efficiency of electronic energies from systematic molecular fragmentation. The Journal of Chemical Physics, 125(10):104104, 2006. doi:10.1063/1.2347710.">5</a></sup></span> ammended the original SMF
+fragmentation method to include what they term the “ring repair rule”. This
+amounts to performing the following steps after the orginal SMF fragmentation
+method:</p>
+<ol class="arabic simple">
+<li><p>For each fragment :math`F_i` in <span class="math notranslate nohighlight">\(F\)</span>, consider pairs of pseudoatoms <span class="math notranslate nohighlight">\(A_0\)</span> and <span class="math notranslate nohighlight">\(A_1\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(A_0\)</span> and <span class="math notranslate nohighlight">\(A_1\)</span> are both bonded to another pseudoatom <span class="math notranslate nohighlight">\(A_2\)</span>, and <span class="math notranslate nohighlight">\(A_2\)</span> is not
+in :math`F_i`, add <span class="math notranslate nohighlight">\(A_2\)</span> to :math`F_i`</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(A_0\)</span> is bonded to a pseudoatom <span class="math notranslate nohighlight">\(A_2\)</span>, which is not in :math`F_i`, and <span class="math notranslate nohighlight">\(A_3\)</span> is
+bonded to a different pseudoatom <span class="math notranslate nohighlight">\(A_3\)</span>, which is also not in :math`F_i`, then add
+<span class="math notranslate nohighlight">\(A_2\)</span> and <span class="math notranslate nohighlight">\(A_3\)</span> to :math`F_i` if <span class="math notranslate nohighlight">\(A_2\)</span> and <span class="math notranslate nohighlight">\(A_3\)</span> are bonded.</p></li>
+<li><p>If either of the previous two steps modifies a fragment repeat the original
+SMF fragmentation method with the new set.</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mta.html" class="btn btn-neutral float-left" title="Molecular Tailoring Approach Fragmentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dclc.html" class="btn btn-neutral float-right" title="Divide and Conquer Local Correlation Fragmentation Method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

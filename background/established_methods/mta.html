@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Molecular Tailoring Approach (MTA) &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script >let toggleHintShow = 'Click to show';</script>
+        <script >let toggleHintHide = 'Click to hide';</script>
+        <script >let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Molecular Fractionation with Conjugate Caps (MFCC)" href="mfcc.html" />
+    <link rel="prev" title="Kernel Energy Method (KEM)" href="kem.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GhostFragment
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../fragment_based_methods.html">Fragment Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bsse/index.html">Basis Set Superposition Error</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Established Fragment Based Methods</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">Overview of Established Fragment Based Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeline.html">Timeline of Fragmentation Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dclc.html">Divide and Conquer Local Correlation (DCLC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ecmfcc.html">Energy-Corrected MFCC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eembe.html">Electorstatically-Embedded Many-Body Expansion (EE-MB)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="efamfcc.html">Electrostatic Field Adapted MFCC (EFA-MFCC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fea.html">Fragment Energy Assembler (FEA)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmo.html">Fragment Molecular Orbital Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gebf.html">Generalized Energy Based Fragmentation (GEBF)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kem.html">Kernel Energy Method (KEM)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Molecular Tailoring Approach (MTA)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mta-method-development">MTA Method Development</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mta-summary">MTA Summary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#other-mta-results">Other MTA Results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mta-reviews">MTA Reviews</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mfcc.html">Molecular Fractionation with Conjugate Caps (MFCC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smf.html">Systematic Molecular Fragmentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/index.html">Algorithms for Fragment-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frag_v_nmer.html">Difference between fragments and n-mers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/index.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Established Fragment Based Methods</a></li>
+      <li class="breadcrumb-item active">Molecular Tailoring Approach (MTA)</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/rmrresearch/ghostfragment/edit/master/docs/source/background/established_methods/mta.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="molecular-tailoring-approach-mta">
+<h1>Molecular Tailoring Approach (MTA)<a class="headerlink" href="#molecular-tailoring-approach-mta" title="Permalink to this headline"></a></h1>
+<div class="section" id="mta-method-development">
+<h2>MTA Method Development<a class="headerlink" href="#mta-method-development" title="Permalink to this headline"></a></h2>
+<p>In the original MTA approach, <span id="id1">Gadre <em>et al.</em><sup><a class="reference internal" href="../../references.html#id3" title="Shridhar R. Gadre, Rajendra N. Shirsat, and Ajay C. Limaye. Molecular tailoring approach for simulation of electrostatic properties. The Journal of Physical Chemistry, 98(37):9165–9169, 1994.">19</a></sup></span> sought a means of reducing the
+cost of constructing the SCF density matrix. To do this the system of interest
+was fragmented into overlapping fragments and the density matrix of each
+fragment is computed. Pieces of the fragment density matrices are then combined
+to form an approximation to the supersystem’s density matrix. How one should
+choose the pieces for use in the supersystem density matrix is not well defined
+at this point in the development of MTA. Initial results focused on zeolite and
+peptides using small basis sets. Interestingly because the supersystem density
+is not converged, comparisons are made against the supersystem’s density matrix
+and electrostatic potential, as opposed to the usual absolute energy.</p>
+<p>In a follow-up study <span id="id2">Babu and Gadre<sup><a class="reference internal" href="../../references.html#id4" title="K. Babu and Shridhar R. Gadre. Ab initio quality one-electron properties of large molecules: development and testing of molecular tailoring approach. Journal of Computational Chemistry, 24(4):484–495, 2003.">1</a></sup></span> proposed the
+<a class="reference internal" href="../algorithms/frag_methods/mta.html#mta03-fragmentation"><span class="std std-ref">MTA03 Fragmentation</span></a> method and with it the MTA 03 variant of MTA. Like in
+the original MTA study:cite:<cite>Gadre1994</cite>, the density matrix of the supersystem
+is assembled from the density matrices of the fragments. Unlike, in the original
+manuscript an algorithm for doing so is provided. Applications focused on three
+systems: 5,7,8-trimethyltocol, zeolite, and a peptide using small basis SCF.
+Results primarily focused on comparing the electorstatic potential computed by
+MTA to that of the supersystem.</p>
+<p>The next development <span id="id3"><sup><a class="reference internal" href="../../references.html#id8" title="V. Ganesh, Rameshwar K. Dongare, P. Balanarayan, and Shridhar R. Gadre. Molecular tailoring approach for geometry optimization of large molecules: energy evaluation and parallelization strategies. The Journal of Chemical Physics, 125(10):104109, 2006.">21</a></sup></span> in MTA, came from realizing the IEP
+could be used to compute the energy, and energy derivatives, of a fragmented
+system. Initial applications focused on replicating the energy of
+medium-sized organic molecules using small-basis HF, MP2, and B3LYP. Also
+considered were geometry optimizations, and vibrational frequencies. This study
+is also one of the earliest applications of <a class="reference internal" href="../algorithms/frag_methods/mta.html#mta06-fragmentation"><span class="std std-ref">MTA06 Fragmentation</span></a> and with
+it the MTA 06 variant of MTA.</p>
+<p>For benzene clusters, <span id="id4">Mahadevi <em>et al.</em><sup><a class="reference internal" href="../../references.html#id14" title="A. Subha Mahadevi, Anuja P. Rahalkar, Shridhar R. Gadre, and G. Narahari Sastry. Ab initio investigation of benzene clusters: molecular tailoring approach. The Journal of Chemical Physics, 133(16):164308, 2010.">45</a></sup></span> note that a 1-body MTA
+expansion still neglects some many-body interactions. They suggested a screening
+method which amounts to manually adding back in two-, three-, etc. body
+interactions which do not appear in the 1-body MTA expansion. For larger
+benzene clusters (hexamers, for example) these higher-body corrections can be
+more than a kcal/mol. Conceptually this correction is very similar to
+<a class="reference internal" href="../algorithms/screening_methods/smf.html#smf-screening-05"><span class="std std-ref">SMF Screening 05</span></a>. The accompanying numerical results demonstrated that
+BSSE was quite prevelant in the benzene tetramers. Despite this fact, results
+for larger clusters did not correct for BSSE.</p>
+<p><span id="id5">Furtado <em>et al.</em><sup><a class="reference internal" href="../../references.html#id20" title="Jonathan P. Furtado, Anuja P. Rahalkar, Sudhanshu Shanker, Pradipta Bandyopadhyay, and Shridhar R. Gadre. Facilitating minima search for large water clusters at the MP2 level via molecular tailoring. The Journal of Physical Chemistry Letters, 3(16):2253–2258, 2012.">15</a></sup></span> noted that up to this point in MTA development, errors
+(relative to the supersystem calcualtion) resulting from MTA tend to be basis
+set independent. They also note that when applying MTA to a correlated method
+the majority of the error comes from the SCF part of the energy. On the basis
+of these observations, <span id="id6">Furtado <em>et al.</em><sup><a class="reference internal" href="../../references.html#id20" title="Jonathan P. Furtado, Anuja P. Rahalkar, Sudhanshu Shanker, Pradipta Bandyopadhyay, and Shridhar R. Gadre. Facilitating minima search for large water clusters at the MP2 level via molecular tailoring. The Journal of Physical Chemistry Letters, 3(16):2253–2258, 2012.">15</a></sup></span> propsed the “grafting” correction
+to MTA. Grafting involves:</p>
+<ol class="arabic simple">
+<li><p>Compute the SCF energy of the supersystem with a large basis set, <span class="math notranslate nohighlight">\(E_{SCF/High}\)</span>.</p></li>
+<li><p>Using MTA compute the MP2 correlation energy with the same large basis set,
+<span class="math notranslate nohighlight">\(E_{MTA-MP2/High}\)</span>.</p></li>
+<li><p>Compute the MP2 energy of the supersystem with a small basis set, <span class="math notranslate nohighlight">\(E_{MP2/Low|}\)</span>.</p></li>
+<li><p>Using MTA compute the MP2 correlation energy with the same small basis set,
+<span class="math notranslate nohighlight">\(E_{MP2/Low|}\)</span>.</p></li>
+</ol>
+<p>The final energy is then estimated as <span class="math notranslate nohighlight">\(E_{SCF/High}\)</span> plus <span class="math notranslate nohighlight">\(E_{MTA-MP2/High}\)</span> plus a
+correction (the difference between <span class="math notranslate nohighlight">\(E_{MP2/Low|}\)</span> and <span class="math notranslate nohighlight">\(E_{MP2/Low|}\)</span>) which accounts
+for the error in the fragmentation. Alternatively, one may view the energy as
+<span class="math notranslate nohighlight">\(E_{SCF/High}\)</span> plus <span class="math notranslate nohighlight">\(E_{MP2/Low|}\)</span> plus a basis set correction (the difference between
+<span class="math notranslate nohighlight">\(E_{MTA-MP2/High}\)</span> and <span class="math notranslate nohighlight">\(E_{MP2/Low|}\)</span>). Either way grafting amounts to a multi-level
+fragment-based method. To demonstrate grafting <span id="id7">Furtado <em>et al.</em><sup><a class="reference internal" href="../../references.html#id20" title="Jonathan P. Furtado, Anuja P. Rahalkar, Sudhanshu Shanker, Pradipta Bandyopadhyay, and Shridhar R. Gadre. Facilitating minima search for large water clusters at the MP2 level via molecular tailoring. The Journal of Physical Chemistry Letters, 3(16):2253–2258, 2012.">15</a></sup></span> considered
+MP2 energies of water clusters; compared to supersystem MP2/aug-cc-pVDZ energies
+the grafting procedure resulted in errors on the order of 0.3 mH.</p>
+<p><span id="id8">Isegawa <em>et al.</em><sup><a class="reference internal" href="../../references.html#id41" title="Miho Isegawa, Bo Wang, and Donald G. Truhlar. Electrostatically embedded molecular tailoring approach and validation for peptides. Journal of Chemical Theory and Computation, 9(3):1381–1393, 2013. doi:10.1021/ct300845q.">26</a></sup></span> combined the electrostatic embedding of the EE-MB method
+with the MTA. It is perhaps worth noting this MTA development is somewhat
+unconventional in that it has not been made by the Gadre group. The study
+considers how four parameters: size of fragments, fragment boundaries, type of
+background charge, and type of cap atom affect the approximation. Admittedly the
+description of the method is very hard to follow and it is not exactly clear
+what the final method is. It is perhaps worth noting that this study proposes
+that one can simply truncate the IEP early (they specificlly state they will
+only consider at most intersections involving two  ragments). In genernal this
+leads to unacceptable errors. For example, consider a system of four
+non-interacting hydrogen atoms. Arbitrarily labeling the atoms 0, 1, 2, and 3 we
+choose to create three fragments: 012, 013, and 123. Applying the IEP:</p>
+<div class="math notranslate nohighlight">
+\[E = E_{012} + E_{013} + E_{123} - E_{01} - E_{12} - E_{13} + E_{1}\]</div>
+<p>The first three terms are the energies of the fragments, the next three are the
+pair-wise intersections, and the last term is the one ternary intersection. Even
+with non-interacting systems we can’t neglect the ternary interaction as it is
+an error of half a hartree (<em>i.e.</em>, the energy of a hydrogen atom). In the case
+of <span id="id9">Isegawa <em>et al.</em><sup><a class="reference internal" href="../../references.html#id41" title="Miho Isegawa, Bo Wang, and Donald G. Truhlar. Electrostatically embedded molecular tailoring approach and validation for peptides. Journal of Chemical Theory and Computation, 9(3):1381–1393, 2013. doi:10.1021/ct300845q.">26</a></sup></span>’s study, the approximation works because it’s not
+actually an approximation. More specifically their fragmentation scheme is such
+that the higher-order intersections always cancel out.</p>
+</div>
+<div class="section" id="mta-summary">
+<h2>MTA Summary<a class="headerlink" href="#mta-summary" title="Permalink to this headline"></a></h2>
+<p>Like many fragment-based methods, there is no “<em>the MTA method</em>” as the
+definition of the method has changed over the years without modifying the name.
+The following table summarizes the variants of MTA, which have appeared. Note
+that the names of the variants are our names, and were not present in the
+original manuscripts.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 16%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Fragments</p></th>
+<th class="head"><p>Embedding</p></th>
+<th class="head"><p>Caps</p></th>
+<th class="head"><p>Screening</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MTA 03</p></td>
+<td><p><a class="reference internal" href="../algorithms/frag_methods/mta.html#mta03-fragmentation"><span class="std std-ref">MTA03 Fragmentation</span></a></p></td>
+<td><p>N/A</p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>MTA 06</p></td>
+<td><p><a class="reference internal" href="../algorithms/frag_methods/mta.html#mta06-fragmentation"><span class="std std-ref">MTA06 Fragmentation</span></a></p></td>
+<td><p>N/A</p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>MTA 10</p></td>
+<td><p>Manual</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p><a class="reference internal" href="../algorithms/screening_methods/smf.html#smf-screening-05"><span class="std std-ref">SMF Screening 05</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>In this table “manual” fragmentation refers to the fact that the user specified
+the fragments. Based on the presentation of MTA in the literature it is
+reasonable to assume that the authors of MTA really consider the IEP to be the
+key ingrediant of what distinguishes MTA from other fragment methods.</p>
+</div>
+<div class="section" id="other-mta-results">
+<h2>Other MTA Results<a class="headerlink" href="#other-mta-results" title="Permalink to this headline"></a></h2>
+<p><span id="id10">Babu <em>et al.</em><sup><a class="reference internal" href="../../references.html#id5" title="K. Babu, V. Ganesh, Shridhar R. Gadre, and Nour E. Ghermani. Tailoring approach for exploring electron densities and electrostatic potentials of molecular crystals. Theoretical Chemistry Accounts, 111(2-6):255–263, 2004.">2</a></sup></span> used the MTA 03 variant of MTA (and possibly an early version
+of the MTA 06 variant, but the description in the paper is too vague for me to
+be certain) to approximate the density matrix of an ibuprofen crystal with the
+HF/STO-3G and HF/6-31G(d,p) levels of theory. Comparisons between the
+supersystem density matrices were made at the HF/STO-3G level of theory.</p>
+<p><span id="id11">Gadre <em>et al.</em><sup><a class="reference internal" href="../../references.html#id7" title="Shridhar R. Gadre, Anuja Rahalkar, and Shri V. Ganesh. Ab initio treatment of large molecules: cut-and-stitch the tailor's way. IANCAS Bulletin, 4:267–276, 2006.">18</a></sup></span> provided additional details about the
+<a class="reference internal" href="../algorithms/frag_methods/mta.html#mta06-fragmentation"><span class="std std-ref">MTA06 Fragmentation</span></a> procedure and saw the MTA 06 variant of MTA be
+applied to additional studies of organic molecules. Calulations used the HF
+and B3LYP methods with the 6-31G(d) and 6-31G(d, p) basis sets.
+Absolute energies, gradients, optimized geometries, and molecular electorstatic
+potential surfaces were compared to the supersystem results.</p>
+<p><span id="id12">Elango <em>et al.</em><sup><a class="reference internal" href="../../references.html#id10" title="M. Elango, V. Subramanian, Anuja P. Rahalkar, Shridhar R. Gadre, and N. Sathyamurthy. Structure, energetics, and reactivity of boric acid nanotubes: a molecular tailoring approach. The Journal of Physical Chemistry A, 112(33):7699–7704, 2008.">11</a></sup></span> applied the MTA 06 variant of MTA to boric acid
+nanotubes and nanorings. Comparisons to B3LYP/3-21G supersystem energies and
+(partial) geometry optimizations. Additional results with CG-MTA approximated
+B3LYP and MP2 are reported (6-31+G(d,p) basis set). Of note BSSE calculations
+are foregone due to cost and an expectation that they will not change the
+results.</p>
+<p><span id="id13">Jose and Gadre<sup><a class="reference internal" href="../../references.html#id11" title="K. V. Jovan Jose and Shridhar R. Gadre. Electrostatic guidelines and molecular tailoring for density functional investigation of structures and energetics of (li)n clusters. The Journal of Chemical Physics, 129(16):164314, 2008.">28</a></sup></span> considered optimized structures of lithium clusters
+using small basis DFT. Results for larger clusters relied on the MTA 06 variant
+of MTA (disclaimer it is possible that the fragments were manually defined,
+but it is not clear from the presentation). Several properties were computed for
+each cluster including: the adiabatic ionization potential (which is notable as
+it requires computing the energy of the cationic cluster) and the
+polarizability.</p>
+<p><span id="id14">Rahalkar <em>et al.</em><sup><a class="reference internal" href="../../references.html#id9" title="Anuja P. Rahalkar, V. Ganesh, and Shridhar R. Gadre. Enabling ab initio hessian and frequency calculations of large molecules. The Journal of Chemical Physics, 129(23):234101, 2008.">52</a></sup></span> used the MTA 06 variant of MTA to computatethe Hessian
+matrix at the HF, B3LYP, and MP2 levels of theory (with small basis sets).
+Errors in computed vibrational frequencies were less than a wavenumber.</p>
+<p><span id="id15">Jose and Gadre<sup><a class="reference internal" href="../../references.html#id12" title="K. V. Jovan Jose and Shridhar R. Gadre. Ab initio study on (CO2 ) n clusters via electrostatics- and molecular tailoring-based algorithm. International Journal of Quantum Chemistry, 109(10):2238–2247, 2009.">29</a></sup></span> used the MTA 06 variant of MTA to study CO2 clusters with
+DFT. Optimized geometries and vibrational frequencies were considered. For
+vibrational frequencies, CG-MTA matched supersystem calculations to within about
+a wavenumber.</p>
+<p><span id="id16">Yeole and Gadre<sup><a class="reference internal" href="../../references.html#id16" title="Sachin D. Yeole and Shridhar R. Gadre. On the applicability of fragmentation methods to conjugated $\uppi $ systems within density functional framework. The Journal of Chemical Physics, 132(9):094102, 2010.">65</a></sup></span> applied MTA to conjugated <span class="math notranslate nohighlight">\(\pi\)</span> systems with small
+basis DFT and MP2. Single point energies, gradients, and optimized geometries
+were computed and compared to the results of the respective full calculation.
+Overall the results were promising as long as relatively large fragments were
+used (fragments had radii of 6+ Angstroms).</p>
+<p><span id="id17">Rahalkar <em>et al.</em><sup><a class="reference internal" href="../../references.html#id13" title="Anuja P. Rahalkar, Michio Katouda, Shridhar R. Gadre, and Shigeru Nagase. Molecular tailoring approach in conjunction with MP2 and ri-MP2 codes: a comparison with fragment molecular orbital method. Journal of Computational Chemistry, 31:2405–2418, 2010.">53</a></sup></span> paired the MTA 06 variant of MTA with small basis
+IMS-MP2 and IMS-RI-MP2 (AFAIK IMS is a disk-based MP2 algoritm in the GAMESS
+package). Comparisons of MTA energies to FMO energies were also presented.
+Overall the comparison shows that three-body FMO performs about as well as
+MTA, although it is noted that the error in the FMO results tends to increase
+with basis set size.</p>
+<p><span id="id18">Yeole <em>et al.</em><sup><a class="reference internal" href="../../references.html#id18" title="Sachin D. Yeole, Nityananda Sahu, and Shridhar R. Gadre. Structures, energetics and vibrational spectra of CO2 clusters through molecular tailoring and cluster building algorithm. Physical Chemistry Chemical Physics, 14(21):7718, 2012.">66</a></sup></span> applied MTA (exactly which variant is unclear, possibly MTA
+10, without screening) to CO2 clusters with the focus of finding local minima.
+MTA was used to approximate single point energies and gradients at the MP2/CBS
+level of theory (extrapolations of MP2/aDZ and MP2/aTZ). No comparisons to full
+system calculations were presented, instead comparisons were made to previously
+published results that leveraged a Lennard-Jones potential.</p>
+<p><span id="id19">Rahalkar <em>et al.</em><sup><a class="reference internal" href="../../references.html#id22" title="Anuja P. Rahalkar, Sachin D. Yeole, and Shridhar R. Gadre. Acetylene aggregates via cluster-building algorithm and molecular tailoring approach. Theoretical Chemistry Accounts, 2012.">54</a></sup></span> is conceptually similar to <span id="id20"><sup><a class="reference internal" href="../../references.html#id18" title="Sachin D. Yeole, Nityananda Sahu, and Shridhar R. Gadre. Structures, energetics and vibrational spectra of CO2 clusters through molecular tailoring and cluster building algorithm. Physical Chemistry Chemical Physics, 14(21):7718, 2012.">66</a></sup></span> except that
+instead of CO2 clusters the focus was on acetylene clusters.</p>
+<p><span id="id21">Rahalkar and Gadre<sup><a class="reference internal" href="../../references.html#id19" title="Anuja P. Rahalkar and Shridhar R. Gadre. Tailoring approach for obtaining molecular orbitals of large systems. Journal of Chemical Sciences, 124(1):149–158, 2012.">51</a></sup></span> used the density matrix from the MTA 06 variant of MTA to
+build a Fock matrix. Subsequent diagonalization of the Fock matrix yielded MOs.
+The study uses relatively small fragments and in turn the results are a mixed
+bag. Some HOMO-LUMO gaps are modeled well, others aren’t. Of note they consider
+several conjugated systems.</p>
+<p><span id="id22">Sahu <em>et al.</em><sup><a class="reference internal" href="../../references.html#id21" title="Nityananda Sahu, Sachin D. Yeole, and Shridhar R. Gadre. Appraisal of molecular tailoring approach for large clusters. The Journal of Chemical Physics, 138(10):104101, 2013.">58</a></sup></span> applied the grafted MTA procedure to additional clusters. Of
+note they also introduced the idea of an R-goodness for two-, three-, body
+interactions. The manuscript suggests that these higher-body R-goodness
+parameters could be used to influence the fragmentation procedure; however, a
+clear description of how to do this is not provided.</p>
+</div>
+<div class="section" id="mta-reviews">
+<h2>MTA Reviews<a class="headerlink" href="#mta-reviews" title="Permalink to this headline"></a></h2>
+<p><span id="id23">Gadre <em>et al.</em><sup><a class="reference internal" href="../../references.html#id15" title="Shridhar R. Gadre, K. V. Jovan Jose, and Anuja P. Rahalkar. Molecular tailoring approach for exploring structures, energetics and properties of clusters. Journal of Chemical Sciences, 122(1):47–56, 2010.">17</a></sup></span> reviewed applications of MTA geometry optimization,
+frequency calculations, as well as property computations to clusters.</p>
+<p><span id="id24">Rahalkar <em>et al.</em><sup><a class="reference internal" href="../../references.html#id17" title="Anuja P. Rahalkar, V. Yeole, Sachin D.vand Ganesh, and Shridhar R. Gadre. Molecular Tailoring: An Art of the Possible for Ab Initio Treatment of Large Molecules and Molecular Clusters. Springer Netherlands, Dordrecht, 2011.">55</a></sup></span> reviewed the MTA method up to that point. The
+presentation primarily distinguishes MTA from other methods by pointing out that
+MTA is capable of geometry optimizations and that MTA has been applied to large
+systems. Also of note this review gives a nice explanation of the MTA 06
+fragmentation method.</p>
+<p><span id="id25">Gadre <em>et al.</em><sup><a class="reference internal" href="../../references.html#id23" title="Shridhar R. Gadre, Sachin D. Yeole, and Nityananda Sahu. Quantum chemical investigations on molecular clusters. Chemical Reviews, 114(24):12132–12173, 2014.">20</a></sup></span> is a review primarily focusing on understanding the
+structure of molecular clusters (from both the experimental and theoeritcal
+perspective); however, there is a bit of disucssion of how fragment-based
+methods, including MTA, have been used to study the problem.</p>
+<p><span id="id26">Sahu and Gadre<sup><a class="reference internal" href="../../references.html#id24" title="Nityananda Sahu and Shridhar R. Gadre. Molecular tailoring approach: a route for ab initio treatment of large clusters. Accounts of Chemical Research, 47(9):2739–2747, 2014.">57</a></sup></span> review MTA primarily in light of its applications to
+predicting minima of molecular clusters.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kem.html" class="btn btn-neutral float-left" title="Kernel Energy Method (KEM)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mfcc.html" class="btn btn-neutral float-right" title="Molecular Fractionation with Conjugate Caps (MFCC)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Add a New Capping Method &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script >let toggleHintShow = 'Click to show';</script>
+        <script >let toggleHintHide = 'Click to hide';</script>
+        <script >let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js"></script>
+        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="References" href="../../references.html" />
+    <link rel="prev" title="GhostFragment Development Topics" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GhostFragment
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../background/index.html">Theoretical Background</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../design/index.html">Designing GhostFragment</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">GhostFragment Development Topics</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">How to Add a New Capping Method</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#where-do-i-put-a-new-capping-method">Where do I Put a New Capping Method?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-do-i-implement-a-new-capping-method">How do I Implement a New Capping Method?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Developer Documentation</a></li>
+          <li class="breadcrumb-item"><a href="index.html">GhostFragment Development Topics</a></li>
+      <li class="breadcrumb-item active">How to Add a New Capping Method</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/rmrresearch/ghostfragment/edit/master/docs/source/developer/development/capping.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="how-to-add-a-new-capping-method">
+<h1>How to Add a New Capping Method<a class="headerlink" href="#how-to-add-a-new-capping-method" title="Permalink to this headline"></a></h1>
+<div class="section" id="where-do-i-put-a-new-capping-method">
+<h2>Where do I Put a New Capping Method?<a class="headerlink" href="#where-do-i-put-a-new-capping-method" title="Permalink to this headline"></a></h2>
+<div class="section" id="c">
+<h3>C++<a class="headerlink" href="#c" title="Permalink to this headline"></a></h3>
+<p>C++ capping methods live in <code class="docutils literal notranslate"><span class="pre">src/ghostfragment/capping</span></code>. Each capping method
+should be implemented as a module (TODO: link to PluginPlay module). The name
+of the module should reflect the algorithm in the module. For example the
+<code class="docutils literal notranslate"><span class="pre">SingleAtom</span></code> module uses a single atom to cap all bonds. It is common C++
+practice to name the source file based on the algorithm within it. So, the
+<code class="docutils literal notranslate"><span class="pre">SingleAtom</span></code> module lives in <code class="docutils literal notranslate"><span class="pre">src/ghostfragment/capping/single_atom.cpp</span></code>.</p>
+</div>
+</div>
+<div class="section" id="how-do-i-implement-a-new-capping-method">
+<h2>How do I Implement a New Capping Method?<a class="headerlink" href="#how-do-i-implement-a-new-capping-method" title="Permalink to this headline"></a></h2>
+<div class="section" id="id1">
+<h3>C++<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<ol class="arabic simple">
+<li><p>Once you know the name for module, add a corresponding <code class="docutils literal notranslate"><span class="pre">DECLARE_MODULE</span></code>
+statement to <code class="docutils literal notranslate"><span class="pre">src/ghostfragment/capping/capping.hpp</span></code></p></li>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">load_modules</span></code> in <code class="docutils literal notranslate"><span class="pre">src/ghostfragment/capping/capping.hpp</span></code> so that
+it loads your module.</p></li>
+<li><p>If applicable, modify <code class="docutils literal notranslate"><span class="pre">set_defaults</span></code> in <code class="docutils literal notranslate"><span class="pre">src/ghostfragment/capping.hpp</span></code>
+so that it sets the default submodules for your new module.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">src/ghostfragment/capping/name_of_your_module.cpp</span></code> create a new module
+satisfying the property type <code class="docutils literal notranslate"><span class="pre">Capped&lt;T&gt;</span></code>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="GhostFragment Development Topics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../references.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
