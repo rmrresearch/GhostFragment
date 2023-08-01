@@ -1,6 +1,6 @@
 #include "../test_ghostfragment.hpp"
 #include "hydrocarbon/hydrocarbon.h"
-#include <ghostfragment/drivers/engine.cpp>
+#include <ghostfragment/drivers/engine.hpp>
 #include <ghostfragment/property_types/fragmented_molecule.hpp>
 #include <ghostfragment/property_types/fragmented_nuclei.hpp>
 #include <ghostfragment/property_types/property_types.hpp>
