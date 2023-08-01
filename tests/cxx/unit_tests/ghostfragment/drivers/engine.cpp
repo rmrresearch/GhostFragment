@@ -20,14 +20,14 @@ system_type ethane(hydrocarbon(2));
 system_type propane(hydrocarbon(3));
 
 auto make_lambda() {
-    return pluginplay::make_lambda<energy_type>([=](const auto& system_in) {
-        if(system_in == methane) {
+    return pluginplay::make_lambda<energy_type>([=](const auto& pair_in) {
+        if(pair_in == methane)
             return 1.1;
-        } else if(system_in == ethane) {
+        else if(pair_in == ethane)
             return -2.2;
-        } else if(system_in == propane) {
+        else if(pair_in == propane)
             return 3.3;
-        } else
+        else
             return 100.0;
     });
 }
@@ -41,7 +41,7 @@ TEST_CASE("Engine") {
 
         float corr = 0.0;
 
-        REQUIRE(test == corr);
+        REQUIRE(test == Approx(corr));
     }
 
     SECTION("One System") {
@@ -50,42 +50,42 @@ TEST_CASE("Engine") {
 
         float corr = 1.1;
 
-        REQUIRE(test == corr);
+        REQUIRE(test == Approx(corr));
     }
 
     SECTION("Two Unique Systems") {
         input_type input{{methane, 1.0}, {ethane, 2.0}};
         float test = engine(input, make_lambda());
 
-        float corr = -1.1;
+        float corr = -3.3;
 
-        REQUIRE(test == corr);
+        REQUIRE(test == Approx(corr));
     }
 
     SECTION("Two Equivalent Systems") {
         input_type input{{methane, 1.0}, {methane, 2.0}};
         float test = engine(input, make_lambda());
 
-        float corr = 2.2;
+        float corr = 3.3;
 
-        REQUIRE(test == corr);        
+        REQUIRE(test == Approx(corr));        
     }
 
     SECTION("Three Unique Systems") {
         input_type input{{methane, 1.0}, {ethane, 2.0}, {propane, 3.0}};
         float test = engine(input, make_lambda());
 
-        float corr = 2.2;
+        float corr = 6.6;
 
-        REQUIRE(test == corr);
+        REQUIRE(test == Approx(corr));
     }
 
     SECTION("Three Systems with One Pair") {
         input_type input{{methane, 1.0}, {methane, 2.0}, {propane, 3.0}};
         float test = engine(input, make_lambda());
 
-        float corr = 5.5;
+        float corr = 13.2;
 
-        REQUIRE(test == corr);  
+        REQUIRE(test == Approx(corr));  
     }
 }
