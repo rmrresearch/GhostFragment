@@ -46,6 +46,10 @@ and vibrational frequencies were compared to the conventional results. Small
 basis SCF (both HF and DFT) results, for several types of systems (clusters, 
 peptides, and hydrogelators) are presented.
 
+:cite:t:`Dong2009` uses a GEBF07 approximation to B3LYP (with van Der Waals
+correctiosn) to model aromatic oglioamides. Of note include the 
+:ref:`distance_based_cp` BSSE corrections.
+
 ************
 GEBF Reviews
 ************
