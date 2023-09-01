@@ -3,7 +3,9 @@ Generalized Energy Based Fragmentation (GEBF)
 #############################################
 
 .. |Frag7| replace:: :ref:`gebf07_fragmentation_method`
+.. |Frag8| replace:: :ref:`gebf08_fragmentation_method`
 .. |ItrPC| replace:: :ref:`iterative_point_charge_embedding`
+.. |PC|    replace:: :ref:`ee_mb_b`
 .. |stdH|  replace:: :ref:`standard_distance_capping`
 .. |smf06| replace:: :ref:`smf06_screening`
 
@@ -22,6 +24,15 @@ applications of GEBF focused on peptides and water clusters with the HF and MP2
 methods. In addition to absolute energies this study also considered dipole 
 moments and static polarizabilities.
 
+:cite:t:`Hua_2008` introduced the GEBF08 method which differs from the GEBF07
+method in nearly all regards. In particular GEBF08 uses the |Frag8| 
+fragmentation method, non-iterative point charge embedding (|PC|), |stdH|
+capping, and no (?) screening. GEBF08 was applied to geometry optimizations and
+vibrational frequency calculations. The GEBF08 energies, optimized geometries,
+and vibrational frequencies were compared to the conventional results. Small
+basis SCF (both HF and DFT) results, for several types of systems (clusters, 
+peptides, and hydrogelators) are presented.
+
 ************
 GEBF Summary
 ************
@@ -31,6 +42,8 @@ GEBF Summary
 +========+===========+===========+========+===========+
 | GEBF07 | |Frag7|   | |ItrPC|   | |stdH| | |smf06|   |
 +--------+-----------+-----------+--------+-----------+
+| GEBF08 | |Frag8|   | |PC|      | |stdH| | ???       |
++--------+-----------+-----------+--------+-----------+ 
 
 ******************
 Other GEBF Results
@@ -40,14 +53,8 @@ Other GEBF Results
 as the QM part of a QM/MM calcualtion. This method was applied to
 solvated polyethylene.
 
-:cite:t:`Hua_2008` extended the GEBF07 method to geometry optimizations and
-vibrational frequency calculations. The GEBF07 energies, optimized geometries,
-and vibrational frequencies were compared to the conventional results. Small
-basis SCF (both HF and DFT) results, for several types of systems (clusters, 
-peptides, and hydrogelators) are presented.
-
-:cite:t:`Dong2009` uses a GEBF07 approximation to B3LYP (with van Der Waals
-correctiosn) to model aromatic oglioamides. Of note include the 
+:cite:t:`Dong2009` uses a GEBF08 approximation to B3LYP (with van der Waals 
+correctiosn) to model aromatic oglioamides. Of note this study included the 
 :ref:`distance_based_cp` BSSE corrections.
 
 ************

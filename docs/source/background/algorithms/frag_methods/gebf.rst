@@ -5,6 +5,8 @@ GEBF Fragmentation Methods
 .. |zeta| replace:: :math:`\zeta`
 .. |g| replace:: :math:`g`
 .. |Fg| replace:: :math:`F_g`
+.. |eta| replace:: :math:`\eta`
+.. |etam1| replace:: :math:`\left(\eta -1\right)`
 
 .. _gebf07_fragmentation_method:
 
@@ -43,3 +45,17 @@ presented namely:
   fragment. The multiplicity of this intersection is :math:`1-k`, where :math`k`
   is the number of fragments it appears in.
 - Repeat the previous step for sets of :math`n-2, n-3, \ldots, 1` pseudoatoms 
+
+.. _gebf08_fragmentation_method:
+
+***************************
+GEBF08 Fragmentation Method
+***************************
+
+:cite:t:`Hua_2008` introduced a new fragmentation method for the GEBF method:
+
+1. Define |eta|, the maximum number of pseudoatoms in a fragment.
+2. Form pseudoatoms.
+3. For each pseudoatom combine it with the |etam1| closest pseudoatoms to form
+   a fragment.
+
