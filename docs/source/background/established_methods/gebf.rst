@@ -49,13 +49,14 @@ GEBF Summary
 Other GEBF Results
 ******************
 
-:cite:t:`Li2008a` used GEBF07 (with manually specified fragments) 
-as the QM part of a QM/MM calcualtion. This method was applied to
-solvated polyethylene.
+:cite:t:`Li2008a` used GEBF07 with manually specified fragments (it's not 
+immediately clear if the embedding was iterative) as the QM part of a QM/MM 
+calcualtion. This method was applied to solvated polyethylene.
 
 :cite:t:`Dong2009` uses a GEBF08 approximation to B3LYP (with van der Waals 
 correctiosn) to model aromatic oglioamides. Of note this study included the 
-:ref:`distance_based_cp` BSSE corrections.
+:ref:`distance_based_cp` BSSE corrections which were found to be a good 
+approximation to full counterpoise corrections.
 
 ************
 GEBF Reviews
