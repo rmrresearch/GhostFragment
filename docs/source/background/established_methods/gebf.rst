@@ -4,6 +4,7 @@ Generalized Energy Based Fragmentation (GEBF)
 
 .. |Frag7| replace:: :ref:`gebf07_fragmentation_method`
 .. |Frag8| replace:: :ref:`gebf08_fragmentation_method`
+.. |Frag10| replace:: :ref:`_gebf10_fragmentation_method`
 .. |ItrPC| replace:: :ref:`iterative_point_charge_embedding`
 .. |PC|    replace:: :ref:`ee_mb_b`
 .. |stdH|  replace:: :ref:`standard_distance_capping`
@@ -26,8 +27,9 @@ moments and static polarizabilities.
 
 :cite:t:`Hua_2008` introduced the GEBF08 method which differs from the GEBF07
 method in nearly all regards. In particular GEBF08 uses the |Frag8| 
-fragmentation method, non-iterative point charge embedding (|PC|), |stdH|
-capping, and no (?) screening. GEBF08 was applied to geometry optimizations and
+fragmentation method, |ItrPC| (I assume since the GEBF07 method is cited, but 
+the article is not clear on this point), |stdH| capping, and no (?) screening. 
+GEBF08 was applied to geometry optimizations and
 vibrational frequency calculations. The GEBF08 energies, optimized geometries,
 and vibrational frequencies were compared to the conventional results. Small
 basis SCF (both HF and DFT) results, for several types of systems (clusters, 
@@ -42,8 +44,10 @@ GEBF Summary
 +========+===========+===========+========+===========+
 | GEBF07 | |Frag7|   | |ItrPC|   | |stdH| | |smf06|   |
 +--------+-----------+-----------+--------+-----------+
-| GEBF08 | |Frag8|   | |PC|      | |stdH| | ???       |
+| GEBF08 | |Frag8|   | |ItrPC|   | |stdH| | ???       |
 +--------+-----------+-----------+--------+-----------+ 
+| GEBF10 | |Frag10|  | |ItrPC|   | |stdH| | ???       |
++--------+-----------+-----------+--------+-----------+
 
 ******************
 Other GEBF Results

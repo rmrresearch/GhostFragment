@@ -59,3 +59,10 @@ GEBF08 Fragmentation Method
 3. For each pseudoatom combine it with the |etam1| closest pseudoatoms to form
    a fragment.
 
+.. _gebf10_fragmentation_method:
+
+***************************
+GEBF10 Fragmentation Method
+***************************
+
+:cite:t:`Hua2010` introduced a new fragmention method for the GEBF method: 
