@@ -4,7 +4,7 @@ Generalized Energy Based Fragmentation (GEBF)
 
 .. |Frag7| replace:: :ref:`gebf07_fragmentation_method`
 .. |Frag8| replace:: :ref:`gebf08_fragmentation_method`
-.. |Frag10| replace:: :ref:`_gebf10_fragmentation_method`
+.. |Frag10| replace:: :ref:`gebf10_fragmentation_method`
 .. |ItrPC| replace:: :ref:`iterative_point_charge_embedding`
 .. |PC|    replace:: :ref:`ee_mb_b`
 .. |stdH|  replace:: :ref:`standard_distance_capping`
@@ -34,6 +34,8 @@ vibrational frequency calculations. The GEBF08 energies, optimized geometries,
 and vibrational frequencies were compared to the conventional results. Small
 basis SCF (both HF and DFT) results, for several types of systems (clusters, 
 peptides, and hydrogelators) are presented.
+
+:cite:t:`Hua2010` extended GEB08 by...
 
 ************
 GEBF Summary

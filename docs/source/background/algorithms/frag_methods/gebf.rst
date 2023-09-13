@@ -3,8 +3,7 @@ GEBF Fragmentation Methods
 ##########################
 
 .. |zeta| replace:: :math:`\zeta`
-.. |g| replace:: :math:`g`
-.. |Fg| replace:: :math:`F_g`
+.. |i| replace:: :math:`i`
 .. |eta| replace:: :math:`\eta`
 .. |etam1| replace:: :math:`\left(\eta -1\right)`
 
@@ -65,4 +64,32 @@ GEBF08 Fragmentation Method
 GEBF10 Fragmentation Method
 ***************************
 
-:cite:t:`Hua2010` introduced a new fragmention method for the GEBF method: 
+.. |Pi| replace:: :math:`P_i`
+.. |pj| replace:: :math:`P_j`
+.. |Fi| replace:: :math:`F_i`
+
+:cite:t:`Hua2010` introduced a new fragmention method for the GEBF method. The
+first steps are just the GEBF07 method (minus the distinction between molecular
+clusters and covalent systems):
+
+#. Define a distance threshold |zeta|
+#. Determine pseudoatoms, the |i|-th pseudoatom is denoted |Pi|
+#. The |i|-th fragment, |Fi|, include |Pi| and all pseudoatoms within |zeta| of
+   it.
+
+The remainder of the algorithm amounts to "extension rules" which extend the
+fragments:
+
+4. For each fragment check for incomplete rings. If the fragment contains an
+   incomplete ring, complete it by adding the pseudoatoms spanning the rest
+   of the ring. If the resulting structure still has incomplete rings repeat
+   this step one more time. Do not repeat the step beyond the second time.
+#. For each fragment consider pseudoatoms with dangling bonds. Say |Pi| has 
+   dangling bonds, then if |Pi| contains three or more heavy atoms, or if |Pi| 
+   was added by the previous step ignore it. If |Pi| was not ignored then add to
+   the fragment each pseudoatom bonded to |Pi|. If |Pi| contains only 1 heavy 
+   atom then for each pseudoatom bonded to |Pi|, |Pj|, additionaly add the
+   pseudoatoms bonded to |Pj|.
+
+At this point caps are added (:cite:t:`Hua2010` used 
+:ref:`standard_distance_capping`).

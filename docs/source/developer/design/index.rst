@@ -16,3 +16,8 @@ section record the process of designing GhostFragment.
     fragmented_molecule_driver
     fragmented_nuclei_driver
     nmers
+
+.. toctree::
+   :maxdepth: 2
+
+   gmbe_coefficients
