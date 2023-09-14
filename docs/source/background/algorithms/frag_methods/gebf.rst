@@ -91,5 +91,5 @@ fragments:
    atom then for each pseudoatom bonded to |Pi|, |Pj|, additionaly add the
    pseudoatoms bonded to |Pj|.
 
-At this point caps are added (:cite:t:`Hua2010` used 
+At this point caps are added (:cite:t:`Hua2010` use 
 :ref:`standard_distance_capping`).

@@ -35,7 +35,14 @@ and vibrational frequencies were compared to the conventional results. Small
 basis SCF (both HF and DFT) results, for several types of systems (clusters, 
 peptides, and hydrogelators) are presented.
 
-:cite:t:`Hua2010` extended GEB08 by...
+The next methodologic development came when :cite:t:`Hua2010` updated the
+fragmentation method of the GEBF08 method. The resulting GEBF10 method uses the
+|Frag10| fragmentation method which is similar to the original |Frag7| method
+with a series of "extension rules". GEBF10 was applied to a series of large
+organic molecules. Computed properties included absolute energies, relative
+energies, and optimized geometries all with small basis HF or DFT. Compared to
+the supersystem results GEB10 did well for geometries, but the errors in the 
+energetics were often off by more than 1 kcal/mol. 
 
 ************
 GEBF Summary
@@ -46,9 +53,9 @@ GEBF Summary
 +========+===========+===========+========+===========+
 | GEBF07 | |Frag7|   | |ItrPC|   | |stdH| | |smf06|   |
 +--------+-----------+-----------+--------+-----------+
-| GEBF08 | |Frag8|   | |ItrPC|   | |stdH| | ???       |
+| GEBF08 | |Frag8|   | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+ 
-| GEBF10 | |Frag10|  | |ItrPC|   | |stdH| | ???       |
+| GEBF10 | |Frag10|  | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+
 
 ******************
@@ -63,6 +70,11 @@ calcualtion. This method was applied to solvated polyethylene.
 correctiosn) to model aromatic oglioamides. Of note this study included the 
 :ref:`distance_based_cp` BSSE corrections which were found to be a good 
 approximation to full counterpoise corrections.
+
+:cite:t:`Jiang2011` applied GEBF10 (with user-defined fragments) to computing 
+vibrational circular dichromism spectra at the DFT level of theory. The authors
+report that the VCD spectra were in good agreement with supersystem spectra as
+well as experimental.
 
 ************
 GEBF Reviews
