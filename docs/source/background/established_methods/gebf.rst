@@ -58,6 +58,17 @@ GEBF Summary
 | GEBF10 | |Frag10|  | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+
 
+Like other fragment-based methods, many of the studies which employ GEBF simply
+refer to it as "GEBF" or "GEBF-XXX" where "XXX" is a method such as HF, MP2, or
+DFT. As the table above shows there isn't just a GEBF method, but several
+varieties of method. We suspect that the authors of the GEBF
+method feel that any fragment-method which relies on the GEBF energy equations
+is GEBF, *i.e.*, it is the energy equation which determines whether a method is
+GEBF or not. However, the GEBF energy equation is nothing more than the
+inclusion-exclusion principle (including the self-interaction of the
+point charges), so such a definition would mean CG-MTA, or any other overlapping
+fragment-based method would be labeled as GEBF. 
+
 ******************
 Other GEBF Results
 ******************
@@ -70,6 +81,12 @@ calcualtion. This method was applied to solvated polyethylene.
 correctiosn) to model aromatic oglioamides. Of note this study included the 
 :ref:`distance_based_cp` BSSE corrections which were found to be a good 
 approximation to full counterpoise corrections.
+
+:cite:t:`Yang_2010` applied GEBF08 to water clusters containing 20 to 30 water
+molecules in order to search for low energy geometries. Results using B3LYP
+and MP2 were optimized and corrected for ZPVE. Some comparison with supersystem 
+results was presented (errors were around 1 kcal/mol), but the majority of 
+conclusions relied on fragment-based methods alone.
 
 :cite:t:`Jiang2011` applied GEBF10 (with user-defined fragments) to computing 
 vibrational circular dichromism spectra at the DFT level of theory. The authors
