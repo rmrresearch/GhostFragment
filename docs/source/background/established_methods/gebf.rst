@@ -5,6 +5,7 @@ Generalized Energy Based Fragmentation (GEBF)
 .. |Frag7| replace:: :ref:`gebf07_fragmentation_method`
 .. |Frag8| replace:: :ref:`gebf08_fragmentation_method`
 .. |Frag10| replace:: :ref:`gebf10_fragmentation_method`
+.. |Frag12| replace:: :ref:`gebf12_fragmentation_method`
 .. |ItrPC| replace:: :ref:`iterative_point_charge_embedding`
 .. |PC|    replace:: :ref:`ee_mb_b`
 .. |stdH|  replace:: :ref:`standard_distance_capping`
@@ -44,6 +45,18 @@ energies, and optimized geometries all with small basis HF or DFT. Compared to
 the supersystem results GEB10 did well for geometries, but the errors in the 
 energetics were often off by more than 1 kcal/mol. 
 
+:cite:t:`Hua2012` noted that the GEBF10 method performed poorly for systems
+containing important non-covalent interactions. To combat this, 
+:cite:t:`Hua2012` introduced a new fragmentation method |Frag12|. |Frag12|
+extends |Frag10| by augmenting the original set of fragments with additional
+fragments formed from pairs of pseudoatoms (plus the pseudoatoms near that
+pair). The resulting GEBF12 method was then applied to several peptides and
+large molecules. GEBF12 performed better than GEBF10 (for example for binding
+energies of the large molecules GEBF10 erred from supersystem results by about 
+3.8 kcal/mol whereas GEBF10 only erred by about 0.5 kcal/mol). Of note the role
+of BSSE corrections (as computed using the :ref:`distance_based_cp` correction)
+was also considered.
+
 ************
 GEBF Summary
 ************
@@ -56,6 +69,10 @@ GEBF Summary
 | GEBF08 | |Frag8|   | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+ 
 | GEBF10 | |Frag10|  | |ItrPC|   | |stdH| | N/A       |
++--------+-----------+-----------+--------+-----------+
+| GEBF11 | Manual    | |ItrPC|   | |stdH| | N/A       |
++--------+-----------+-----------+--------+-----------+
+| GEBF12 | |Frag12|  | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+
 
 Like other fragment-based methods, many of the studies which employ GEBF simply
@@ -88,7 +105,8 @@ and MP2 were optimized and corrected for ZPVE. Some comparison with supersystem
 results was presented (errors were around 1 kcal/mol), but the majority of 
 conclusions relied on fragment-based methods alone.
 
-:cite:t:`Jiang2011` applied GEBF10 (with user-defined fragments) to computing 
+:cite:t:`Jiang2011` applied GEBF11 (GEBF10 with user-defined fragments) to 
+computing 
 vibrational circular dichromism spectra at the DFT level of theory. The authors
 report that the VCD spectra were in good agreement with supersystem spectra as
 well as experimental.

@@ -65,7 +65,7 @@ GEBF10 Fragmentation Method
 ***************************
 
 .. |Pi| replace:: :math:`P_i`
-.. |pj| replace:: :math:`P_j`
+.. |Pj| replace:: :math:`P_j`
 .. |Fi| replace:: :math:`F_i`
 
 :cite:t:`Hua2010` introduced a new fragmention method for the GEBF method. The
@@ -93,3 +93,22 @@ fragments:
 
 At this point caps are added (:cite:t:`Hua2010` use 
 :ref:`standard_distance_capping`).
+
+.. _gebf12_fragmentation_method:
+
+***************************
+GEBF12 Fragmentation Method
+***************************
+
+:cite:t:`Hua2012` built on the GEBF10 Fragmentation method to create the GEBF12
+fragmentation method.
+
+#. Create fragments subject to the :ref:`gebf10_fragmentation_method`.
+#. Find the pairs of pseudoatoms, |Pi| and |Pj|, separated by a distance less
+   than :math:`2\zeta`.
+#. For each pair from step 2, determine if a pair from step 1 contains the
+   pair, if not create a new fragment which contains the |Pi| and |Pj| and
+   all other pseudoatoms which are within |zeta| of the geometric center of
+   |Pi| and |Pj|.
+#. Apply extension rules (see :ref:`gebf10_fragmentation_method`) to each 
+   fragment formed in step 3. 
