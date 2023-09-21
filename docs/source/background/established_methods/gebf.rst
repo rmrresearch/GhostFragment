@@ -111,6 +111,13 @@ vibrational circular dichromism spectra at the DFT level of theory. The authors
 report that the VCD spectra were in good agreement with supersystem spectra as
 well as experimental.
 
+:cite:t:`Hua_2011` applied GEB07 (presumably; the paper is not clear on the
+exact details and instead presents references) to poly-alanine systems
+containing up to 40 residues. Optimized structures, energies, and enthalpies
+were computed using DFT (B3LYP and M06-2X). Errors in GEBF approximated
+energies, relative to supersystem results, were about 2 kcal/mol; errors were
+only computed for systems with 10 alanines.
+
 ************
 GEBF Reviews
 ************
