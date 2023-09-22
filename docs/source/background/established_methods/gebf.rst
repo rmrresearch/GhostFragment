@@ -118,6 +118,16 @@ were computed using DFT (B3LYP and M06-2X). Errors in GEBF approximated
 energies, relative to supersystem results, were about 2 kcal/mol; errors were
 only computed for systems with 10 alanines.
 
+:cite:t:`Li2013` applied GEBF10 to methanol disolved in water. Methanol 
+dissolved in clusters containing up to 1115 water molecules were considered. To
+reach the large cluster size an ONIOM was utilized where the highest level of
+theory was GEBF approximated MP2-F12/aDZ, the middle layer was GEBF approximated
+MP2/aDZ, and the lowest level was DFTB (presumably with no GEBF approximation).
+As part of the calibration supersystem MP2-F12/aDZ results for a cluster with
+12 water molecules were computed and compared to the GEBF approximated results;
+errors were less than 1 kcal/mol. Of note this study also used the 
+:ref:`distance_based_cp` method.
+
 ************
 GEBF Reviews
 ************
