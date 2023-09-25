@@ -118,6 +118,13 @@ were computed using DFT (B3LYP and M06-2X). Errors in GEBF approximated
 energies, relative to supersystem results, were about 2 kcal/mol; errors were
 only computed for systems with 10 alanines.
 
+:cite:t:`Yang_2011` looked at water clusters trapped in MOF pores using QM/MM. 
+Two types of clusters were considered: neutral and protonated. The QM region of
+the neutral cluster was too big for a conentional B3LYP calculation so the
+authors relied on GEBF (presumably either GEBF07 or GEBF10). The geometries
+were optimized using QM/MM and the cluster geometries agreed well with 
+experiment. No comparison of GEBF to supersystem calculations was presented. 
+
 :cite:t:`Li2013` applied GEBF10 to methanol disolved in water. Methanol 
 dissolved in clusters containing up to 1115 water molecules were considered. To
 reach the large cluster size an ONIOM was utilized where the highest level of
