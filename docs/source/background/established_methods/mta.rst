@@ -207,7 +207,6 @@ clear description of how to do this is not provided.
 MTA Reviews
 ***********
 
-
 :cite:t:`Gadre_2010` reviewed applications of MTA geometry optimization, 
 frequency calculations, as well as property computations to clusters.
 

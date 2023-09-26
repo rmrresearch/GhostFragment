@@ -141,3 +141,9 @@ GEBF Reviews
 
 :cite:t:`Li2008` provides a brief introduction to fragment-based methods 
 primarily focusing on GEBF (including its earlier incarnations).
+
+:cite:t:`Li2014` reviewed the progress of GEBF to date. New results presented 
+here included an analysis of the gradients for a hydrogelator with and without 
+neglect of the response terms (results were at the HF/6-31G* level of theory) 
+and ab initio molecular dynamic simulations of alanine peptides (using the
+M06-2X/STO-3G level of theory). 
