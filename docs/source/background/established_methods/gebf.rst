@@ -6,6 +6,7 @@ Generalized Energy Based Fragmentation (GEBF)
 .. |Frag8| replace:: :ref:`gebf08_fragmentation_method`
 .. |Frag10| replace:: :ref:`gebf10_fragmentation_method`
 .. |Frag12| replace:: :ref:`gebf12_fragmentation_method`
+.. |Frag14| replace:: :ref:`_gebf14_fragmenation_method`
 .. |ItrPC| replace:: :ref:`iterative_point_charge_embedding`
 .. |PC|    replace:: :ref:`ee_mb_b`
 .. |stdH|  replace:: :ref:`standard_distance_capping`
@@ -57,6 +58,16 @@ energies of the large molecules GEBF10 erred from supersystem results by about
 of BSSE corrections (as computed using the :ref:`distance_based_cp` correction)
 was also considered.
 
+In looking at explicitly correlated CCSD(T) energies of water clusters,
+:cite:t:`Wang2014` introduced the GEBF14 method. GEBF14 differs from GEBF10 in
+the fragmentation method, more specifically GEBF14 uses |Frag14| which is 
+essentially |Frag8| combined with |Frag10|. By only applying GEBF to the
+correlation energy, :cite:t:`Wang2014` were able to replicate supersystem
+explicitly correlated MP2/CBS results to within about 0.3 kcal/mol (errors 
+when GEBF was also applied to the SCF component of the energy were about 
+1 kcal/mol). The authors attributed the better performance of only applying 
+GEBF to the correlation energy to a better treatment of BSSE. 
+
 ************
 GEBF Summary
 ************
@@ -74,6 +85,8 @@ GEBF Summary
 +--------+-----------+-----------+--------+-----------+
 | GEBF12 | |Frag12|  | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+
+| GEBF14 | |Frag14|  | |ItrPC|   | |stdH| | N/A       |
++--------+-----------+-----------+--------+-----------+
 
 Like other fragment-based methods, many of the studies which employ GEBF simply
 refer to it as "GEBF" or "GEBF-XXX" where "XXX" is a method such as HF, MP2, or
@@ -82,9 +95,9 @@ varieties of method. We suspect that the authors of the GEBF
 method feel that any fragment-method which relies on the GEBF energy equations
 is GEBF, *i.e.*, it is the energy equation which determines whether a method is
 GEBF or not. However, the GEBF energy equation is nothing more than the
-inclusion-exclusion principle (including the self-interaction of the
+inclusion-exclusion principle (accounting for the self-interaction of the
 point charges), so such a definition would mean CG-MTA, or any other overlapping
-fragment-based method would be labeled as GEBF. 
+fragment-based method should also be labeled as GEBF. 
 
 ******************
 Other GEBF Results

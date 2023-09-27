@@ -112,3 +112,31 @@ fragmentation method.
    |Pi| and |Pj|.
 #. Apply extension rules (see :ref:`gebf10_fragmentation_method`) to each 
    fragment formed in step 3. 
+
+.. _gebf14_fragmenation_method:
+
+***************************
+GEBF14 Fragmentation Method
+***************************
+
+:cite:t:`Wang2014` combined the GEBF08 and GEBF12 fragmenation methods to create
+the GEBF14 method. In their presentation, :cite:t:`Want2014` did not discuss the
+extension rules; however, because the application was water clusters, the
+extension rules were not relevant. For clarity the GEBF14 procedure is:
+
+#. Define a distance threshold |zeta|
+#. Define a maximum number of pseudoatoms |eta|.
+#. Determine pseudoatoms, the |i|-th pseudoatom is denoted |Pi|
+#. The |i|-th fragment, |Fi|, include |Pi| and all pseudoatoms within |zeta| of
+   it. If more than |eta| pseudoatoms fall within a radius of |zeta| only the
+   |eta| closest to |Pi| are included.
+#. Presumably extension rules are applied here.
+#. Find the pairs of pseudoatoms, |Pi| and |Pj|, separated by a distance less
+   than :math:`2\zeta`.
+#. For each pair from step 2, determine if a pair from step 1 contains the
+   pair, if not create a new fragment which contains the |Pi| and |Pj| and
+   all other pseudoatoms which are within |zeta| of the geometric center of
+   |Pi| and |Pj|. If more than |eta| pseudoatoms fall within a radius of |zeta| 
+   only the |eta| closest to the geometric center of |Pi| and |Pj| are included.
+#. Apply extension rules (see :ref:`gebf10_fragmentation_method`) to each 
+   fragment formed in step 3. 
