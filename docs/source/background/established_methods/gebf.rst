@@ -148,6 +148,21 @@ As part of the calibration supersystem MP2-F12/aDZ results for a cluster with
 errors were less than 1 kcal/mol. Of note this study also used the 
 :ref:`distance_based_cp` method.
 
+:cite:t:`Fang_2014` applied GEBF14 to periodic systems. In their approach, the
+lattice energy of the unit cell is estimated by performing GEBF on all fragments
+in a super cell that have at least one pseudoatom within the unit cell. the
+supercell is then embedded in an infinite field of point charges which gives
+rise to an Ewald term. There is then discussion of a compensation field to
+correct for truncating the infinite field into a finite field; I admittedly am
+unclear if this is in addition to the Ewald term or a replacement for it. Either
+way the resulting method is calibrated for phase II ice against periodic 
+BL3LYp/6-31G*. With the compensation field, and 5 waters per fragment, GEBF
+matches the supersystem result to within 1 mH. :cite:t:`Fang_2014` then go on
+to compute the lattice constants for 10 molecular crystals using either 
+CCSD(T)-F12/aTZ or MP2-F12/aTZ plus a CCSD(T)/aDZ correction (depending on the 
+size of the molecules). The GEBF-approximated lattice energies agree with 
+experiment to within 6 kJ/mol.
+
 ************
 GEBF Reviews
 ************
