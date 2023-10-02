@@ -163,6 +163,14 @@ CCSD(T)-F12/aTZ or MP2-F12/aTZ plus a CCSD(T)/aDZ correction (depending on the
 size of the molecules). The GEBF-approximated lattice energies agree with 
 experiment to within 6 kJ/mol.
 
+:cite:t:`Li_2014` describes the Linear Scaling Quantum Chemistry (LSQC) program.
+LSQC is a program capable of running GEBF calculations and CIM calculations by
+leveraging existing quantum chemistry packages. For GEBF calculations, LSQC can
+leverage Gaussian and Molpro. For CIM, LSQC relies on a locally modified version
+of GAMESS. Also presented were GEBF-M06-2X/6-31G* optimized structures and IR
+spectra, GEBF-MP2/6-31G* optimized structures, and a scaling plot of 
+GEBF-MP2/6-31G*.
+
 ************
 GEBF Reviews
 ************
