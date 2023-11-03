@@ -171,6 +171,14 @@ of GAMESS. Also presented were GEBF-M06-2X/6-31G* optimized structures and IR
 spectra, GEBF-MP2/6-31G* optimized structures, and a scaling plot of 
 GEBF-MP2/6-31G*.
 
+:cite:t:`Fang_2016` extended periodic GEBF14 calculations to include IR and
+Raman spectra. Comparisons to conventional periodic DFT (PBE0-D2/6-311G(d,p))
+on imidazole and CO2 demonstrated that PBC-GEBF could faithfully approximate
+conventional supersystem calculations. For urea and ammonia borane crystals,
+PBC-GEBF calculations at the MP2/6-311++G(d,p) level of theory were compared to
+experiment. Discrepency between PBC-GEBF and experiment was worse, but the
+results still overall match well.
+
 ************
 GEBF Reviews
 ************
