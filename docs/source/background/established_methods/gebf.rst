@@ -179,6 +179,15 @@ PBC-GEBF calculations at the MP2/6-311++G(d,p) level of theory were compared to
 experiment. Discrepency between PBC-GEBF and experiment was worse, but the
 results still overall match well.
 
+:cite:t:`Zhang_2016` presented AIMD simulations of polypetides using GEBF11.
+Simulations were performed at several levels of theory. Initial Comparisons
+of energy differences for the polypetides showed a fairly large descrepancy
+across the methods considered, notably GEBF-M06-2X/6-31G differed from
+conventional M06-2X by about 10 kcal/mol. DFTB differed by almost 100 kcal/mol.
+It was noted that GEBF approximated SCF/STO-3G and M06-2X/STO-3G simulations had
+large energy drift (presumably because the gradients were too inaccurate 
+from neglegting response terms).
+
 ************
 GEBF Reviews
 ************
