@@ -188,6 +188,19 @@ It was noted that GEBF approximated SCF/STO-3G and M06-2X/STO-3G simulations had
 large energy drift (presumably because the gradients were too inaccurate 
 from neglegting response terms).
 
+:cite:t:`Li_2016` extended GEBF to excited states (specifically the GEBF14 
+flavor). In these calculations, the excitations were assumed localized to a set
+of pseudoatoms. Fragments containing the active pseudoatoms were treated with
+an excited state method. Fragments without active pseudoatoms are treated with
+the ground state method. For a conjugated aldehyde, comparison of 
+GEBF-:math:`\omega`B97XD to conventional TD-DFT results (for the 6-31G, 
+6-311G(d,p), 6-311++G(d,p), and cc-pVTZ bases) showed errors less than 0.1 eV.
+Solvatochromatic shifts of acetone in solvent (solvents of water, methanol,
+acetonitrile, and carbon tetrachloride) computed with GEBF-:math:`\omega`B97XD
+match experiment to about 0.1 eV. A similar analysis of pyridine and uracil in
+water again showed GEBF-:math:`\omega`B97XD could match supersystem results
+well.
+
 ************
 GEBF Reviews
 ************
