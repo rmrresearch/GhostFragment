@@ -861,7 +861,27 @@ pages={199--225}
   readstatus = {read},
 }
 
-
+@Article{Fang_2017,
+  author    = {Tao Fang and Yunzhi Li and Shuhua Li},
+  journal   = {{WIREs} Computational Molecular Science},
+  title     = {Generalized energy-based fragmentation approach for modeling condensed phase systems},
+  year      = {2017},
+  number    = {2},
+  volume    = {7},
+  comment   = {- Review of the PBC variant of GEBF
+- Describes the GEBF14 variant of the method
+- Notes that the compensation field is a unique contribution not found in other methods.
+- Also says the fact that PBC-GEBF can be applied to large molecules (by fragmenting the large molecules too) is  a unique aspect, though it's not clear how unique that really is.
+- Includes a comparison of PBC-GEBF-M062X/6-31g(d,p) gradients to supersystem results for ammonia crystals (geometries taken from the optimization path). Energy differences are less than 2.1 mH, gradients "at all atoms" (not sure exactly what that means) 0.40 mH/Bohr. Lattice parameters differ by less than 1%.
+- Also evaluate lattice energies for optimized ammonia crystal (optimized using PBC-GEBF-MP2/6-311++G(2d,2p).with several DFT and wavefunction methods (aug-cc-pVTZ basis with BSSE corrections) compared to experiment. MP2-F12 and CCSD(T)-F12 match to within 1 kcal/mol.
+- Also compute frequency shifts in vibrational spectra of BH3NH3 with PBC-GEBF (MP2, M06-2X, and PBE-D) with the 6-311++G(d,p) basis set. MP2 matches experiment better (error is about 20 wavenumbers for MP2)
+- Methacrylamide polymorhps optimized using PBC-GEBF-M062X/6-311++G(d,p), deviates less than 2% from experiment. Also computed Raman spectra; compared to experiment reasonable agreement.
+- PBC-GEBF (MP2, M06-2X, and X3LYP)/ 6-311++G(d,p) is applied to crystalized ionic liquids.Optimized geometries are compared to experiment and match well. Also compute Raman spectra},
+  doi       = {10.1002/wcms.1297},
+  groups    = {GEBF},
+  month     = jan,
+  publisher = {Wiley},
+}
 
 @Article{Noffke_2020,
   author     = {Benjamin W. Noffke and Daniel Beckett and Liang-shi Li and Krishnan Raghavachari},

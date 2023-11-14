@@ -213,3 +213,10 @@ here included an analysis of the gradients for a hydrogelator with and without
 neglect of the response terms (results were at the HF/6-31G* level of theory) 
 and ab initio molecular dynamic simulations of alanine peptides (using the
 M06-2X/STO-3G level of theory). 
+
+:cite:t:`Fang_2017` reviewed the progress of PBC-GEBF and presented new
+comparisons to both periodic supersystem calculations as well as experiment.
+Results provided included optimized geometries, lattice energies, vibrational
+frequency shifts, and Raman spectra. Most results were obtained with the M06-2X
+functional and/or MP2. Generally speaking agreement between PBC-GEBF and the
+supersystem or experiment were good.
