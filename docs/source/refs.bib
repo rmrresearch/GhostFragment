@@ -883,6 +883,29 @@ pages={199--225}
   publisher = {Wiley},
 }
 
+@Article{Zhao_2017,
+  author    = {Dongbo Zhao and Ruiheng Song and Wei Li and Jing Ma and Hao Dong and Shuhua Li},
+  journal   = {Journal of Chemical Theory and Computation},
+  title     = {Accurate Prediction of {NMR} Chemical Shifts in Macromolecular and Condensed-Phase Systems with the Generalized Energy-Based Fragmentation Method},
+  year      = {2017},
+  number    = {11},
+  pages     = {5231--5239},
+  volume    = {13},
+  comment   = {- Looks at NMR shifts using GEBF14 method
+- Point out that if one wants shift of specific atoms, only need derivatives of fragments containing those atoms.
+- Calibration first looks at a Trp-cage mini protein. Errors relative to supersystem results for HF/pcSseg-2, CAM-B3LYP/pcSSeg-2, and M06-2X/pcSSeg-2. GEBF is able to accuratlely approximate shielding constants for most atoms, though it does exhibit large errors for oxygen.
+- Additional calibration is for a CH3CN solvated in CHCl3 using B97-2/pcSseg-2. So long as the ultrafine grid is used the GEBF shielding constants matach well.
+- Note that Beran previously saw integration grid fine-ness have an issue on NMR constants
+- Next look at an oligoamide $\beta$-sheet. Optimized the structure with GEBF-B97-2/pcSseg-2. NMR shifts comptued at the same level. Shifts are compared to experiment and match well in most cases.
+- The next system is a supramolecular aggregate. Also optimized at GEBF-B97-2/6-31G(d,p). NMR shifts computed with the pcSseg-2 basis though. Compared to experiment again, deviations are all small.
+- Return to the CH3CN solvated in CHCl3, this time for an ensemble average of 200 clusters.Gas-to-solution shift is converged after considering 120 clusters. Results from QM/MM MD match experiment much better than results from classical MD, though the error is still a bit large (2 to 4 ppm)},
+  doi       = {10.1021/acs.jctc.7b00380},
+  groups    = {GEBF},
+  month     = oct,
+  publisher = {American Chemical Society ({ACS})},
+}
+
+
 @Article{Noffke_2020,
   author     = {Benjamin W. Noffke and Daniel Beckett and Liang-shi Li and Krishnan Raghavachari},
   journal    = {Journal of Chemical Theory and Computation},

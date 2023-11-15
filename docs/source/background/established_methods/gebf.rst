@@ -201,6 +201,12 @@ match experiment to about 0.1 eV. A similar analysis of pyridine and uracil in
 water again showed GEBF-:math:`\omega`B97XD could match supersystem results
 well.
 
+:cite:t:`Zhao_2017` applied GEBF14 to NMR shifts. Considered a number of systems
+including a Trp-cage mini protein, CH3CN solvated in CHCl3, a oligoamide beta
+sheet, and a supramolecular aggregate. The GEBF approximated NMR shifts are
+compared with both supersystem results and experiment. Overall, the predicted
+NMR shifts match well, with errors typically less than 1 ppm.
+
 ************
 GEBF Reviews
 ************
