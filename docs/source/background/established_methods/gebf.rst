@@ -88,16 +88,17 @@ GEBF Summary
 | GEBF14 | |Frag14|  | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+
 
-Like other fragment-based methods, many of the studies which employ GEBF simply
-refer to it as "GEBF" or "GEBF-XXX" where "XXX" is a method such as HF, MP2, or
-DFT. As the table above shows there isn't just a GEBF method, but several
-varieties of method. We suspect that the authors of the GEBF
-method feel that any fragment-method which relies on the GEBF energy equations
-is GEBF, *i.e.*, it is the energy equation which determines whether a method is
-GEBF or not. However, the GEBF energy equation is nothing more than the
-inclusion-exclusion principle (accounting for the self-interaction of the
-point charges), so such a definition would mean CG-MTA, or any other overlapping
-fragment-based method should also be labeled as GEBF. 
+We suspect that the authors of the GEBF method feel that any fragment-method 
+which relies on the GEBF energy equations is GEBF, *i.e.*, it is the energy 
+equation which determines whether a method is GEBF or not. However, the GEBF 
+energy equation is nothing more than the inclusion-exclusion principle 
+(accounting for the self-interaction of the point charges), so such a definition
+would mean CG-MTA, or any other overlapping fragment-based method should also be
+labeled as GEBF. Nonetheless, as the above table shows, by our breakdown, GEBF
+is a fairly consistent method with the main variation being how the fragments
+are formed. Thanfully, in each study, the GEBF authors usually provide fairly 
+detailed descriptions of how the fragments are formed so that reproducibility
+shouldn't be an issue.
 
 ******************
 Other GEBF Results
@@ -206,6 +207,17 @@ including a Trp-cage mini protein, CH3CN solvated in CHCl3, a oligoamide beta
 sheet, and a supramolecular aggregate. The GEBF approximated NMR shifts are
 compared with both supersystem results and experiment. Overall, the predicted
 NMR shifts match well, with errors typically less than 1 ppm.
+
+:cite:t:`Li_2018` applied GEBF14 to ionic liquids. Of particular note the
+authors found that choosing neutral pseudoatoms (one cation and one anion
+per pseudoatom) led to better results than simply letting each cation/anion be
+a pseudoatom. GEBF based on one ion per pseudoatom fragments sometimes erred by
+more than 20 kcal/mol! Also computed relative energies, optimized geometries,
+IR spectra, and thermodynamic values. The authors considered the effect of
+ensuring the same fragments throughout the optimization (as opposed to picking
+the closest ion pairs in each step) and somewhat surprisingly found that this
+had little affect on the geometry and spectra, but could lead to large errors
+in the thermodynamic values.
 
 ************
 GEBF Reviews
