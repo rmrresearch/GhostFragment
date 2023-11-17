@@ -202,6 +202,11 @@ match experiment to about 0.1 eV. A similar analysis of pyridine and uracil in
 water again showed GEBF-:math:`\omega`B97XD could match supersystem results
 well.
 
+:cite:t:`Wang_2017` undertook a joint experimental/theory study on crystals
+of DNA bases. PBC-GEBF-PBE(D3B3)/6-311+G(d,p) was used to optimized the crystal
+structures and to compute the IR vibrational spectra. Geometries and spectra
+were compared to experiment and matched well.
+
 :cite:t:`Zhao_2017` applied GEBF14 to NMR shifts. Considered a number of systems
 including a Trp-cage mini protein, CH3CN solvated in CHCl3, a oligoamide beta
 sheet, and a supramolecular aggregate. The GEBF approximated NMR shifts are
