@@ -88,17 +88,20 @@ GEBF Summary
 | GEBF14 | |Frag14|  | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+
 
-We suspect that the authors of the GEBF method feel that any fragment-method 
-which relies on the GEBF energy equations is GEBF, *i.e.*, it is the energy 
-equation which determines whether a method is GEBF or not. However, the GEBF 
-energy equation is nothing more than the inclusion-exclusion principle 
+We suspect that originally the authors of the GEBF method felt that any 
+fragment-method which relied on the GEBF energy equations is GEBF, *i.e.*, it is
+the energy equation which determines whether a method is GEBF or not. However, 
+the GEBF energy equation is nothing more than the inclusion-exclusion principle 
 (accounting for the self-interaction of the point charges), so such a definition
-would mean CG-MTA, or any other overlapping fragment-based method should also be
-labeled as GEBF. Nonetheless, as the above table shows, by our breakdown, GEBF
-is a fairly consistent method with the main variation being how the fragments
-are formed. Thanfully, in each study, the GEBF authors usually provide fairly 
-detailed descriptions of how the fragments are formed so that reproducibility
-shouldn't be an issue.
+would mean CG-MTA, or any other overlapping fragment-based method, should also 
+be labeled as GEBF. 
+
+Things get harrier, when you consider later studies like
+that of :cite:t:`Yuan_2016`, which note that the GEBF energy equations are the
+IEP. Presumably at this point the GEBF authors have shifted their definiton of
+GEBF to be the combination of |Frag14|, |ItrPC|, and |stdH|; however, this is
+speculation on our part motivated by the large number of studies that use 
+GEBF14.
 
 ******************
 Other GEBF Results
@@ -201,6 +204,19 @@ acetonitrile, and carbon tetrachloride) computed with GEBF-:math:`\omega`B97XD
 match experiment to about 0.1 eV. A similar analysis of pyridine and uracil in
 water again showed GEBF-:math:`\omega`B97XD could match supersystem results
 well.
+
+:cite:t:`Yuan_2016` compares GEBF14 to the EE-MB method. The discussion focuses
+on absolute energies of water clusters using M06-2X, HF, and MP2 (and several
+basis sets). Consistent with Bettens (TODO: cite Bettens BSSE), the study finds
+that the EE-MB method converges poorly (likely because of BSSE). One notable 
+example is M06-2X/6-311++G** for clusters with 20 waters; here the maximum 
+unsigned error exceeds 11 mH and does not seem to have converged by an 8-body 
+MBE. EE-MB is also shown to have a fairly large sensitivity to the level of
+theory. Interestingly, using loose n-mer screening rectifies these problems
+somewhat.The study goes on to demonstrate that GEBF14 does not suffer from these
+problems, and that using supersystem basis sets with GEBF14 does not appreciably
+change the result. The authors attribute this to a BSSE cancellation effect
+stemming from the IEP nature of GEBF.
 
 :cite:t:`Wang_2017` undertook a joint experimental/theory study on crystals
 of DNA bases. PBC-GEBF-PBE(D3B3)/6-311+G(d,p) was used to optimized the crystal
