@@ -67,6 +67,7 @@ GEBF10 Fragmentation Method
 .. |Pi| replace:: :math:`P_i`
 .. |Pj| replace:: :math:`P_j`
 .. |Fi| replace:: :math:`F_i`
+.. |Fj| replace:: :math:`F_j`
 
 :cite:t:`Hua2010` introduced a new fragmention method for the GEBF method. The
 first steps are just the GEBF07 method (minus the distinction between molecular
@@ -140,3 +141,25 @@ extension rules were not relevant. For clarity the GEBF14 procedure is:
    only the |eta| closest to the geometric center of |Pi| and |Pj| are included.
 #. Apply extension rules (see :ref:`gebf10_fragmentation_method`) to each 
    fragment formed in step 3. 
+
+.. _gebf19_fragmenation_method:
+
+***************************
+GEBF19 Fragmentation Method
+***************************
+
+:cite:t:`Li_2019` proposed a new fragmentation method designed to produce
+smaller fragments then GEBF14 when applied to host/guest complexes.
+
+#. Define a distance threshold |zeta|
+#. Define a mximum number of pseudoatoms |eta|.
+#. Determine pseudoatoms, the |i|-th pseudoatom is denoted |Pi|.
+#. For |Pi| form a fragment, |Fi|, which contains |Pi| and all pseudoatoms that
+   are within |zeta| of |Pi|. |Pi| is considered colored in |Fi|.
+#. For each fragment |Fi| with more pseudoatoms than |eta|, create new fragments
+   for each un-colored pseudoatom |Pj| in |Fi|. The fragment resulting from
+   |Pj| is |Fj| and includes |Pj|, the colored pseudoatoms, and the un-colored
+   pseudoatoms in |Fi| which are within |zeta| of |Pj|. |Pj| is considered c
+   olored in |Fj|. Discard |Fi|.
+#. Repeat the previous step until no fragments contain more pseudoatoms than
+   |eta| or all pseudoatoms have been colored.

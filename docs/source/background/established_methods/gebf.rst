@@ -6,7 +6,8 @@ Generalized Energy Based Fragmentation (GEBF)
 .. |Frag8| replace:: :ref:`gebf08_fragmentation_method`
 .. |Frag10| replace:: :ref:`gebf10_fragmentation_method`
 .. |Frag12| replace:: :ref:`gebf12_fragmentation_method`
-.. |Frag14| replace:: :ref:`_gebf14_fragmenation_method`
+.. |Frag14| replace:: :ref:`gebf14_fragmenation_method`
+.. |Frag19| replace:: :ref:`gebf19_fragmentation_method`
 .. |ItrPC| replace:: :ref:`iterative_point_charge_embedding`
 .. |PC|    replace:: :ref:`ee_mb_b`
 .. |stdH|  replace:: :ref:`standard_distance_capping`
@@ -68,9 +69,26 @@ when GEBF was also applied to the SCF component of the energy were about
 1 kcal/mol). The authors attributed the better performance of only applying 
 GEBF to the correlation energy to a better treatment of BSSE. 
 
+In looking at host/guest complexes, :cite:t:`Li_2019` realized that GEBF14
+often resulted in one fragment which contained all of, or most of, the 
+pseudoatoms (presumably because of ties in pseudoatom distances?). Regardless,
+to avoid this, :cite:t:`Li_2019` introduced |Frag19|. GEBF19 was applied to 10
+systems from the S30L database (TODO: cite). At the M06-2X/def2-TZVP level of 
+theory, GEBF19 was able to reproduce supersystem binding energies to better than 
+1 kcal/mol; however, more careful analysis showed that this was a result of
+error cancellation.
+
 ************
 GEBF Summary
 ************
+
+.. note::
+    
+    We need to verify that all of the embedding methods are truly the same. In
+    particular I think some of the methods only do one iteration where others
+    iterate to consistency every time. Another variation is in how the charges
+    are computed, namely are they taken from a specific fragment, supersystem
+    calculation, or some other way. 
 
 +--------+-----------+-----------+--------+-----------+
 | Name   | Fragments | Embedding | Caps   | Screening |
@@ -87,6 +105,8 @@ GEBF Summary
 +--------+-----------+-----------+--------+-----------+
 | GEBF14 | |Frag14|  | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+
+| GEBF19 | |Frag19|  | |ItrPC|   | |stdH| | N/A       |
++--------+-----------+-----------+--------+-----------+
 
 We suspect that originally the authors of the GEBF method felt that any 
 fragment-method which relied on the GEBF energy equations is GEBF, *i.e.*, it is
@@ -94,14 +114,9 @@ the energy equation which determines whether a method is GEBF or not. However,
 the GEBF energy equation is nothing more than the inclusion-exclusion principle 
 (accounting for the self-interaction of the point charges), so such a definition
 would mean CG-MTA, or any other overlapping fragment-based method, should also 
-be labeled as GEBF. 
-
-Things get harrier, when you consider later studies like
-that of :cite:t:`Yuan_2016`, which note that the GEBF energy equations are the
-IEP. Presumably at this point the GEBF authors have shifted their definiton of
-GEBF to be the combination of |Frag14|, |ItrPC|, and |stdH|; however, this is
-speculation on our part motivated by the large number of studies that use 
-GEBF14.
+be labeled as GEBF. Things get harrier, when you consider later studies like
+that of :cite:t:`Yuan_2016` or :cite:t:`Li_2019`, which note that the GEBF 
+energy equations are the IEP. 
 
 ******************
 Other GEBF Results
