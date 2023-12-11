@@ -238,6 +238,17 @@ of DNA bases. PBC-GEBF-PBE(D3B3)/6-311+G(d,p) was used to optimized the crystal
 structures and to compute the IR vibrational spectra. Geometries and spectra
 were compared to experiment and matched well.
 
+:cite:t:`Yuan_2017` used GEBF14 to compute benchmark energetics for water 
+clusters involving 32 and 64 water molecules. The benchmarks presente are
+relative energies of different isomers, computed with the GEBF-CCSD(T)/CBS model. 
+Calibration was done by comparing to supersystem MP2/cc-pVTZ results. For water 
+32, restricting fragments to at most 6 waters resulted in unsigned errors of 
+1.2 kcal/mol; this decreases to 0.2 kcal/mol if fragments may contain 8 waters.
+For water 64, restricting to 8 waters resulted in mean unsigned errors of 1.4
+kcal/mol; this reduces to 0.4 kcal/mol if the maximum is raised to 10 waters.
+The remainder of the study considered how various density functional theory
+approaches performed compared to the GEBF-CCSD(T)/CBS results.
+
 :cite:t:`Zhao_2017` applied GEBF14 to NMR shifts. Considered a number of systems
 including a Trp-cage mini protein, CH3CN solvated in CHCl3, a oligoamide beta
 sheet, and a supramolecular aggregate. The GEBF approximated NMR shifts are
