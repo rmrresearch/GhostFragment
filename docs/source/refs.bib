@@ -941,13 +941,6 @@ pages={199--225}
   number     = {6},
   pages      = {2696--2704},
   volume     = {13},
-  comment    = {- Uses GEBF14 to compute MP2/CBS and CCSD(T)/CBS energies for large water clusters (32 and 64 waters)
-- For water 32 GEBF was compared to conventional MP2/cc-pVTZ. Allowing at most 6 waters per fragment resulted in average unsigned errors of 1.2 kcal/mol. This decreasss to 0.2 kcal/mol if instead 8 water molecules are allowed.
-- Without point charges the error shoots up to 6.9 kcal/mol (still with 8 waters)
-- For water 64 the mean unsigned error is 1.4 kcal/mol (still with maximum of 8 waters and point charges). Decreases to 0.4 kcal/mol if 10 waters are in each fragment.
-- GEBF-CCSD(T) energies are computed with at most 8 waters per fragment; HF component of the energy is computed with 10 waters per fragment.
-- GEBF-CCSD(T) energies are provided for water 32 and water 64 clusters. No supersystem results are provided for comparison.
-- Various DFTs compared to GEBF-CCSD(T) benchmarks},
   doi        = {10.1021/acs.jctc.7b00284},
   groups     = {GEBF},
   issn       = {1549-9626},
@@ -956,6 +949,24 @@ pages={199--225}
   readstatus = {read},
 }
 
+@Article{Zhang_2017,
+  author     = {Zhang, Lei and Li, Wei and Fang, Tao and Li, Shuhua},
+  journal    = {The Journal of Physical Chemistry A},
+  title      = {Accurate Relative Energies and Binding Energies of Large Ice–Liquid Water Clusters and Periodic Structures},
+  year       = {2017},
+  number     = {20},
+  pages      = {4030--4038},
+  volume     = {121},
+  comment    = {- Look at 10 isomers of water 144 and 10 isomers of water 64. Isomers taken from trajectory depicting the melting of ice.
+- Benchmark relative energies and binding energies computed with GEBF and PBC-GEBF approximations to CCSD(T)-F12b/cc-pVDZ-F12
+- Compare a variety of DFTs to the benchmarks},
+  doi        = {10.1021/acs.jpca.7b03376},
+  groups     = {GEBF},
+  issn       = {1520-5215},
+  month      = may,
+  publisher  = {American Chemical Society (ACS)},
+  readstatus = {read},
+}
 
 @Article{Li_2018,
   author     = {Yunzhi Li and Dandan Yuan and Qingchun Wang and Wei Li and Shuhua Li},

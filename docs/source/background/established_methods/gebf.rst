@@ -238,6 +238,12 @@ of DNA bases. PBC-GEBF-PBE(D3B3)/6-311+G(d,p) was used to optimized the crystal
 structures and to compute the IR vibrational spectra. Geometries and spectra
 were compared to experiment and matched well.
 
+:cite:t:`Zhang_2017` used GEBF14 and PBC-GBEF14 to establish benchmark 
+energetics for water clusters containing 144 and 64 waters, respectively.
+Benchmarks relied on the CCSD(T)-F12b/cc-pVDZ-F12 model. Relative energies and
+binding energies are computed. The remainder of the study compares the 
+performance of several flavors of DFT against the benchmarks.
+
 :cite:t:`Yuan_2017` used GEBF14 to compute benchmark energetics for water 
 clusters involving 32 and 64 water molecules. The benchmarks presente are
 relative energies of different isomers, computed with the GEBF-CCSD(T)/CBS model. 
