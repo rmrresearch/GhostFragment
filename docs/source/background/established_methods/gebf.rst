@@ -233,6 +233,12 @@ problems, and that using supersystem basis sets with GEBF14 does not appreciably
 change the result. The authors attribute this to a BSSE cancellation effect
 stemming from the IEP nature of GEBF.
 
+:cite:t:`Tao_2016` used the GEBF14 approximated 
+:math:`\omega`B97XD/6-311++G(d,p) model to analyze the properties of water
+clusters containing 50 molecules. The study was primarily interested in
+characterizing the different types of hydrogen bonds which are present and
+explaining how the types of hydrogen bonds affect the freezing of water.
+
 :cite:t:`Wang_2017` undertook a joint experimental/theory study on crystals
 of DNA bases. PBC-GEBF-PBE(D3B3)/6-311+G(d,p) was used to optimized the crystal
 structures and to compute the IR vibrational spectra. Geometries and spectra
