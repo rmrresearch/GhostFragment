@@ -278,6 +278,13 @@ the closest ion pairs in each step) and somewhat surprisingly found that this
 had little affect on the geometry and spectra, but could lead to large errors
 in the thermodynamic values.
 
+:cite:t:`Fu_2019` applied GEBF14 and PBC-GEBF14 to studying the excited state
+spectra of uracil. To this end GEBF14 was combined with QM/MM. The study looked
+aqueous, amorphous, and crystalline uracil. GEBF approximated excited state
+energies were computed using TD-:math:`\omega`B97X-D/6-311++G(d,p) and compared
+to experiment. For aqueous and crystalline uracil peak maximums were off by 10
+nm. 
+
 ************
 GEBF Reviews
 ************
