@@ -285,6 +285,14 @@ energies were computed using TD-:math:`\omega`B97X-D/6-311++G(d,p) and compared
 to experiment. For aqueous and crystalline uracil peak maximums were off by 10
 nm. 
 
+:cite:t:`Zhao_2020` introduced a variant of the PBC-GEBF method. More 
+specifically, up to this point PBC-GEBF had been done on crystals formed from
+small molecules. As such pseudoatoms were taken to be entire molecules. The
+new "fragment-based" variant allowed the molecules in the crystal to be broken
+into multiple pseudoatoms. The new method was applied to a series of systems
+and with various flavors of DFT. Compared to experimental NMR parameters, both
+flavors performed well.
+
 ************
 GEBF Reviews
 ************
