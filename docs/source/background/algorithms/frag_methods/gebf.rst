@@ -121,7 +121,7 @@ GEBF14 Fragmentation Method
 ***************************
 
 :cite:t:`Wang2014` combined the GEBF08 and GEBF12 fragmenation methods to create
-the GEBF14 method. In their presentation, :cite:t:`Want2014` did not discuss the
+the GEBF14 method. In their presentation, :cite:t:`Wang2014` did not discuss the
 extension rules; however, because the application was water clusters, the
 extension rules were not relevant. For clarity the GEBF14 procedure is:
 
@@ -142,7 +142,7 @@ extension rules were not relevant. For clarity the GEBF14 procedure is:
 #. Apply extension rules (see :ref:`gebf10_fragmentation_method`) to each 
    fragment formed in step 3. 
 
-.. _gebf19_fragmenation_method:
+.. _gebf19_fragmentation_method:
 
 ***************************
 GEBF19 Fragmentation Method

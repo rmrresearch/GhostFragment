@@ -20,7 +20,7 @@ macromolecules/clusters that are charged or highly polar :cite:`Li2007`. The
 original GEBF method, which we term the GEBF07 method, consists of the |Frag7|, 
 with |stdH| capping, a slight variation of |smf06|, and an |ItrPC|. GEBF's 
 original presentation also includes an energy equation which is simply a one-
-body GMBE corrected for the 
+body GMBE corrected for the  
 self-interaction of the point charges (*i.e.*, it is assumed that the energies
 of the fragments include not only the interaction of the fragment with the point
 charges, but also the interactions among the point charges). Initial 
@@ -212,12 +212,12 @@ flavor). In these calculations, the excitations were assumed localized to a set
 of pseudoatoms. Fragments containing the active pseudoatoms were treated with
 an excited state method. Fragments without active pseudoatoms are treated with
 the ground state method. For a conjugated aldehyde, comparison of 
-GEBF-:math:`\omega`B97XD to conventional TD-DFT results (for the 6-31G, 
+GEBF-:math:`\omega`\ B97XD to conventional TD-DFT results (for the 6-31G, 
 6-311G(d,p), 6-311++G(d,p), and cc-pVTZ bases) showed errors less than 0.1 eV.
 Solvatochromatic shifts of acetone in solvent (solvents of water, methanol,
-acetonitrile, and carbon tetrachloride) computed with GEBF-:math:`\omega`B97XD
+acetonitrile, and carbon tetrachloride) computed with GEBF-:math:`\omega`\ B97XD
 match experiment to about 0.1 eV. A similar analysis of pyridine and uracil in
-water again showed GEBF-:math:`\omega`B97XD could match supersystem results
+water again showed GEBF-:math:`\omega`\ B97XD could match supersystem results
 well.
 
 :cite:t:`Yuan_2016` compares GEBF14 to the EE-MB method. The discussion focuses
@@ -234,7 +234,7 @@ change the result. The authors attribute this to a BSSE cancellation effect
 stemming from the IEP nature of GEBF.
 
 :cite:t:`Tao_2016` used the GEBF14 approximated 
-:math:`\omega`B97XD/6-311++G(d,p) model to analyze the properties of water
+:math:`\omega`\ B97XD/6-311++G(d,p) model to analyze the properties of water
 clusters containing 50 molecules. The study was primarily interested in
 characterizing the different types of hydrogen bonds which are present and
 explaining how the types of hydrogen bonds affect the freezing of water.
@@ -281,9 +281,9 @@ in the thermodynamic values.
 :cite:t:`Fu_2019` applied GEBF14 and PBC-GEBF14 to studying the excited state
 spectra of uracil. To this end GEBF14 was combined with QM/MM. The study looked
 aqueous, amorphous, and crystalline uracil. GEBF approximated excited state
-energies were computed using TD-:math:`\omega`B97X-D/6-311++G(d,p) and compared
-to experiment. For aqueous and crystalline uracil peak maximums were off by 10
-nm. 
+energies were computed using TD-:math:`\omega`\ B97X-D/6-311++G(d,p) and 
+compared to experiment. For aqueous and crystalline uracil peak maximums were 
+off by 10 nm. 
 
 :cite:t:`Zhao_2020` introduced a variant of the PBC-GEBF method. More 
 specifically, up to this point PBC-GEBF had been done on crystals formed from
@@ -292,6 +292,15 @@ new "fragment-based" variant allowed the molecules in the crystal to be broken
 into multiple pseudoatoms. The new method was applied to a series of systems
 and with various flavors of DFT. Compared to experimental NMR parameters, both
 flavors performed well.
+
+:cite:t:`Li_2022` applied PBC-GEBF14 to ionic crystals. The study proposed two
+mechanisms for forming pseudoatoms: one ion per pseudoatom or pairs of ions (one
+cation and one anion). The results establish that defining pseudoatoms using
+pairs of ions leads to much better resutls. The resulting methodology is then
+used to predict optimized geometries, IR spectra, Raman spectra, and NMR
+shifts. PBC-GEBF results are compared to experiment and conventional periodic
+DFT. Generally speaking good agreement between PBC-GEBF and the benchmarks is
+seen. 
 
 ************
 GEBF Reviews
