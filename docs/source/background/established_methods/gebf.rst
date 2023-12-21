@@ -239,6 +239,11 @@ clusters containing 50 molecules. The study was primarily interested in
 characterizing the different types of hydrogen bonds which are present and
 explaining how the types of hydrogen bonds affect the freezing of water.
 
+:cite:t:`Li_2017` used PBC-GEBF to optimize molecular crystal geometries for a
+QM/MM calculation. Once the geometries were optimized QM/MM calculations were
+run to compute excited states. The QM region contained dimers or trimers of 
+and MM charges were taken from the PBC-GEBF calculation. 
+
 :cite:t:`Wang_2017` undertook a joint experimental/theory study on crystals
 of DNA bases. PBC-GEBF-PBE(D3B3)/6-311+G(d,p) was used to optimized the crystal
 structures and to compute the IR vibrational spectra. Geometries and spectra
@@ -301,6 +306,13 @@ used to predict optimized geometries, IR spectra, Raman spectra, and NMR
 shifts. PBC-GEBF results are compared to experiment and conventional periodic
 DFT. Generally speaking good agreement between PBC-GEBF and the benchmarks is
 seen. 
+
+:cite:t:`Hong_2023` updated the equations used for the gradients of PBC-GEBF to
+use fractional coordinates instead of combinatorial coordinates. The revamped
+gradients are compared directly to analytic gradients from conventional periodic
+DFT calculations. The gradients are then used for geometry optimization (results
+are compared to both conventional calculations and experiment). Finally IR
+spectra are computed.
 
 ************
 GEBF Reviews
