@@ -333,3 +333,9 @@ Results provided included optimized geometries, lattice energies, vibrational
 frequency shifts, and Raman spectra. Most results were obtained with the M06-2X
 functional and/or MP2. Generally speaking agreement between PBC-GEBF and the
 supersystem or experiment were good.
+
+:cite:t:`Li_2020` was a follow up review to :cite:t:`Li2014`. In this review
+advancements since the 2014 review were summarized. In particular, the 
+PBC variant of GEBF and properties thereof. The majority of the review focuses
+on select calculations from various types of systems including: ionic liquids,
+molecular crystals, coordination compounds, and host-guest systems.
