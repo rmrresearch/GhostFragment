@@ -283,6 +283,13 @@ the closest ion pairs in each step) and somewhat surprisingly found that this
 had little affect on the geometry and spectra, but could lead to large errors
 in the thermodynamic values.
 
+:cite:t:`Yuan_2018` applied GEBF14 to supramolecular coordination complexes. In
+doing so they stipulated that pseudoatom creation should avoid breaking metal-
+ligand bonds. GEBF approximated DFT energies, relative energies, optimized
+geometries, IR spectra, and NMR chermical shifts are compared to supersystem
+calculations and found to match well. On this basis, GEBF approximated IR and
+NMR spectra are then used to help assign experimental peaks.
+
 :cite:t:`Fu_2019` applied GEBF14 and PBC-GEBF14 to studying the excited state
 spectra of uracil. To this end GEBF14 was combined with QM/MM. The study looked
 aqueous, amorphous, and crystalline uracil. GEBF approximated excited state
