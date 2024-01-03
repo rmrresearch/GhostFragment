@@ -239,6 +239,10 @@ clusters containing 50 molecules. The study was primarily interested in
 characterizing the different types of hydrogen bonds which are present and
 explaining how the types of hydrogen bonds affect the freezing of water.
 
+:cite:t:`Liu_2016` uses GEBF approximated M06-2X/6-31G(d) for computing the
+energies and gradients needed for AIMD. The study looked at pseudorotaxane and
+compared AIMD results to classical MD results. 
+
 :cite:t:`Li_2017` used PBC-GEBF to optimize molecular crystal geometries for a
 QM/MM calculation. Once the geometries were optimized QM/MM calculations were
 run to compute excited states. The QM region contained dimers or trimers of 
