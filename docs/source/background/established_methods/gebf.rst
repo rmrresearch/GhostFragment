@@ -116,7 +116,7 @@ the GEBF energy equation is nothing more than the inclusion-exclusion principle
 would mean CG-MTA, or any other overlapping fragment-based method, should also 
 be labeled as GEBF. Things get harrier, when you consider later studies like
 that of :cite:t:`Yuan_2016` or :cite:t:`Li_2019`, which note that the GEBF 
-energy equations are the IEP. 
+energy equations are the IEP.
 
 ******************
 Other GEBF Results
@@ -189,6 +189,10 @@ leverage Gaussian and Molpro. For CIM, LSQC relies on a locally modified version
 of GAMESS. Also presented were GEBF-M06-2X/6-31G* optimized structures and IR
 spectra, GEBF-MP2/6-31G* optimized structures, and a scaling plot of 
 GEBF-MP2/6-31G*.
+
+:cite:t:`Liu_2014` modeled the conformation dynamics of three-station molecular
+shuttles with DFT. To determine which DFT was most suitable, reference MP2 
+binding energies were computed using the GEBF method. 
 
 :cite:t:`Fang_2016` extended periodic GEBF14 calculations to include IR and
 Raman spectra. Comparisons to conventional periodic DFT (PBE0-D2/6-311G(d,p))

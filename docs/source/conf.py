@@ -37,13 +37,16 @@ extensions = [
     'sphinxcontrib.bibtex',
     'sphinx_rtd_theme'
 ]
-bibtex_bibfiles = ['refs.bib']
-bibtex_reference_style = "super"
-bibtex_default_style = 'plain'
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 doc_path = os.path.dirname(dir_path)
 root_path = os.path.dirname(doc_path)
+
+bibtex_dir = os.path.join(dir_path, 'bibliography')
+bibfiles = [f for f in os.listdir(bibtex_dir) if f.endswith('.bib')]
+bibtex_bibfiles = [os.path.join(bibtex_dir, f) for f in bibfiles]
+bibtex_reference_style = "super"
+bibtex_default_style = 'plain'
 
 # Add any paths that contain templates here, relative to this directory.
 #templates_path = ['_templates']
