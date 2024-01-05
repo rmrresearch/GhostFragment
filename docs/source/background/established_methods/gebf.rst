@@ -78,6 +78,12 @@ theory, GEBF19 was able to reproduce supersystem binding energies to better than
 1 kcal/mol; however, more careful analysis showed that this was a result of
 error cancellation.
 
+:cite:t:`Cheng_2020` wanted to combine GEBF with machine-learning. To that
+end they introduced an approximation to the GEBF14 method by not embedding the
+fragments. The resulting GEBF20 method was then used to combine the energies,
+gradients, and dipole moments computed by a machine-learning model. GEBF20 was
+then used to perform MD runs  for a series of alkanes.
+
 ************
 GEBF Summary
 ************
@@ -107,16 +113,24 @@ GEBF Summary
 +--------+-----------+-----------+--------+-----------+
 | GEBF19 | |Frag19|  | |ItrPC|   | |stdH| | N/A       |
 +--------+-----------+-----------+--------+-----------+
+| GEBF20 | |Frag14|  | N/A       | |stdH| | N/A       |
++--------+-----------+-----------+--------+-----------+
 
-We suspect that originally the authors of the GEBF method felt that any 
-fragment-method which relied on the GEBF energy equations is GEBF, *i.e.*, it is
-the energy equation which determines whether a method is GEBF or not. However, 
-the GEBF energy equation is nothing more than the inclusion-exclusion principle 
-(accounting for the self-interaction of the point charges), so such a definition
-would mean CG-MTA, or any other overlapping fragment-based method, should also 
-be labeled as GEBF. Things get harrier, when you consider later studies like
-that of :cite:t:`Yuan_2016` or :cite:t:`Li_2019`, which note that the GEBF 
-energy equations are the IEP.
+As the above table shows, there are a number of different methods which have
+been termed "GEBF". We suspect that the authors of the GEBF method originally
+felt that it was the energy equations which defined GEBF. This is supported by
+the follow up studies which changed the fragmentation method still calling the
+method GEBF.  However, the GEBF energy equation is nothing more than the 
+inclusion-exclusion principle (accounting for the self-interaction of the point 
+charges), so such a definition would mean CG-MTA, or any other overlapping 
+fragment-based method, should also be labeled as GEBF. The GEBF authors 
+eventually realized:cite:`Yuan_2016,Li_2019` the IEP equivelence. At this point,
+it is reasonable to assume that it is the closed form which results from the
+IEP that determines whether a method is GEBF or not, particularly whether there
+is a self-energy correction.  However, this hypothesis is also disproved when
+:cite:t:`Cheng_2020` debuts the GEBF20 method, which does not include any
+electronic embedding. Ultimately, it appears that it is simply the authors of
+the study which determine whether or not the method is GEBF or not.
 
 ******************
 Other GEBF Results
@@ -304,6 +318,8 @@ aqueous, amorphous, and crystalline uracil. GEBF approximated excited state
 energies were computed using TD-:math:`\omega`\ B97X-D/6-311++G(d,p) and 
 compared to experiment. For aqueous and crystalline uracil peak maximums were 
 off by 10 nm. 
+
+
 
 :cite:t:`Zhao_2020` introduced a variant of the PBC-GEBF method. More 
 specifically, up to this point PBC-GEBF had been done on crystals formed from
