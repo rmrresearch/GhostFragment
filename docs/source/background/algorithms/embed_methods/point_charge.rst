@@ -62,7 +62,7 @@ means one:
 #. Recompute the point charges for each fragment. This time instead of 
    neglecting atoms outside the fragment, replace them with their computed point
    charge.
-#. Repeat the previous step until convergence.
+#. Repeat the previous step until convergence or for a set number of iterations
 
 Variations
 ==========

@@ -11,5 +11,5 @@ pertaining to fragment-based methods and basis-set superposition error.
 
    background/index
    developer/index
-   references
+   bibliography/index
    C++ API <https://rmrresearch.github.io/GhostFragment/cxx_api/index.html>
