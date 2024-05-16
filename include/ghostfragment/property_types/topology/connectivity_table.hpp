@@ -1,20 +1,21 @@
 #pragma once
-#include <chemist/chemical_system/nucleus/nuclei.hpp>
+#include <chemist/chemical_system/molecule/molecule.hpp>
 #include <chemist/topology/connectivity_table.hpp>
 #include <pluginplay/pluginplay.hpp>
 
 namespace ghostfragment {
 
 struct ConnectivityTableTraits {
-    using input_type  = chemist::Nuclei;
+    using input_type  = chemist::Molecule;
     using result_type = chemist::topology::ConnectivityTable;
 };
 
 DECLARE_PROPERTY_TYPE(ConnectivityTable);
 
 PROPERTY_TYPE_INPUTS(ConnectivityTable) {
-    using input_type = ConnectivityTableTraits::input_type;
-    return pluginplay::declare_input().add_field<input_type>("Nuclei");
+    using molecule_type = typename ConnectivityTableTraits::input_type;
+    using input_type = chemist::MoleculeView<const molecule_type>;
+    return pluginplay::declare_input().add_field<input_type>("Molecule");
 }
 
 PROPERTY_TYPE_RESULTS(ConnectivityTable) {

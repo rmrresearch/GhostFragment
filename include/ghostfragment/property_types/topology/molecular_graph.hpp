@@ -1,11 +1,11 @@
 #pragma once
-#include <chemist/fragmenting/fragmented_nuclei.hpp>
+#include <chemist/chemical_system/chemical_system.hpp>
 #include <ghostfragment/molecular_graph.hpp>
 
-namespace ghostfragment::pt {
+namespace ghostfragment {
 
 struct MolecularGraphTraits {
-    using input_type  = chemist::FragmentedNuclei;
+    using input_type  = chemist::ChemicalSystem;
     using result_type = ghostfragment::MolecularGraph;
 };
 
@@ -13,16 +13,17 @@ struct MolecularGraphTraits {
  *
  *  There are a number of use cases in computational chemistry which lead to the
  *  molecular system being thought of as a mathematical graph. Modules which
- *  satisfy this property type are responsible for taking a fragmented molecule
- *  (fragments define the nodes of the graph) and creating a molecular graph
- *  from it (essentially the module must assign connectivity to the nodes).
+ *  satisfy this property type are responsible for taking a Molecule and
+ *  creating a molecular graph from it (essentially the module must break the
+ *  Molecule into nodes and assign connectivity to the nodes).
  */
 DECLARE_PROPERTY_TYPE(MolecularGraph);
 
 PROPERTY_TYPE_INPUTS(MolecularGraph) {
-    using input_type = MolecularGraphTraits::input_type;
+    using chemical_system_type = typename MolecularGraphTraits::input_type;
+    using input_type = chemist::ChemicalSystemView<const chemical_system_type>;
 
-    return pluginplay::declare_input().add_field<input_type>("Pseudoatoms");
+    return pluginplay::declare_input().add_field<input_type>("Chemical System");
 }
 
 PROPERTY_TYPE_RESULTS(MolecularGraph) {
@@ -31,4 +32,4 @@ PROPERTY_TYPE_RESULTS(MolecularGraph) {
     return pluginplay::declare_result().add_field<result_type>("Graph");
 }
 
-} // namespace ghostfragment::pt
+} // namespace ghostfragment
