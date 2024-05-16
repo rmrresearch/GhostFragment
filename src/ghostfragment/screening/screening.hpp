@@ -1,14 +1,14 @@
-#pragma once
-#include <simde/simde.hpp>
+// #pragma once
+// #include <simde/simde.hpp>
 
-namespace ghostfragment::screening {
+// namespace ghostfragment::screening {
 
-// DECLARE_MODULE(MinimumDistance);
+// // DECLARE_MODULE(MinimumDistance);
 
-inline void load_modules(pluginplay::ModuleManager& mm) {
-    // mm.add_module<MinimumDistance>("Screen by minimum distance");
-}
+// inline void load_modules(pluginplay::ModuleManager& mm) {
+//     // mm.add_module<MinimumDistance>("Screen by minimum distance");
+// }
 
-inline void set_defaults(pluginplay::ModuleManager&) {}
+// inline void set_defaults(pluginplay::ModuleManager&) {}
 
-} // namespace ghostfragment::screening
+// } // namespace ghostfragment::screening

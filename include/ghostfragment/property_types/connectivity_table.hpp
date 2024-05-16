@@ -1,5 +1,5 @@
 #pragma once
-#include <chemist/nucleus/nuclei.hpp>
+#include <chemist/chemical_system/nucleus/nuclei.hpp>
 #include <chemist/topology/connectivity_table.hpp>
 #include <pluginplay/pluginplay.hpp>
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <chemist/fragmenting/fragmented_nuclei.hpp>
 #include <ghostfragment/molecular_graph.hpp>
 
 namespace ghostfragment::pt {

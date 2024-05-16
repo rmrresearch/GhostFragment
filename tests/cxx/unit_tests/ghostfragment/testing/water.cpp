@@ -82,22 +82,22 @@ TEST_CASE("water_fragmented_nuclei") {
 
     SECTION("One Water") {
         corr_type corr(water(1).nuclei());
-        corr.add_fragment({0, 1, 2});
+        corr.insert({0, 1, 2});
         REQUIRE(water_fragmented_nuclei(1) == corr);
     }
 
     SECTION("Two Waters") {
         corr_type corr(water(2).nuclei());
-        corr.add_fragment({0, 1, 2});
-        corr.add_fragment({3, 4, 5});
+        corr.insert({0, 1, 2});
+        corr.insert({3, 4, 5});
         REQUIRE(water_fragmented_nuclei(2) == corr);
     }
 
     SECTION("Three Waters") {
         corr_type corr(water(3).nuclei());
-        corr.add_fragment({0, 1, 2});
-        corr.add_fragment({3, 4, 5});
-        corr.add_fragment({6, 7, 8});
+        corr.insert({0, 1, 2});
+        corr.insert({3, 4, 5});
+        corr.insert({6, 7, 8});
         REQUIRE(water_fragmented_nuclei(3) == corr);
     }
 }

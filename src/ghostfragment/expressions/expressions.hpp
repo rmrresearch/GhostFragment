@@ -1,14 +1,14 @@
-#pragma once
-#include <simde/simde.hpp>
+// #pragma once
+// #include <simde/simde.hpp>
 
-namespace ghostfragment::expressions {
+// namespace ghostfragment::expressions {
 
-// DECLARE_MODULE(MBE);
+// // DECLARE_MODULE(MBE);
 
-inline void load_modules(pluginplay::ModuleManager& mm) {
-    // mm.add_module<MBE>("Many-body expansion");
-}
+// inline void load_modules(pluginplay::ModuleManager& mm) {
+//     // mm.add_module<MBE>("Many-body expansion");
+// }
 
-inline void set_defaults(pluginplay::ModuleManager& mm) {}
+// inline void set_defaults(pluginplay::ModuleManager& mm) {}
 
-} // namespace ghostfragment::expressions
+// } // namespace ghostfragment::expressions

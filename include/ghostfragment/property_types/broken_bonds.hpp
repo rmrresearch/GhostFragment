@@ -1,12 +1,12 @@
 #pragma once
-#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <chemist/fragmenting/fragmented_nuclei.hpp>
 #include <ghostfragment/molecular_graph.hpp>
 #include <pluginplay/pluginplay.hpp>
 
 namespace ghostfragment::pt {
 
 struct BrokenBondsTraits {
-    using input_type = chemist::FragmentedNuclei;
+    using input_type = chemist::FragmentedNuclei<Nuclei>;
 
     using size_type   = typename input_type::size_type;
     using bond_type   = std::pair<size_type, size_type>;

@@ -1,23 +1,24 @@
-#include <ghostfragment/molecular_graph.hpp>
+#include <ghostfragment/nuclear_graph.hpp>
 
 namespace ghostfragment {
 namespace detail_ {
 
-struct MolecularGraphPIMPL {
-    using parent_type = MolecularGraph;
+class NuclearGraphPIMPL {
+public:
+    using parent_type = NuclearGraph;
 
-    using partitioned_mol_type = parent_type::partitioned_mol_type;
+    using fragmented_nuclei = parent_type::fragmented_nuclei;
 
     using connectivity_type = parent_type::connectivity_type;
 
-    MolecularGraphPIMPL(partitioned_mol_type ns, connectivity_type es) :
+    NuclearGraphPIMPL(fragmented_nuclei ns, connectivity_type es) :
       m_nodes(std::move(ns)), m_edges(std::move(es)) {}
 
-    bool operator==(const MolecularGraphPIMPL& rhs) const noexcept {
+    bool operator==(const NuclearGraphPIMPL& rhs) const noexcept {
         return std::tie(m_nodes, m_edges) == std::tie(rhs.m_nodes, rhs.m_edges);
     }
 
-    partitioned_mol_type m_nodes;
+    fragmented_nuclei m_nodes;
 
     connectivity_type m_edges;
 };
@@ -26,7 +27,7 @@ namespace {
 
 template<typename... Args>
 auto make_pimpl(Args&&... args) {
-    return std::make_unique<MolecularGraphPIMPL>(std::forward<Args>(args)...);
+    return std::make_unique<NuclearGraphPIMPL>(std::forward<Args>(args)...);
 }
 
 } // namespace
@@ -37,63 +38,65 @@ auto make_pimpl(Args&&... args) {
 //                          CTors, Assignment, and DTors
 //------------------------------------------------------------------------------
 
-MolecularGraph::MolecularGraph() noexcept = default;
+NuclearGraph::NuclearGraph() noexcept = default;
 
-MolecularGraph::MolecularGraph(partitioned_mol_type nodes,
-                               connectivity_type edges) :
+NuclearGraph::NuclearGraph(fragmented_nuclei nodes, connectivity_type edges) :
   m_pimpl_(detail_::make_pimpl(std::move(nodes), std::move(edges))) {}
 
-MolecularGraph::MolecularGraph(const MolecularGraph& other) :
+NuclearGraph::NuclearGraph(const NuclearGraph& other) :
   m_pimpl_(other.m_pimpl_ ? detail_::make_pimpl(*other.m_pimpl_) : nullptr) {}
 
-MolecularGraph::MolecularGraph(MolecularGraph&& other) noexcept = default;
+NuclearGraph::NuclearGraph(NuclearGraph&& other) noexcept = default;
 
-MolecularGraph& MolecularGraph::operator=(const MolecularGraph& rhs) {
-    if(this == &rhs) return *this;
-    return *this = std::move(MolecularGraph(rhs));
+NuclearGraph& NuclearGraph::operator=(const NuclearGraph& rhs) {
+    if(this != &rhs) NuclearGraph(rhs).swap(*this);
+    return *this;
 }
 
-MolecularGraph& MolecularGraph::operator=(MolecularGraph&& rhs) noexcept =
-  default;
+NuclearGraph& NuclearGraph::operator=(NuclearGraph&& rhs) noexcept = default;
 
-MolecularGraph::~MolecularGraph() noexcept = default;
+NuclearGraph::~NuclearGraph() noexcept = default;
 
 //------------------------------------------------------------------------------
 //                             Accessors
 //------------------------------------------------------------------------------
 
-MolecularGraph::const_molecule_reference MolecularGraph::molecule() const {
+NuclearGraph::const_nuclei_reference NuclearGraph::nuclei() const {
     assert_pimpl_();
     return m_pimpl_->m_nodes.supersystem();
 }
 
-MolecularGraph::size_type MolecularGraph::nnodes() const noexcept {
+NuclearGraph::size_type NuclearGraph::nodes_size() const noexcept {
     if(m_pimpl_) return m_pimpl_->m_nodes.size();
     return 0;
 }
 
-MolecularGraph::size_type MolecularGraph::nedges() const noexcept {
+NuclearGraph::size_type NuclearGraph::edges_size() const noexcept {
     if(m_pimpl_) return m_pimpl_->m_edges.bonds().size();
     return 0;
 }
 
-MolecularGraph::edge_list MolecularGraph::edges() const noexcept {
+NuclearGraph::edge_list NuclearGraph::edges() const noexcept {
     if(m_pimpl_) return m_pimpl_->m_edges.bonds();
     return edge_list{};
 }
 
-MolecularGraph::const_node_reference MolecularGraph::node(size_type i) const {
-    if(i < nnodes() && m_pimpl_) return m_pimpl_->m_nodes.at(i);
+NuclearGraph::const_node_reference NuclearGraph::node(size_type i) const {
+    if(i < nodes_size() && m_pimpl_) return m_pimpl_->m_nodes.at(i);
     throw std::out_of_range(
       std::to_string(i) + " is not in the range [0, nnodes) where nnodes == " +
-      std::to_string(nnodes()));
+      std::to_string(nodes_size()));
 }
 
 //------------------------------------------------------------------------------
 //                               Utilities
 //------------------------------------------------------------------------------
 
-bool MolecularGraph::operator==(const MolecularGraph& rhs) const noexcept {
+void NuclearGraph::swap(NuclearGraph& other) noexcept {
+    m_pimpl_.swap(other.m_pimpl_);
+}
+
+bool NuclearGraph::operator==(const NuclearGraph& rhs) const noexcept {
     if(m_pimpl_ && rhs.m_pimpl_)
         return *m_pimpl_ == *rhs.m_pimpl_;
     else if(!m_pimpl_ && !rhs.m_pimpl_)
@@ -101,7 +104,7 @@ bool MolecularGraph::operator==(const MolecularGraph& rhs) const noexcept {
     return false; // One has a PIMPL other doesn't
 }
 
-void MolecularGraph::print(std::ostream& os) const {
+void NuclearGraph::print(std::ostream& os) const {
     if(!m_pimpl_) return;
     for(const auto& nuke_i : m_pimpl_->m_nodes) os << nuke_i << std::endl;
     os << m_pimpl_->m_edges;
@@ -111,7 +114,7 @@ void MolecularGraph::print(std::ostream& os) const {
 //                           Protected/Private Members
 //------------------------------------------------------------------------------
 
-void MolecularGraph::assert_pimpl_() const {
+void NuclearGraph::assert_pimpl_() const {
     if(m_pimpl_) return;
 
     throw std::runtime_error("Instance does not have a PIMPL. Was it default "

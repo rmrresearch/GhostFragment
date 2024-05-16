@@ -1,61 +1,70 @@
 #pragma once
-#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <chemist/fragmenting/fragmented_nuclei.hpp>
 #include <chemist/topology/connectivity_table.hpp>
 
 namespace ghostfragment {
 namespace detail_ {
 
-/// Class which actually contains the MolecularGraph's state
-class MolecularGraphPIMPL;
+/// Class which actually contains the NuclearGraph's state
+class NuclearGraphPIMPL;
 
 } // namespace detail_
 
-/** @brief Provides a few of a molecular system as a graph in the mathematical
- *         sense.
+/** @brief Provides a view of a molecule's nuclear framework as a graph in the
+ *         mathematical sense.
+ *
+ *  @note While the term "Molecular Graph" is more common the graph usually
+ *        does not track the electrons in the molecule more than to establish
+ *        that a bond exists and sometimes to also weight the bond by the bond
+ *        order (i.e., single bond, double bond, etc.). To stay consistent with
+ *        Chemist's naming scheme we thus adopt the term "Nuclear Graph"
  *
  *  For many computational chemistry applications it is useful to think of the
- *  molecular system as a graph where the atoms (or possibly connected sets of
- *  atoms; think a methyl group for example) are viewed as nodes and the edges
- *  are typicaly taken to be covalent bonds (some applications may also consider
- *  other types of bonds, notably hydrogen-bonds, as edges).
+ *  nuclear framework as a graph where the nuclei --- or connected sets of
+ *  nuclei, e.g., the carbon nucleus and three hydrogen nuclei in a methyl
+ *  group --- are viewed as nodes and the edges denote covalent bonds between
+ *  two nodes (some applications may also consider other types of bonds, notably
+ *  hydrogen-bonds, as edges).
  *
- *  This class assumes that the atoms in the molecular system have been
+ *  This class assumes that the nuclei in the nuclear framework have been
  *  partitioned in some manner (notably "partitioned" requires that the sets of
- *  atoms are disjoint) and that the connectiivty of those partitions has been
+ *  atoms are disjoint) and that the connectivity of those partitions has been
  *  defined. In this case, the partitions are the nodes and the connectivity
  *  defines the edges.
  *
  */
-class MolecularGraph {
+class NuclearGraph {
 public:
-    /// Type used to input the partitioned molecular system
-    using partitioned_mol_type = chemist::FragmentedNuclei;
+    /// Type used to model the nuclear framework
+    using nuclei_type = chemist::Nuclei;
 
-    /// Type used to model the Molecule
-    using molecule_type = partitioned_mol_type::supersystem_type;
+    /// Type used to store the fragmented nuclear framework
+    using fragmented_nuclei =
+      chemist::fragmenting::FragmentedNuclei<nuclei_type>;
 
     /// Read-only reference to the Molecule
-    using const_molecule_reference = const molecule_type&;
+    using const_nuclei_reference =
+      typename fragmented_nuclei::const_supersystem_reference;
 
     /// Type of a node in the graph
-    using node_type = partitioned_mol_type::value_type;
+    using node_type = typename fragmented_nuclei::value_type;
 
     /// Type of a read-only reference to a node in the graph
-    using const_node_reference = const node_type&;
+    using const_node_reference = typename fragmented_nuclei::const_reference;
 
     /// Type used to input the connectivity
     using connectivity_type = chemist::topology::ConnectivityTable;
 
     /// Type used for edges of the graph
-    using edge_type = connectivity_type::pair_type;
+    using edge_type = connectivity_type::offset_pair;
 
     /// Type used for a list of edges
-    using edge_list = connectivity_type::bond_list_type;
+    using edge_list = connectivity_type::offset_pair_list;
 
     /// Type used for indexing and offsets
     using size_type = std::size_t;
 
-    /** @brief Creates an empty MolecularGraph instance with no PIMPL.
+    /** @brief Creates an empty NuclearGraph instance with no PIMPL.
      *
      *  Default instances behave like a graph with 0 nodes and 0 edges. At the
      *  moment the only way to give a defaulted instance state is to assign to
@@ -63,9 +72,9 @@ public:
      *
      *  @throw None No throw guarantee.
      */
-    MolecularGraph() noexcept;
+    NuclearGraph() noexcept;
 
-    /** @brief Creates a MolecularGraph with the specified state.
+    /** @brief Creates a NuclearGraph with the specified state.
      *
      *  This ctor assumes you have already partitioned a molecular system into
      *  subsets and established the connectivity of those subsets.
@@ -76,7 +85,7 @@ public:
      *                   which defines the edges of the system.
      *
      */
-    MolecularGraph(partitioned_mol_type nodes, connectivity_type edges);
+    NuclearGraph(fragmented_nuclei nodes, connectivity_type edges);
 
     /** @brief Makes a deep copy of another instance.
      *
@@ -85,7 +94,7 @@ public:
      *  @throw std::bad_alloc if there is a problem copying @p other 's state.
      *                        Strong throw guarantee.
      */
-    MolecularGraph(const MolecularGraph& other);
+    NuclearGraph(const NuclearGraph& other);
 
     /** @brief Creates a new instance by taking ownership of another instance's
      *         state.
@@ -95,7 +104,7 @@ public:
      *
      *  @throw None No throw guarantee.
      */
-    MolecularGraph(MolecularGraph&& other) noexcept;
+    NuclearGraph(NuclearGraph&& other) noexcept;
 
     /** @brief Overwrites this instance's state with a deep copy of @p rhs's
      *         state.
@@ -107,7 +116,7 @@ public:
      *  @throw std::bad_alloc if there is a problem copying @p rhs's state.
      *                        Strong throw guarantee.
      */
-    MolecularGraph& operator=(const MolecularGraph& rhs);
+    NuclearGraph& operator=(const NuclearGraph& rhs);
 
     /** @brief Overwrite's this instance's state by taking ownership of another
      *         instance's state.
@@ -119,15 +128,25 @@ public:
      *
      *  @throw None No throw guarantee.
      */
-    MolecularGraph& operator=(MolecularGraph&& rhs) noexcept;
+    NuclearGraph& operator=(NuclearGraph&& rhs) noexcept;
 
     /// Default, no-throw dtor
-    ~MolecularGraph() noexcept;
+    ~NuclearGraph() noexcept;
+
+    /** @brief Exchanges the state of *this with the state in @p other.
+     *
+     *  @param[in,out] other The object to exchange state with. After this
+     *                       method is called @p other will contain the state
+     *                       which was previously in *this.
+     *
+     *  @throw None No throw guarantee.
+     */
+    void swap(NuclearGraph& other) noexcept;
 
     /** @brief Returns a read-only reference to the molecular system this graph
      *         models.
      *
-     *  The MolecularGraph class ultimately models a molecular system as a
+     *  The NuclearGraph class ultimately models a molecular system as a
      *  mathematical graph. This function can be used to retrieve the molecular
      *  system this graph describes.
      *
@@ -136,11 +155,11 @@ public:
      *  @throw std::runtime_error if the instance does not contain a PIMPL.
      *                            Strong throw guarantee.
      */
-    const_molecule_reference molecule() const;
+    const_nuclei_reference nuclei() const;
 
     /** @brief Returns the number of nodes in the graph.
      *
-     *  Each MolecularGraph is a representation of a molecular system. In this
+     *  Each NuclearGraph is a representation of a molecular system. In this
      *  representation the atoms in the molecular system are partitioned into
      *  disjoint sets (either as one atom per set, or with multiple atoms in
      *  the same set). Regardless of how the atoms are partitioned, the sets
@@ -151,11 +170,11 @@ public:
      *
      *  @throw None No throw guarantee.
      */
-    size_type nnodes() const noexcept;
+    size_type nodes_size() const noexcept;
 
     /** @brief Returns the number of edges in the graph.
      *
-     *  Each MolecularGraph is a representation of a molecular system. In this
+     *  Each NuclearGraph is a representation of a molecular system. In this
      *  representation the atoms in the molecular system are partitioned into
      *  disjoint sets (either as one atom per set, or with multiple atoms in
      *  the same set). Regardless of how the atoms are partitioned, the sets
@@ -170,7 +189,7 @@ public:
      *
      *  @throw None No throw guarantee.
      */
-    size_type nedges() const noexcept;
+    size_type edges_size() const noexcept;
 
     /** @brief Returns a list of the edges in the graph.
      *
@@ -193,7 +212,7 @@ public:
 
     /** @brief Determines if this instance is equivalent to @p rhs.
      *
-     *  Two MolecularGraph instances are equal if they partition the same
+     *  Two NuclearGraph instances are equal if they partition the same
      *  molecular system in the same way, and if the same partitions are
      *  connected to each other.
      *
@@ -204,7 +223,7 @@ public:
      *
      *  @throw None No throw guarantee.
      */
-    bool operator==(const MolecularGraph& rhs) const noexcept;
+    bool operator==(const NuclearGraph& rhs) const noexcept;
 
     void print(std::ostream& os) const;
 
@@ -213,7 +232,7 @@ private:
     void assert_pimpl_() const;
 
     /// Type of the class holding the state
-    using pimpl_type = detail_::MolecularGraphPIMPL;
+    using pimpl_type = detail_::NuclearGraphPIMPL;
 
     /// Type of a modifiable pointer to the state
     using pimpl_ptr = std::unique_ptr<pimpl_type>;
@@ -222,23 +241,23 @@ private:
     pimpl_ptr m_pimpl_;
 };
 
-inline std::ostream& operator<<(std::ostream& os, const MolecularGraph& g) {
+inline std::ostream& operator<<(std::ostream& os, const NuclearGraph& g) {
     g.print(os);
     return os;
 }
 
-/** @brief Determines if two MolecularGraph instances are different.
+/** @brief Determines if two NuclearGraph instances are different.
  *
- *  @relates MolecularGraph
+ *  @relates NuclearGraph
  *
- *  Two MolecularGraph instances are different if they do not compare equal. See
- *  MolecularGraph::operator== for the definition of equality.
+ *  Two NuclearGraph instances are different if they do not compare equal. See
+ *  NuclearGraph::operator== for the definition of equality.
  *
  *  @returns false if @p lhs and @p rhs are equal and true otherwise.
  *
  *  @throw None No throw guarantee.
  */
-inline bool operator!=(const MolecularGraph& lhs, const MolecularGraph& rhs) {
+inline bool operator!=(const NuclearGraph& lhs, const NuclearGraph& rhs) {
     return !(lhs == rhs);
 }
 

@@ -1,15 +1,9 @@
 #pragma once
-#include "testing/aos.hpp"
-#include "testing/caps.hpp"
-#include "testing/connectivity.hpp"
-#include "testing/fragment.hpp"
-#include "testing/sto3g.hpp"
 #include "testing/water.hpp"
 #include <catch2/catch.hpp>
-#include <chemist/chemist.hpp>
-#include <ghostfragment/detail_/fragmented_system_pimpl.hpp>
-#include <ghostfragment/ghostfragment.hpp>
+#include <ghostfragment/load_modules.hpp>
 #include <simde/simde.hpp>
+
 namespace testing {
 
 // Common set-up all tests have

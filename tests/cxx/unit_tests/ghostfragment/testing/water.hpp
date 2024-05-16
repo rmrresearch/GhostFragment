@@ -1,6 +1,6 @@
 #pragma once
-#include <chemist/molecule/molecule.hpp>
-#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <chemist/chemical_system/molecule/molecule.hpp>
+#include <chemist/fragmenting/fragmented_nuclei.hpp>
 
 namespace testing {
 
@@ -26,10 +26,12 @@ inline auto water(std::size_t N = 1) {
 /// Fragments a water system created with `water` (fragments are
 /// individual water molecules)
 inline auto water_fragmented_nuclei(std::size_t N = 1) {
-    auto water_n = water(N);
-    chemist::FragmentedNuclei frags(water_n.nuclei());
+    auto water_n      = water(N);
+    using nuclei_type = chemist::Nuclei;
+    using return_type = chemist::fragmenting::FragmentedNuclei<nuclei_type>;
+    return_type frags(water_n.nuclei());
     for(std::size_t i = 0; i < N; ++i)
-        frags.add_fragment({3 * i, 3 * i + 1, 3 * i + 2});
+        frags.insert({3 * i, 3 * i + 1, 3 * i + 2});
     return frags;
 }
 

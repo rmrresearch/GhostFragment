@@ -1,6 +1,6 @@
 #pragma once
-#include <chemist/capping/cap_set.hpp>
-#include <chemist/nucleus/fragmented_nuclei.hpp>
+#include <chemist/fragmenting/capping/cap_set.hpp>
+#include <chemist/fragmenting/fragmented_nuclei.hpp>
 
 #include <simde/simde.hpp>
 
@@ -13,8 +13,8 @@ namespace ghostfragment::pt {
  *                   specialization of FamilyOfSets.
  */
 struct CappedTraits {
-    using input_type  = const chemist::FragmentedNuclei&;
-    using result_type = std::vector<chemist::CapSet>;
+    using input_type  = const chemist::FragmentedNuclei<Nuclei>&;
+    using result_type = chemist::CapSet;
 };
 
 DECLARE_PROPERTY_TYPE(Capped);
