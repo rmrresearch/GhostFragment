@@ -16,23 +16,23 @@
 
 #pragma once
 #include <simde/simde.hpp>
-namespace ghostfragment::connectivity {
+namespace ghostfragment::topology {
 
 DECLARE_MODULE(CovRadii);
-// DECLARE_MODULE(MolecularGraph);
+DECLARE_MODULE(NuclearGraphFromConnectivity);
 // DECLARE_MODULE(BrokenBonds);
 
 inline void load_modules(pluginplay::ModuleManager& mm) {
     mm.add_module<CovRadii>("Covalent Radius");
-    //     mm.add_module<MolecularGraph>("Molecular Graph");
+    mm.add_module<NuclearGraphFromConnectivity>("Nuclear Graph");
     //     mm.add_module<BrokenBonds>("Broken Bonds");
 }
 
 inline void set_defaults(pluginplay::ModuleManager& mm) {
-    //     mm.change_submod("Molecular Graph", "Atomic connectivity",
-    //                      "Covalent Radius");
+    mm.change_submod("Nuclear Graph", "Nodes", "Heavy Atom Partition");
+    mm.change_submod("Nuclear Graph", "Connectivity", "Covalent Radius");
     //     mm.change_submod("Broken Bonds", "Atomic connectivity", "Covalent
     //     Radius");
 }
 
-} // namespace ghostfragment::connectivity
+} // namespace ghostfragment::topology

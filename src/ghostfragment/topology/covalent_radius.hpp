@@ -17,7 +17,7 @@
 #pragma once
 #include <array>
 
-namespace ghostfragment::connectivity {
+namespace ghostfragment::topology {
 
 /** @brief  Returns the covalent radius (in Bohr) of the specified element.
  *

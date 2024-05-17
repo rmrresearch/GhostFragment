@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-#include "connectivity.hpp"
 #include "covalent_radius.hpp"
+#include "topology.hpp"
 #include <ghostfragment/property_types/topology/connectivity_table.hpp>
 #include <simde/simde.hpp>
 
-namespace ghostfragment::connectivity {
+namespace ghostfragment::topology {
 
-using my_pt       = ConnectivityTable;
-using traits_type = ConnectivityTableTraits;
+using my_pt       = pt::ConnectivityTable;
+using traits_type = pt::ConnectivityTableTraits;
 
 const auto mod_desc = R"(
 Connectivity Table via Covalent Radii
@@ -81,4 +81,4 @@ MODULE_RUN(CovRadii) {
     return my_pt::wrap_results(rv, ct);
 }
 
-} // namespace ghostfragment::connectivity
+} // namespace ghostfragment::topology

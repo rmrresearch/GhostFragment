@@ -15,23 +15,22 @@
  */
 
 #include "../test_ghostfragment.hpp"
-#include "../testing/water.hpp"
-#include <ghostfragment/connectivity/connectivity.hpp>
-#include <ghostfragment/connectivity/covalent_radius.hpp>
 #include <ghostfragment/property_types/topology/connectivity_table.hpp>
+#include <ghostfragment/topology/covalent_radius.hpp>
+#include <ghostfragment/topology/topology.hpp>
 
 using namespace ghostfragment;
 
 TEST_CASE("CovRadii Module") {
-    using property_type = ConnectivityTable;
-    using molecule_type = ConnectivityTableTraits::input_type;
+    using property_type = pt::ConnectivityTable;
+    using molecule_type = pt::ConnectivityTableTraits::input_type;
     using atom_type     = typename molecule_type::atom_type;
-    using ct_type       = ConnectivityTableTraits::result_type;
+    using ct_type       = pt::ConnectivityTableTraits::result_type;
 
     auto mm   = testing::initialize();
     auto& mod = mm.at("Covalent Radius");
 
-    const auto sigma_h = connectivity::covalent_radius(1);
+    const auto sigma_h = topology::covalent_radius(1);
     const atom_type h0("H", 1ul, 1837.289, 0.0, 0.0, 0.0);
 
     SECTION("Default tau") {

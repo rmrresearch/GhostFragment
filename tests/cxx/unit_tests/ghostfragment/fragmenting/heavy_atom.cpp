@@ -5,15 +5,15 @@
 
 using namespace ghostfragment;
 
-using my_pt      = FragmentedNuclei;
-using connect_pt = ConnectivityTable;
+using my_pt      = pt::FragmentedNuclei;
+using connect_pt = pt::ConnectivityTable;
 
-using chemical_system_type = typename FragmentedNucleiTraits::system_type;
+using chemical_system_type = typename pt::FragmentedNucleiTraits::system_type;
 using molecule_type =
   typename chemical_system_type::molecule_traits::value_type;
 using atom_type   = typename molecule_type::atom_type;
-using result_type = FragmentedNucleiTraits::result_type;
-using connect_t   = typename ConnectivityTableTraits::result_type;
+using result_type = pt::FragmentedNucleiTraits::result_type;
+using connect_t   = typename pt::ConnectivityTableTraits::result_type;
 
 namespace {
 

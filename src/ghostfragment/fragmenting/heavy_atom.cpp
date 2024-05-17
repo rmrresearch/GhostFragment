@@ -7,8 +7,8 @@
 
 namespace ghostfragment::fragmenting {
 
-using frags_pt = FragmentedNuclei;
-using conn_pt  = ghostfragment::ConnectivityTable;
+using frags_pt = pt::FragmentedNuclei;
+using conn_pt  = pt::ConnectivityTable;
 
 const auto mod_desc = R"(
 Fragmentation by Heavy Atom
@@ -38,7 +38,7 @@ MODULE_CTOR(HeavyAtom) {
 }
 
 MODULE_RUN(HeavyAtom) {
-    using fragmented_nuclei = typename FragmentedNucleiTraits::result_type;
+    using fragmented_nuclei = typename pt::FragmentedNucleiTraits::result_type;
     using size_type         = typename fragmented_nuclei::size_type;
 
     const auto& [system] = frags_pt::unwrap_inputs(inputs);

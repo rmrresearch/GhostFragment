@@ -3,7 +3,7 @@
 #include <chemist/topology/connectivity_table.hpp>
 #include <pluginplay/pluginplay.hpp>
 
-namespace ghostfragment {
+namespace ghostfragment::pt {
 
 struct ConnectivityTableTraits {
     using input_type  = chemist::Molecule;
@@ -14,7 +14,7 @@ DECLARE_PROPERTY_TYPE(ConnectivityTable);
 
 PROPERTY_TYPE_INPUTS(ConnectivityTable) {
     using molecule_type = typename ConnectivityTableTraits::input_type;
-    using input_type = chemist::MoleculeView<const molecule_type>;
+    using input_type    = chemist::MoleculeView<const molecule_type>;
     return pluginplay::declare_input().add_field<input_type>("Molecule");
 }
 
@@ -24,4 +24,4 @@ PROPERTY_TYPE_RESULTS(ConnectivityTable) {
       "ConnectivityTable");
 }
 
-} // namespace ghostfragment
+} // namespace ghostfragment::pt
