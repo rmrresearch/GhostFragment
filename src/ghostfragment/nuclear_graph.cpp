@@ -97,6 +97,14 @@ NuclearGraph::edge_list NuclearGraph::edges() const noexcept {
     return edge_list{};
 }
 
+NuclearGraph::nucleus_index_set NuclearGraph::node_indices(size_type i) const {
+    if(i < nodes_size() && m_pimpl_)
+        return m_pimpl_->m_nodes.nuclear_indices(i);
+    throw std::out_of_range(std::to_string(i) +
+                            " is not in the range [0, size_nodes()) where " +
+                            "size_nodes() == " + std::to_string(nodes_size()));
+}
+
 NuclearGraph::const_node_reference NuclearGraph::node(size_type i) const {
     if(i < nodes_size() && m_pimpl_) return m_pimpl_->m_nodes.at(i);
     throw std::out_of_range(

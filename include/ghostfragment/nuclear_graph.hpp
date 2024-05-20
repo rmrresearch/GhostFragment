@@ -58,6 +58,9 @@ public:
     using fragmented_nuclei =
       chemist::fragmenting::FragmentedNuclei<nuclei_type>;
 
+    /// Type used to store the indices for a fragment
+    using nucleus_index_set = typename fragmented_nuclei::nucleus_index_set;
+
     /// Read-only reference to the Molecule
     using const_nuclei_reference =
       typename fragmented_nuclei::const_supersystem_reference;
@@ -216,6 +219,20 @@ public:
      *  @throw None No throw guarantee.
      */
     edge_list edges() const noexcept;
+
+    /** @brief Returns the offsets for the nuclei in the @p i -th node.
+     *
+     *  @param[in] i The node whose members are wanted.
+     *
+     *  @return The set of offsets (as used in nuclei()) for the @p i -th node.
+     *
+     *  @throw std::bad_alloc if there is a problem creating the result. Strong
+     *                        throw guarantee.
+     *
+     *  @throw std::out_of_range if @p i is not in the range [0,nodes_size()).
+     *                           Strong throw guarantee.
+     */
+    nucleus_index_set node_indices(size_type i) const;
 
     /** @brief Returns the requested node of the graph.
      *

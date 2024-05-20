@@ -15,19 +15,17 @@
  */
 
 #pragma once
-#include "testing/hydrocarbon/hydrocarbon.hpp"
-#include "testing/water/water.hpp"
-#include <catch2/catch.hpp>
-#include <ghostfragment/load_modules.hpp>
-#include <simde/simde.hpp>
+#include <array>
+#include <cmath>
+#include <vector>
 
 namespace testing {
 
-// Common set-up all tests have
-inline auto initialize() {
-    pluginplay::ModuleManager mm;
-    ghostfragment::load_modules(mm);
-    return mm;
-}
+std::array<float, 3> position_carbon(const std::vector<float>& source_coords,
+                                     float carbon_bond, int num,
+                                     float angle_deg);
 
+std::array<float, 3> position_hydrogen(const std::vector<float>& source_coords,
+                                       int flag, int num, float hydrogen_bond,
+                                       float angle_deg);
 } // namespace testing
