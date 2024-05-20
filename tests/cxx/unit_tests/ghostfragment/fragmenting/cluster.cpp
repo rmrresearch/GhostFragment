@@ -81,7 +81,7 @@ TEST_CASE("Cluster Partitioner") {
         graph_type input(nodes, edges);
 
         const auto& rv = mod.run_as<my_pt>(input);
-        frags_type corr(water2.nuclei(), {{0, 2, 4}, {1, 3}});
+        frags_type corr(water2.nuclei(), {{0, 2, 4}, {1, 3}, {5}});
         REQUIRE(corr == rv);
     }
 
@@ -104,7 +104,7 @@ TEST_CASE("Cluster Partitioner") {
         graph_type input(nodes, edges);
 
         const auto& rv = mod.run_as<my_pt>(input);
-        frags_type corr(water2.nuclei(), {{0, 1, 2, 3, 4}});
+        frags_type corr(water2.nuclei(), {{0, 1, 2, 3, 4, 5}});
         REQUIRE(corr == rv);
     }
 }
