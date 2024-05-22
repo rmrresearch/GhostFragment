@@ -26,6 +26,9 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Fragment Driver", "Molecular graph", "Nuclear Graph");
     mm.change_submod("Fragment Driver", "Molecular graph to fragments",
                      "Bond-Based Fragmenter");
+    mm.change_submod("Fragment Driver", "Find broken bonds", "Broken bonds");
+    mm.change_submod("Fragment Driver", "Cap broken bonds",
+                     "Weighted distance");
 
     //     // mm.change_submod("FragmentedSystem Driver", "Fragmenter",
     //     //                  "Fragment Driver");

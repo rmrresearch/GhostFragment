@@ -5,15 +5,18 @@
 using namespace ghostfragment;
 using namespace testing;
 
-using frags_pt       = pt::FragmentedNuclei;
-using graph_pt       = pt::NuclearGraph;
-using graph2frags_pt = pt::NuclearGraphToFragments;
+using frags_pt        = pt::FragmentedNuclei;
+using graph_pt        = pt::NuclearGraph;
+using graph2frags_pt  = pt::NuclearGraphToFragments;
+using broken_bonds_pt = pt::BrokenBonds;
+using cap_pt          = pt::CappedFragments;
 
-using system_type   = typename pt::FragmentedNucleiTraits::system_type;
-using molecule_type = typename system_type::molecule_t;
-using frags_type    = typename pt::FragmentedNucleiTraits::result_type;
-using graph_type    = typename pt::NuclearGraphTraits::result_type;
-using conns_type    = typename graph_type::connectivity_type;
+using system_type       = typename pt::FragmentedNucleiTraits::system_type;
+using molecule_type     = typename system_type::molecule_t;
+using frags_type        = typename pt::FragmentedNucleiTraits::result_type;
+using graph_type        = typename pt::NuclearGraphTraits::result_type;
+using conns_type        = typename graph_type::connectivity_type;
+using broken_bonds_type = typename pt::BrokenBondsTraits::result_type;
 
 namespace {
 
@@ -30,14 +33,33 @@ auto make_g2frag_module(const graph_type& g, const frags_type& rv) {
         return rv;
     });
 }
+
+auto make_bond_module(const frags_type& frags, const graph_type& conns,
+                      const broken_bonds_type& broken_bonds) {
+    return pluginplay::make_lambda<broken_bonds_pt>(
+      [=](auto&& frags_in, auto&& conns_in) {
+          REQUIRE(frags_in == frags);
+          REQUIRE(conns_in == conns.edges());
+          return broken_bonds;
+      });
+}
+
+auto make_cap_module(const frags_type& frags,
+                     const broken_bonds_type& broken_bonds) {
+    return pluginplay::make_lambda<cap_pt>(
+      [=](auto&& frags_in, auto&& bonds_in) {
+          REQUIRE(frags_in == frags);
+          REQUIRE(bonds_in == broken_bonds);
+          return frags_in;
+      });
+}
+
 } // namespace
 
 /* Testing strategy:
  *
  * The FragmentDriver module is purely a driver. If we assume the modules it
  * calls work correctly, the only thing we need to test is that the data flows.
- * Testing is done using the default modules (Heavy Atom for pseudoatom
- * generation, Bond-Based for fragmentation).
  */
 
 TEST_CASE("Fragment Driver") {
@@ -45,16 +67,21 @@ TEST_CASE("Fragment Driver") {
     auto& mod = mm.at("Fragment Driver");
 
     // Factor out so change_submod fits on one line
-    const auto g2f_key = "Molecular graph to fragments";
+    const auto g2f_key  = "Molecular graph to fragments";
+    const auto bond_key = "Find broken bonds";
+    const auto cap_key  = "Cap broken bonds";
 
     SECTION("Empty Molecule") {
         molecule_type mol;
         system_type system(mol);
         frags_type corr(mol.nuclei());
         graph_type graph(corr, {});
+        broken_bonds_type bonds;
 
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
+        mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
+        mod.change_submod(cap_key, make_cap_module(corr, bonds));
         const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
@@ -66,9 +93,12 @@ TEST_CASE("Fragment Driver") {
         frags_type corr(mol.nuclei());
         corr.insert({0});
         graph_type graph(corr, {});
+        broken_bonds_type bonds;
 
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
+        mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
+        mod.change_submod(cap_key, make_cap_module(corr, bonds));
         const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
@@ -79,9 +109,12 @@ TEST_CASE("Fragment Driver") {
         frags_type corr(methane.nuclei());
         corr.insert({0, 1, 2, 3, 4});
         graph_type graph(corr, {});
+        broken_bonds_type bonds;
 
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
+        mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
+        mod.change_submod(cap_key, make_cap_module(corr, bonds));
         const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
@@ -95,9 +128,12 @@ TEST_CASE("Fragment Driver") {
         conns_type c(2);
         c.add_bond(0, 1);
         graph_type graph(corr, c);
+        broken_bonds_type bonds{{0, 1}};
 
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
+        mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
+        mod.change_submod(cap_key, make_cap_module(corr, bonds));
         const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
