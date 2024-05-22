@@ -19,7 +19,7 @@ using nuclei_type = typename input_type::nuclei_type;
 
 subset_type frag_nodes(const NuclearGraph& graph, std::size_t root_node,
                        std::size_t nbonds) {
-    const auto& bonds = graph.edges();
+    const auto& bonds = graph.edge_list();
     using size_type   = typename subset_type::value_type;
     std::unordered_map<size_type, size_type> distance;
     std::stack<std::pair<size_type, size_type>> node_stack;

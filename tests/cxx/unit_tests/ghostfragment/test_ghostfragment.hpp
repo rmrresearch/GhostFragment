@@ -15,6 +15,7 @@
  */
 
 #pragma once
+#include "testing/are_caps_equal.hpp"
 #include "testing/hydrocarbon/hydrocarbon.hpp"
 #include "testing/water/water.hpp"
 #include <catch2/catch.hpp>

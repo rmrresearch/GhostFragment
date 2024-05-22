@@ -8,7 +8,7 @@ using my_pt       = pt::NuclearGraphToFragments;
 using traits_type = pt::NuclearGraphToFragmentsTraits;
 using graph_type  = typename traits_type::graph_type;
 using frags_type  = typename traits_type::fragment_type;
-using edge_list   = typename graph_type::edge_list;
+using edge_list   = typename graph_type::edge_list_type;
 using index_type  = typename edge_list::size_type;
 
 namespace detail_ {
@@ -78,7 +78,7 @@ MODULE_RUN(Cluster) {
     }
 
     frags_type frags(graph.nuclei().as_nuclei()); // Will be the fragments
-    const auto& bonds = graph.edges();
+    const auto& bonds = graph.edge_list();
 
     using size_type = typename std::decay_t<decltype(bonds)>::size_type;
     std::vector<std::set<size_type>> patom2frag;

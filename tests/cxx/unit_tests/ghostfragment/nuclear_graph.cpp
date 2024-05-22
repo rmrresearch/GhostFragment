@@ -11,7 +11,7 @@ namespace ghostfragment {
 TEST_CASE("NuclearGraph") {
     using frags_t   = NuclearGraph::fragmented_nuclei;
     using connect_t = NuclearGraph::connectivity_type;
-    using edge_list = NuclearGraph::edge_list;
+    using edge_list = NuclearGraph::edge_list_type;
     using pair_t    = typename edge_list::value_type;
 
     auto water0 = testing::water_fragmented_nuclei(0);
@@ -113,13 +113,13 @@ TEST_CASE("NuclearGraph") {
         REQUIRE(tetramer.edges_size() == 2);
     }
 
-    SECTION("edges()") {
-        REQUIRE(defaulted.edges() == edge_list{});
-        REQUIRE(empty.edges() == edge_list{});
-        REQUIRE(monomer.edges() == edge_list{});
-        REQUIRE(dimer.edges() == edge_list{});
-        REQUIRE(trimer.edges() == edge_list{pair_t{0, 1}});
-        REQUIRE(tetramer.edges() == edge_list{pair_t{1, 2}, pair_t{2, 3}});
+    SECTION("edge_list()") {
+        REQUIRE(defaulted.edge_list() == edge_list{});
+        REQUIRE(empty.edge_list() == edge_list{});
+        REQUIRE(monomer.edge_list() == edge_list{});
+        REQUIRE(dimer.edge_list() == edge_list{});
+        REQUIRE(trimer.edge_list() == edge_list{pair_t{0, 1}});
+        REQUIRE(tetramer.edge_list() == edge_list{pair_t{1, 2}, pair_t{2, 3}});
     }
 
     SECTION("node()") {

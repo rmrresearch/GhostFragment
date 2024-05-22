@@ -92,9 +92,14 @@ NuclearGraph::size_type NuclearGraph::edges_size() const noexcept {
     return 0;
 }
 
-NuclearGraph::edge_list NuclearGraph::edges() const noexcept {
+NuclearGraph::edge_list_type NuclearGraph::edge_list() const {
     if(m_pimpl_) return m_pimpl_->m_edges.bonds();
-    return edge_list{};
+    return edge_list_type{};
+}
+
+const NuclearGraph::connectivity_type& NuclearGraph::edges() const {
+    assert_pimpl_();
+    return m_pimpl_->m_edges;
 }
 
 NuclearGraph::nucleus_index_set NuclearGraph::node_indices(size_type i) const {

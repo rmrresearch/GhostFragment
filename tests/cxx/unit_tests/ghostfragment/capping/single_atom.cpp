@@ -1,71 +1,107 @@
-// #include "../test_ghostfragment.hpp"
-// #include <ghostfragment/property_types/connectivity_table.hpp>
-// #include <hydrocarbon/hydrocarbon_fragment.hpp>
-// #include "single_atom.hpp"
-// #include <testing/are_caps_equal.hpp>
+#include "../test_ghostfragment.hpp"
+#include <ghostfragment/property_types/fragmenting/capped_fragments.hpp>
 
-// using namespace ghostfragment;
-// using namespace testing::single;
-// using namespace testing;
+using namespace ghostfragment;
+using namespace testing;
 
-// using the_pt      = pt::Capped;
-// using input_type  = const chemist::FragmentedNuclei&;
-// using connect_pt  = ConnectivityTable;
-// using ct_t        = ConnectivityTableTraits::result_type;
-// using return_type = pt::CappedTraits::result_type;
-// using size_type   = std::size_t;
+using the_pt            = pt::CappedFragments;
+using frags_type        = typename pt::CappedFragmentsTraits::frags_type;
+using broken_bonds_type = typename pt::CappedFragmentsTraits::broken_bonds_type;
+using size_type         = std::size_t;
+using nucleus_type      = typename frags_type::value_type::value_type;
+using cap_type          = typename frags_type::cap_set_type::value_type;
 
-// TEST_CASE("SingleAtom") {
-//     auto mm   = initialize();
-//     auto& mod = mm.at("Atomic Capping");
+inline auto caps_methane_one() {
+    frags_type rv = hydrocarbon_fragmented_nuclei(1, 1);
+    return rv;
+}
 
-//     SECTION("Water monomers") {
-//         for(size_type n_waters = 1; n_waters < 4; ++n_waters) {
-//             SECTION("N = " + std::to_string(n_waters)) {
-//                 auto water_n = water_fragmented_nuclei(n_waters);
+inline auto caps_ethane_one() {
+    auto rv = hydrocarbon_fragmented_nuclei(2, 1);
+    nucleus_type c0("H", 1ul, 1837.289, 2.360094094, 1.667949599, 0.0);
+    nucleus_type c1("H", 1ul, 1837.289, 0.0, 0.0, 0.0);
+    rv.add_cap(cap_type(0, 1, c0));
+    rv.add_cap(cap_type(1, 0, c1));
+    return rv;
+}
 
-//                 auto conn_mod =
-//                   pluginplay::make_lambda<connect_pt>([=](const auto& mol_in) {
-//                       REQUIRE(mol_in == water_n.supersystem());
-//                       return water_connectivity(n_waters);
-//                   });
+inline auto caps_propane_one() {
+    auto rv = hydrocarbon_fragmented_nuclei(3, 1);
+    nucleus_type c0("H", 1ul, 1837.289, 2.360094094, 1.667949599, 0.0);
+    nucleus_type c1("H", 1ul, 1837.289, 0.0, 0.0, 0.0);
+    nucleus_type c2("H", 1ul, 1837.289, 4.720188189, 0.0, 0.0);
+    nucleus_type c3("H", 1ul, 1837.289, 2.360094094, 1.667949599, 0.0);
+    rv.add_cap(cap_type(0, 1, c0));
+    rv.add_cap(cap_type(1, 0, c1));
+    rv.add_cap(cap_type(1, 2, c2));
+    rv.add_cap(cap_type(2, 1, c3));
+    return rv;
+}
 
-//                 return_type corr(n_waters);
+inline auto caps_propane_two() {
+    auto rv = hydrocarbon_fragmented_nuclei(3, 2);
+    nucleus_type c0("H", 1ul, 1837.289, 4.720188189, 0.0, 0.0);
+    nucleus_type c1("H", 1ul, 1837.289, 0.0, 0.0, 0.0);
+    rv.add_cap(cap_type(1, 0, c1));
+    rv.add_cap(cap_type(1, 2, c0));
+    return rv;
+}
 
-//                 mod.change_submod("Connectivity", conn_mod);
-//                 const auto& caps = mod.run_as<the_pt>(water_n);
-//                 REQUIRE(caps == corr);
-//             }
-//         }
-//     }
+TEST_CASE("SingleAtom") {
+    auto mm   = initialize();
+    auto& mod = mm.at("Atomic Capping");
 
-//     SECTION("Hydrocarbon monomers") {
-//         SECTION("Methane fragment (size 1)") {
-//             auto corr = caps_methane_one();
-//             input_type hc{hydrocarbon_fragmented_nuclei(1, 1)};
-//             result_type test = mod.run_as<the_pt>(hc);
-//             REQUIRE(are_caps_equal(corr, test));
-//         }
+    SECTION("Water monomers") {
+        for(size_type n_waters = 1; n_waters < 4; ++n_waters) {
+            SECTION("N = " + std::to_string(n_waters)) {
+                auto water_n = water_fragmented_nuclei(n_waters);
+                broken_bonds_type bonds;
 
-//         SECTION("Ethane fragment (size 1)") {
-//             auto corr = caps_ethane_one();
-//             input_type hc{hydrocarbon_fragmented_nuclei(2, 1)};
-//             result_type test = mod.run_as<the_pt>(hc);
-//             REQUIRE(are_caps_equal(corr, test));
-//         }
+                const auto& rv = mod.run_as<the_pt>(water_n, bonds);
+                REQUIRE(rv == water_n);
+            }
+        }
+    }
 
-//         SECTION("Propane fragment (size 1)") {
-//             auto corr = caps_propane_one();
-//             input_type hc{hydrocarbon_fragmented_nuclei(3, 1)};
-//             result_type test = mod.run_as<the_pt>(hc);
-//             REQUIRE(are_caps_equal(corr, test));
-//         }
+    SECTION("Hydrocarbon monomers") {
+        SECTION("Methane fragment (size 1)") {
+            auto corr = caps_methane_one();
+            auto hc   = hydrocarbon_fragmented_nuclei(1, 1);
+            broken_bonds_type bonds;
+            auto test = mod.run_as<the_pt>(hc, bonds);
+            REQUIRE(are_caps_equal(corr.cap_set(), test.cap_set()));
+        }
 
-//         SECTION("Propane fragment (size 2)") {
-//             auto corr = caps_propane_two();
-//             input_type hc{hydrocarbon_fragmented_nuclei(3, 2)};
-//             result_type test = mod.run_as<the_pt>(hc);
-//             REQUIRE(are_caps_equal(corr, test));
-//         }
-//     }
-// }
+        SECTION("Ethane fragment (size 1)") {
+            auto corr = caps_ethane_one();
+            auto hc   = hydrocarbon_fragmented_nuclei(2, 1);
+            broken_bonds_type bonds;
+            bonds.insert({0, 1});
+            bonds.insert({1, 0});
+            auto test = mod.run_as<the_pt>(hc, bonds);
+            REQUIRE(are_caps_equal(corr.cap_set(), test.cap_set()));
+        }
+
+        SECTION("Propane fragment (size 1)") {
+            auto corr = caps_propane_one();
+            auto hc   = hydrocarbon_fragmented_nuclei(3, 1);
+            broken_bonds_type bonds;
+            bonds.insert({0, 1});
+            bonds.insert({1, 0});
+            bonds.insert({1, 2});
+            bonds.insert({2, 1});
+            auto test = mod.run_as<the_pt>(hc, bonds);
+            REQUIRE(are_caps_equal(corr.cap_set(), test.cap_set()));
+        }
+
+        SECTION("Propane fragment (size 2)") {
+            auto corr = caps_propane_two();
+            auto hc   = hydrocarbon_fragmented_nuclei(3, 2);
+            broken_bonds_type bonds;
+            bonds.insert({1, 2});
+            bonds.insert({1, 0});
+            auto test = mod.run_as<the_pt>(hc, bonds);
+            REQUIRE(are_caps_equal(corr.cap_set(), test.cap_set()));
+        }
+    }
+}

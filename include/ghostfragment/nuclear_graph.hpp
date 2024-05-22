@@ -78,7 +78,7 @@ public:
     using edge_type = connectivity_type::offset_pair;
 
     /// Type used for a list of edges
-    using edge_list = connectivity_type::offset_pair_list;
+    using edge_list_type = connectivity_type::offset_pair_list;
 
     /// Type used for indexing and offsets
     using size_type = std::size_t;
@@ -218,7 +218,9 @@ public:
      *
      *  @throw None No throw guarantee.
      */
-    edge_list edges() const noexcept;
+    edge_list_type edge_list() const;
+
+    const connectivity_type& edges() const;
 
     /** @brief Returns the offsets for the nuclei in the @p i -th node.
      *

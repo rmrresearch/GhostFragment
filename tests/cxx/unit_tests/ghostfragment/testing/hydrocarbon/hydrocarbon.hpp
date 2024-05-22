@@ -15,16 +15,39 @@
  */
 
 #pragma once
-#include <cstdlib>
-#include <string>
-
 #include <chemist/chemical_system/molecule/atom.hpp>
 #include <chemist/chemical_system/molecule/molecule.hpp>
 #include <chemist/fragmenting/fragmented_nuclei.hpp>
+#include <chemist/topology/connectivity_table.hpp>
+#include <cstdlib>
+#include <string>
 
 namespace testing {
 
 chemist::Molecule hydrocarbon(int num_carbon);
+
+inline auto hydrocarbon_connectivity(std::size_t N) {
+    // Probably a better way, but this works
+    const auto n_atoms = hydrocarbon(N).size();
+
+    chemist::topology::ConnectivityTable conns(n_atoms);
+    if(N == 0) return conns;
+
+    // First N-1 atoms are carbons
+    // carbon 0 is bonded to atom N
+    // carbon i is bonded to carbon i + 1 (assuming i + 1 != N)
+    // carbon i is bonded to hydrogens N + 2*i + 1 and N + 2*i + 2
+    // carbon N - 1 is bonded to atom n_atoms - 1
+    std::size_t h_counter = N;
+    conns.add_bond(0, h_counter);
+    for(std::size_t i = 0; i < N; ++i) {
+        if(i + 1 < N) conns.add_bond(i, i + 1);
+        conns.add_bond(i, ++h_counter);
+        conns.add_bond(i, ++h_counter);
+    }
+    conns.add_bond(N - 1, ++h_counter);
+    return conns;
+}
 
 /// Fragments a hydrocarbon system (fragments are M carbons
 /// with M-1 carbon overlap with adjacent fragments,

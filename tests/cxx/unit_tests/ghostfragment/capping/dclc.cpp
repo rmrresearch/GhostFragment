@@ -1,70 +1,125 @@
-// #include "../test_ghostfragment.hpp"
-// #include "dclc.hpp"
-// #include <ghostfragment/property_types/connectivity_table.hpp>
-// #include <hydrocarbon/hydrocarbon_fragment.hpp>
-// #include <testing/are_caps_equal.hpp>
+#include "../test_ghostfragment.hpp"
+#include "../testing/are_caps_equal.hpp"
+#include <ghostfragment/property_types/fragmenting/capped_fragments.hpp>
+#include <ghostfragment/property_types/topology/connectivity_table.hpp>
 
-// TEST_CASE("DCLC Capping") {
+using the_pt         = ghostfragment::pt::CappedFragments;
+using connect_pt     = ghostfragment::pt::ConnectivityTable;
+using traits_t       = ghostfragment::pt::CappedFragmentsTraits;
+using broken_bonds_t = typename traits_t::broken_bonds_type;
+using frags_t        = typename traits_t::result_type;
+using nuclei_t       = typename frags_t::value_type;
+using nucleus_t      = typename nuclei_t::value_type;
+using cap_set_type   = typename frags_t::cap_set_type;
 
-//     using namespace ghostfragment;
-//     using namespace testing;
+namespace {
+// Correct answers for three hydrocarbons -- ethane with two
+// fragments, propane with two fragments, and propane with four
+// fragments. Answers generated in Mathematica.
 
-//     using the_pt       = pt::Capped;
-//     using input_type   = chemist::FragmentedNuclei;
-//     using result_type  = std::vector<chemist::CapSet>;
-//     using conn_pt      = ghostfragment::ConnectivityTable;
+// Methane CapSet (1 carbon, 1 frag)
 
-//     auto mm        = initialize();
-//     auto& mod      = mm.at("DCLC Capping");
+auto methane_dclc_caps() {
+    cap_set_type methane;
+    return methane;
+}
 
-//     SECTION("Methane (1 carbon 1 frag") {
-//         result_type corr(methane_dclc_caps());
-//         input_type hc{hydrocarbon_fragmented_nuclei(1,1)};
-//         // mod.change_submod("Connectivity", "Covalent Radius");
-//         result_type caps = mod.run_as<the_pt>(hc);
-//         REQUIRE(are_caps_equal(corr, caps));
-//     }
+// Ethane CapSets (2 carbon, 2 frags)
+auto ethane_dclc_caps() {
+    cap_set_type caps;
 
-//     SECTION("Ethane (2 carbon 2 frags)") {
-//         result_type corr(ethane_dclc_caps());
-//         input_type hc{hydrocarbon_fragmented_nuclei(2,1)};
-//         // mod.change_submod("Connectivity", "Covalent Radius");
-//         result_type caps = mod.run_as<the_pt>(hc);
-//         REQUIRE(are_caps_equal(corr, caps));
-//     }
+    nucleus_t c0("H", 1, 1837.289, 1.682281604, 1.188919091, 0);
+    caps.emplace_back(0, 1, c0);
 
-//     SECTION("Propane (3 carbon 2 frags)") {
-//         result_type corr(propane_dclc_2_caps());
-//         input_type hc{hydrocarbon_fragmented_nuclei(3,2)};
-//         result_type caps = mod.run_as<the_pt>(hc);
-//         REQUIRE(are_caps_equal(corr, caps));
-//     }
+    nucleus_t c1("H", 1, 1837.289, 0.677812, 0.479031, 0);
+    caps.emplace_back(1, 0, c1);
 
-//     SECTION("Propane (3 carbon 4 frags)") {
-//         result_type corr(propane_dclc_3_caps());
-//         input_type hc{hydrocarbon_fragmented_nuclei(3,1)};
-//         result_type caps = mod.run_as<the_pt>(hc);
-//         REQUIRE(are_caps_equal(corr, caps));
-//     }
+    return caps;
+}
 
-//     SECTION("Average Bond Length Calculation"){
-//         // Tests the HC bond in propane
-//         chemist::Nuclei propane = hydrocarbon(3).nuclei();
-//         chemist::topology::ConnectivityTable con;
-//         con.set_n_atoms(11);
-//         con.add_bond(0,1);
-//         con.add_bond(1,2);
-//         con.add_bond(0,3);
-//         con.add_bond(0,4);
-//         con.add_bond(0,5);
-//         con.add_bond(1,6);
-//         con.add_bond(1,7);
-//         con.add_bond(2,8);
-//         con.add_bond(2,9);
-//         con.add_bond(2,10);
-//         double corr = 2.06;
-//         double test = ghostfragment::capping::average_bond_length(
-//             propane, con, 1, 6);
-//         REQUIRE(corr == Approx(test).margin(0.0001));
-//     }
-// }
+// Propane CapSet (3 carbon, 2 frags)
+auto propane_dclc_2_caps() {
+    cap_set_type caps;
+
+    nucleus_t c1("H", 1, 1837.289, 0.677812, 0.479031, 0);
+    caps.emplace_back(1, 0, c1);
+
+    nucleus_t c0("H", 1, 1837.289, 4.04238, 0.479031, 0);
+    caps.emplace_back(1, 2, c0);
+
+    return caps;
+}
+
+// Propane CapSet (3 carbon, 4 frags)
+auto propane_dclc_3_caps() {
+    cap_set_type caps;
+
+    nucleus_t c0("H", 1, 1837.289, 1.68228, 1.18892, 0);
+    caps.emplace_back(0, 1, c0);
+
+    nucleus_t c1("H", 1, 1837.289, 0.677812, 0.479031, 0);
+    nucleus_t c2("H", 1, 1837.289, 4.04238, 0.479031, 0);
+    caps.emplace_back(1, 0, c1);
+    caps.emplace_back(1, 2, c2);
+
+    nucleus_t c3("H", 1, 1837.289, 3.03791, 1.18892, 0);
+    caps.emplace_back(2, 1, c3);
+
+    return caps;
+}
+
+auto make_submod(std::size_t n) {
+    return pluginplay::make_lambda<connect_pt>([=](auto&& mol_in) {
+        REQUIRE(testing::hydrocarbon(n) == mol_in);
+        return testing::hydrocarbon_connectivity(n);
+    });
+}
+
+} // namespace
+
+TEST_CASE("DCLC Capping") {
+    auto mm   = testing::initialize();
+    auto& mod = mm.at("DCLC Capping");
+
+    SECTION("Methane (1 carbon 1 frag") {
+        auto corr = methane_dclc_caps();
+        auto hc   = testing::hydrocarbon_fragmented_nuclei(1, 1);
+        broken_bonds_t bonds;
+        mod.change_submod("Connectivity", make_submod(1));
+        auto caps = mod.run_as<the_pt>(hc, bonds);
+        REQUIRE(are_caps_equal(corr, caps.cap_set()));
+    }
+
+    SECTION("Ethane (2 carbon 2 frags)") {
+        auto corr = ethane_dclc_caps();
+        auto hc   = testing::hydrocarbon_fragmented_nuclei(2, 1);
+        broken_bonds_t bonds;
+        bonds.insert({0, 1});
+        bonds.insert({1, 0});
+        mod.change_submod("Connectivity", make_submod(2));
+        auto caps = mod.run_as<the_pt>(hc, bonds);
+        REQUIRE(are_caps_equal(corr, caps.cap_set()));
+    }
+
+    SECTION("Propane (3 carbon 2 frags)") {
+        auto corr = propane_dclc_2_caps();
+        auto hc   = testing::hydrocarbon_fragmented_nuclei(3, 2);
+        broken_bonds_t bonds;
+        bonds.insert({1, 0});
+        bonds.insert({1, 2});
+        auto caps = mod.run_as<the_pt>(hc, bonds);
+        REQUIRE(are_caps_equal(corr, caps.cap_set()));
+    }
+
+    SECTION("Propane (3 carbon 4 frags)") {
+        auto corr = propane_dclc_3_caps();
+        auto hc   = testing::hydrocarbon_fragmented_nuclei(3, 1);
+        broken_bonds_t bonds;
+        bonds.insert({0, 1});
+        bonds.insert({1, 0});
+        bonds.insert({1, 2});
+        bonds.insert({2, 1});
+        auto caps = mod.run_as<the_pt>(hc, bonds);
+        REQUIRE(are_caps_equal(corr, caps.cap_set()));
+    }
+}
