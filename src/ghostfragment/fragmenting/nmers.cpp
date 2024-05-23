@@ -1,12 +1,13 @@
+#include "fragmenting.hpp"
+#include <combinations.hpp>
 #include <ghostfragment/property_types/fragmenting/nuclear_graph_to_fragments.hpp>
-#include <utilities/iter_tools/combinations.hpp>
-
+#include <numeric>
 namespace ghostfragment::fragmenting {
 
 using my_pt              = ghostfragment::pt::NuclearGraphToFragments;
 using traits_type        = ghostfragment::pt::NuclearGraphToFragmentsTraits;
-using nmer_type          = typename traits_type::result_type;
-using nucleus_index_list = typename nmer_type::nucleus_index_set;
+using nmers_type         = typename traits_type::fragment_type;
+using nucleus_index_list = typename nmers_type::nucleus_index_set;
 using index_type         = typename nucleus_index_list::value_type;
 using n_type             = unsigned short;
 
@@ -46,17 +47,17 @@ MODULE_RUN(NMers) {
                                  " fragments");
 
     // Initialize nmer container and container of fragment indices
-    frags_type nmers(frags.supersystem());
+    nmers_type nmers(frags.supersystem().as_nuclei());
 
     std::vector<decltype(n_frags)> frag_indices(n_frags);
     std::iota(frag_indices.begin(), frag_indices.end(), 0);
 
     // Make the mmers
     for(decltype(n) m = 1; m <= n; ++m) {
-        for(auto mmer : utilities::Combinations(frag_indices, m)) {
+        for(auto&& mmer : iter::combinations(frag_indices, m)) {
             std::set<index_type> nuclear_indices;
-            for(auto frag : mmer) {
-                auto buffer = frags.nuclear_indices(frag);
+            for(auto&& frag_index : mmer) {
+                auto buffer = frags.nuclear_indices(frag_index);
                 nuclear_indices.insert(buffer.begin(), buffer.end());
             }
             nmers.insert(nuclear_indices.begin(), nuclear_indices.end());
@@ -64,7 +65,7 @@ MODULE_RUN(NMers) {
     }
 
     auto rv = results();
-    return pt::wrap_results(rv, nmers);
+    return my_pt::wrap_results(rv, nmers);
 }
 
 } // namespace ghostfragment::fragmenting

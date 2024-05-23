@@ -1,155 +1,184 @@
-// #include "../test_ghostfragment.hpp"
+#include "../test_ghostfragment.hpp"
+#include <ghostfragment/property_types/fragmenting/nuclear_graph_to_fragments.hpp>
 
-// using frags_type = ghostfragment::type::fragmented_molecule;
-// using nmers_type = ghostfragment::type::nmers;
-// using molecule   = simde::type::molecule;
-// using my_pt      = ghostfragment::pt::NMers;
+using my_pt      = ghostfragment::pt::NuclearGraphToFragments;
+using traits     = ghostfragment::pt::NuclearGraphToFragmentsTraits;
+using graph_type = typename traits::graph_type;
+using frags_type = typename traits::fragment_type;
+using size_type  = unsigned short;
+namespace {
 
-// TEST_CASE("NMers") {
-//     auto mm   = testing::initialize();
-//     auto& mod = mm.at("All nmers");
+auto make_monomers(const graph_type& corr_graph, const frags_type& frags) {
+    return pluginplay::make_lambda<my_pt>([=](auto&& graph_in) {
+        REQUIRE(graph_in == corr_graph);
+        return frags;
+    });
+}
 
-//     auto [H, He, O] = testing::some_atoms();
+} // namespace
 
-//     // Here n is the order of nmers we are making and N is the total number
-//     // of fragments
-//     SECTION("N = 1") {
-//         molecule water{H, H, O};
-//         frags_type frags(water, {{0ul, 1ul, 2ul}});
-//         SECTION("n = 1") {
-//             nmers_type corr(frags, {{0ul}});
-//             mod.change_input("n", 1ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+TEST_CASE("NMers") {
+    auto mm   = testing::initialize();
+    auto& mod = mm.at("All nmers");
 
-//         SECTION("n = 2") {
-//             mod.change_input("n", 2ul);
-//             REQUIRE_THROWS_AS(mod.run_as<my_pt>(frags), std::runtime_error);
-//         }
-//     }
+    SECTION("Disjoint") {
+        SECTION("Water 1") {
+            size_type n_waters = 1;
+            auto conns         = testing::water_connectivity(n_waters);
+            auto monomers      = testing::water_fragmented_nuclei(n_waters);
 
-//     SECTION("Disjoint N = 2") {
-//         molecule water{H, H, O, H, H, O};
-//         frags_type frags(water, {{0ul, 1ul, 2ul}, {3ul, 4ul, 5ul}});
-//         SECTION("n = 1") {
-//             nmers_type corr(frags, {{0ul}, {1ul}});
-//             mod.change_input("n", 1ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            // Waters as pseudoatoms == heavy-atom partitioning
+            graph_type graph(monomers, conns);
+            mod.change_submod("Monomer maker", make_monomers(graph, monomers));
+            auto corr = testing::water_fragmented_nuclei(n_waters);
 
-//         SECTION("n = 2") {
-//             nmers_type corr(frags, {{0ul}, {1ul}, {0ul, 1ul}});
-//             mod.change_input("n", 2ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            SECTION("monomers") {
+                mod.change_input("n", size_type{1});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+        }
 
-//         SECTION("n = 3") {
-//             mod.change_input("n", 3ul);
-//             REQUIRE_THROWS_AS(mod.run_as<my_pt>(frags), std::runtime_error);
-//         }
-//     }
+        SECTION("Water 2") {
+            size_type n_waters = 2;
+            auto conns         = testing::water_connectivity(n_waters);
+            auto monomers      = testing::water_fragmented_nuclei(n_waters);
 
-//     SECTION("Non-disjoint N = 2") {
-//         molecule water{He, He, He};
-//         frags_type frags(water, {{0ul, 1ul}, {1ul, 2ul}});
-//         SECTION("n = 1") {
-//             nmers_type corr(frags, {{0ul}, {1ul}});
-//             mod.change_input("n", 1ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            // Waters as pseudoatoms == heavy-atom partitioning
+            graph_type graph(monomers, conns);
 
-//         SECTION("n = 2") {
-//             nmers_type corr(frags, {{0ul}, {1ul}, {0ul, 1ul}});
-//             mod.change_input("n", 2ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            mod.change_submod("Monomer maker", make_monomers(graph, monomers));
+            auto corr = testing::water_fragmented_nuclei(n_waters);
 
-//         SECTION("n = 3") {
-//             mod.change_input("n", 3ul);
-//             REQUIRE_THROWS_AS(mod.run_as<my_pt>(frags), std::runtime_error);
-//         }
-//     }
+            SECTION("monomers") {
+                mod.change_input("n", size_type{1});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
 
-//     SECTION("Disjoint N = 3") {
-//         molecule water{H, H, O, H, H, O, H, H, O};
-//         frags_type frags(water,
-//                          {{0ul, 1ul, 2ul}, {3ul, 4ul, 5ul}, {6ul, 7ul,
-//                          8ul}});
-//         SECTION("n = 1") {
-//             nmers_type corr(frags, {{0ul}, {1ul}, {2ul}});
-//             mod.change_input("n", 1ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            SECTION("dimers") {
+                mod.change_input("n", size_type{2});
+                corr.insert({0, 1, 2, 3, 4, 5});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+        }
 
-//         SECTION("n = 2") {
-//             nmers_type corr(
-//               frags, {{0ul}, {1ul}, {2ul}, {0ul, 1ul}, {0ul, 2ul}, {1ul,
-//               2ul}});
-//             mod.change_input("n", 2ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+        SECTION("Water 3") {
+            size_type n_waters = 3;
+            auto conns         = testing::water_connectivity(n_waters);
+            auto monomers      = testing::water_fragmented_nuclei(n_waters);
 
-//         SECTION("n = 3") {
-//             nmers_type corr(frags, {{0ul},
-//                                     {1ul},
-//                                     {2ul},
-//                                     {0ul, 1ul},
-//                                     {0ul, 2ul},
-//                                     {1ul, 2ul},
-//                                     {0ul, 1ul, 2ul}});
-//             mod.change_input("n", 3ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            // Waters as pseudoatoms == heavy-atom partitioning
+            graph_type graph(monomers, conns);
 
-//         SECTION("n = 4") {
-//             mod.change_input("n", 4ul);
-//             REQUIRE_THROWS_AS(mod.run_as<my_pt>(frags), std::runtime_error);
-//         }
-//     }
+            mod.change_submod("Monomer maker", make_monomers(graph, monomers));
+            auto corr = testing::water_fragmented_nuclei(n_waters);
 
-//     SECTION("Non-disjoint N = 3") {
-//         molecule water{He, He, He};
-//         frags_type frags(water, {{0ul, 1ul}, {0ul, 2ul}, {1ul, 2ul}});
-//         SECTION("n = 1") {
-//             nmers_type corr(frags, {{0ul}, {1ul}, {2ul}});
-//             mod.change_input("n", 1ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            SECTION("monomers") {
+                mod.change_input("n", size_type{1});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
 
-//         SECTION("n = 2") {
-//             nmers_type corr(
-//               frags, {{0ul}, {1ul}, {2ul}, {0ul, 1ul}, {0ul, 2ul}, {1ul,
-//               2ul}});
-//             mod.change_input("n", 2ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            SECTION("dimers") {
+                mod.change_input("n", size_type{2});
+                corr.insert({0, 1, 2, 3, 4, 5});
+                corr.insert({0, 1, 2, 6, 7, 8});
+                corr.insert({3, 4, 5, 6, 7, 8});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
 
-//         SECTION("n = 3") {
-//             nmers_type corr(frags, {{0ul},
-//                                     {1ul},
-//                                     {2ul},
-//                                     {0ul, 1ul},
-//                                     {0ul, 2ul},
-//                                     {1ul, 2ul},
-//                                     {0ul, 1ul, 2ul}});
-//             mod.change_input("n", 3ul);
-//             auto [nmers] = mod.run_as<my_pt>(frags);
-//             REQUIRE(nmers == corr);
-//         }
+            SECTION("trimers") {
+                mod.change_input("n", size_type{3});
+                corr.insert({0, 1, 2, 3, 4, 5});
+                corr.insert({0, 1, 2, 6, 7, 8});
+                corr.insert({3, 4, 5, 6, 7, 8});
+                corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+        }
+    }
 
-//         SECTION("n = 4") {
-//             mod.change_input("n", 4ul);
-//             REQUIRE_THROWS_AS(mod.run_as<my_pt>(frags), std::runtime_error);
-//         }
-//     }
-// }
+    SECTION("Non-disjoint") {
+        using testing::hydrocarbon_fragmented_nuclei;
+        SECTION("Propane") {
+            size_type n_carbons = 3;
+            auto conns          = testing::hydrocarbon_connectivity(n_carbons);
+            auto monomers       = hydrocarbon_fragmented_nuclei(n_carbons, 2);
+
+            // Waters as pseudoatoms == heavy-atom partitioning
+            graph_type graph(monomers, conns);
+            mod.change_submod("Monomer maker", make_monomers(graph, monomers));
+            frags_type corr(monomers.supersystem().as_nuclei());
+            corr.insert({0, 1, 3, 4, 5, 6, 7});
+            corr.insert({1, 2, 6, 7, 8, 9, 10});
+
+            SECTION("monomers") {
+                mod.change_input("n", size_type{1});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+
+            SECTION("dimers") {
+                mod.change_input("n", size_type{2});
+                corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+        }
+
+        SECTION("Butane") {
+            size_type n_carbons = 4;
+            auto conns          = testing::hydrocarbon_connectivity(n_carbons);
+            auto monomers       = hydrocarbon_fragmented_nuclei(n_carbons, 2);
+
+            // Waters as pseudoatoms == heavy-atom partitioning
+            graph_type graph(monomers, conns);
+            mod.change_submod("Monomer maker", make_monomers(graph, monomers));
+            frags_type corr(monomers.supersystem().as_nuclei());
+            corr.insert({0, 1, 4, 5, 6, 7, 8});
+            corr.insert({1, 2, 7, 8, 9, 10});
+            corr.insert({2, 3, 9, 10, 11, 12, 13});
+
+            SECTION("monomers") {
+                mod.change_input("n", size_type{1});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+
+            SECTION("dimers") {
+                mod.change_input("n", size_type{2});
+                corr.insert({0, 1, 2, 4, 5, 6, 7, 8, 9, 10});
+                corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+                corr.insert({1, 2, 3, 7, 8, 9, 10, 11, 12, 13});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+
+            SECTION("trimers") {
+                mod.change_input("n", size_type{3});
+                corr.insert({0, 1, 2, 4, 5, 6, 7, 8, 9, 10});
+                corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+                corr.insert({1, 2, 3, 7, 8, 9, 10, 11, 12, 13});
+                corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+        }
+    }
+
+    SECTION("Throws if n > number-of-fragments") {
+        auto conns    = testing::water_connectivity(1);
+        auto monomers = testing::water_fragmented_nuclei(1);
+
+        // Waters as pseudoatoms == heavy-atom partitioning
+        graph_type graph(monomers, conns);
+
+        mod.change_submod("Monomer maker", make_monomers(graph, monomers));
+        mod.change_input("n", size_type{2});
+        REQUIRE_THROWS_AS(mod.run_as<my_pt>(graph), std::runtime_error);
+    }
+}

@@ -5,8 +5,7 @@ namespace ghostfragment::drivers {
 
 DECLARE_MODULE(Fragment);
 // DECLARE_MODULE(FragmentBasedMethod);
-// // DECLARE_MODULE(FragmentedSystem);
-// // DECLARE_MODULE(NMerSystem);
+DECLARE_MODULE(FragmentedChemicalSystem);
 // DECLARE_MODULE(NeutralSinglet);
 // DECLARE_MODULE(InputQueue);
 
@@ -14,7 +13,7 @@ DECLARE_MODULE(Fragment);
 inline void load_modules(pluginplay::ModuleManager& mm) {
     mm.add_module<Fragment>("Fragment Driver");
     //     // mm.add_module<FragmentBasedMethod>("Fragment Based Method");
-    //     // mm.add_module<FragmentedSystem>("FragmentedSystem Driver");
+    mm.add_module<FragmentedChemicalSystem>("FragmentedChemicalSystem Driver");
     //     // mm.add_module<NMerSystem>("NMerSystem Driver");
     //     mm.add_module<NeutralSinglet>("Neutral Singlet");
     //     mm.add_module<InputQueue>("Input Queue");
@@ -29,9 +28,8 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Fragment Driver", "Find broken bonds", "Broken bonds");
     mm.change_submod("Fragment Driver", "Cap broken bonds",
                      "Weighted distance");
-
-    //     // mm.change_submod("FragmentedSystem Driver", "Fragmenter",
-    //     //                  "Fragment Driver");
+    mm.change_submod("FragmentedChemicalSystem Driver", "Fragmenter",
+                     "Fragment Driver");
     //     // mm.change_submod("FragmentedSystem Driver", "Atom to AO Mapper",
     //     //                 "AO Center to Atom Mapper");
 

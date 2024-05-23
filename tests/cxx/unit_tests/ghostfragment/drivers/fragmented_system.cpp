@@ -1,82 +1,65 @@
-// #include "../test_ghostfragment.hpp"
-// #include <ghostfragment/detail_/fragmented_system_pimpl.hpp>
+#include "../test_ghostfragment.hpp"
+#include <ghostfragment/property_types/fragmenting/fragmented_chemical_system.hpp>
+#include <ghostfragment/property_types/fragmenting/fragmented_nuclei.hpp>
 
-// using namespace ghostfragment;
-// using namespace testing;
+using namespace ghostfragment;
+using namespace testing;
 
-// using frag_pt    = pt::FragmentedMolecule;
-// using cap_pt     = pt::CappedFragments;
-// using ao_pt      = pt::AtomicOrbitals;
-// using atom2ao_pt = simde::AtomToAO;
-// using mod_pt     = pt::FragmentedSystem;
+using frag_sys_pt        = pt::FragmentedChemicalSystem;
+using frag_nuclei_pt     = pt::FragmentedNuclei;
+using frag_sys_traits    = pt::FragmentedChemicalSystemTraits;
+using frag_nuclei_traits = pt::FragmentedNucleiTraits;
+using chem_system_type   = typename frag_sys_traits::system_type;
+using frag_nuclei_type   = typename frag_nuclei_traits::result_type;
+using frag_system_type   = typename frag_sys_traits::result_type;
+using frag_molecule_type = typename frag_system_type::fragmented_molecule_type;
+using charge_list        = typename frag_molecule_type::charge_container;
+using mult_list          = typename frag_molecule_type::multiplicity_container;
 
-// /* Testing Strategy:
-//  *
-//  * The driver routine is pretty straightforward. All we really need to do is
-//  * ensure that the driver calls the submodules with the appropriate inputs and
-//  * that it correctly assigns electrons to atoms.
-//  */
-// TEST_CASE("FragmentedSystem Module") {
-//     auto mm = initialize();
+namespace {
 
-//     auto mol = water(1);
-//     auto bs  = sto3g(mol);
-//     simde::type::chemical_system sys(mol);
+auto make_frag_submod(const chem_system_type& sys,
+                      const frag_nuclei_type& frags) {
+    return pluginplay::make_lambda<frag_nuclei_pt>([=](auto&& sys_in) {
+        REQUIRE(sys_in == sys);
+        return frags;
+    });
+}
 
-//     auto monomer    = testing::fragmented_water(1);
-//     auto mono2ao    = testing::water_ao_pairs(1);
-//     auto caps       = testing::capped_water(1);
-//     auto cap_nuclei = caps.begin()->second.object().nuclei();
+} // namespace
 
-//     // Create and set default submods
-//     auto fragmenter_mod = pluginplay::make_lambda<frag_pt>([=](auto&& mol_in) {
-//         REQUIRE(mol_in == mol);
-//         return monomer;
-//     });
+/* Testing Strategy:
+ *
+ * The driver routine is pretty straightforward. All we really need to do is
+ * ensure that the driver calls the submodules with the appropriate inputs and
+ * that it correctly assigns electrons to atoms.
+ */
 
-//     auto cap_mod = pluginplay::make_lambda<cap_pt>([=](auto&& frags_in) {
-//         REQUIRE(frags_in == monomer);
-//         return caps;
-//     });
+TEST_CASE("FragmentedChemicalSystem Module") {
+    auto mm   = initialize();
+    auto& mod = mm.at("FragmentedChemicalSystem Driver");
 
-//     auto cap_ao_mod = pluginplay::make_lambda<ao_pt>([=](auto&& nuclei) {
-//         REQUIRE(nuclei == cap_nuclei);
-//         return simde::type::ao_space{sto3g(nuclei)};
-//     });
+    for(std::size_t i = 1; i < 5; ++i) {
+        SECTION("Water " + std::to_string(i)) {
+            chem_system_type sys(testing::water(i));
+            auto frags = testing::water_fragmented_nuclei(i);
+            mod.change_submod("Fragmenter", make_frag_submod(sys, frags));
+            const auto& sys_frags = mod.run_as<frag_sys_pt>(sys);
 
-//     auto atom2ao_mod =
-//       pluginplay::make_lambda<atom2ao_pt>([=](auto&& mol_in, auto&& bs_in) {
-//           using return_type = simde::atom_to_center_return_type;
-//           using set_type    = typename return_type::value_type;
-//           if(mol_in == mol) {
-//               REQUIRE(mol_in == mol);
-//               REQUIRE(bs_in == bs);
-//               return_type corr(mol_in.size());
-//               for(std::size_t j = 0; j < mol_in.size(); ++j)
-//                   corr[j] = set_type{j};
-//               return corr;
-//           } else {
-//               REQUIRE(mol_in == cap_nuclei);
-//               REQUIRE(bs_in == sto3g(cap_nuclei));
-//               return return_type{};
-//           }
-//       });
+            charge_list charges(i, 0);
+            mult_list mults(i, 1);
 
-//     auto& mod = mm.at("FragmentedSystem Driver");
-//     mod.change_submod("Fragmenter", fragmenter_mod);
-//     mod.change_submod("Capper", cap_mod);
-//     mod.change_submod("Cap Basis", cap_ao_mod);
-//     mod.change_submod("Atom to AO Mapper", atom2ao_mod);
+            frag_molecule_type mol_frags(frags, 0, 1, charges, mults);
+            frag_system_type corr_frags(mol_frags);
+            REQUIRE(sys_frags == corr_frags);
+        }
+    }
 
-//     SECTION("Standard usage") {
-//         const auto& [frags] = mod.run_as<mod_pt>(sys, bs);
-//         auto corr           = testing::fragmented_water_system(1);
-//         REQUIRE(frags == corr);
-//     }
-
-//     SECTION("Crashes for charged system") {
-//         simde::type::chemical_system charged_water(mol, 11);
-//         REQUIRE_THROWS_AS(mod.run_as<mod_pt>(charged_water, bs),
-//                           std::runtime_error);
-//     }
-// }
+    SECTION("Crashes for charged system") {
+        auto mol = testing::water(1);
+        mol.set_charge(1);
+        chem_system_type charged_water(std::move(mol));
+        using except_t = std::runtime_error;
+        REQUIRE_THROWS_AS(mod.run_as<frag_sys_pt>(charged_water), except_t);
+    }
+}

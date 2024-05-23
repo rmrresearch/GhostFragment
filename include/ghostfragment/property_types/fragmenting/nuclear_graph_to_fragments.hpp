@@ -17,6 +17,7 @@
 #pragma once
 #include <chemist/fragmenting/fragmented_nuclei.hpp>
 #include <ghostfragment/nuclear_graph.hpp>
+#include <simde/simde.hpp>
 
 namespace ghostfragment::pt {
 

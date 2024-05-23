@@ -48,11 +48,19 @@ cmaize_find_or_build_dependency(
     CMAKE_ARGS BUILD_TESTING=OFF
 )
 
+cmaize_find_or_build_dependency(
+    cppitertools
+    URL https://github.com/ryanhaining/cppitertools
+    VERSION v2.1
+    BUILD_TARGET cppitertools
+    FIND_TARGET cppitertools::cppitertools
+)
+
 cmaize_add_library(
     ${PROJECT_NAME}
     SOURCE_DIR "${project_src_dir}/${PROJECT_NAME}"
     INCLUDE_DIRS "${project_inc_dir}"
-    DEPENDS simde
+    DEPENDS simde cppitertools
 )
 
 include(nwx_pybind11)
