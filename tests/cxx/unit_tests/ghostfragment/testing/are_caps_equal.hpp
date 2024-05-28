@@ -8,7 +8,7 @@ using cap_set_type = traits_t::result_type::cap_set_type;
 inline auto are_caps_equal(cap_set_type caps1, cap_set_type caps2) {
     REQUIRE(caps1.size() == caps2.size());
 
-    for(auto i = 0; i < caps1.size(); i++) {
+    for(decltype(caps1.size()) i = 0; i < caps1.size(); i++) {
         REQUIRE(caps1[i].get_anchor_index() == caps2[i].get_anchor_index());
         REQUIRE(caps1[i].get_replaced_index() == caps2[i].get_replaced_index());
 
