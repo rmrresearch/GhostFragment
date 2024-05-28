@@ -19,16 +19,16 @@
 
 using namespace ghostfragment;
 
-using property_type = pt::Intersections;
+using property_type  = pt::Intersections;
 using traits_type    = pt::IntersectionTraits;
 using fragments_type = typename traits_type::input_type;
 using nuclei_type    = typename fragments_type::supersystem_type;
 using nucleus_type   = typename nuclei_type::value_type;
 
 TEST_CASE("Intersection Finder") {
-    auto mm = testing::initialize();
+    auto mm   = testing::initialize();
     auto& mod = mm.at("Intersections");
-    
+
     nuclei_type nuclei;
 
     for(auto i = 0; i < 8; ++i) {

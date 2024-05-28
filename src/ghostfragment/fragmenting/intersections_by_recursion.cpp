@@ -24,8 +24,8 @@ using fragments_type    = typename traits_type::input_type;
 using result_type       = typename traits_type::result_type;
 using nuclear_index_set = typename fragments_type::nucleus_index_set;
 using size_type         = typename nuclear_index_set::size_type;
-    using index_set        = std::set<size_type>;
-    using intersection_set = std::set<index_set>;
+using index_set         = std::set<size_type>;
+using intersection_set  = std::set<index_set>;
 
 namespace {
 template<typename BeginItr, typename EndItr>
@@ -56,16 +56,15 @@ Intersections by Recursion
 
 This module finds the intersections of a set of fragments via recursion.
 )";
-}
+} // namespace
 
-MODULE_CTOR(IntersectionsByRecursion){
+MODULE_CTOR(IntersectionsByRecursion) {
     description(mod_desc);
 
     satisfies_property_type<property_type>();
 }
 
-MODULE_RUN(IntersectionsByRecursion){
-
+MODULE_RUN(IntersectionsByRecursion) {
     auto [frags] = property_type::unwrap_inputs(inputs);
 
     // It's much easier to work with nuclear indices
