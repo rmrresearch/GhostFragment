@@ -30,3 +30,4 @@ jobs:
       doc_target: 'ghostfragment_cxx_api'
     secrets:
       CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      CONTAINER_REPO_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
