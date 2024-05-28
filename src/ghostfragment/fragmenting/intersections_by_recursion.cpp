@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#include "inter_finder.hpp"
-// #include <algorithm>
-// #include <chemist/nucleus/fragmented_nuclei.hpp>
-// #include <cstdlib>
-// #include <iostream>
+#include "fragmenting.hpp"
+#include <ghostfragment/property_types/fragmenting/intersections.hpp>
 
 namespace ghostfragment::fragmenting {
 
-using traits_type       = IntersectionTraits;
+using property_type     = pt::Intersections;
+using traits_type       = pt::IntersectionTraits;
 using fragments_type    = typename traits_type::input_type;
 using result_type       = typename traits_type::result_type;
 using nuclear_index_set = typename fragments_type::nucleus_index_set;
 using size_type         = typename nuclear_index_set::size_type;
+    using index_set        = std::set<size_type>;
+    using intersection_set = std::set<index_set>;
 
-using index_set        = std::set<size_type>;
-using intersection_set = std::set<index_set>;
-
+namespace {
 template<typename BeginItr, typename EndItr>
 void compute_intersection(const index_set& curr_frag, BeginItr&& starting_frag,
                           EndItr&& end_itr, intersection_set& ints_so_far) {
@@ -53,7 +50,24 @@ void compute_intersection(const index_set& curr_frag, BeginItr&& starting_frag,
     }
 }
 
-result_type intersections(fragments_type frags) {
+const auto mod_desc = R"(
+Intersections by Recursion
+--------------------------
+
+This module finds the intersections of a set of fragments via recursion.
+)";
+}
+
+MODULE_CTOR(IntersectionsByRecursion){
+    description(mod_desc);
+
+    satisfies_property_type<property_type>();
+}
+
+MODULE_RUN(IntersectionsByRecursion){
+
+    auto [frags] = property_type::unwrap_inputs(inputs);
+
     // It's much easier to work with nuclear indices
     std::vector<index_set> frag_indices;
 
@@ -77,7 +91,8 @@ result_type intersections(fragments_type frags) {
     for(const auto& intersection_i : intersections)
         frags.insert(intersection_i.begin(), intersection_i.end());
 
-    return frags;
+    auto rv = results();
+    return property_type::wrap_results(rv, frags);
 }
 
 } // namespace ghostfragment::fragmenting

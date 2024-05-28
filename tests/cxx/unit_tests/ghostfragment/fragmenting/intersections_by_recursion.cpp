@@ -15,17 +15,20 @@
  */
 
 #include "../test_ghostfragment.hpp"
-#include <ghostfragment/fragmenting/inter_finder.hpp>
-// #include <iostream>
+#include <ghostfragment/property_types/fragmenting/intersections.hpp>
 
-using namespace ghostfragment::fragmenting;
+using namespace ghostfragment;
 
-using traits_type    = IntersectionTraits;
+using property_type = pt::Intersections;
+using traits_type    = pt::IntersectionTraits;
 using fragments_type = typename traits_type::input_type;
 using nuclei_type    = typename fragments_type::supersystem_type;
 using nucleus_type   = typename nuclei_type::value_type;
 
 TEST_CASE("Intersection Finder") {
+    auto mm = testing::initialize();
+    auto& mod = mm.at("Intersections");
+    
     nuclei_type nuclei;
 
     for(auto i = 0; i < 8; ++i) {
@@ -36,13 +39,15 @@ TEST_CASE("Intersection Finder") {
 
     SECTION("No Fragments") {
         fragments_type corr(nuclei);
-        REQUIRE(intersections(fragmented_nuclei) == corr);
+        auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+        REQUIRE(intersects == corr);
     }
 
     SECTION("One Fragment") {
         fragmented_nuclei.insert({0, 1, 2, 3, 4, 5, 6, 7});
         fragments_type corr(fragmented_nuclei);
-        REQUIRE(intersections(fragmented_nuclei) == corr);
+        auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+        REQUIRE(intersects == corr);
     }
 
     SECTION("Two Fragments") {
@@ -52,7 +57,8 @@ TEST_CASE("Intersection Finder") {
 
             fragments_type corr(fragmented_nuclei);
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
 
         SECTION("Overlap") {
@@ -62,7 +68,8 @@ TEST_CASE("Intersection Finder") {
             fragments_type corr(fragmented_nuclei);
             corr.insert({4});
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
     }
 
@@ -74,7 +81,8 @@ TEST_CASE("Intersection Finder") {
 
             fragments_type corr(fragmented_nuclei);
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
 
         SECTION("One Overlap") {
@@ -85,7 +93,8 @@ TEST_CASE("Intersection Finder") {
             fragments_type corr(fragmented_nuclei);
             corr.insert({2});
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
 
         SECTION("Two Overlaps") {
@@ -97,7 +106,8 @@ TEST_CASE("Intersection Finder") {
             corr.insert({2});
             corr.insert({4});
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
 
         SECTION("Three Overlaps") {
@@ -110,7 +120,8 @@ TEST_CASE("Intersection Finder") {
             corr.insert({3});
             corr.insert({3, 4, 5});
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
     }
 
@@ -123,7 +134,8 @@ TEST_CASE("Intersection Finder") {
 
             fragments_type corr(fragmented_nuclei);
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
 
         SECTION("One Overlap") {
@@ -135,7 +147,8 @@ TEST_CASE("Intersection Finder") {
             fragments_type corr(fragmented_nuclei);
             corr.insert({2});
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
 
         SECTION("Two Overlaps") {
@@ -148,7 +161,8 @@ TEST_CASE("Intersection Finder") {
             corr.insert({2});
             corr.insert({6});
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
 
         SECTION("Three Overlaps") {
@@ -162,7 +176,8 @@ TEST_CASE("Intersection Finder") {
             corr.insert({2, 4});
             corr.insert({6});
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
 
         SECTION("Four Overlaps") {
@@ -177,7 +192,8 @@ TEST_CASE("Intersection Finder") {
             corr.insert({2, 4});
             corr.insert({2, 6});
 
-            REQUIRE(intersections(fragmented_nuclei) == corr);
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
         }
     }
 }

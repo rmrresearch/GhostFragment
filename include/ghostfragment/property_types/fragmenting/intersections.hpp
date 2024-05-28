@@ -16,9 +16,9 @@
 
 #pragma once
 #include <chemist/fragmenting/fragmented_nuclei.hpp>
-#include <utility>
+#include <pluginplay/pluginplay.hpp>
 
-namespace ghostfragment::fragmenting {
+namespace ghostfragment::pt {
 
 struct IntersectionTraits {
     using input_type = chemist::fragmenting::FragmentedNuclei<chemist::Nuclei>;
@@ -26,7 +26,19 @@ struct IntersectionTraits {
     using result_type = input_type;
 };
 
-typename IntersectionTraits::result_type intersections(
-  typename IntersectionTraits::input_type fragmented_system);
+DECLARE_PROPERTY_TYPE(Intersections);
+
+PROPERTY_TYPE_INPUTS(Intersections) {
+  using input0_type = typename IntersectionTraits::input_type;
+  return pluginplay::declare_input().add_field<input0_type>(
+    "Fragments to find intersections of");
+}
+
+PROPERTY_TYPE_RESULTS(Intersections) {
+  using result_type = typename IntersectionTraits::result_type;
+  return pluginplay::declare_result().add_field<result_type>(
+    "Fragments with intersections"
+  );
+}
 
 } // namespace ghostfragment::fragmenting
