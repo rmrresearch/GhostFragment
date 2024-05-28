@@ -1,166 +1,167 @@
-// #include "../test_ghostfragment.hpp"
-// #include <ghostfragment/fragmenting/inter_finder.hpp>
+#include "../test_ghostfragment.hpp"
+#include <ghostfragment/fragmenting/inter_finder.hpp>
 // #include <iostream>
 
-// using namespace ghostfragment::fragmenting;
+using namespace ghostfragment::fragmenting;
 
-// using mol_type  = chemist::FragmentedMolecule;
-// using nuke_type = chemist::FragmentedNuclei;
+using traits_type    = IntersectionTraits;
+using fragments_type = typename traits_type::input_type;
+using nuclei_type    = typename fragments_type::supersystem_type;
+using nucleus_type   = typename nuclei_type::value_type;
 
-// using inter_type = std::vector<std::size_t>;
-// using res_type   = std::map<inter_type, float>;
+TEST_CASE("Intersection Finder") {
+    nuclei_type nuclei;
 
-// using nucleus_type = chemist::Nuclei;
-// using atom_type    = nucleus_type::value_type;
+    for(auto i = 0; i < 8; ++i) {
+        nuclei.push_back(nucleus_type("H", 1ul, 1.0, i, 0.0, 0.0));
+    }
 
-// TEST_CASE("Intersection Finder") {
-//     nucleus_type nuclei;
+    fragments_type fragmented_nuclei(nuclei);
 
-//     for(auto i = 0; i < 8; ++i) {
-//         nuclei.push_back(atom_type("H", 1ul, 1.0, i, 0.0, 0.0));
-//     }
+    SECTION("No Fragments") {
+        fragments_type corr(nuclei);
+        REQUIRE(intersections(fragmented_nuclei) == corr);
+    }
 
-//     nuke_type frag_nuke(nuclei);
-//     res_type corr;
+    SECTION("One Fragment") {
+        fragmented_nuclei.insert({0, 1, 2, 3, 4, 5, 6, 7});
+        fragments_type corr(fragmented_nuclei);
+        REQUIRE(intersections(fragmented_nuclei) == corr);
+    }
 
-//     SECTION("No Fragments") {
-//         mol_type mol(frag_nuke);
-//         REQUIRE(intersections(mol) == corr);
-//     }
+    SECTION("Two Fragments") {
+        SECTION("Disjoint") {
+            fragmented_nuclei.insert({0, 1, 2, 3});
+            fragmented_nuclei.insert({4, 5, 6, 7});
 
-//     SECTION("One Fragment") {
-//         frag_nuke.add_fragment({0, 1, 2, 3, 4, 5, 6, 7});
-//         mol_type mol(frag_nuke);
-//         REQUIRE(intersections(mol) == corr);
-//     }
+            fragments_type corr(fragmented_nuclei);
 
-//     SECTION("Two Fragments") {
-//         SECTION("Disjoint") {
-//             frag_nuke.add_fragment({0, 1, 2, 3});
-//             frag_nuke.add_fragment({4, 5, 6, 7});
-//             mol_type mol(frag_nuke);
-//             REQUIRE(intersections(mol) == corr);
-//         }
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
 
-//         SECTION("Overlap") {
-//             frag_nuke.add_fragment({0, 1, 2, 3, 4});
-//             frag_nuke.add_fragment({4, 5, 6, 7});
-//             mol_type mol(frag_nuke);
+        SECTION("Overlap") {
+            fragmented_nuclei.insert({0, 1, 2, 3, 4});
+            fragmented_nuclei.insert({4, 5, 6, 7});
 
-//             corr.insert({{4}, -1.0});
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({4});
 
-//             REQUIRE(intersections(mol) == corr);
-//         }
-//     }
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
+    }
 
-//     SECTION("Three Fragments") {
-//         SECTION("Disjoint") {
-//             frag_nuke.add_fragment({0, 1, 2});
-//             frag_nuke.add_fragment({3, 4, 5});
-//             frag_nuke.add_fragment({6, 7});
-//             mol_type mol(frag_nuke);
-//             REQUIRE(intersections(mol) == corr);
-//         }
+    SECTION("Three Fragments") {
+        SECTION("Disjoint") {
+            fragmented_nuclei.insert({0, 1, 2});
+            fragmented_nuclei.insert({3, 4, 5});
+            fragmented_nuclei.insert({6, 7});
 
-//         SECTION("One Overlap") {
-//             frag_nuke.add_fragment({0, 1, 2});
-//             frag_nuke.add_fragment({2, 3, 4});
-//             frag_nuke.add_fragment({5, 6, 7});
-//             mol_type mol(frag_nuke);
+            fragments_type corr(fragmented_nuclei);
 
-//             corr.insert({{2}, -1.0});
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
 
-//             REQUIRE(intersections(mol) == corr);
-//         }
+        SECTION("One Overlap") {
+            fragmented_nuclei.insert({0, 1, 2});
+            fragmented_nuclei.insert({2, 3, 4});
+            fragmented_nuclei.insert({5, 6, 7});
 
-//         SECTION("Two Overlaps") {
-//             frag_nuke.add_fragment({0, 1, 2});
-//             frag_nuke.add_fragment({2, 3, 4});
-//             frag_nuke.add_fragment({4, 5, 6, 7});
-//             mol_type mol(frag_nuke);
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({2});
 
-//             corr.insert({{2}, -1.0});
-//             corr.insert({{4}, -1.0});
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
 
-//             REQUIRE(intersections(mol) == corr);
-//         }
+        SECTION("Two Overlaps") {
+            fragmented_nuclei.insert({0, 1, 2});
+            fragmented_nuclei.insert({2, 3, 4});
+            fragmented_nuclei.insert({4, 5, 6, 7});
 
-//         SECTION("Three Overlaps") {
-//             frag_nuke.add_fragment({0, 1, 2, 3});
-//             frag_nuke.add_fragment({2, 3, 4, 5});
-//             frag_nuke.add_fragment({3, 4, 5, 6});
-//             mol_type mol(frag_nuke);
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({2});
+            corr.insert({4});
 
-//             corr.insert({{2, 3}, -1.0});
-//             corr.insert({{3, 4, 5}, -1.0});
-//             corr.insert({{3}, 0.0});
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
 
-//             REQUIRE(intersections(mol) == corr);
-//         }
-//     }
+        SECTION("Three Overlaps") {
+            fragmented_nuclei.insert({0, 1, 2, 3});
+            fragmented_nuclei.insert({2, 3, 4, 5});
+            fragmented_nuclei.insert({3, 4, 5, 6});
 
-//     SECTION("Four Fragments") {
-//         SECTION("Disjoint") {
-//             frag_nuke.add_fragment({0, 1});
-//             frag_nuke.add_fragment({2, 3});
-//             frag_nuke.add_fragment({4, 5});
-//             frag_nuke.add_fragment({6, 7});
-//             mol_type mol(frag_nuke);
-//             REQUIRE(intersections(mol) == corr);
-//         }
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({2, 3});
+            corr.insert({3});
+            corr.insert({3, 4, 5});
 
-//         SECTION("One Overlap") {
-//             frag_nuke.add_fragment({0, 1, 2});
-//             frag_nuke.add_fragment({2, 3});
-//             frag_nuke.add_fragment({4, 5});
-//             frag_nuke.add_fragment({6, 7});
-//             mol_type mol(frag_nuke);
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
+    }
 
-//             corr.insert({{2}, -1.0});
+    SECTION("Four Fragments") {
+        SECTION("Disjoint") {
+            fragmented_nuclei.insert({0, 1});
+            fragmented_nuclei.insert({2, 3});
+            fragmented_nuclei.insert({4, 5});
+            fragmented_nuclei.insert({6, 7});
 
-//             REQUIRE(intersections(mol) == corr);
-//         }
+            fragments_type corr(fragmented_nuclei);
 
-//         SECTION("Two Overlaps") {
-//             frag_nuke.add_fragment({0, 1, 2});
-//             frag_nuke.add_fragment({2, 3});
-//             frag_nuke.add_fragment({4, 5, 6});
-//             frag_nuke.add_fragment({6, 7});
-//             mol_type mol(frag_nuke);
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
 
-//             corr.insert({{2}, -1.0});
-//             corr.insert({{6}, -1.0});
+        SECTION("One Overlap") {
+            fragmented_nuclei.insert({0, 1, 2});
+            fragmented_nuclei.insert({2, 3});
+            fragmented_nuclei.insert({4, 5});
+            fragmented_nuclei.insert({6, 7});
 
-//             REQUIRE(intersections(mol) == corr);
-//         }
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({2});
 
-//         SECTION("Three Overlaps") {
-//             frag_nuke.add_fragment({0, 1, 2});
-//             frag_nuke.add_fragment({2, 3, 4});
-//             frag_nuke.add_fragment({2, 4, 5, 6});
-//             frag_nuke.add_fragment({6, 7});
-//             mol_type mol(frag_nuke);
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
 
-//             corr.insert({{2}, -1.0});
-//             corr.insert({{2, 4}, -1.0});
-//             corr.insert({{6}, -1.0});
+        SECTION("Two Overlaps") {
+            fragmented_nuclei.insert({0, 1, 2});
+            fragmented_nuclei.insert({2, 3});
+            fragmented_nuclei.insert({4, 5, 6});
+            fragmented_nuclei.insert({6, 7});
 
-//             REQUIRE(intersections(mol) == corr);
-//         }
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({2});
+            corr.insert({6});
 
-//         SECTION("Four Overlaps") {
-//             frag_nuke.add_fragment({0, 1, 2, 3});
-//             frag_nuke.add_fragment({2, 3, 4});
-//             frag_nuke.add_fragment({2, 4, 5, 6});
-//             frag_nuke.add_fragment({2, 6, 7});
-//             mol_type mol(frag_nuke);
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
 
-//             corr.insert({{2}, 0});
-//             corr.insert({{2, 3}, -1.0});
-//             corr.insert({{2, 4}, -1.0});
-//             corr.insert({{2, 6}, -1.0});
+        SECTION("Three Overlaps") {
+            fragmented_nuclei.insert({0, 1, 2});
+            fragmented_nuclei.insert({2, 3, 4});
+            fragmented_nuclei.insert({2, 4, 5, 6});
+            fragmented_nuclei.insert({6, 7});
 
-//             REQUIRE(intersections(mol) == corr);
-//         }
-//     }
-// }
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({2});
+            corr.insert({2, 4});
+            corr.insert({6});
+
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
+
+        SECTION("Four Overlaps") {
+            fragmented_nuclei.insert({0, 1, 2, 3});
+            fragmented_nuclei.insert({2, 3, 4});
+            fragmented_nuclei.insert({2, 4, 5, 6});
+            fragmented_nuclei.insert({2, 6, 7});
+
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({2});
+            corr.insert({2, 3});
+            corr.insert({2, 4});
+            corr.insert({2, 6});
+
+            REQUIRE(intersections(fragmented_nuclei) == corr);
+        }
+    }
+}

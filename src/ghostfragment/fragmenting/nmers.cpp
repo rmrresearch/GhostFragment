@@ -1,5 +1,6 @@
 #include "fragmenting.hpp"
 #include <combinations.hpp>
+#include <enumerate.hpp>
 #include <ghostfragment/property_types/fragmenting/nuclear_graph_to_fragments.hpp>
 #include <numeric>
 namespace ghostfragment::fragmenting {
@@ -17,11 +18,11 @@ const auto mod_desc = R"(
 NMers
 =====
 
-Given a set of input fragments, this module will take unions of the input
-fragments to generate **all** fragments, dimers, trimers, on up to |n|-mers
-where the value of |n| is controlled by the user. This module works with both
-disjoint and intersecting fragments; however, for non-disjoint fragments the
-nmers may not be unique.
+Given a set of input fragments, this module will take all |n|-way unions of the
+input fragments. This module works with both disjoint and intersecting
+fragments. For intersecting fragments, this module will ensure that the
+resulting set of |n|-mers are such that no |n|-mer is a subset of another
+|n|-mer (notably this also guarantees their uniqueness).
 )";
 
 MODULE_CTOR(NMers) {
@@ -52,16 +53,46 @@ MODULE_RUN(NMers) {
     std::vector<decltype(n_frags)> frag_indices(n_frags);
     std::iota(frag_indices.begin(), frag_indices.end(), 0);
 
+    // Use a set of sets to avoid copies
+    using index_set_type     = std::set<index_type>;
+    using index_set_set_type = std::set<index_set_type>;
+
+    index_set_set_type nmer_indices;
+
     // Make the mmers
-    for(decltype(n) m = 1; m <= n; ++m) {
-        for(auto&& mmer : iter::combinations(frag_indices, m)) {
-            std::set<index_type> nuclear_indices;
-            for(auto&& frag_index : mmer) {
-                auto buffer = frags.nuclear_indices(frag_index);
-                nuclear_indices.insert(buffer.begin(), buffer.end());
-            }
-            nmers.insert(nuclear_indices.begin(), nuclear_indices.end());
+    for(auto&& mmer : iter::combinations(frag_indices, n)) {
+        index_set_type nuclear_indices;
+        for(auto&& frag_index : mmer) {
+            auto buffer = frags.nuclear_indices(frag_index);
+            nuclear_indices.insert(buffer.begin(), buffer.end());
         }
+        nmer_indices.insert(nuclear_indices);
+    }
+
+    // This block ensures we only add non subsets
+
+    // This is used to avoid comparing against sets we know are subsets already
+    std::vector<bool> i_is_good(nmer_indices.size(), true);
+
+    for(const auto&& [i, nmer_i] : iter::enumerate(nmer_indices)) {
+        // N.b. "x is not a subset of y" does NOT mean that
+        // "y is not a subset of x", i.e., this loop must always consider the
+        // full range.
+        for(const auto&& [j, nmer_j] : iter::enumerate(nmer_indices)) {
+            // Every set is a subset of itself, so skip i == j, also skip j if
+            // we already know it's a subset of something else (i.e., if i was
+            // going to be a subset of j, and j is a subset of say x, then i
+            // is also going to be a subset of x)
+            if(i == j || !i_is_good[j]) continue;
+
+            // Checks if nmer_i is a subset of nmer_j
+            if(std::includes(nmer_j.begin(), nmer_j.end(), nmer_i.begin(),
+                             nmer_i.end())) {
+                i_is_good[i] = false;
+                break; // Early out b/c it's a subset
+            }
+        }
+        if(i_is_good[i]) nmers.insert(nmer_i.begin(), nmer_i.end());
     }
 
     auto rv = results();

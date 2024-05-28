@@ -1,101 +1,67 @@
-// #include "inter_finder.hpp"
+#include "inter_finder.hpp"
 // #include <algorithm>
 // #include <chemist/nucleus/fragmented_nuclei.hpp>
-// #include <cmath>
 // #include <cstdlib>
 // #include <iostream>
 
-// using namespace ghostfragment::fragmenting;
+namespace ghostfragment::fragmenting {
 
-// using nuke_type = chemist::FragmentedNuclei;
+using traits_type       = IntersectionTraits;
+using fragments_type    = typename traits_type::input_type;
+using result_type       = typename traits_type::result_type;
+using nuclear_index_set = typename fragments_type::nucleus_index_set;
+using size_type         = typename nuclear_index_set::size_type;
 
-// using frag_type   = std::vector<std::size_t>;
-// using system_type = std::vector<frag_type>;
+using index_set        = std::set<size_type>;
+using intersection_set = std::set<index_set>;
 
-// using group_type = std::vector<std::size_t>;
+template<typename BeginItr, typename EndItr>
+void compute_intersection(const index_set& curr_frag, BeginItr&& starting_frag,
+                          EndItr&& end_itr, intersection_set& ints_so_far) {
+    while(starting_frag != end_itr) {
+        index_set intersection;
+        auto itr = std::inserter(intersection, intersection.begin());
+        std::set_intersection(curr_frag.begin(), curr_frag.end(),
+                              starting_frag->begin(), starting_frag->end(),
+                              itr);
+        ++starting_frag;
+        // If it's empty and/or we've seen it befor just move on
+        if(intersection.empty() || ints_so_far.count(intersection)) continue;
 
-// using log_type = std::map<std::pair<std::size_t, std::size_t>, inter_type>;
+        // Add the intersection
+        ints_so_far.insert(intersection);
 
-// res_type find_group_intersections(const system_type& fragments,
-//                                   inter_type inter, std::size_t recent_add,
-//                                   res_type m, const log_type& log,
-//                                   group_type& group) {
-//     if(group.size() > 2) {
-//         for(std::size_t i = 0; i < group.size() - 1; ++i) {
-//             if(log.count(std::make_pair(group[i], recent_add)) == 0) return
-//             m;
-//         }
-//         inter_type::iterator it = set_intersection(
-//           inter.begin(), inter.end(), fragments[recent_add].begin(),
-//           fragments[recent_add].end(), inter.begin());
-//         inter.resize(it - inter.begin());
-//     } else if(group.size() == 2) {
-//         std::pair<int, int> p(group[0], group[1]);
-//         if(log.count(p))
-//             inter = log.at(p);
-//         else
-//             inter.clear();
-//     }
+        // Copy iterator so we leave starting_frag unchanged when we recurse
+        decltype(starting_frag) new_begin(starting_frag);
+        compute_intersection(intersection, new_begin, end_itr, ints_so_far);
+    }
+}
 
-//     if(!(inter.empty())) {
-//         if(m.count(inter) > 0)
-//             m[inter] += (group.size() % 2 == 0) ? -1 : 1;
-//         else if(group.size() > 1)
-//             m[inter] = (group.size() % 2 == 0) ? -1 : 1;
+result_type intersections(fragments_type frags) {
+    // It's much easier to work with nuclear indices
+    std::vector<index_set> frag_indices;
 
-//         for(std::size_t new_frag = recent_add + 1; new_frag <
-//         fragments.size();
-//             ++new_frag) {
-//             group_type new_group(group);
-//             new_group.push_back(new_frag);
-//             m = find_group_intersections(fragments, inter, new_frag,
-//                                          std::move(m), log, new_group);
-//         }
-//     }
-//     return m;
-// }
+    for(size_type i = 0; i < frags.size(); ++i) {
+        const auto frag_i = frags.nuclear_indices(i);
+        frag_indices.emplace_back(frag_i.begin(), frag_i.end());
+    }
 
-// log_type find_pair_intersections(const system_type& fragments) {
-//     log_type log;
-//     inter_type::iterator it;
-//     for(std::size_t i = 0; i < fragments.size(); ++i) {
-//         for(std::size_t j = i + 1; j < fragments.size(); ++j) {
-//             std::size_t smaller =
-//               std::min(fragments[i].size(), fragments[j].size());
-//             inter_type inter(smaller);
-//             it = set_intersection(fragments[i].begin(), fragments[i].end(),
-//                                   fragments[j].begin(), fragments[j].end(),
-//                                   inter.begin());
-//             inter.resize(it - inter.begin());
+    std::set<index_set> intersections;
 
-//             if(!(inter.empty()))
-//                 log.insert(std::make_pair(std::make_pair(i, j), inter));
-//         }
-//     }
-//     return log;
-// }
+    auto begin = frag_indices.begin();
+    auto end   = frag_indices.end();
 
-// system_type create_system(const mol_type& mol) {
-//     system_type fragments;
-//     const nuke_type f_nuclei = mol.fragmented_nuclei();
-//     for(std::size_t i = 0; i < f_nuclei.size(); ++i) {
-//         auto nukes = f_nuclei[i];
-//         frag_type fragment;
-//         for(const auto atom_i : nukes) { fragment.push_back(atom_i); }
-//         fragments.push_back(fragment);
-//     }
-//     return fragments;
-// }
+    while(begin != end) {
+        index_set frag = *begin;
+        ++begin;
+        decltype(begin) begin_copy(begin);
+        compute_intersection(frag, begin_copy, end, intersections);
+    }
 
-// res_type ghostfragment::fragmenting::intersections(const mol_type& mol) {
-//     res_type m;
-//     system_type fragments = create_system(mol);
-//     const log_type log    = find_pair_intersections(fragments);
-//     for(std::size_t i = 0; i < fragments.size(); ++i) {
-//         inter_type inter(fragments[i]);
-//         group_type group({i});
-//         m = find_group_intersections(fragments, inter, i, std::move(m), log,
-//                                      group);
-//     }
-//     return m;
-// }
+    for(const auto& intersection_i : intersections)
+        frags.insert(intersection_i.begin(), intersection_i.end());
+
+    return frags;
+}
+
+} // namespace ghostfragment::fragmenting

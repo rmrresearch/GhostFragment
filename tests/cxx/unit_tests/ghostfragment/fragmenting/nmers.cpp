@@ -30,10 +30,10 @@ TEST_CASE("NMers") {
             // Waters as pseudoatoms == heavy-atom partitioning
             graph_type graph(monomers, conns);
             mod.change_submod("Monomer maker", make_monomers(graph, monomers));
-            auto corr = testing::water_fragmented_nuclei(n_waters);
 
             SECTION("monomers") {
                 mod.change_input("n", size_type{1});
+                auto corr  = testing::water_fragmented_nuclei(n_waters);
                 auto nmers = mod.run_as<my_pt>(graph);
                 REQUIRE(nmers == corr);
             }
@@ -48,16 +48,17 @@ TEST_CASE("NMers") {
             graph_type graph(monomers, conns);
 
             mod.change_submod("Monomer maker", make_monomers(graph, monomers));
-            auto corr = testing::water_fragmented_nuclei(n_waters);
 
             SECTION("monomers") {
                 mod.change_input("n", size_type{1});
                 auto nmers = mod.run_as<my_pt>(graph);
+                auto corr  = testing::water_fragmented_nuclei(n_waters);
                 REQUIRE(nmers == corr);
             }
 
             SECTION("dimers") {
                 mod.change_input("n", size_type{2});
+                frags_type corr(monomers.supersystem().as_nuclei());
                 corr.insert({0, 1, 2, 3, 4, 5});
                 auto nmers = mod.run_as<my_pt>(graph);
                 REQUIRE(nmers == corr);
@@ -73,16 +74,17 @@ TEST_CASE("NMers") {
             graph_type graph(monomers, conns);
 
             mod.change_submod("Monomer maker", make_monomers(graph, monomers));
-            auto corr = testing::water_fragmented_nuclei(n_waters);
 
             SECTION("monomers") {
                 mod.change_input("n", size_type{1});
+                auto corr  = testing::water_fragmented_nuclei(n_waters);
                 auto nmers = mod.run_as<my_pt>(graph);
                 REQUIRE(nmers == corr);
             }
 
             SECTION("dimers") {
                 mod.change_input("n", size_type{2});
+                frags_type corr(monomers.supersystem().as_nuclei());
                 corr.insert({0, 1, 2, 3, 4, 5});
                 corr.insert({0, 1, 2, 6, 7, 8});
                 corr.insert({3, 4, 5, 6, 7, 8});
@@ -92,9 +94,7 @@ TEST_CASE("NMers") {
 
             SECTION("trimers") {
                 mod.change_input("n", size_type{3});
-                corr.insert({0, 1, 2, 3, 4, 5});
-                corr.insert({0, 1, 2, 6, 7, 8});
-                corr.insert({3, 4, 5, 6, 7, 8});
+                frags_type corr(monomers.supersystem().as_nuclei());
                 corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8});
                 auto nmers = mod.run_as<my_pt>(graph);
                 REQUIRE(nmers == corr);
@@ -109,15 +109,14 @@ TEST_CASE("NMers") {
             auto conns          = testing::hydrocarbon_connectivity(n_carbons);
             auto monomers       = hydrocarbon_fragmented_nuclei(n_carbons, 2);
 
-            // Waters as pseudoatoms == heavy-atom partitioning
             graph_type graph(monomers, conns);
             mod.change_submod("Monomer maker", make_monomers(graph, monomers));
             frags_type corr(monomers.supersystem().as_nuclei());
-            corr.insert({0, 1, 3, 4, 5, 6, 7});
-            corr.insert({1, 2, 6, 7, 8, 9, 10});
 
             SECTION("monomers") {
                 mod.change_input("n", size_type{1});
+                corr.insert({0, 1, 3, 4, 5, 6, 7});
+                corr.insert({1, 2, 6, 7, 8, 9, 10});
                 auto nmers = mod.run_as<my_pt>(graph);
                 REQUIRE(nmers == corr);
             }
@@ -135,35 +134,59 @@ TEST_CASE("NMers") {
             auto conns          = testing::hydrocarbon_connectivity(n_carbons);
             auto monomers       = hydrocarbon_fragmented_nuclei(n_carbons, 2);
 
-            // Waters as pseudoatoms == heavy-atom partitioning
             graph_type graph(monomers, conns);
             mod.change_submod("Monomer maker", make_monomers(graph, monomers));
             frags_type corr(monomers.supersystem().as_nuclei());
-            corr.insert({0, 1, 4, 5, 6, 7, 8});
-            corr.insert({1, 2, 7, 8, 9, 10});
-            corr.insert({2, 3, 9, 10, 11, 12, 13});
 
             SECTION("monomers") {
                 mod.change_input("n", size_type{1});
                 auto nmers = mod.run_as<my_pt>(graph);
+                corr.insert({0, 1, 4, 5, 6, 7, 8});
+                corr.insert({1, 2, 7, 8, 9, 10});
+                corr.insert({2, 3, 9, 10, 11, 12, 13});
                 REQUIRE(nmers == corr);
             }
 
             SECTION("dimers") {
                 mod.change_input("n", size_type{2});
-                corr.insert({0, 1, 2, 4, 5, 6, 7, 8, 9, 10});
                 corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
-                corr.insert({1, 2, 3, 7, 8, 9, 10, 11, 12, 13});
                 auto nmers = mod.run_as<my_pt>(graph);
                 REQUIRE(nmers == corr);
             }
 
             SECTION("trimers") {
                 mod.change_input("n", size_type{3});
-                corr.insert({0, 1, 2, 4, 5, 6, 7, 8, 9, 10});
                 corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
-                corr.insert({1, 2, 3, 7, 8, 9, 10, 11, 12, 13});
-                corr.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+                auto nmers = mod.run_as<my_pt>(graph);
+                REQUIRE(nmers == corr);
+            }
+        }
+
+        // First time the dimers aren't equal to the full system
+        SECTION("Pentane") {
+            size_type n_carbons = 5;
+            auto conns          = testing::hydrocarbon_connectivity(n_carbons);
+            auto monomers       = hydrocarbon_fragmented_nuclei(n_carbons, 2);
+
+            graph_type graph(monomers, conns);
+            mod.change_submod("Monomer maker", make_monomers(graph, monomers));
+            frags_type corr(monomers.supersystem().as_nuclei());
+
+            SECTION("monomers") {
+                mod.change_input("n", size_type{1});
+                auto nmers = mod.run_as<my_pt>(graph);
+                corr.insert({0, 1, 5, 6, 7, 8, 9});
+                corr.insert({1, 2, 8, 9, 10, 11});
+                corr.insert({2, 3, 10, 11, 12, 13});
+                corr.insert({3, 4, 12, 13, 14, 15, 16});
+                REQUIRE(nmers == corr);
+            }
+
+            SECTION("dimers") {
+                mod.change_input("n", size_type{2});
+                corr.insert({0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+                corr.insert({0, 1, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16});
+                corr.insert({1, 2, 3, 4, 8, 9, 10, 11, 12, 13, 14, 15, 16});
                 auto nmers = mod.run_as<my_pt>(graph);
                 REQUIRE(nmers == corr);
             }
