@@ -18,7 +18,9 @@ import pluginplay
 import ghostfragment
 import unittest
 
+
 class TestCapping(unittest.TestCase):
+
     def setUp(self):
         mm = pluginplay.ModuleManager()
         ghostfragment.load_modules(mm)

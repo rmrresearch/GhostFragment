@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 class SetBase:
+
     def __init__(self, *args):
         self.terms = []
         # This makes sure we only add unique elements

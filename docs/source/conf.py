@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import os
 
 # -- Project information -----------------------------------------------------
@@ -40,15 +39,9 @@ release = version
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.githubpages',
-    'sphinx_togglebutton',
-    'sphinxcontrib.bibtex',
+    'sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx',
+    'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.mathjax',
+    'sphinx.ext.githubpages', 'sphinx_togglebutton', 'sphinxcontrib.bibtex',
     'sphinx_rtd_theme'
 ]
 
@@ -90,7 +83,7 @@ exclude_patterns = []
 pygments_style = 'sphinx'
 
 # Enable/disable numbered figures
-numfig  = True
+numfig = True
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -103,15 +96,13 @@ html_theme = 'sphinx_rtd_theme'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    'vcs_pageview_mode' : 'edit'
-}
+html_theme_options = {'vcs_pageview_mode': 'edit'}
 
 html_context = {
-  'display_github': True,
-  'github_user': 'rmrresearch',
-  'github_repo': 'ghostfragment',
-  'github_version': 'master/docs/source/',
+    'display_github': True,
+    'github_user': 'rmrresearch',
+    'github_repo': 'ghostfragment',
+    'github_version': 'master/docs/source/',
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -129,12 +120,10 @@ html_context = {
 #
 # html_sidebars = {}
 
-
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = project + 'doc'
-
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -160,17 +149,13 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, project + '.tex',project + ' Documentation', author, 'manual'),
+    (master_doc, project + '.tex', project + ' Documentation', author,
+     'manual'),
 ]
-
-
-
 
 # -- Extension configuration -------------------------------------------------
 
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'python' : ('https://docs.python.org/', None) }
-
-
+intersphinx_mapping = {'python': ('https://docs.python.org/', None)}

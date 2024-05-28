@@ -15,13 +15,16 @@
 import unittest
 import sys
 import os
+
 sys.path.insert(0, os.path.join(os.getcwd(), ".."))
 
 from union import Union
 from intersection import Intersection
 from index import Index
 
+
 class IndexTest(unittest.TestCase):
+
     def setUp(self):
         self.i = Index("I")
         self.j = Index("J")
