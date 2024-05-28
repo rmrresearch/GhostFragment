@@ -46,4 +46,4 @@ inline double covalent_radius(std::size_t z) {
     return cov_radii[z - 1];
 }
 
-} // namespace ghostfragment::connectivity
+} // namespace ghostfragment::topology

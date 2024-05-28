@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // #include "test_ghostfragment.hpp"
 // #include <ghostfragment/nmer_system.hpp>
 
@@ -123,20 +139,22 @@
 //     }
 
 //     SECTION("n_electrons(nmer)") {
-//         REQUIRE_THROWS_AS(defaulted.n_electrons(dimers[0]), std::runtime_error);
-//         REQUIRE(has_value.n_electrons(dimers[0]) == 20);
+//         REQUIRE_THROWS_AS(defaulted.n_electrons(dimers[0]),
+//         std::runtime_error); REQUIRE(has_value.n_electrons(dimers[0]) == 20);
 //         REQUIRE(has_value.n_electrons(dimers[1]) == 20);
 //         REQUIRE(has_value.n_electrons(dimers[2]) == 20);
-//         REQUIRE_THROWS_AS(has_value.n_electrons(trimers[0]), std::out_of_range);
+//         REQUIRE_THROWS_AS(has_value.n_electrons(trimers[0]),
+//         std::out_of_range);
 //     }
 
 //     SECTION("n_electrons(frag)") {
 //         auto bad_water = fragmented_water(4)[0];
-//         REQUIRE_THROWS_AS(defaulted.n_electrons(bad_water), std::runtime_error);
-//         REQUIRE(has_value.n_electrons(frags.fragment(0)) == 10);
-//         REQUIRE(has_value.n_electrons(frags.fragment(1)) == 10);
+//         REQUIRE_THROWS_AS(defaulted.n_electrons(bad_water),
+//         std::runtime_error); REQUIRE(has_value.n_electrons(frags.fragment(0))
+//         == 10); REQUIRE(has_value.n_electrons(frags.fragment(1)) == 10);
 //         REQUIRE(has_value.n_electrons(frags.fragment(2)) == 10);
-//         REQUIRE_THROWS_AS(has_value.n_electrons(bad_water), std::out_of_range);
+//         REQUIRE_THROWS_AS(has_value.n_electrons(bad_water),
+//         std::out_of_range);
 //     }
 
 //     SECTION("Comparisons") {

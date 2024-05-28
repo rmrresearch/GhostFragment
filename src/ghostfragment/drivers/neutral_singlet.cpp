@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // #include "drivers.hpp"
 // #include <ghostfragment/property_types/charge_multiplicity_assigner.hpp>
 // #include <chemist/molecule/molecule.hpp>
@@ -18,7 +34,8 @@
 // This module assigns a charge of zero
 // and a multiplicity of one to each input fragment.
 
-// The inputs to this module are fragments, a cap set, and the original molecule.
+// The inputs to this module are fragments, a cap set, and the original
+// molecule.
 // )""";
 // } // end namespace
 
@@ -34,7 +51,6 @@
 //     // Charge vector is only populated with 0s
 //     charge_result_type charges(frags.size(), 0);
 //     mult_result_type multiplicities;
-
 
 //     // Goes over every fragment and attempts
 //     // to set each one's multiplicity to one.
@@ -62,9 +78,10 @@
 //             multiplicities.push_back(1);
 //         }
 
-//         // With an odd number of electrons, a multiplicity of one is impossible
-//         else {
-//             throw std::runtime_error("An odd number of electrons cannot have multiplicity of one");
+//         // With an odd number of electrons, a multiplicity of one is
+//         impossible else {
+//             throw std::runtime_error("An odd number of electrons cannot have
+//             multiplicity of one");
 //         }
 //     }
 

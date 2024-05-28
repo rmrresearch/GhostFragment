@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // #include "../test_ghostfragment.hpp"
 // #include <simde/energy/ao_energy.hpp>
 
@@ -13,7 +29,8 @@
 //  *
 //  * - frag_mod checks that the inputs to the FragmentBasedMethod driver are
 //  *   forwarded to it correctly and then returns a set of fragments
-//  * - nmer_mod makes sure it's given the set of fragments from frag_mod and then
+//  * - nmer_mod makes sure it's given the set of fragments from frag_mod and
+//  then
 //  *   returns a set of n-mers
 //  * - expr_mod checks that it's given set of n-mers from nmer_mod and then
 //  *   creates an expression which depends on the number of fragments and the
@@ -39,14 +56,14 @@
 // using nmer_sys_pt   = pt::NMerSystem;
 // using expression_pt = pt::Expression;
 
-// // Checks that we pass in the correct system/AO pair, returns a set of fragments
-// auto frag_mod(std::size_t n_waters) {
+// // Checks that we pass in the correct system/AO pair, returns a set of
+// fragments auto frag_mod(std::size_t n_waters) {
 //     return pluginplay::make_lambda<frag_sys_pt>([=](auto&& mol_in,
 //                                                     auto&& aos_in) {
-//         simde::type::chemical_system s(testing::water(n_waters), 10 * n_waters);
-//         REQUIRE(mol_in == s);
-//         REQUIRE(aos_in == testing::sto3g(s.molecule()));
-//         return testing::fragmented_water_system(n_waters);
+//         simde::type::chemical_system s(testing::water(n_waters), 10 *
+//         n_waters); REQUIRE(mol_in == s); REQUIRE(aos_in ==
+//         testing::sto3g(s.molecule())); return
+//         testing::fragmented_water_system(n_waters);
 //     });
 // }
 
@@ -104,7 +121,8 @@
 //                 const std::size_t n_waters = n;
 //                 auto mol                   = testing::water(n_waters);
 //                 simde::type::chemical_system sys(mol, n_waters * 10);
-//                 auto aos = chemist::orbital_space::AOSpace(testing::sto3g(mol));
+//                 auto aos =
+//                 chemist::orbital_space::AOSpace(testing::sto3g(mol));
 
 //                 mod.change_submod("Fragment Maker", frag_mod(n_waters));
 //                 mod.change_submod("N-Mer Maker", nmer_mod(n_waters, m));
