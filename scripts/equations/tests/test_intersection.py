@@ -15,6 +15,7 @@
 import unittest
 import sys
 import os
+
 sys.path.insert(0, os.path.join(os.getcwd(), ".."))
 
 from union import Union
@@ -23,6 +24,7 @@ from index import Index
 
 
 class IntersectionTest(unittest.TestCase):
+
     def setUp(self):
         i, j, k, l = Index("I"), Index("J"), Index("K"), Index("L")
         self.icj = Intersection(i, j)
@@ -35,7 +37,7 @@ class IntersectionTest(unittest.TestCase):
         self.assertFalse(self.icjck.is_union())
         self.assertFalse(self.icjckcl.is_union())
         self.assertFalse(self.icjk.is_union())
-    
+
     def test_is_intersection(self):
         self.assertTrue(self.icj.is_intersection())
         self.assertTrue(self.icjck.is_intersection())
@@ -48,12 +50,12 @@ class IntersectionTest(unittest.TestCase):
         self.assertFalse(self.icjckcl.is_index())
         self.assertFalse(self.icjk.is_index())
 
-    def test_associate(self):      
+    def test_associate(self):
         i, j, k, l = Index("I"), Index("J"), Index("K"), Index("L")
 
         corr = Intersection(i, j)
         self.assertEqual(self.icj.associate(), corr)
-        
+
         corr = Intersection(i, j, k)
         self.assertEqual(self.icjck.associate(), corr)
 
@@ -75,7 +77,7 @@ class IntersectionTest(unittest.TestCase):
 
         corr = Intersection(i, j)
         self.assertEqual(self.icj.distribute(), corr)
-        
+
         corr = Intersection(i, j, k)
         self.assertEqual(self.icjck.distribute(), corr)
 
@@ -94,12 +96,11 @@ class IntersectionTest(unittest.TestCase):
         self.assertEqual(i_jck_jk.distribute(), corr)
 
         ijcikcjk = Intersection(Union(i, j), Union(i, k), Union(j, k))
-        corr = Union(Intersection(i, i, j), Intersection(i, i, k), 
+        corr = Union(Intersection(i, i, j), Intersection(i, i, k),
                      Intersection(i, k, j), Intersection(i, k, k),
-                     Intersection(j, i, j), Intersection(j, i, k), 
+                     Intersection(j, i, j), Intersection(j, i, k),
                      Intersection(j, k, j), Intersection(j, k, k))
         self.assertEqual(ijcikcjk.distribute(), corr)
-
 
     def test_equal(self):
         i, j, k, l = Index("I"), Index("J"), Index("K"), Index("L")

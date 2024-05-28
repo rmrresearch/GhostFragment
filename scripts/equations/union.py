@@ -13,10 +13,13 @@
 # limitations under the License.
 
 from set_base import SetBase
+
+
 class Union(SetBase):
     """ Class representing a set which has been formed by taking the symbolic
         union of one or more objects.
     """
+
     def print_type(self):
         rv = "Union("
         for x in self.terms:
@@ -50,7 +53,6 @@ class Union(SetBase):
 
         # Getting here means we have an index or an intersection
         return False
-
 
     def clean_up(self):
         new_terms = [x.clean_up() for x in self.terms]
@@ -90,9 +92,8 @@ class Union(SetBase):
             new_terms.append(x.distribute())
         return Union(*new_terms).associate()
 
-
     def __lt__(self, rhs):
-        if rhs.is_index(): 
+        if rhs.is_index():
             return False
         elif rhs.is_intersection():
             return True
@@ -109,7 +110,7 @@ class Union(SetBase):
             x_str = str(self.terms[i])
 
             if self.terms[i].is_intersection():
-               x_str = "(" + x_str + ")"
+                x_str = "(" + x_str + ")"
 
             if i == 0:
                 rv = x_str

@@ -15,6 +15,7 @@
 import unittest
 import sys
 import os
+
 sys.path.insert(0, os.path.join(os.getcwd(), ".."))
 
 from union import Union
@@ -23,6 +24,7 @@ from index import Index
 
 
 class UnionTest(unittest.TestCase):
+
     def setUp(self):
         i, j, k, l = Index("I"), Index("J"), Index("K"), Index("L")
         self.ij = Union(i, j)
@@ -35,7 +37,7 @@ class UnionTest(unittest.TestCase):
         self.assertTrue(self.ijk.is_union())
         self.assertTrue(self.ijkl.is_union())
         self.assertTrue(self.i_jck.is_union())
-    
+
     def test_is_intersection(self):
         self.assertFalse(self.ij.is_intersection())
         self.assertFalse(self.ijk.is_intersection())
@@ -48,12 +50,12 @@ class UnionTest(unittest.TestCase):
         self.assertFalse(self.ijkl.is_index())
         self.assertFalse(self.i_jck.is_index())
 
-    def test_associate(self):      
+    def test_associate(self):
         i, j, k, l = Index("I"), Index("J"), Index("K"), Index("L")
 
         corr = Union(i, j)
         self.assertEqual(self.ij.associate(), corr)
-        
+
         corr = Union(i, j, k)
         self.assertEqual(self.ijk.associate(), corr)
 
@@ -70,13 +72,12 @@ class UnionTest(unittest.TestCase):
         i_jck_jk = Union(i, jck, Union(j, k))
         self.assertEqual(i_jck_jk.associate(), Union(i, jck, j, k))
 
-
     def test_distribute(self):
         i, j, k, l = Index("I"), Index("J"), Index("K"), Index("L")
 
         corr = Union(i, j)
         self.assertEqual(self.ij.distribute(), corr)
-        
+
         corr = Union(i, j, k)
         self.assertEqual(self.ijk.distribute(), corr)
 
@@ -96,7 +97,6 @@ class UnionTest(unittest.TestCase):
         i_jkcl = Union(i, Intersection(Union(j, k), l))
         corr = Union(i, Intersection(j, l), Intersection(k, l))
         self.assertEqual(i_jkcl.distribute(), corr)
-
 
     def test_equal(self):
         i, j, k, l = Index("I"), Index("J"), Index("K"), Index("L")

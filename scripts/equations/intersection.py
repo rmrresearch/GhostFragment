@@ -14,6 +14,8 @@
 
 from set_base import SetBase
 from union import Union
+
+
 class Intersection(SetBase):
     """ Class representing a symbolic intersection of indices.
     """
@@ -36,19 +38,17 @@ class Intersection(SetBase):
             return self.count(rhs) == 1
         elif rhs.is_union():
             for x in self.terms:
-               if rhs.count(x):
-                   return True
+                if rhs.count(x):
+                    return True
             return False
         elif rhs.is_intersection():
-            if len(rhs) >=  len(self):
+            if len(rhs) >= len(self):
                 return False
             # Every term in rhs, must be in us
             for x in rhs.terms:
                 if self.count(x) == 0:
                     return False
             return True
-
-
 
     def clean_up(self):
         new_terms = [x.clean_up() for x in self.terms]
@@ -71,7 +71,6 @@ class Intersection(SetBase):
                 new_terms.append(new_term)
         return Intersection(*new_terms)
 
-
     def distribute(self):
         new_terms = self.associate()
         nterms = len(new_terms)
@@ -80,8 +79,8 @@ class Intersection(SetBase):
             newi = new_terms[i].distribute()
             if newi.is_union():
                 lhs = rv
-                rhs = new_terms[i + 1 : nterms]
-                rv = [ ]
+                rhs = new_terms[i + 1:nterms]
+                rv = []
                 for x in new_terms[i].terms:
                     rv.append(Intersection(*lhs, x, *rhs).distribute())
                 return Union(*rv).associate()
