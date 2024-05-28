@@ -112,4 +112,4 @@ std::array<float, 3> position_hydrogen(const std::vector<float>& source_coords,
     return coords;
 }
 
-}
+} // namespace testing
