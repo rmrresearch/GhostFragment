@@ -62,11 +62,11 @@ MODULE_RUN(Fragment) {
     auto& graph_mod   = submods.at("Molecular Graph");
     const auto& graph = graph_mod.run_as<graph_pt>(mol);
 
-    auto& frags_mod   = submods.at("Molecular graph to fragments");
+    auto& frags_mod           = submods.at("Molecular graph to fragments");
     const auto& frags_no_ints = frags_mod.run_as<graph2frags_pt>(graph);
 
     auto& intersect_mod = submods.at("Intersection finder");
-    const auto& frags  = intersect_mod.run_as<intersections_pt>(frags_no_ints);
+    const auto& frags   = intersect_mod.run_as<intersections_pt>(frags_no_ints);
 
     auto& bonds_mod          = submods.at("Find broken bonds");
     const auto& conns        = graph.edges();
