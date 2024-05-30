@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "hydrocarbon/hydrocarbon.hpp"
+#include "hydrocarbon.hpp"
 #include <catch2/catch.hpp>
 
 namespace testing {

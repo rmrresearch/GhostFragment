@@ -17,16 +17,18 @@
 #include "drivers.hpp"
 #include <ghostfragment/property_types/fragmenting/capped_fragments.hpp>
 #include <ghostfragment/property_types/fragmenting/fragmented_nuclei.hpp>
+#include <ghostfragment/property_types/fragmenting/intersections.hpp>
 #include <ghostfragment/property_types/fragmenting/nuclear_graph_to_fragments.hpp>
 #include <ghostfragment/property_types/topology/broken_bonds.hpp>
 #include <ghostfragment/property_types/topology/nuclear_graph.hpp>
 namespace ghostfragment::drivers {
 
-using broken_bonds_pt = pt::BrokenBonds;
-using cap_pt          = pt::CappedFragments;
-using frags_pt        = pt::FragmentedNuclei;
-using graph_pt        = pt::NuclearGraph;
-using graph2frags_pt  = pt::NuclearGraphToFragments;
+using broken_bonds_pt  = pt::BrokenBonds;
+using cap_pt           = pt::CappedFragments;
+using frags_pt         = pt::FragmentedNuclei;
+using intersections_pt = pt::Intersections;
+using graph_pt         = pt::NuclearGraph;
+using graph2frags_pt   = pt::NuclearGraphToFragments;
 
 const auto mod_desc = R"(
 Fragment Driver
@@ -37,6 +39,7 @@ a chemist::FragmentedNuclei object. Generally speaking this occurs by:
 
 #. Determining the connectivity of the ChemicalSystem
 #. Fragmenting the resulting molecular graph
+#. Find intersections for the fragments
 #. Determine if bonds were broken
 #. Cap the broken bonds
 
@@ -48,6 +51,7 @@ MODULE_CTOR(Fragment) {
 
     add_submodule<graph_pt>("Molecular graph");
     add_submodule<graph2frags_pt>("Molecular graph to fragments");
+    add_submodule<intersections_pt>("Intersection finder");
     add_submodule<broken_bonds_pt>("Find broken bonds");
     add_submodule<cap_pt>("Cap broken bonds");
 }
@@ -59,7 +63,10 @@ MODULE_RUN(Fragment) {
     const auto& graph = graph_mod.run_as<graph_pt>(mol);
 
     auto& frags_mod   = submods.at("Molecular graph to fragments");
-    const auto& frags = frags_mod.run_as<graph2frags_pt>(graph);
+    const auto& frags_no_ints = frags_mod.run_as<graph2frags_pt>(graph);
+
+    auto& intersect_mod = submods.at("Intersection finder");
+    const auto& frags  = intersect_mod.run_as<intersections_pt>(frags_no_ints);
 
     auto& bonds_mod          = submods.at("Find broken bonds");
     const auto& conns        = graph.edges();
