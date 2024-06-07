@@ -56,12 +56,14 @@ MODULE_CTOR(HeavyAtom) {
 MODULE_RUN(HeavyAtom) {
     using fragmented_nuclei = typename pt::FragmentedNucleiTraits::result_type;
     using size_type         = typename fragmented_nuclei::size_type;
+    auto& logger            = get_runtime().logger();
 
     const auto& [system] = frags_pt::unwrap_inputs(inputs);
     const auto& mol      = system.molecule();
 
     auto& con_mod     = submods.at("Connectivity");
     const auto& conns = con_mod.run_as<conn_pt>(mol);
+    logger.debug("Found " + std::to_string(conns.nbonds()) + " bonds.");
 
     fragmented_nuclei frags(mol.nuclei().as_nuclei());
 
@@ -69,6 +71,8 @@ MODULE_RUN(HeavyAtom) {
         std::vector<size_type> fragment;
         const auto Zi     = mol[atom_i].Z();
         const auto conn_i = conns.bonded_atoms(atom_i);
+        logger.trace("Atom " + std::to_string(atom_i) +
+                     " has Z == " + std::to_string(Zi));
         if(Zi > 1) {
             fragment.push_back(atom_i);
 

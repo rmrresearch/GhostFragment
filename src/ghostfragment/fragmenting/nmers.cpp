@@ -45,13 +45,20 @@ MODULE_CTOR(NMers) {
     description(mod_desc);
     satisfies_property_type<my_pt>();
 
-    add_input<n_type>("n").set_description("The maximum n-mer size");
+    add_input<n_type>("n")
+      .set_description("The maximum n-mer size")
+      .set_default(n_type(1));
     add_submodule<my_pt>("Monomer maker");
 }
 
 MODULE_RUN(NMers) {
+    auto& logger = get_runtime().logger();
+
     const auto& [graph] = my_pt::unwrap_inputs(inputs);
     auto n              = inputs.at("n").value<n_type>();
+
+    auto nmer_str = std::to_string(n) + "-mers";
+    logger.debug("Will be making " + nmer_str + ".");
 
     auto& monomer_mod = submods.at("Monomer maker");
     const auto& frags = monomer_mod.run_as<my_pt>(graph);
@@ -110,7 +117,7 @@ MODULE_RUN(NMers) {
         }
         if(i_is_good[i]) nmers.insert(nmer_i.begin(), nmer_i.end());
     }
-
+    logger.debug("Made " + std::to_string(nmers.size()) + " " + nmer_str + ".");
     auto rv = results();
     return my_pt::wrap_results(rv, nmers);
 }

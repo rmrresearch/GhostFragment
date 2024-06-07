@@ -55,6 +55,7 @@ MODULE_CTOR(CovRadii) {
 }
 
 MODULE_RUN(CovRadii) {
+    auto& logger          = get_runtime().logger();
     const auto& [mol]     = my_pt::unwrap_inputs(inputs);
     const auto tau        = inputs.at("tau").value<double>();
     const auto tau_plus_1 = tau + 1.0;
@@ -66,13 +67,21 @@ MODULE_RUN(CovRadii) {
     for(size_type i = 0; i < natoms; ++i) {
         const auto atom_i  = mol[i];
         const auto sigma_i = covalent_radius(atom_i.Z());
+        logger.trace("Atom " + std::to_string(i) + " has covalent radius " +
+                     std::to_string(sigma_i) + " (a.u.).");
 
         for(size_type j = i + 1; j < natoms; ++j) {
             const auto atom_j  = mol[j].as_nucleus();
             const auto sigma_j = covalent_radius(atom_j.Z());
+            logger.trace("Atom " + std::to_string(j) + " has covalent radius " +
+                         std::to_string(sigma_j) + " (a.u.).");
 
             const auto rij      = (atom_i.as_nucleus() - atom_j).magnitude();
             const auto max_bond = tau_plus_1 * (sigma_i + sigma_j);
+
+            logger.trace(std::to_string(i) + "-" + std::to_string(j) +
+                         " distance is: " + std::to_string(rij));
+
             if(rij <= max_bond) ct.add_bond(i, j);
         }
     }

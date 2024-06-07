@@ -40,11 +40,24 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Fragment Driver", "Find broken bonds", "Broken bonds");
     mm.change_submod("Fragment Driver", "Cap broken bonds",
                      "Weighted distance");
+
+    mm.copy_module("Fragment Driver", "N-mer Driver");
+    mm.change_submod("N-mer Driver", "Molecular graph to fragments",
+                     "All nmers");
+
     mm.change_submod("FragmentedChemicalSystem Driver", "Fragmenter",
                      "Fragment Driver");
+
+    mm.copy_module("FragmentedChemicalSystem Driver", "N-mer System Driver");
+    mm.change_submod("N-mer System Driver", "Fragmenter", "N-mer Driver");
+
     mm.change_submod("Fragment Based Method", "Subsystem former",
                      "FragmentedChemicalSystem Driver");
     mm.change_submod("Fragment Based Method", "Weighter", "GMBE Weights");
+
+    mm.copy_module("Fragment Based Method", "N-mer Based Method");
+    mm.change_submod("N-mer Based Method", "Subsystem former",
+                     "N-mer System Driver");
 }
 
 } // namespace ghostfragment::drivers

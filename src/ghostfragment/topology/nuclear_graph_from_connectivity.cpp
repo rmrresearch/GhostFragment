@@ -46,13 +46,22 @@ MODULE_CTOR(NuclearGraphFromConnectivity) {
 MODULE_RUN(NuclearGraphFromConnectivity) {
     using traits_type = pt::NuclearGraphTraits;
     using result_type = traits_type::result_type;
+    auto& logger      = get_runtime().logger();
 
     const auto& [chem_sys] = my_pt::unwrap_inputs(inputs);
-    auto& pseudo_atom_mod  = submods.at("Nodes");
-    const auto& frags      = pseudo_atom_mod.run_as<pa_pt>(chem_sys);
+
+    auto& pseudo_atom_mod = submods.at("Nodes");
+    const auto& frags     = pseudo_atom_mod.run_as<pa_pt>(chem_sys);
+    const auto n_atoms    = chem_sys.molecule().size();
+    const auto n_pas      = frags.size();
+    logger.debug("The " + std::to_string(n_atoms) +
+                 " atoms of the system were converted into " +
+                 std::to_string(n_pas) + " pseudoatoms.");
 
     auto& conn_mod         = submods.at("Connectivity");
     const auto& atom_conns = conn_mod.run_as<conn_pt>(chem_sys.molecule());
+    const auto n_bonds     = atom_conns.nbonds();
+    logger.debug("System has " + std::to_string(n_bonds) + " bonds.");
 
     const auto nnodes = frags.size();
     std::decay_t<decltype(atom_conns)> edges(nnodes);

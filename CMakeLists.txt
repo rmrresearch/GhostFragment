@@ -46,6 +46,7 @@ cmaize_find_or_build_dependency(
     BUILD_TARGET simde
     FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
+               NWX_PLUGINPLAY_VERSION="cache_access"
 )
 
 cmaize_find_or_build_dependency(
@@ -88,11 +89,6 @@ if("${BUILD_TESTING}")
         INCLUDE_DIRS "${project_src_dir}/${PROJECT_NAME}"
         DEPENDS Catch2::Catch2 ${PROJECT_NAME}
     )
-    nwx_pybind11_tests(
-        py_ghostfragment
-        ${python_tests_dir}/integration_tests/test_ghostfragment.py
-        SUBMODULES simde chemist pluginplay parallelzone
-    )
 
     if("${INTEGRATION_TESTING}")
         cmaize_find_or_build_dependency(
@@ -102,5 +98,13 @@ if("${BUILD_TESTING}")
             FIND_TARGET nwx::nwchemex
             CMAKE_ARGS BUILD_TESTING=OFF
         )
+
+        nwx_pybind11_tests(
+            py_ghostfragment
+            ${python_tests_dir}/integration_tests/test_ghostfragment.py
+            DEPENDS nwchemex
+            SUBMODULES simde chemist pluginplay parallelzone friendzone chemcache nwchemex
+        )
+
     endif()
 endif()

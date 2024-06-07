@@ -47,14 +47,11 @@ using namespace ghostfragment;
 using namespace testing;
 
 using my_pt                = simde::TotalEnergy;
-using ao_energy_pt         = simde::AOEnergy;
 using frag_sys_pt          = pt::FragmentedChemicalSystem;
 using frag_sys_traits      = pt::FragmentedChemicalSystemTraits;
 using chemical_system_type = typename frag_sys_traits::system_type;
 using frag_sys_type        = typename frag_sys_traits::result_type;
 using frag_mol_type        = typename frag_sys_type::fragmented_molecule_type;
-using basis_set_pt         = simde::MolecularBasisSet;
-using basis_set_type       = chemist::basis_set::AOBasisSetD;
 using weights_pt           = pt::FragmentWeights;
 
 // Checks that we pass in the correct system, returns a set of fragments
@@ -73,21 +70,11 @@ auto weight_mod(const frag_sys_type& frags) {
     });
 }
 
-// Checks it was passed one of the frags
-auto basis_mod(const chemical_system_type& sys, const basis_set_type& aos) {
-    return pluginplay::make_lambda<basis_set_pt>([=](auto&& sys_in) {
-        REQUIRE(sys_in == sys.molecule());
-        return aos;
+auto energy_mod(const chemical_system_type& sys) {
+    return pluginplay::make_lambda<my_pt>([=](auto&& sys_in) {
+        REQUIRE(sys == sys_in);
+        return -75.123456; // Just make up an energy...
     });
-}
-
-auto energy_mod(const chemical_system_type& sys, const basis_set_type& aos) {
-    return pluginplay::make_lambda<ao_energy_pt>(
-      [=](auto&& aos_in, auto&& sys_in) {
-          REQUIRE(sys == sys_in);
-          REQUIRE(aos == aos_in);
-          return -75.123456; // Just make up an energy...
-      });
 }
 
 TEST_CASE("FragmentBasedMethod") {
@@ -97,12 +84,10 @@ TEST_CASE("FragmentBasedMethod") {
     chemical_system_type water(testing::water(1));
     frag_mol_type frag_mol(testing::water_fragmented_nuclei(1), 0, 1);
     frag_sys_type frags(std::move(frag_mol));
-    basis_set_type aos;
 
     mod.change_submod("Subsystem former", frag_mod(water, frags));
     mod.change_submod("Weighter", weight_mod(frags));
-    mod.change_submod("Apply basis set", basis_mod(water, aos));
-    mod.change_submod("Energy method", energy_mod(water, aos));
+    mod.change_submod("Energy method", energy_mod(water));
 
     auto energy = mod.run_as<my_pt>(water);
     auto corr   = 2.0 * -75.123456;

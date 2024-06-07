@@ -58,22 +58,42 @@ MODULE_CTOR(Fragment) {
 
 MODULE_RUN(Fragment) {
     const auto& [mol] = frags_pt::unwrap_inputs(inputs);
+    auto& runtime     = get_runtime();
 
-    auto& graph_mod   = submods.at("Molecular Graph");
-    const auto& graph = graph_mod.run_as<graph_pt>(mol);
+    // Step 1: Form the molecular graph
+    auto& graph_mod    = submods.at("Molecular Graph");
+    const auto& graph  = graph_mod.run_as<graph_pt>(mol);
+    const auto n_nodes = graph.nodes_size();
+    const auto n_edges = graph.edges_size();
+    runtime.logger().debug("Created a graph with " + std::to_string(n_nodes) +
+                           " nodes and " + std::to_string(n_edges) + " edges.");
 
-    auto& frags_mod   = submods.at("Molecular graph to fragments");
+    // Step 2: Use the graph to make fragments
+    auto& frags_mod           = submods.at("Molecular graph to fragments");
     const auto& frags_no_ints = frags_mod.run_as<graph2frags_pt>(graph);
+    const auto n_frags        = frags_no_ints.size();
+    runtime.logger().debug("Created " + std::to_string(n_frags) +
+                           " fragments.");
 
+    // Step 3: Analyze the fragments for intersections
     auto& intersect_mod = submods.at("Intersection finder");
-    const auto& frags  = intersect_mod.run_as<intersections_pt>(frags_no_ints);
+    const auto& frags   = intersect_mod.run_as<intersections_pt>(frags_no_ints);
+    const auto n_ints   = frags.size() - n_frags;
+    runtime.logger().debug("Added " + std::to_string(n_ints) +
+                           " intersections.");
 
+    // Step 4: Did forming fragments (or intersections) break bonds?
     auto& bonds_mod          = submods.at("Find broken bonds");
     const auto& conns        = graph.edges();
     const auto& broken_bonds = bonds_mod.run_as<broken_bonds_pt>(frags, conns);
+    runtime.logger().debug("Found " + std::to_string(broken_bonds.size()) +
+                           " broken bonds.");
 
+    // Step 5: Fix those broken bonds!!!!
     auto& cap_mod            = submods.at("Cap broken bonds");
     const auto& capped_frags = cap_mod.run_as<cap_pt>(frags, broken_bonds);
+    const auto n_caps        = capped_frags.cap_set().size();
+    runtime.logger().debug("Added " + std::to_string(n_caps) + " caps.");
 
     auto rv = results();
     return frags_pt::wrap_results(rv, capped_frags);

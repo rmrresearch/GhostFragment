@@ -44,11 +44,12 @@ MODULE_CTOR(FragmentBasedMethod) {
 
     add_submodule<fragmenting_pt>("Subsystem former");
     add_submodule<weight_pt>("Weighter");
-    add_submodule<basis_set_pt>("Apply basis set");
-    add_submodule<ao_energy_pt>("Energy method");
+    add_submodule<my_pt>("Energy method");
 }
 
 MODULE_RUN(FragmentBasedMethod) {
+    auto& logger = get_runtime().logger();
+
     // Step 0: Unpack input
     const auto& [sys] = my_pt::unwrap_inputs(inputs);
 
@@ -60,19 +61,25 @@ MODULE_RUN(FragmentBasedMethod) {
     auto& weight_mod    = submods.at("weighter");
     const auto& weights = weight_mod.run_as<weight_pt>(subsystems);
 
-    auto& basis_mod  = submods.at("Apply basis set");
     auto& energy_mod = submods.at("Energy method");
 
     double energy = 0.0;
+
+    auto n_subsystems              = subsystems.size();
+    decltype(n_subsystems) counter = 0;
+    auto msg = [](auto counter, auto n_subsystems, auto egy) {
+        return "Energy of subsystem " + std::to_string(counter) + " of " +
+               std::to_string(n_subsystems) + " : " + std::to_string(egy);
+    };
     for(auto&& [c_i, sys_i] : iter::zip(weights, subsystems)) {
-        auto mol_i        = sys_i.molecule().as_molecule();
-        const auto& basis = basis_mod.run_as<basis_set_pt>(mol_i);
+        auto mol_i = sys_i.molecule().as_molecule();
 
         // This is a hack until views work with values
         chemical_system_type sys_i_copy(mol_i);
 
-        const auto e_i = energy_mod.run_as<ao_energy_pt>(basis, sys_i_copy);
+        const auto e_i = energy_mod.run_as<my_pt>(sys_i_copy);
         energy += c_i * e_i;
+        logger.info(msg(counter++, n_subsystems, e_i));
     }
 
     auto rv = results();

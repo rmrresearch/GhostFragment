@@ -123,6 +123,20 @@ TEST_CASE("Intersection Finder") {
             auto intersects = mod.run_as<property_type>(fragmented_nuclei);
             REQUIRE(intersects == corr);
         }
+
+        SECTION("Alternative three Overlaps") {
+            fragmented_nuclei.insert({0, 1, 2, 3, 4});
+            fragmented_nuclei.insert({0, 1, 2, 5, 6, 7});
+            fragmented_nuclei.insert({3, 4, 5, 6, 7});
+
+            fragments_type corr(fragmented_nuclei);
+            corr.insert({0, 1, 2});
+            corr.insert({3, 4});
+            corr.insert({5, 6, 7});
+
+            auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+            REQUIRE(intersects == corr);
+        }
     }
 
     SECTION("Four Fragments") {
