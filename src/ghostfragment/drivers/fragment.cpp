@@ -20,9 +20,11 @@
 #include <ghostfragment/property_types/fragmenting/intersections.hpp>
 #include <ghostfragment/property_types/fragmenting/nuclear_graph_to_fragments.hpp>
 #include <ghostfragment/property_types/topology/broken_bonds.hpp>
+#include <ghostfragment/property_types/topology/connectivity_table.hpp>
 #include <ghostfragment/property_types/topology/nuclear_graph.hpp>
 namespace ghostfragment::drivers {
 
+using conn_pt          = pt::ConnectivityTable;
 using broken_bonds_pt  = pt::BrokenBonds;
 using cap_pt           = pt::CappedFragments;
 using frags_pt         = pt::FragmentedNuclei;
@@ -49,6 +51,7 @@ MODULE_CTOR(Fragment) {
     description(mod_desc);
     satisfies_property_type<frags_pt>();
 
+    add_submodule<conn_pt>("Atomic connectivity");
     add_submodule<graph_pt>("Molecular graph");
     add_submodule<graph2frags_pt>("Molecular graph to fragments");
     add_submodule<intersections_pt>("Intersection finder");
@@ -59,6 +62,9 @@ MODULE_CTOR(Fragment) {
 MODULE_RUN(Fragment) {
     const auto& [mol] = frags_pt::unwrap_inputs(inputs);
     auto& runtime     = get_runtime();
+
+    auto& conn_mod           = submods.at("Atomic connectivity");
+    const auto& atomic_conns = conn_mod.run_as<conn_pt>(mol.molecule());
 
     // Step 1: Form the molecular graph
     auto& graph_mod    = submods.at("Molecular Graph");
@@ -83,9 +89,9 @@ MODULE_RUN(Fragment) {
                            " intersections.");
 
     // Step 4: Did forming fragments (or intersections) break bonds?
-    auto& bonds_mod          = submods.at("Find broken bonds");
-    const auto& conns        = graph.edges();
-    const auto& broken_bonds = bonds_mod.run_as<broken_bonds_pt>(frags, conns);
+    auto& bonds_mod = submods.at("Find broken bonds");
+    const auto& broken_bonds =
+      bonds_mod.run_as<broken_bonds_pt>(frags, atomic_conns);
     runtime.logger().debug("Found " + std::to_string(broken_bonds.size()) +
                            " broken bonds.");
 

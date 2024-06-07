@@ -18,10 +18,12 @@
 #include <ghostfragment/property_types/fragmenting/fragmented_nuclei.hpp>
 #include <ghostfragment/property_types/fragmenting/intersections.hpp>
 #include <ghostfragment/property_types/fragmenting/nuclear_graph_to_fragments.hpp>
+#include <ghostfragment/property_types/topology/connectivity_table.hpp>
 #include <ghostfragment/property_types/topology/nuclear_graph.hpp>
 using namespace ghostfragment;
 using namespace testing;
 
+using conn_pt         = pt::ConnectivityTable;
 using frags_pt        = pt::FragmentedNuclei;
 using graph_pt        = pt::NuclearGraph;
 using intersection_pt = pt::Intersections;
@@ -37,6 +39,13 @@ using conns_type        = typename graph_type::connectivity_type;
 using broken_bonds_type = typename pt::BrokenBondsTraits::result_type;
 
 namespace {
+
+auto make_conn_module(const molecule_type& sys, const graph_type& conns) {
+    return pluginplay::make_lambda<conn_pt>([=](auto&& mol_in) {
+        REQUIRE(mol_in == sys);
+        return conns.edges();
+    });
+}
 
 auto make_graph_module(const system_type& sys, const graph_type& g) {
     return pluginplay::make_lambda<graph_pt>([=](auto&& sys_in) {
@@ -92,6 +101,7 @@ TEST_CASE("Fragment Driver") {
     auto& mod = mm.at("Fragment Driver");
 
     // Factor out so change_submod fits on one line
+    const auto conn_key = "Atomic connectivity";
     const auto g2f_key  = "Molecular graph to fragments";
     const auto int_key  = "Intersection finder";
     const auto bond_key = "Find broken bonds";
@@ -104,6 +114,7 @@ TEST_CASE("Fragment Driver") {
         graph_type graph(corr, {});
         broken_bonds_type bonds;
 
+        mod.change_submod(conn_key, make_conn_module(mol, graph));
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
         mod.change_submod(int_key, make_intersection_module(corr));
@@ -122,6 +133,7 @@ TEST_CASE("Fragment Driver") {
         graph_type graph(corr, {});
         broken_bonds_type bonds;
 
+        mod.change_submod(conn_key, make_conn_module(mol, graph));
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
         mod.change_submod(int_key, make_intersection_module(corr));
@@ -139,6 +151,7 @@ TEST_CASE("Fragment Driver") {
         graph_type graph(corr, {});
         broken_bonds_type bonds;
 
+        mod.change_submod(conn_key, make_conn_module(methane, graph));
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
         mod.change_submod(int_key, make_intersection_module(corr));
@@ -159,6 +172,7 @@ TEST_CASE("Fragment Driver") {
         graph_type graph(corr, c);
         broken_bonds_type bonds{{0, 1}};
 
+        mod.change_submod(conn_key, make_conn_module(ethane, graph));
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
         mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
         mod.change_submod(int_key, make_intersection_module(corr));

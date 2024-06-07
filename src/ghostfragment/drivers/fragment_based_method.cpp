@@ -79,6 +79,8 @@ MODULE_RUN(FragmentBasedMethod) {
 
         const auto e_i = energy_mod.run_as<my_pt>(sys_i_copy);
         energy += c_i * e_i;
+        logger.debug("Weight of subsystem " + std::to_string(counter) + " is " +
+                     std::to_string(c_i) + ".");
         logger.info(msg(counter++, n_subsystems, e_i));
     }
 

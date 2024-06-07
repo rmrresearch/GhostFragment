@@ -40,10 +40,17 @@ MODULE_CTOR(BrokenBonds) {
 }
 
 MODULE_RUN(BrokenBonds) {
+    auto& logger      = get_runtime().logger();
     using result_type = traits_type::result_type;
     using bond_type   = typename traits_type::bond_type;
 
     const auto& [frags, atom_conns] = my_pt::unwrap_inputs(inputs);
+
+    const auto n_frags = frags.size();
+    const auto n_bonds = atom_conns.nbonds();
+
+    logger.debug("Input: " + std::to_string(n_frags) + " fragments and " +
+                 std::to_string(n_bonds) + " bonds.");
 
     result_type bonds;
 

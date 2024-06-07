@@ -20,6 +20,7 @@
 
 using traits_type = ghostfragment::pt::BrokenBondsTraits;
 using input_type  = typename traits_type::fragments_type;
+using conns_type  = typename traits_type::conns_type;
 using size_type   = typename traits_type::size_type;
 using bond_type   = typename traits_type::bond_type;
 using result_type = typename traits_type::result_type;
@@ -50,6 +51,15 @@ inline auto bonds_propane_two() {
     result_type bonds;
     bonds.insert(bond_type(1, 2));
     bonds.insert(bond_type(1, 0));
+    return bonds;
+}
+
+inline auto bonds_pentane() {
+    result_type bonds;
+    bonds.insert(bond_type(0, 3));
+    bonds.insert(bond_type(3, 6));
+    bonds.insert(bond_type(10, 13));
+    bonds.insert(bond_type(0, 10));
     return bonds;
 }
 
@@ -92,6 +102,27 @@ TEST_CASE("Broken Bonds") {
         auto hc          = hydrocarbon_fragmented_nuclei(3, 2);
         auto conns       = hydrocarbon_connectivity(3);
         result_type test = mod.run_as<pt>(hc, conns);
+        REQUIRE(corr == test);
+    }
+
+    SECTION("Pentane (size 2)") {
+        auto corr = bonds_pentane();
+
+        auto hc = hydrocarbon(5);
+        input_type frags(hc.nuclei());
+        frags.insert({0, 1, 2, 3, 4, 5, 10, 11, 12});
+        frags.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
+        frags.insert({0, 1, 2, 10, 11, 12, 13, 14, 15, 16});
+        frags.insert({0, 1, 2});
+        frags.insert({0, 1, 2, 3, 4, 5});
+        frags.insert({0, 1, 2, 10, 11, 12});
+
+        conns_type conns(17);
+        conns.add_bond(0, 3);
+        conns.add_bond(0, 10);
+        conns.add_bond(3, 6);
+        conns.add_bond(10, 13);
+        result_type test = mod.run_as<pt>(frags, conns);
         REQUIRE(corr == test);
     }
 }

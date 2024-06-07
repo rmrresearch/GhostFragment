@@ -33,6 +33,8 @@ inline void load_modules(pluginplay::ModuleManager& mm) {
 /// Sets the defaults for submodules in the Drivers library, when a suitable
 /// default is provided by GhostFragment
 inline void set_defaults(pluginplay::ModuleManager& mm) {
+    mm.change_submod("Fragment Driver", "Atomic connectivity",
+                     "Covalent Radius");
     mm.change_submod("Fragment Driver", "Molecular graph", "Nuclear Graph");
     mm.change_submod("Fragment Driver", "Molecular graph to fragments",
                      "Bond-Based Fragmenter");
