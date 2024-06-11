@@ -37,8 +37,32 @@ using frags_type        = typename pt::FragmentedNucleiTraits::result_type;
 using graph_type        = typename pt::NuclearGraphTraits::result_type;
 using conns_type        = typename graph_type::connectivity_type;
 using broken_bonds_type = typename pt::BrokenBondsTraits::result_type;
+using n_type            = unsigned int;
 
 namespace {
+
+DECLARE_MODULE(NMerStub);
+
+MODULE_CTOR(NMerStub) {
+    satisfies_property_type<graph2frags_pt>();
+
+    add_input<n_type>("n").set_default(n_type(1));
+    add_input<n_type>("corr n");
+    add_input<graph_type>("corr input");
+    add_input<frags_type>("corr result");
+}
+
+MODULE_RUN(NMerStub) {
+    const auto& [graph_in] = graph2frags_pt::unwrap_inputs(inputs);
+    REQUIRE(graph_in == inputs.at("corr input").value<graph_type>());
+
+    auto n = inputs.at("n").value<n_type>();
+    REQUIRE(n == inputs.at("corr n").value<n_type>());
+
+    auto rv                = results();
+    const auto& corr_frags = inputs.at("corr result").value<frags_type>();
+    return graph2frags_pt::wrap_results(rv, corr_frags);
+}
 
 auto make_conn_module(const molecule_type& sys, const graph_type& conns) {
     return pluginplay::make_lambda<conn_pt>([=](auto&& mol_in) {
@@ -54,7 +78,7 @@ auto make_graph_module(const system_type& sys, const graph_type& g) {
     });
 }
 
-auto make_g2frag_module(const graph_type& g, const frags_type& rv) {
+auto make_frag_module(const graph_type& g, const frags_type& rv) {
     return pluginplay::make_lambda<graph2frags_pt>([=](auto&& graph_in) {
         REQUIRE(graph_in == g);
         return rv;
@@ -102,10 +126,23 @@ TEST_CASE("Fragment Driver") {
 
     // Factor out so change_submod fits on one line
     const auto conn_key = "Atomic connectivity";
-    const auto g2f_key  = "Molecular graph to fragments";
+    const auto nmer_key = "N-mer builder";
+    const auto frag_key = "Fragment builder";
     const auto int_key  = "Intersection finder";
     const auto bond_key = "Find broken bonds";
     const auto cap_key  = "Cap broken bonds";
+
+    auto make_nmer_module = [&](const graph_type& graph,
+                                const frags_type& frags) {
+        mm.add_module<NMerStub>(nmer_key);
+        mm.change_submod("Fragment Driver", "N-mer builder", nmer_key);
+
+        // When eventually called we will pass n == 2, if called before we're
+        // ready we'll gen an error because n defaults to 1.
+        mm.change_input(nmer_key, "corr n", n_type(2));
+        mm.change_input(nmer_key, "corr input", graph);
+        mm.change_input(nmer_key, "corr result", frags);
+    };
 
     SECTION("Empty Molecule") {
         molecule_type mol;
@@ -116,10 +153,11 @@ TEST_CASE("Fragment Driver") {
 
         mod.change_submod(conn_key, make_conn_module(mol, graph));
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
-        mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
+        mod.change_submod(frag_key, make_frag_module(graph, corr));
         mod.change_submod(int_key, make_intersection_module(corr));
         mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
         mod.change_submod(cap_key, make_cap_module(corr, bonds));
+        make_nmer_module(graph, corr);
         const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
@@ -135,10 +173,11 @@ TEST_CASE("Fragment Driver") {
 
         mod.change_submod(conn_key, make_conn_module(mol, graph));
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
-        mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
+        mod.change_submod(frag_key, make_frag_module(graph, corr));
         mod.change_submod(int_key, make_intersection_module(corr));
         mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
         mod.change_submod(cap_key, make_cap_module(corr, bonds));
+        make_nmer_module(graph, corr);
         const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
@@ -153,10 +192,11 @@ TEST_CASE("Fragment Driver") {
 
         mod.change_submod(conn_key, make_conn_module(methane, graph));
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
-        mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
+        mod.change_submod(frag_key, make_frag_module(graph, corr));
         mod.change_submod(int_key, make_intersection_module(corr));
         mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
         mod.change_submod(cap_key, make_cap_module(corr, bonds));
+        make_nmer_module(graph, corr);
         const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }
@@ -174,10 +214,34 @@ TEST_CASE("Fragment Driver") {
 
         mod.change_submod(conn_key, make_conn_module(ethane, graph));
         mod.change_submod("Molecular graph", make_graph_module(system, graph));
-        mod.change_submod(g2f_key, make_g2frag_module(graph, corr));
+        mod.change_submod(frag_key, make_frag_module(graph, corr));
         mod.change_submod(int_key, make_intersection_module(corr));
         mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
         mod.change_submod(cap_key, make_cap_module(corr, bonds));
+        make_nmer_module(graph, corr);
+        const auto& rv = mod.run_as<frags_pt>(system);
+        REQUIRE(corr == rv);
+    }
+
+    SECTION("Dispatches to N-mer builder when n > 1") {
+        auto ethane = hydrocarbon(2);
+        system_type system(ethane);
+        frags_type corr(ethane.nuclei());
+        corr.insert({0, 2, 3, 4});
+        corr.insert({1, 5, 6, 7});
+        conns_type c(2);
+        c.add_bond(0, 1);
+        graph_type graph(corr, c);
+        broken_bonds_type bonds{{0, 1}};
+
+        mod.change_submod(conn_key, make_conn_module(ethane, graph));
+        mod.change_submod("Molecular graph", make_graph_module(system, graph));
+        mod.change_submod(frag_key, make_frag_module(graph, corr));
+        mod.change_submod(int_key, make_intersection_module(corr));
+        mod.change_submod(bond_key, make_bond_module(corr, graph, bonds));
+        mod.change_submod(cap_key, make_cap_module(corr, bonds));
+        make_nmer_module(graph, corr);
+        mod.change_input("n", n_type(2));
         const auto& rv = mod.run_as<frags_pt>(system);
         REQUIRE(corr == rv);
     }

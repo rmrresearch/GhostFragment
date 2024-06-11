@@ -31,6 +31,7 @@ using frags_pt         = pt::FragmentedNuclei;
 using intersections_pt = pt::Intersections;
 using graph_pt         = pt::NuclearGraph;
 using graph2frags_pt   = pt::NuclearGraphToFragments;
+using n_type           = unsigned int;
 
 const auto mod_desc = R"(
 Fragment Driver
@@ -51,12 +52,35 @@ MODULE_CTOR(Fragment) {
     description(mod_desc);
     satisfies_property_type<frags_pt>();
 
+    // Inputs/modules controlling
+    add_input<n_type>("n").set_default(n_type(1));
+    add_submodule<graph2frags_pt>("N-mer builder");
+    add_submodule<graph2frags_pt>("Fragment builder");
+
     add_submodule<conn_pt>("Atomic connectivity");
     add_submodule<graph_pt>("Molecular graph");
-    add_submodule<graph2frags_pt>("Molecular graph to fragments");
     add_submodule<intersections_pt>("Intersection finder");
     add_submodule<broken_bonds_pt>("Find broken bonds");
     add_submodule<cap_pt>("Cap broken bonds");
+}
+
+MODULE_PRE_RUN(Fragment) {
+    auto n = inputs.at("n").value<n_type>();
+
+    auto& frag_mod = submods["Molecular graph to fragments"];
+    frag_mod.set_type<graph2frags_pt>();
+
+    if(n == 1) {
+        frag_mod.change(submods.at("Fragment builder"));
+    } else {
+        auto new_mod = submods.at("N-mer builder").value().unlocked_copy();
+        new_mod.change_input("n", n);
+        frag_mod.change(new_mod);
+    }
+
+    // TODO: Strip "n", "N-mer builder", and "Fragment builder" out
+
+    return std::make_tuple(std::move(inputs), std::move(submods));
 }
 
 MODULE_RUN(Fragment) {
@@ -104,5 +128,7 @@ MODULE_RUN(Fragment) {
     auto rv = results();
     return frags_pt::wrap_results(rv, capped_frags);
 }
+
+DEFAULT_MODULE_POST_RUN(Fragment);
 
 } // namespace ghostfragment::drivers
