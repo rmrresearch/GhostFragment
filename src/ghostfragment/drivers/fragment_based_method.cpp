@@ -1,67 +1,91 @@
-// #include "drivers.hpp"
-// #include <ghostfragment/property_types/property_types.hpp>
-// #include <simde/energy/ao_energy.hpp>
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-// namespace ghostfragment::drivers {
+#include "drivers.hpp"
+#include <ghostfragment/property_types/fragmenting/fragment_weights.hpp>
+#include <ghostfragment/property_types/fragmenting/fragmented_chemical_system.hpp>
+#include <simde/energy/ao_energy.hpp>
+#include <zip.hpp>
+namespace ghostfragment::drivers {
 
-// using my_pt         = simde::AOEnergy;
-// using frag_sys_pt   = pt::FragmentedSystem;
-// using nmer_sys_pt   = pt::NMerSystem;
-// using expression_pt = pt::Expression;
+using my_pt                = simde::TotalEnergy;
+using ao_energy_pt         = simde::AOEnergy;
+using fragmenting_pt       = pt::FragmentedChemicalSystem;
+using fragmenting_traits   = pt::FragmentedChemicalSystemTraits;
+using chemical_system_type = typename fragmenting_traits::system_type;
+using basis_set_pt         = simde::MolecularBasisSet;
+using weight_pt            = pt::FragmentWeights;
 
-// namespace {
+namespace {
+const auto mod_desc = R"(
+Fragment-Based Method Driver
+----------------------------
 
-// const auto mod_desc = R"(
-// Fragment-Based Method Driver
-// ----------------------------
+)";
+}
 
-// )";
-// }
+MODULE_CTOR(FragmentBasedMethod) {
+    description(mod_desc);
 
-// MODULE_CTOR(FragmentBasedMethod) {
-//     satisfies_property_type<my_pt>();
-//     description(mod_desc);
+    satisfies_property_type<my_pt>();
 
-//     add_submodule<frag_sys_pt>("Fragment Maker");
-//     add_submodule<nmer_sys_pt>("N-Mer Maker");
-//     add_submodule<expression_pt>("Expression generator");
-//     add_submodule<my_pt>("energy method");
+    add_submodule<fragmenting_pt>("Subsystem former");
+    add_submodule<weight_pt>("Weighter");
+    add_submodule<my_pt>("Energy method");
+}
 
-//     unsigned int m(1);
-//     add_input<unsigned int>("GMBE truncation order").set_default(m);
-// }
+MODULE_RUN(FragmentBasedMethod) {
+    auto& logger = get_runtime().logger();
 
-// MODULE_RUN(FragmentBasedMethod) {
-//     // Step 0: Unpack input
-//     const auto& [aos, sys] = my_pt::unwrap_inputs(inputs);
-//     const auto n = inputs.at("GMBE truncation order").value<unsigned int>();
+    // Step 0: Unpack input
+    const auto& [sys] = my_pt::unwrap_inputs(inputs);
 
-//     // Stp 1: Create those fragments
-//     auto& frag_mod      = submods.at("Fragment Maker");
-//     const auto& [frags] = frag_mod.run_as<frag_sys_pt>(sys, aos.basis_set());
+    // Step 1: Form subsystems
+    auto& subsystem_mod    = submods.at("Subsystem former");
+    const auto& subsystems = subsystem_mod.run_as<fragmenting_pt>(sys);
 
-//     // Step 2: Create those n-mers
-//     auto& nmer_mod      = submods.at("N-Mer Maker");
-//     const auto& [nmers] = nmer_mod.run_as<nmer_sys_pt>(frags, n);
+    // Step 2: Determine weights
+    auto& weight_mod    = submods.at("weighter");
+    const auto& weights = weight_mod.run_as<weight_pt>(subsystems);
 
-//     // Step 3: Create an expression
-//     auto& expr_mod     = submods.at("Expression generator");
-//     const auto& [expr] = expr_mod.run_as<expression_pt>(nmers);
+    auto& energy_mod = submods.at("Energy method");
 
-//     // Step 4: Run those terms
-//     double e      = 0.0;
-//     auto& egy_mod = submods.at("energy method");
-//     for(std::size_t term_index = 0; term_index < expr.size(); ++term_index) {
-//         const auto& term_i = expr.at(term_index);
-//         const auto sys_i   = term_i.chemical_system();
-//         const chemist::orbital_space::AOSpace aos_i(term_i.ao_basis_set());
-//         const auto c_i        = term_i.coefficient();
-//         const auto [e_term_i] = egy_mod.run_as<my_pt>(aos_i, sys_i);
-//         e += c_i * e_term_i;
-//     }
+    double energy = 0.0;
 
-//     auto rv = results();
-//     return my_pt::wrap_results(rv, e);
-// }
+    auto n_subsystems              = subsystems.size();
+    decltype(n_subsystems) counter = 0;
+    auto msg = [](auto counter, auto n_subsystems, auto egy) {
+        return "Energy of subsystem " + std::to_string(counter) + " of " +
+               std::to_string(n_subsystems) + " : " + std::to_string(egy);
+    };
+    for(auto&& [c_i, sys_i] : iter::zip(weights, subsystems)) {
+        auto mol_i = sys_i.molecule().as_molecule();
 
-// } // namespace ghostfragment::drivers
+        // This is a hack until views work with values
+        chemical_system_type sys_i_copy(mol_i);
+
+        const auto e_i = energy_mod.run_as<my_pt>(sys_i_copy);
+        energy += c_i * e_i;
+        logger.debug("Weight of subsystem " + std::to_string(counter) + " is " +
+                     std::to_string(c_i) + ".");
+        logger.info(msg(counter++, n_subsystems, e_i));
+    }
+
+    auto rv = results();
+    return my_pt::wrap_results(rv, energy);
+}
+
+} // namespace ghostfragment::drivers

@@ -1,14 +1,30 @@
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "fragmenting.hpp"
 
-#include <ghostfragment/property_types/connectivity_table.hpp>
-#include <chemist/nucleus/fragmented_nuclei.hpp>
-#include <ghostfragment/property_types/fragmented_nuclei.hpp>
+#include <chemist/fragmenting/fragmented_nuclei.hpp>
+#include <ghostfragment/property_types/fragmenting/fragmented_nuclei.hpp>
+#include <ghostfragment/property_types/topology/connectivity_table.hpp>
 #include <iostream>
 
 namespace ghostfragment::fragmenting {
 
 using frags_pt = pt::FragmentedNuclei;
-using conn_pt  = ghostfragment::ConnectivityTable;
+using conn_pt  = pt::ConnectivityTable;
 
 const auto mod_desc = R"(
 Fragmentation by Heavy Atom
@@ -38,21 +54,25 @@ MODULE_CTOR(HeavyAtom) {
 }
 
 MODULE_RUN(HeavyAtom) {
-    using fragmented_nuclei = chemist::FragmentedNuclei;
-    using size_type         = typename chemist::FragmentedNuclei::size_type;
+    using fragmented_nuclei = typename pt::FragmentedNucleiTraits::result_type;
+    using size_type         = typename fragmented_nuclei::size_type;
+    auto& logger            = get_runtime().logger();
 
     const auto& [system] = frags_pt::unwrap_inputs(inputs);
-    const auto& mol      = system.molecule().nuclei();
+    const auto& mol      = system.molecule();
 
     auto& con_mod     = submods.at("Connectivity");
     const auto& conns = con_mod.run_as<conn_pt>(mol);
+    logger.debug("Found " + std::to_string(conns.nbonds()) + " bonds.");
 
-    fragmented_nuclei frags(mol);
+    fragmented_nuclei frags(mol.nuclei().as_nuclei());
 
     for(size_type atom_i = 0; atom_i < mol.size(); ++atom_i) {
         std::vector<size_type> fragment;
         const auto Zi     = mol[atom_i].Z();
         const auto conn_i = conns.bonded_atoms(atom_i);
+        logger.trace("Atom " + std::to_string(atom_i) +
+                     " has Z == " + std::to_string(Zi));
         if(Zi > 1) {
             fragment.push_back(atom_i);
 
@@ -61,14 +81,14 @@ MODULE_RUN(HeavyAtom) {
                 const auto Zj = mol[atom_j].Z();
                 if(Zj == 1) fragment.push_back(atom_j);
             }
-            frags.add_fragment(fragment.begin(), fragment.end());
-        }else if(Zi == 1) {
+            frags.insert(fragment.begin(), fragment.end());
+        } else if(Zi == 1) {
             if(conn_i.size() > 1)
                 throw std::runtime_error("Wasn't expecting hydrogen to make "
                                          "more than one bond...");
             if(conn_i.size() == 0) {
                 fragment.push_back(atom_i);
-                frags.add_fragment(fragment.begin(), fragment.end());
+                frags.insert(fragment.begin(), fragment.end());
             } else { // size == 1
                 const auto atom_j = *conn_i.begin();
 
@@ -80,7 +100,7 @@ MODULE_RUN(HeavyAtom) {
                 // hydrogen atoms in it
                 fragment.push_back(atom_i);
                 fragment.push_back(atom_j);
-                frags.add_fragment(fragment.begin(), fragment.end());
+                frags.insert(fragment.begin(), fragment.end());
             }
         } else {
             // I guess it's element zero...
@@ -92,4 +112,4 @@ MODULE_RUN(HeavyAtom) {
     return frags_pt::wrap_results(rv, frags);
 }
 
-} // namespace ghostfragment::partitioned
+} // namespace ghostfragment::fragmenting

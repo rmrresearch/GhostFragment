@@ -1,15 +1,27 @@
-#include "capping.hpp"
-#include <src/ghostfragment/connectivity/connectivity.hpp>
-#include <ghostfragment/property_types/capped.hpp>
-#include <ghostfragment/property_types/connectivity_table.hpp>
-#include <ghostfragment/property_types/broken_bonds.hpp>
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-using my_pt      = ghostfragment::pt::Capped;
-using bonds_pt = ghostfragment::pt::BrokenBonds;
-using traits_t   = ghostfragment::pt::CappedTraits;
-using result_type = traits_t::result_type;
-using set_type = result_type::value_type;
-using atom_type  = set_type::atom_type;
+#include "../topology/covalent_radius.hpp"
+#include "capping.hpp"
+#include <ghostfragment/property_types/fragmenting/capped_fragments.hpp>
+
+using my_pt        = ghostfragment::pt::CappedFragments;
+using traits_t     = ghostfragment::pt::CappedFragmentsTraits;
+using result_type  = traits_t::result_type;
+using nucleus_type = typename result_type::value_type::value_type;
 
 namespace ghostfragment::capping {
 
@@ -19,62 +31,58 @@ constexpr auto module_desc = R"""(
 Weighted Distance Capper
 ##################
 
-This module closes off the valencies of the input fragments using a hydrogen 
-atom at a specific distance. More specifically for each bond A-B, such that atom A is in the
+This module closes off the valencies of the input fragments using a hydrogen
+atom at a specific distance. More specifically for each bond A-B, such that
+atom A is in the
 fragment, and atom B is not, a hydrogen atom will be
-added to the fragment such that the location along the original bond is the ratio
+added to the fragment such that the location along the original bond is the
+ratio
 of a normal A-H bond to a normal A-B bond.
 
-The inputs to this module are fragments. In general these inputs are
-non-disjoint, for this reason we choose to establish connectivity at an
-atomic level.
 
-#. Generate atomic connectivity
-#. Determine caps we need
-#. Pair each fragment with its set of caps
 
 )""";
 } // end namespace
 
-MODULE_CTOR(WeightedDistance){
+MODULE_CTOR(WeightedDistance) {
+    description(module_desc);
     satisfies_property_type<my_pt>();
-
-    add_submodule<bonds_pt>("Broken Bonds");
+    add_input<nucleus_type>("capping nucleus")
+      .set_description("nucleus to use as the cap")
+      .set_default(nucleus_type{"H", 1ul, 1837.289, 0.0, 0.0, 0.0});
 }
 
-MODULE_RUN(WeightedDistance){
-    const auto& [frags] = my_pt::unwrap_inputs(inputs);
+MODULE_RUN(WeightedDistance) {
+    using cap_type = typename result_type::cap_set_type::value_type;
+
+    auto&& [frags, broken_bonds] = my_pt::unwrap_inputs(inputs);
+    auto cap = inputs.at("capping nucleus").value<nucleus_type>();
 
     const auto& mol = frags.supersystem();
-    const auto& broken_bonds = submods.at("Broken Bonds").run_as<bonds_pt>(frags);
 
-    result_type capped_frags;
+    for(const auto& bonds : broken_bonds) {
+        // Gets the both atoms from the bond
+        const auto& atom_i = mol[bonds.first];
+        const auto& atom_j = mol[bonds.second];
 
-    for(auto bond_set : broken_bonds){
-        set_type caps_i;
-        for(auto bonds : bond_set){
-            //Gets the both atoms from the bond
-            const auto& atom_i = mol[bonds.first];
-            const auto& atom_j = mol[bonds.second];
+        // Finds the bond lengths of i-H and i-j
+        auto i_j_bond = topology::covalent_radius(atom_i.Z()) +
+                        topology::covalent_radius(atom_j.Z());
+        auto i_h_bond = topology::covalent_radius(atom_i.Z()) +
+                        topology::covalent_radius(cap.Z());
 
-            //Finds the bond lengths of i-H and i-j
-            auto i_j_bond = ghostfragment::connectivity::covalent_radius(atom_i.Z()) + ghostfragment::connectivity::covalent_radius(atom_j.Z());
-            auto i_h_bond = ghostfragment::connectivity::covalent_radius(atom_i.Z()) + ghostfragment::connectivity::covalent_radius(1);
+        auto ratio = i_h_bond / i_j_bond;
 
-            auto ratio = i_h_bond / i_j_bond;
+        nucleus_type new_cap(cap);
 
-            atom_type new_cap("H", 1ul, 1837.289, 0.0, 0.0, 0.0);
-
-            for(auto i = 0; i < 3; i++){
-                new_cap.coord(i) = (atom_i.coord(i) + ratio * (atom_j.coord(i) - atom_i.coord(i)));
-            }
-            caps_i.add_cap(bonds.first, bonds.second, new_cap);
+        for(auto i = 0; i < 3; i++) {
+            new_cap.coord(i) =
+              (atom_i.coord(i) + ratio * (atom_j.coord(i) - atom_i.coord(i)));
         }
-
-        capped_frags.emplace_back(std::move(caps_i));
+        frags.add_cap(cap_type(bonds.first, bonds.second, new_cap));
     }
 
     auto rv = results();
-    return my_pt::wrap_results(rv, capped_frags);
+    return my_pt::wrap_results(rv, frags);
 }
-}  // namespace ghostfragment::capping
+} // namespace ghostfragment::capping

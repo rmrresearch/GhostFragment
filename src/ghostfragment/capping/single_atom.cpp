@@ -1,11 +1,26 @@
-#include "capping.hpp"
-#include <ghostfragment/property_types/capped.hpp>
-#include <ghostfragment/property_types/connectivity_table.hpp>
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-using my_pt      = ghostfragment::pt::Capped;
-using connect_pt = ghostfragment::ConnectivityTable;
-using traits_t   = ghostfragment::pt::CappedTraits;
-using atom_type  = traits_t::result_type::value_type::atom_type;
+#include "capping.hpp"
+#include <ghostfragment/property_types/fragmenting/capped_fragments.hpp>
+
+using my_pt        = ghostfragment::pt::CappedFragments;
+using traits_type  = ghostfragment::pt::CappedFragmentsTraits;
+using frags_type   = typename traits_type::frags_type;
+using nucleus_type = typename frags_type::value_type::value_type;
 
 namespace ghostfragment::capping {
 
@@ -16,12 +31,12 @@ Single Atom Capper
 ##################
 
 This module closes off the valencies of the input fragments using single
-atoms. More specifically for each bond A-B, such that atom A is in the
-fragment, and atom B is not, an atom (default is a hydrogen atom) will be
-added to the fragment. By default the added atom will be placed at the
+nuclei. More specifically for each bond A-B, such that atom A is in the
+fragment, and atom B is not, a nucleus (default is a hydrogen nucleus) will be
+added to the fragment. By default the added nucleus will be placed at the
 location of B.
 
-The inputs to this module are fragments. In general these inputs are
+The inputs to this module are fragments and the . In general these inputs are
 non-disjoint, for this reason we choose to establish connectivity at an
 atomic level.
 
@@ -33,49 +48,31 @@ atomic level.
 } // end namespace
 
 MODULE_CTOR(SingleAtom) {
+    description(module_desc);
     satisfies_property_type<my_pt>();
 
-    add_submodule<connect_pt>("Connectivity");
-
-    add_input<atom_type>("capping atom")
-      .set_description("atom to use as the cap")
-      .set_default(atom_type{"H", 1ul, 1837.289, 0.0, 0.0, 0.0});
+    add_input<nucleus_type>("capping nucleus")
+      .set_description("nucleus to use as the cap")
+      .set_default(nucleus_type{"H", 1ul, 1837.289, 0.0, 0.0, 0.0});
 }
 
 MODULE_RUN(SingleAtom) {
-    const auto& [frags] = my_pt::unwrap_inputs(inputs);
-    auto cap            = inputs.at("capping atom").value<atom_type>();
+    using cap_type = typename frags_type::cap_set_type::value_type;
 
-    // Step 1. Generate atomic connectivity
-    const auto& mol   = frags.supersystem();
-    const auto& conns = submods.at("Connectivity").run_as<connect_pt>(mol);
+    auto&& [frags, broken_bonds] = my_pt::unwrap_inputs(inputs);
+    auto cap = inputs.at("capping nucleus").value<nucleus_type>();
 
-    // Step 2. Make the caps
-    using result_type  = traits_t::result_type;
-    using cap_set_type = typename result_type::value_type;
+    for(const auto& [atom_i, atom_j] : broken_bonds) {
+        // Make the cap
+        nucleus_type new_cap(cap);
+        for(nucleus_type::size_type j = 0; j < 3; ++j)
+            new_cap.coord(j) = frags.supersystem()[atom_j].coord(j);
 
-    result_type capped_frags; // Will be the result
-    for(const auto& frag_i : frags) {
-        cap_set_type caps_i; // Will be the set of caps for this fragment
-        for(const auto& atom_i : frag_i) {
-            // Loop over atoms bonded to atom_i
-            for(const auto& atom_j : conns.bonded_atoms(atom_i)) {
-                // Check if atom_j is in the fragment, if so no cap is needed
-                if(frag_i.count(mol[atom_j])) continue;
-
-                // Make the cap
-                atom_type new_cap(cap);
-                for(atom_type::size_type i = 0; i < 3; ++i)
-                    new_cap.coord(i) = mol[atom_j].coord(i);
-
-                // Add the cap to the set of caps for this fragment
-                caps_i.add_cap(atom_i, atom_j, new_cap);
-            }
-        }
-        capped_frags.emplace_back(std::move(caps_i));
+        // Add the cap to the set of caps for this fragment
+        frags.add_cap(cap_type(atom_i, atom_j, new_cap));
     }
 
     auto rv = results();
-    return my_pt::wrap_results(rv, capped_frags);
+    return my_pt::wrap_results(rv, frags);
 }
 } // namespace ghostfragment::capping

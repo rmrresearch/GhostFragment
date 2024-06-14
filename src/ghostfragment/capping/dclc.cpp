@@ -1,46 +1,67 @@
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "../topology/covalent_radius.hpp"
 #include "capping.hpp"
-#include <ghostfragment/property_types/capped.hpp>
-#include <ghostfragment/property_types/connectivity_table.hpp>
-#include <src/ghostfragment/connectivity/connectivity.hpp>
+#include <ghostfragment/property_types/fragmenting/capped_fragments.hpp>
+#include <ghostfragment/property_types/topology/connectivity_table.hpp>
 
 namespace ghostfragment::capping {
 
-using my_pt      = ghostfragment::pt::Capped;
-using connect_pt = ghostfragment::ConnectivityTable;
-using traits_t   = ghostfragment::pt::CappedTraits;
-using atom_type  = traits_t::result_type::value_type::atom_type;
-
+using my_pt                  = ghostfragment::pt::CappedFragments;
+using connect_pt             = ghostfragment::pt::ConnectivityTable;
+using traits_t               = ghostfragment::pt::CappedFragmentsTraits;
+using connect_t              = ghostfragment::pt::ConnectivityTableTraits;
+using conns_type             = typename connect_t::result_type;
+using nuclei_type            = typename traits_t::result_type::value_type;
+using const_nuclei_reference = typename traits_t::result_type::const_reference;
+using nucleus_type           = typename nuclei_type::value_type;
+using molecule_type          = typename connect_t::input_type;
+using charge_type            = typename molecule_type::charge_type;
+using multiplicity_type      = typename molecule_type::multiplicity_type;
+using distance_type          = double;
 
 // Computes the average X-C bond length in the molecule, where X is in
 // the fragment and C is the cap. Takes in Nuclei m, and the atomic
 // numbers of X and C.
-double average_bond_length(const chemist::Nuclei& m,
-const chemist::topology::ConnectivityTable& connections,
-std::size_t z_x, std::size_t z_c){
-    int existing_bonds = 0;
-    double bond_lengths = 0;
-    double ave_length = 0;
-    for(size_t atom_k = 0; atom_k < m.size(); ++atom_k){
-        if(m[atom_k].Z() == z_x){
-            for(size_t atom_l : connections.bonded_atoms(atom_k)){
-                if(m[atom_l].Z() == z_c){
-                    bond_lengths += (m[atom_l].as_nucleus()
-                    - m[atom_k].as_nucleus()).magnitude();
-                    existing_bonds ++;
+distance_type average_bond_length(const_nuclei_reference m,
+                                  const conns_type& connections,
+                                  std::size_t z_x, std::size_t z_c) {
+    int existing_bonds         = 0;
+    distance_type bond_lengths = 0;
+    distance_type ave_length   = 0;
+    for(size_t atom_k = 0; atom_k < m.size(); ++atom_k) {
+        if(m[atom_k].Z() == z_x) {
+            for(size_t atom_l : connections.bonded_atoms(atom_k)) {
+                if(m[atom_l].Z() == z_c) {
+                    bond_lengths +=
+                      (m[atom_l].as_nucleus() - m[atom_k].as_nucleus())
+                        .magnitude();
+                    existing_bonds++;
                 }
             }
         }
     }
     // If no bonds, defaults to standard distance
-    if(existing_bonds == 0){
+    if(existing_bonds == 0) {
         ave_length =
-            ghostfragment::connectivity::covalent_radius(z_x) 
-            + ghostfragment::connectivity::covalent_radius(z_c);
+          topology::covalent_radius(z_x) + topology::covalent_radius(z_c);
     }
     // If bonds exist, return their average length
-    if(existing_bonds > 0){
-        ave_length = bond_lengths/existing_bonds;
-    }
+    if(existing_bonds > 0) { ave_length = bond_lengths / existing_bonds; }
     return ave_length;
 }
 
@@ -67,64 +88,74 @@ atomic level.
 #. Pair each fragment with its set of caps
 
 )""";
+
+const auto cap_key    = "capping atom";
+const auto charge_key = "charge for supersystem";
+const auto mult_key   = "multiplicity for supersystem";
 } // end namespace
 
 MODULE_CTOR(DCLC) {
+    description(module_desc);
     satisfies_property_type<my_pt>();
 
     add_submodule<connect_pt>("Connectivity");
 
-    add_input<atom_type>("capping atom")
+    add_input<nucleus_type>(cap_key)
       .set_description("atom to use as the cap")
-      .set_default(atom_type{"H", 1ul, 1837.289, 0.0, 0.0, 0.0});
+      .set_default(nucleus_type{"H", 1ul, 1837.289, 0.0, 0.0, 0.0});
+
+    add_input<charge_type>(charge_key).set_default(charge_type{0});
+    add_input<multiplicity_type>(mult_key).set_default(multiplicity_type{1});
 }
 
 MODULE_RUN(DCLC) {
-    const auto& [frags]    = my_pt::unwrap_inputs(inputs);
-    auto cap               = inputs.at("capping atom").value<atom_type>();
-    float bond_length      = 0;
-    float existing_bonds   = 0;
-    float original_bond    = 0;
+    using size_type = typename nucleus_type::atomic_number_type;
+    using bond_type = std::pair<size_type, size_type>;
+    using frag_type = typename traits_t::result_type;
+    using cap_type  = typename frag_type::cap_set_type::value_type;
+
+    auto&& [frags, broken_bonds] = my_pt::unwrap_inputs(inputs);
+    auto cap                     = inputs.at(cap_key).value<nucleus_type>();
+    auto charge                  = inputs.at(charge_key).value<charge_type>();
+    auto mult = inputs.at(mult_key).value<multiplicity_type>();
+
+    std::map<bond_type, distance_type> found_bonds;
 
     // Step 1. Generate atomic connectivity
-    const auto& mol   = frags.supersystem();
-    const auto& conns = submods.at("Connectivity").run_as<connect_pt>(mol);
+    auto mol = frags.supersystem();
+
+    // We assume charge and multiplicity don't matter too much, but do allow the
+    // user to set them if they want...
+    chemist::Molecule temp(charge, mult, mol.as_nuclei());
+    const auto& conns = submods.at("Connectivity").run_as<connect_pt>(temp);
 
     // Step 2. Make the caps
-    using result_type  = traits_t::result_type;
-    using cap_set_type = typename result_type::value_type;
+    const auto cap_Z = cap.Z();
+    for(const auto& [atom_i, atom_j] : broken_bonds) {
+        auto Zi             = mol[atom_i].Z();
+        auto Zs             = std::make_pair(Zi, cap_Z);
+        const auto has_pair = found_bonds.count(Zs);
 
-    result_type capped_frags; // Will be the result
-    for(const auto& frag_i : frags) {
-        cap_set_type caps_i; // Will be the set of caps for this fragment
-        for(const auto& atom_i : frag_i) {
-            // Loop over atoms bonded to atom_i
-            for(const auto& atom_j : conns.bonded_atoms(atom_i)) {
-                // Check if atom_j is in the fragment, if so no cap is needed
-                if(frag_i.count(mol[atom_j])) continue;
+        if(!has_pair)
+            found_bonds[Zs] = average_bond_length(mol, conns, Zi, cap_Z);
 
-                // Make the cap
-                atom_type new_cap(cap);
-                original_bond = (mol[atom_i].as_nucleus()
-                - mol[atom_j].as_nucleus()).magnitude();
-                 const auto cap_Z = new_cap.Z();
-                 const auto Zi    = mol[atom_i].Z();
-                 const auto r0 =average_bond_length(mol, conns, Zi, cap_Z);
-                 for(atom_type::size_type i = 0; i < 3; ++i){
-                    const auto qi = mol[atom_i].coord(i);
-                    const auto dq = mol[atom_j].coord(i) - qi;
-                    
-                    new_cap.coord(i) = qi + dq * (r0 / original_bond);
-                }
+        const auto ni      = mol[atom_i].as_nucleus();
+        const auto nj      = mol[atom_j].as_nucleus();
+        auto original_bond = (ni - nj).magnitude();
+        const auto r0      = found_bonds[Zs];
 
-                // Add the cap to the set of caps for this fragment
-                caps_i.add_cap(atom_i, atom_j, new_cap);
-            }
+        nucleus_type new_cap(cap);
+        for(size_type i = 0; i < 3; ++i) {
+            const auto qi    = ni.coord(i);
+            const auto dq    = nj.coord(i) - qi;
+            new_cap.coord(i) = qi + dq * (r0 / original_bond);
         }
-        capped_frags.emplace_back(std::move(caps_i));
+
+        // Add the cap to the set of caps for this fragment
+        frags.add_cap(cap_type(atom_i, atom_j, new_cap));
     }
 
     auto rv = results();
-    return my_pt::wrap_results(rv, capped_frags);
+    return my_pt::wrap_results(rv, frags);
 }
 } // namespace ghostfragment::capping

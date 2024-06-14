@@ -1,116 +1,85 @@
-// #include "../detail_/fragmented_system_pimpl.hpp"
-// #include "drivers.hpp"
-// #include <ghostfragment/property_types/property_types.hpp>
+/*
+ * Copyright 2024 GhostFragment
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-// namespace ghostfragment::drivers {
+#include "drivers.hpp"
+#include <ghostfragment/property_types/fragmenting/fragmented_chemical_system.hpp>
+#include <ghostfragment/property_types/fragmenting/fragmented_nuclei.hpp>
+namespace ghostfragment::drivers {
 
-// using my_pt      = pt::FragmentedSystem;
-// using frags_pt   = pt::FragmentedMolecule;
-// using cap_pt     = pt::CappedFragments;
-// using ao_pt      = pt::AtomicOrbitals;
-// using atom2ao_pt = simde::AtomToAO;
+using my_pt    = pt::FragmentedChemicalSystem;
+using frags_pt = pt::FragmentedNuclei;
 
-// using pimpl_type = detail_::FragmentedSystemPIMPL;
+const auto mod_desc = R"(
+FragmentedSystem Driver
+-----------------------
 
-// namespace {
+This module is responsible for wrapping the process of turning a
+ChemicalSystem into a FragmentedChemicalSystem instance. This has the following
+steps:
 
-// auto convert_atom2ao(pluginplay::SubmoduleRequest& atom2ao,
-//                      const type::nuclei_set& mol,
-//                      const type::ao_basis_set& aos) {
-//     const auto& [atom_idx2aos] = atom2ao.run_as<atom2ao_pt>(mol, aos);
+#. Fragment the nuclei.
+#. Assign charge/multiplicity to each fragment
+#. Assign fields to each fragment
 
-//     typename pimpl_type::idx2ao_map_type atom2aos;
-//     type::fragmented_aos ao_sets(aos);
-//     for(std::size_t atom_i = 0; atom_i < mol.size(); ++atom_i) {
-//         auto ao_set = ao_sets.new_subset();
-//         for(auto ao_i : atom_idx2aos.at(atom_i)) ao_set.insert(ao_i);
-//         atom2aos.emplace_back(ao_set);
-//     }
-//     return atom2aos;
-// }
+Step 1 is done by a submodule of type FragmentedNuclei.
+Step 2 and 3 are (for now) just done by the driver.
+)";
 
-// auto assign_electrons(const type::nuclei_set& mol) {
-//     typename pimpl_type::idx2ne_map_type a2ne(mol.size());
-//     for(decltype(a2ne.size()) i = 0; i < a2ne.size(); ++i) a2ne[i] =
-//     mol[i].Z(); return a2ne;
-// }
+MODULE_CTOR(FragmentedChemicalSystem) {
+    description(mod_desc);
 
-// } // namespace
+    satisfies_property_type<my_pt>();
 
-// const auto mod_desc = R"(
-// FragmentedSystem Driver
-// -----------------------
+    add_submodule<frags_pt>("Fragmenter");
+}
 
-// This module is responsible for wrapping the process of turning a
-// ChemicalSystem and AOBasisSet instance into a FragmentedSystem instance. This
-// has the following steps:
+MODULE_RUN(FragmentedChemicalSystem) {
+    using traits_type        = pt::FragmentedChemicalSystemTraits;
+    using frag_chem_sys_type = typename traits_type::result_type;
+    using frag_molecule_type =
+      typename frag_chem_sys_type::fragmented_molecule_type;
+    using charge_list = typename frag_molecule_type::charge_container;
+    using multiplicity_list =
+      typename frag_molecule_type::multiplicity_container;
 
-// #. Fragment the system.
-// #. Cap the fragments
-// #. Determine the AO basis for the caps
-// #. Assign AOs to the caps
-// #. Assign AOs to atoms.
-// #. Assign electrons to fragments.
+    // Step 0: Unpack input and inspect
+    const auto& [sys] = my_pt::unwrap_inputs(inputs);
 
-// Step 1 is done by a submodule of type simde::FragmentedMolecule. Step 2 is
-// done by a submodule of type pt::Frag2AO. For the moment Step 3 is done by the
-// module, and in a naive manner (simply assuming each atom has Z electrons,
-// where Z is that atom's atomic number).
-// )";
+    if(sys.molecule().charge())
+        throw std::runtime_error("Charged systems are NYI.");
 
-// MODULE_CTOR(FragmentedSystem) {
-//     description(mod_desc);
+    // Step 1: Form fragments
+    auto& fragmenter         = submods.at("Fragmenter");
+    const auto& nuclei_frags = fragmenter.run_as<frags_pt>(sys);
 
-//     satisfies_property_type<my_pt>();
+    // Step 2: Assign charge/multiplicity
+    auto charge = sys.molecule().charge();
+    auto mult   = sys.molecule().multiplicity();
+    charge_list frag_charges(nuclei_frags.size(), charge);
+    multiplicity_list frag_mults(nuclei_frags.size(), mult);
 
-//     add_submodule<frags_pt>("Fragmenter");
-//     add_submodule<cap_pt>("Capper");
-//     add_submodule<ao_pt>("Cap Basis");
-//     add_submodule<atom2ao_pt>("Atom to AO Mapper");
-// }
+    frag_molecule_type mol_frags(nuclei_frags, charge, mult,
+                                 std::move(frag_charges),
+                                 std::move(frag_mults));
 
-// MODULE_RUN(FragmentedSystem) {
-//     // Step 0: Unpack input and bounds checking
-//     const auto& [sys, aos] = my_pt::unwrap_inputs(inputs);
-//     const auto& mol        = sys.molecule();
+    // Step 3: Assign fields
+    frag_chem_sys_type sys_frags(std::move(mol_frags));
 
-//     if(sys.charge()) throw std::runtime_error("Charged systems are NYI.");
+    auto rv = results();
+    return my_pt::wrap_results(rv, sys_frags);
+}
 
-//     using pimpl_type = detail_::FragmentedSystemPIMPL;
-//     auto pimpl       = std::make_unique<pimpl_type>();
-
-//     // Step 1: Form fragments
-//     auto& fragmenter    = submods.at("Fragmenter");
-//     const auto& [frags] = fragmenter.run_as<frags_pt>(mol);
-
-//     // Step 2: Cap fragments
-//     auto& capper           = submods.at("Capper");
-//     const auto& [frag2cap] = capper.run_as<cap_pt>(frags);
-
-//     // Bit of a hack to get the caps object
-//     const auto& caps = frag2cap.begin()->second.object();
-
-//     // Step 3: Make the AO basis for the caps
-//     auto& cap_basis_mod   = submods.at("Cap Basis");
-//     const auto& [cap_aos] = cap_basis_mod.run_as<ao_pt>(caps.nuclei());
-
-//     // Step 4: Map atoms and caps to AOs
-//     auto& atom2ao_mapper = submods.at("Atom to AO Mapper");
-//     pimpl->m_atom2aos    = convert_atom2ao(atom2ao_mapper, mol, aos);
-//     pimpl->m_cap2aos =
-//       convert_atom2ao(atom2ao_mapper, caps.nuclei(), cap_aos.basis_set());
-
-//     // Step 5: Assign electrons to atoms and caps
-//     pimpl->m_atom2ne = assign_electrons(mol);
-//     pimpl->m_cap2ne  = assign_electrons(caps.nuclei());
-
-//     // Step 6: Assemble and return FragmentedSystem
-//     pimpl->m_frags     = std::move(frags);
-//     pimpl->m_frag2caps = std::move(frag2cap);
-//     ghostfragment::FragmentedSystem fragmented_system(std::move(pimpl));
-
-//     auto rv = results();
-//     return my_pt::wrap_results(rv, fragmented_system);
-// }
-
-// } // namespace ghostfragment::drivers
+} // namespace ghostfragment::drivers

@@ -13,27 +13,25 @@
 # limitations under the License.
 
 cmake_minimum_required(VERSION 3.14)
-set(VERSION 1.0.0) #TODO: get from git
-project(ghostfragment VERSION "${VERSION}" LANGUAGES CXX)
 
-include(FetchContent)
-FetchContent_Declare(
-    nwx_cmake
-    GIT_REPOSITORY https://github.com/NWChemEx-Project/NWXCMake
-)
-FetchContent_MakeAvailable(nwx_cmake)
-set(
-    CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${nwx_cmake_SOURCE_DIR}/cmake"
-    CACHE STRING ""
-    FORCE
-)
+# Downloads common CMake modules used throughout NWChemEx Community
+include(cmake/get_nwx_cmake.cmake)
 
+# TODO: Uncomment when we have tags
+#include(get_version_from_git)
+#get_version_from_git(ghostfragment_version "${CMAKE_CURRENT_LIST_DIR}")
+set(ghostframent_version "0.0.1")
+project(ghostfragment VERSION "${ghostfragment_version}" LANGUAGES CXX)
+
+include(nwx_versions)
 include(get_cmaize)
 
 ### Options ###
-option(BUILD_TESTING "Should we build the tests?" OFF)
-option(BUILD_PYBIND11_PYBINDINGS "Use pybind11 to build Python3 bindings?" OFF)
-
+cmaize_option_list(
+    BUILD_TESTING OFF "Should we build the tests?"
+    BUILD_PYBIND11_PYBINDINGS ON "Use pybind11 to build Python3 bindings?"
+    INTEGRATION_TESTING OFF "Should we build integration tests?"
+)
 
 # Work out the project paths
 set(project_inc_dir "${CMAKE_CURRENT_LIST_DIR}/include")
@@ -42,21 +40,28 @@ set(project_src_dir "${CMAKE_CURRENT_LIST_DIR}/src")
 include(nwx_cxx_api_docs)
 nwx_cxx_api_docs("${project_src_dir}" "${project_inc_dir}")
 
-cpp_find_or_build_dependency(
+cmaize_find_or_build_dependency(
     simde
-    URL github.com/NWChemEx-Project/SimDE
-    PRIVATE TRUE
+    URL github.com/NWChemEx/SimDE
     BUILD_TARGET simde
     FIND_TARGET nwx::simde
     CMAKE_ARGS BUILD_TESTING=OFF
-               BUILD_PYBIND11_PYBINDINGS=${BUILD_PYBIND11_PYBINDINGS}
+               NWX_PLUGINPLAY_VERSION="cache_access"
 )
 
-cpp_add_library(
+cmaize_find_or_build_dependency(
+    cppitertools
+    URL https://github.com/ryanhaining/cppitertools
+    VERSION v2.1
+    BUILD_TARGET cppitertools
+    FIND_TARGET cppitertools::cppitertools
+)
+
+cmaize_add_library(
     ${PROJECT_NAME}
     SOURCE_DIR "${project_src_dir}/${PROJECT_NAME}"
     INCLUDE_DIRS "${project_inc_dir}"
-    DEPENDS nwx::simde
+    DEPENDS simde cppitertools
 )
 
 include(nwx_pybind11)
@@ -70,7 +75,7 @@ if("${BUILD_TESTING}")
     set(cxx_tests_dir "${CMAKE_CURRENT_LIST_DIR}/tests/cxx")
     set(python_tests_dir "${CMAKE_CURRENT_LIST_DIR}/tests/python")
 
-    cpp_find_or_build_dependency(
+    cmaize_find_or_build_dependency(
         Catch2
         VERSION v2.x
         URL github.com/catchorg/Catch2
@@ -78,16 +83,28 @@ if("${BUILD_TESTING}")
         VERSION v2.13.8
         FIND_TARGET Catch2::Catch2
     )
-    cpp_add_tests(
+    cmaize_add_tests(
         "test_${PROJECT_NAME}"
         SOURCE_DIR "${cxx_tests_dir}/unit_tests/${PROJECT_NAME}"
-        INCLUDE_DIR "${project_src_dir}"
+        INCLUDE_DIRS "${project_src_dir}/${PROJECT_NAME}"
         DEPENDS Catch2::Catch2 ${PROJECT_NAME}
     )
-    nwx_pybind11_tests(
-        py_ghostfragment
-        ${python_tests_dir}/integration_tests/test_ghostfragment.py
-        SUBMODULES simde chemist pluginplay parallelzone
-    )
 
+    if("${INTEGRATION_TESTING}")
+        cmaize_find_or_build_dependency(
+            nwchemex
+            URL github.com/NWChemEx/NWChemEx
+            BUILD_TARGET nwchemex
+            FIND_TARGET nwx::nwchemex
+            CMAKE_ARGS BUILD_TESTING=OFF
+        )
+
+        nwx_pybind11_tests(
+            py_ghostfragment
+            ${python_tests_dir}/integration_tests/test_ghostfragment.py
+            DEPENDS nwchemex
+            SUBMODULES simde chemist pluginplay parallelzone friendzone chemcache nwchemex
+        )
+
+    endif()
 endif()

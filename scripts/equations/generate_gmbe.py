@@ -1,3 +1,17 @@
+# Copyright 2024 GhostFragment
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from itertools import combinations
 from union import Union
 from intersection import Intersection
@@ -5,6 +19,7 @@ from index import Index
 
 
 class Term:
+
     def __init__(self, coeff, value):
         self.coeff = coeff
         self.value = value
@@ -34,6 +49,7 @@ def make_fragments(n_fragments):
         fragments.append(Index(some_letters[i]))
     return fragments
 
+
 def make_nmers(trunc_order, frags):
     nmers = []
     if trunc_order == 1:
@@ -62,13 +78,15 @@ def make_intersections(nmers):
 
     return ovps
 
+
 def diff_ovps(old_nmers, new_nmer):
     old_ovps = make_intersections(old_nmers)
     new_nmers = old_nmers + [new_nmer]
     new_ovps = make_intersections(new_nmers)
     return [x for x in new_ovps if x not in old_ovps]
 
-def print_equation(nmers, ovps, clean_up = False):
+
+def print_equation(nmers, ovps, clean_up=False):
     rv = ""
     for nmer in nmers:
         rv += str(nmer)
@@ -79,20 +97,23 @@ def print_equation(nmers, ovps, clean_up = False):
             rv += str(ovp)
     return rv
 
+
 if __name__ == "__main__":
     n_fragments = 4
     trunc_order = 2
     frags = make_fragments(n_fragments)
     nmers = make_nmers(trunc_order, frags)
-    ovps  = make_intersections(nmers)
+    ovps = make_intersections(nmers)
     for x in ovps:
         if len(x.value.associate()) == 3:
             print(x, x.clean_up())
     #print(print_equation(nmers, ovps, True))
-    nmers = [Term(1.0, Union(Index("I"), Index("J"))),
-             Term(1.0, Union(Index("I"), Index("K"))),
-             Term(1.0, Union(Index("J"), Index("K"))),
-             Term(1.0, Union(Index("I"), Index("L"))),
-             Term(1.0, Union(Index("J"), Index("L")))]
+    nmers = [
+        Term(1.0, Union(Index("I"), Index("J"))),
+        Term(1.0, Union(Index("I"), Index("K"))),
+        Term(1.0, Union(Index("J"), Index("K"))),
+        Term(1.0, Union(Index("I"), Index("L"))),
+        Term(1.0, Union(Index("J"), Index("L")))
+    ]
     diff = diff_ovps(nmers, Term(1.0, Union(Index("K"), Index("L"))))
     #print(print_equation(nmers, diff, True))
