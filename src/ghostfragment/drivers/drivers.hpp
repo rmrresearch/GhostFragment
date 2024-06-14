@@ -19,7 +19,7 @@
 
 namespace ghostfragment::drivers {
 
-DECLARE_DRIVER_MODULE(Fragment);
+DECLARE_MODULE(Fragment);
 DECLARE_MODULE(FragmentBasedMethod);
 DECLARE_MODULE(FragmentedChemicalSystem);
 

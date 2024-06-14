@@ -37,7 +37,7 @@ using frags_type        = typename pt::FragmentedNucleiTraits::result_type;
 using graph_type        = typename pt::NuclearGraphTraits::result_type;
 using conns_type        = typename graph_type::connectivity_type;
 using broken_bonds_type = typename pt::BrokenBondsTraits::result_type;
-using n_type            = unsigned int;
+using n_type            = unsigned short;
 
 namespace {
 

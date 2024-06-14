@@ -47,12 +47,12 @@ class TestFragmentBasedMethod(unittest.TestCase):
         self.assertAlmostEqual(egy, -224.881189393868)
 
     def test_2b_water_trimer_hf_sto_3g(self):
-        mod_key = 'N-mer Based Method'
+        mod_key = 'Fragment Based Method'
         method = 'NWChem : SCF'
         basis = 'sto-3g'
         trunc_order = 2
         self.mm.change_input(method, 'basis set', basis)
-        self.mm.change_input('All nmers', 'n', trunc_order)
+        self.mm.change_input('Fragment Driver', 'n', trunc_order)
         sys = chemist.ChemicalSystem(self.water3)
 
         self.mm.change_submod(mod_key, 'Energy method', method)
@@ -72,7 +72,7 @@ class TestFragmentBasedMethod(unittest.TestCase):
         self.assertAlmostEqual(egy, -194.04241322079702)
 
     def setUp(self):
-        self.mm = pluginplay.ModuleManager()
+        self.mm = pluginplay.ModuleManager(pz.runtime.RuntimeView(), None)
         nwx.load_modules(self.mm)
         ghostfragment.load_modules(self.mm)
 

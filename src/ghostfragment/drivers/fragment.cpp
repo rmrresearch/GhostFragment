@@ -31,7 +31,7 @@ using frags_pt         = pt::FragmentedNuclei;
 using intersections_pt = pt::Intersections;
 using graph_pt         = pt::NuclearGraph;
 using graph2frags_pt   = pt::NuclearGraphToFragments;
-using n_type           = unsigned int;
+using n_type           = unsigned short;
 
 const auto mod_desc = R"(
 Fragment Driver
@@ -64,26 +64,18 @@ MODULE_CTOR(Fragment) {
     add_submodule<cap_pt>("Cap broken bonds");
 }
 
-MODULE_PRE_RUN(Fragment) {
+MODULE_RUN(Fragment) {
     auto n = inputs.at("n").value<n_type>();
 
-    auto& frag_mod = submods["Molecular graph to fragments"];
-    frag_mod.set_type<graph2frags_pt>();
+    pluginplay::Module frags_mod;
 
     if(n == 1) {
-        frag_mod.change(submods.at("Fragment builder"));
+        frags_mod = submods.at("Fragment builder").value();
     } else {
-        auto new_mod = submods.at("N-mer builder").value().unlocked_copy();
-        new_mod.change_input("n", n);
-        frag_mod.change(new_mod);
+        frags_mod = submods.at("N-mer builder").value().unlocked_copy();
+        frags_mod.change_input("n", n);
     }
 
-    // TODO: Strip "n", "N-mer builder", and "Fragment builder" out
-
-    return std::make_tuple(std::move(inputs), std::move(submods));
-}
-
-MODULE_RUN(Fragment) {
     const auto& [mol] = frags_pt::unwrap_inputs(inputs);
     auto& runtime     = get_runtime();
 
@@ -99,7 +91,6 @@ MODULE_RUN(Fragment) {
                            " nodes and " + std::to_string(n_edges) + " edges.");
 
     // Step 2: Use the graph to make fragments
-    auto& frags_mod           = submods.at("Molecular graph to fragments");
     const auto& frags_no_ints = frags_mod.run_as<graph2frags_pt>(graph);
     const auto n_frags        = frags_no_ints.size();
     runtime.logger().debug("Created " + std::to_string(n_frags) +
@@ -128,7 +119,5 @@ MODULE_RUN(Fragment) {
     auto rv = results();
     return frags_pt::wrap_results(rv, capped_frags);
 }
-
-DEFAULT_MODULE_POST_RUN(Fragment);
 
 } // namespace ghostfragment::drivers
