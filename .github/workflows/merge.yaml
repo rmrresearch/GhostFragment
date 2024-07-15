@@ -26,4 +26,7 @@ jobs:
     with:
       doc_target: 'ghostfragment_cxx_api'
       generate_module_docs: true
-    secrets: inherit
+    secrets:
+      CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      TAG_TOKEN: ${{ secrets.TAG_TOKEN }}
+      CONTAINER_REPO_TOKEN : ${{ secrets.TAG_TOKEN }}
