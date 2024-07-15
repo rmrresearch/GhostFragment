@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview of Established Fragment Based Methods &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>Overview of Established Fragment Based Methods &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -49,7 +54,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Theoretical Background</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../fragment_based_methods.html">Fragment Based Methods</a></li>
@@ -77,7 +82,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer/index.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -107,18 +112,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="overview-of-established-fragment-based-methods">
-<h1>Overview of Established Fragment Based Methods<a class="headerlink" href="#overview-of-established-fragment-based-methods" title="Permalink to this headline"></a></h1>
+  <section id="overview-of-established-fragment-based-methods">
+<h1>Overview of Established Fragment Based Methods<a class="headerlink" href="#overview-of-established-fragment-based-methods" title="Link to this heading"></a></h1>
 <p>TODO: Proper overview instead of bullet points</p>
 <ul class="simple">
 <li><p>Many fragment-based methods started in relative isolation</p></li>
 <li><p>Each group called their method something different</p></li>
 <li><p>Even when similarities emerge, typically the gropu maintains the method’s name</p></li>
-<li><p>Tendency to talk about methods as if they’re black box</p></li>
+<li><p>Tendency to talk about methods as if they’re black box methods</p>
+<ul>
+<li><p>e.g., much in the way that one would say “we ran B3LYP” groups will say
+they “ran <code class="docutils literal notranslate"><span class="pre">&lt;insert</span> <span class="pre">fragmentation</span> <span class="pre">method</span> <span class="pre">here&gt;</span></code>” with little to few
+details.</p></li>
+</ul>
+</li>
+<li><p>Unlike established quantum chemistry methods, fragment based methods tend to
+be much more sensitive to the specifics.</p></li>
 <li><p>Our argument is that each method can be decomposed into a few key algorithms</p></li>
 <li><p>Specifying the algorithms is akin to specifying a method.</p></li>
+<li><p>Upon enumating the algorithms we can propose new method names which are more
+in the spirit of black box methods (although the utility of such names over
+just specifying the algorithm pieces is debatable).</p></li>
 </ul>
-</div>
+</section>
 
 
            </div>

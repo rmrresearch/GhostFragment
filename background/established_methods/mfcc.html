@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Molecular Fractionation with Conjugate Caps (MFCC) &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>Molecular Fractionation with Conjugate Caps (MFCC) &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -49,7 +54,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Theoretical Background</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../fragment_based_methods.html">Fragment Based Methods</a></li>
@@ -80,7 +85,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer/index.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -110,9 +115,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="molecular-fractionation-with-conjugate-caps-mfcc">
-<span id="mfcc"></span><h1>Molecular Fractionation with Conjugate Caps (MFCC)<a class="headerlink" href="#molecular-fractionation-with-conjugate-caps-mfcc" title="Permalink to this headline"></a></h1>
-<p>Introduced in 2003, MFCC <span id="id1"><sup><a class="reference internal" href="../../references.html#id63" title="Da W. Zhang and J. Z. H. Zhang. Molecular fractionation with conjugate caps for full quantum mechanical calculation of protein–molecule interaction energy. The Journal of Chemical Physics, 119(7):3599–3605, 2003. doi:10.1063/1.1591727.">69</a></sup></span> focused on fragment-based
+  <section id="molecular-fractionation-with-conjugate-caps-mfcc">
+<span id="mfcc"></span><h1>Molecular Fractionation with Conjugate Caps (MFCC)<a class="headerlink" href="#molecular-fractionation-with-conjugate-caps-mfcc" title="Link to this heading"></a></h1>
+<p>Introduced in 2003, MFCC <span id="id1"><sup><a class="reference internal" href="../../bibliography/index.html#id59" title="Da W. Zhang and J. Z. H. Zhang. Molecular fractionation with conjugate caps for full quantum mechanical calculation of protein–molecule interaction energy. The Journal of Chemical Physics, 119(7):3599–3605, 2003. doi:10.1063/1.1591727.">99</a></sup></span> focused on fragment-based
 calculations of proteins. The original MFCC method uses the <a class="reference internal" href="../algorithms/frag_methods/mfcc.html#mfcc-frag-method"><span class="std std-ref">MFCC Fragmentation Method</span></a> and the
 <a class="reference internal" href="../algorithms/cap_methods/h_capping.html#simple-replacement"><span class="std std-ref">Simple Replacement</span></a> capping method (or at least we assume it does since the manuscript only
 mentions adding hydrogen atoms).
@@ -122,11 +127,7 @@ intersections into molecules (for each non-terminal amino acid, the left and
 right intersections are combined into a molecule). Initial small basis SCF and
 DFT (with the B3LYP functional) results focused on water-peptide interactions
 and were shown to be in excellent agreement with supersystem results.</p>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>The next two paragraphs do not seem to be consistent with our terminology.</p>
-</div>
-<p>In a follow up study <span id="id3">Zhang <em>et al.</em><sup><a class="reference internal" href="../../references.html#id65" title="D. W. Zhang, X. H. Chen, and J. Z. H. Zhang. Molecular caps for full quantum mechanical computation of peptide-water interaction energy. Journal of Computational Chemistry, 24(15):1846–1852, 2003.">67</a></sup></span> considered how the cap choice and
+<p>In a follow up study <span id="id3">Zhang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id61" title="D. W. Zhang, X. H. Chen, and J. Z. H. Zhang. Molecular caps for full quantum mechanical computation of peptide-water interaction energy. Journal of Computational Chemistry, 24(15):1846–1852, 2003.">97</a></sup></span> considered how the cap choice and
 cutting location affected the error by looking at the potential energy surface
 for the interaction of a water molecule with a five amino acid peptide.
 Calculations were at the SCF and B3LYP level of theory, with small basis sets
@@ -135,20 +136,13 @@ between the alpha-carbon and the carbonyl carbon, was better than cutting the
 peptide bond (depending on the particular potential energy surface point, could
 be more than 1 kcal/mol difference). Cap size was found to have a smaller effect
 on the error (about 0.5 kcal/mol).</p>
-<p>The next development came when <span id="id4">Chen <em>et al.</em><sup><a class="reference internal" href="../../references.html#id66" title="X. H. Chen, D. W. Zhang, and J. Z. H. Zhang. Fractionation of peptide with disulfide bond for quantum mechanical calculation of interaction energy with molecules. The Journal of Chemical Physics, 120(2):839–844, 2004.">4</a></sup></span> applied MFCC to proteins
+<p>The next development came when <span id="id4">Chen <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id62" title="X. H. Chen, D. W. Zhang, and J. Z. H. Zhang. Fractionation of peptide with disulfide bond for quantum mechanical calculation of interaction energy with molecules. The Journal of Chemical Physics, 120(2):839–844, 2004.">4</a></sup></span> applied MFCC to proteins
 containing disulfide bonds. In addition to severing the alpha carbon-carbonyl
 carbon bonds, the sulfide bonds were also severed. They considered two capping
 strategies for the severed sulfide bonds: hydrogen atoms, or methyls. The latter
 was found to afford better results. Sample calculations were at the SCF, B3LYP,
 and MP2 levels of theory paired with several small basis sets (at most 6-31G).</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 18%" />
-<col style="width: 20%" />
-<col style="width: 16%" />
-<col style="width: 20%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Fragments</p></th>
@@ -166,14 +160,14 @@ and MP2 levels of theory paired with several small basis sets (at most 6-31G).</
 </tr>
 </tbody>
 </table>
-<div class="section" id="other-mfcc-results">
-<h2>Other MFCC Results<a class="headerlink" href="#other-mfcc-results" title="Permalink to this headline"></a></h2>
-<p><span id="id5">Zhang <em>et al.</em><sup><a class="reference internal" href="../../references.html#id64" title="Da W. Zhang, Yun Xiang, and John Z. H. Zhang. New advance in computational chemistry:\hspace 0.167em full quantum mechanical ab initio computation of streptavidin-biotin interaction energy. The Journal of Physical Chemistry B, 107(44):12039–12041, 2003.">68</a></sup></span> applied MFCC to a streptavidin-biotin system, which is a
+<section id="other-mfcc-results">
+<h2>Other MFCC Results<a class="headerlink" href="#other-mfcc-results" title="Link to this heading"></a></h2>
+<p><span id="id5">Zhang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id60" title="Da W. Zhang, Yun Xiang, and John Z. H. Zhang. New advance in computational chemistry:\hspace 0.167em full quantum mechanical ab initio computation of streptavidin-biotin interaction energy. The Journal of Physical Chemistry B, 107(44):12039–12041, 2003.">98</a></sup></span> applied MFCC to a streptavidin-biotin system, which is a
 121 amino-acid protein. Results are computed using the HF/3-21G model chemistry
 and compared to the AMBER force field. Relatively large energetic discrepancies
 between the two are noted.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GhostFragment Design Overview &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>GhostFragment Design Overview &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -49,7 +54,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../background/index.html">Theoretical Background</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Documentation</a><ul class="current">
@@ -66,12 +71,13 @@
 <li class="toctree-l3"><a class="reference internal" href="fragmented_molecule_driver.html">Designing the FragmentedMolecule Driver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fragmented_nuclei_driver.html">Designing GhostFragment’s FragmentedNuclei Driver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmers.html">Designing the NMer Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gmbe_coefficients.html">GMBE Coefficients</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../development/index.html">GhostFragment Development Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -101,25 +107,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="ghostfragment-design-overview">
-<span id="gf-design-overview"></span><h1>GhostFragment Design Overview<a class="headerlink" href="#ghostfragment-design-overview" title="Permalink to this headline"></a></h1>
+  <section id="ghostfragment-design-overview">
+<span id="gf-design-overview"></span><h1>GhostFragment Design Overview<a class="headerlink" href="#ghostfragment-design-overview" title="Link to this heading"></a></h1>
 <p>The purpose of this page is to provide a quick, high-level overview of the
 design of GhostFragment and to point the interested reader to where they
 may find more details.</p>
-<div class="section" id="what-is-ghostfragment">
-<h2>What is GhostFragment?<a class="headerlink" href="#what-is-ghostfragment" title="Permalink to this headline"></a></h2>
+<section id="what-is-ghostfragment">
+<h2>What is GhostFragment?<a class="headerlink" href="#what-is-ghostfragment" title="Link to this heading"></a></h2>
 <p>GhostFragment is a software package designed to facilitate developing and
 running fragment-based methods.</p>
-</div>
-<div class="section" id="why-do-we-need-ghostfragment">
-<h2>Why do we need GhostFragment?<a class="headerlink" href="#why-do-we-need-ghostfragment" title="Permalink to this headline"></a></h2>
+</section>
+<section id="why-do-we-need-ghostfragment">
+<h2>Why do we need GhostFragment?<a class="headerlink" href="#why-do-we-need-ghostfragment" title="Link to this heading"></a></h2>
 <p>There is no one-stop shop for fragment-based methods. Various electronic
 structure packages have implementations of one or a few methods, but no
 package readily provides acccess to a large number of methods. GhostFragment
 seeks to change this while also facilitating rapid-prototyping of new methods.</p>
-</div>
-<div class="section" id="ghostfragment-considerations">
-<span id="gf-considerations"></span><h2>GhostFragment Considerations<a class="headerlink" href="#ghostfragment-considerations" title="Permalink to this headline"></a></h2>
+</section>
+<section id="ghostfragment-considerations">
+<span id="gf-considerations"></span><h2>GhostFragment Considerations<a class="headerlink" href="#ghostfragment-considerations" title="Link to this heading"></a></h2>
 <dl class="simple" id="gf-perfomance">
 <dt>Performance</dt><dd><p>Fragment-based methods are meant to be an approximation to traditional
 electronic structure methods. Most traditional methods have highly-performant
@@ -174,10 +180,10 @@ a fragment-based method, the module implementing the fragment-based method
 should also satisfy the <code class="docutils literal notranslate"><span class="pre">Energy</span></code> property type.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="design-of-ghostfragment">
-<h2>Design of GhostFragment<a class="headerlink" href="#design-of-ghostfragment" title="Permalink to this headline"></a></h2>
-<p>The <span class="xref std std-ref">gf_perfomance</span> and <span class="xref std std-ref">gf_generality</span> considerations have led us to
+</section>
+<section id="design-of-ghostfragment">
+<h2>Design of GhostFragment<a class="headerlink" href="#design-of-ghostfragment" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="#gf-perfomance"><span class="std std-ref">Performance</span></a> and <a class="reference internal" href="#gf-generality"><span class="std std-ref">Generality</span></a> considerations have led us to
 implement GhostFragment as an NWChemEx plugin. More specifically, NWChemEx’s
 PluginPlay framework is designed to faciliate writing software which can easily
 be customized and extended. This in turn makes it easier to modularize the
@@ -192,11 +198,13 @@ for the SCF). We assume that the electronic structure method we are calling is
 peformant already.</p>
 <p>The remaining considerations from <a class="reference internal" href="#gf-considerations"><span class="std std-ref">GhostFragment Considerations</span></a> fall under the
 architecture of GhostFragment.</p>
-<div class="figure align-center" id="id1">
+<figure class="align-center" id="id1">
 <span id="fig-gf-arch"></span><img alt="../../_images/overview.png" src="../../_images/overview.png" />
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">GhostFragment is comprised of two components: an input driver, and an
-engine.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">GhostFragment is comprised of two components: an input driver, and an
+engine.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <p><a class="reference internal" href="#fig-gf-arch"><span class="std std-numref">Fig. 3</span></a> shows the high-level architecture of GhostFragment. The
 unifying theme of all fragment-methods is that they strive to approximate one
 large computation via a series of smaller computations. How one maps the
@@ -207,21 +215,21 @@ computations, GhostFragment can then approximate the property of interest for
 the larger system. While not shown explicitly the input to GhostFragment being
 a chemical system and the result being an energy, is consistent with a module
 satisfying the <code class="docutils literal notranslate"><span class="pre">Energy</span></code> property type, consistent with
-<span class="xref std std-ref">gf_supersystem_pt</span>. Similar top-level designs could be made for any
+<a class="reference internal" href="#gf-supersystem-pt"><span class="std std-ref">Supersystem property type</span></a>. Similar top-level designs could be made for any
 property type taking a chemical system.</p>
 <p>The “input driver” is discussed in more detail at <a class="reference internal" href="input_driver.html#gf-input-driver-design"><span class="std std-ref">Designing GhostFragment’s Input Driver</span></a>.
 The “input driver” controls the creation of the inputs to the engine. The
 accuracy of a fragment-based method (relative to the method it is approximating)
 is determined primarily by those inputs. Hence addressing the
-<span class="xref std std-ref">gf_accuracy</span> consideration falls to the input driver. The final high-level
-consideration, <span class="xref std std-ref">gf_multi_layer</span>, can easily be addressed by nesting calls
-to GhostFragment. In terms of architecture, the <span class="xref std std-ref">gf_multi_layer</span>
+<a class="reference internal" href="#gf-accuracy"><span class="std std-ref">Accuracy</span></a> consideration falls to the input driver. The final high-level
+consideration, <a class="reference internal" href="#gf-multi-layer"><span class="std std-ref">Multi-layer</span></a>, can easily be addressed by nesting calls
+to GhostFragment. In terms of architecture, the <a class="reference internal" href="#gf-multi-layer"><span class="std std-ref">Multi-layer</span></a>
 consideration means GhostFragment needs to be written in a manner which is
 ammenable to being nested. This is somewhat trivially satisfiable by making
 GhostFragment’s top-level a PluginPlay module, and by then relying on the fact
 that PluginPlay modules can be nested.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

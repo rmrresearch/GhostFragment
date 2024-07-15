@@ -1,5 +1,0 @@
-var searchData=
-[
-  ['moleculargraph_132',['MolecularGraph',['../classghostfragment_1_1MolecularGraph.html#a0c161d085f93261ad17bdbd371530394',1,'ghostfragment::MolecularGraph::MolecularGraph() noexcept'],['../classghostfragment_1_1MolecularGraph.html#a3b287a375ead62fb6dc6b8e9c0a12947',1,'ghostfragment::MolecularGraph::MolecularGraph(partitioned_mol_type nodes, connectivity_type edges)'],['../classghostfragment_1_1MolecularGraph.html#aa8ee716b6f08e1a586b638023698e707',1,'ghostfragment::MolecularGraph::MolecularGraph(const MolecularGraph &amp;other)'],['../classghostfragment_1_1MolecularGraph.html#acadf59dd67a33c6f934e2e919c0f353e',1,'ghostfragment::MolecularGraph::MolecularGraph(MolecularGraph &amp;&amp;other) noexcept']]],
-  ['molecule_133',['molecule',['../classghostfragment_1_1equation_1_1Term.html#a8f1e7e1c9c850fbec903caa7bc7dcce5',1,'ghostfragment::equation::Term::molecule()'],['../classghostfragment_1_1MolecularGraph.html#abf3d2dd95de6226ef79ecc0f012940eb',1,'ghostfragment::MolecularGraph::molecule()']]]
-];

@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Designing GhostFragment’s Input Driver &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>Designing GhostFragment’s Input Driver &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -49,7 +55,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../background/index.html">Theoretical Background</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Documentation</a><ul class="current">
@@ -65,12 +71,13 @@
 <li class="toctree-l3"><a class="reference internal" href="fragmented_molecule_driver.html">Designing the FragmentedMolecule Driver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fragmented_nuclei_driver.html">Designing GhostFragment’s FragmentedNuclei Driver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmers.html">Designing the NMer Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gmbe_coefficients.html">GMBE Coefficients</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../development/index.html">GhostFragment Development Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -100,22 +107,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="designing-ghostfragment-s-input-driver">
-<span id="gf-input-driver-design"></span><h1>Designing GhostFragment’s Input Driver<a class="headerlink" href="#designing-ghostfragment-s-input-driver" title="Permalink to this headline"></a></h1>
-<div class="section" id="what-is-the-input-driver">
-<h2>What is the Input Driver?<a class="headerlink" href="#what-is-the-input-driver" title="Permalink to this headline"></a></h2>
+  <section id="designing-ghostfragment-s-input-driver">
+<span id="gf-input-driver-design"></span><h1>Designing GhostFragment’s Input Driver<a class="headerlink" href="#designing-ghostfragment-s-input-driver" title="Link to this heading"></a></h1>
+<section id="what-is-the-input-driver">
+<h2>What is the Input Driver?<a class="headerlink" href="#what-is-the-input-driver" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="overview.html#gf-design-overview"><span class="std std-ref">GhostFragment Design Overview</span></a> separated GhostFragment into two components: the
 input driver and the engine. The input driver is tasked with going from the
 system we actually care about to the inputs needed to approximate that system.</p>
-</div>
-<div class="section" id="input-driver-considerations">
-<h2>Input Driver Considerations<a class="headerlink" href="#input-driver-considerations" title="Permalink to this headline"></a></h2>
+</section>
+<section id="input-driver-considerations">
+<h2>Input Driver Considerations<a class="headerlink" href="#input-driver-considerations" title="Link to this heading"></a></h2>
 <dl class="simple" id="gf-input-driver-accuracy">
 <dt>Accuracy</dt><dd><p><a class="reference internal" href="overview.html#gf-design-overview"><span class="std std-ref">GhostFragment Design Overview</span></a> delegated the accuracy consideration to the input
 driver. At this level accuracy primarily entails:</p>
 <ul class="simple">
 <li><p>Ensuring that the final set of sub-systems contains all important
-interactions, <em>e.g.</em>, all important <span class="math notranslate nohighlight">\(n\)</span>-mers are present.</p></li>
+interactions, <em>e.g.</em>, all important <span class="math notranslate nohighlight">\(n`\)</span>-mers are present.</p></li>
 <li><p>Being able to correct for BSSE.</p></li>
 </ul>
 </dd>
@@ -145,11 +152,11 @@ overlaps with the atom(s) it replaces.</p></li>
 <dt>Opaque fragmentation</dt><dd><p>At the level of the input driver we assume that a submodule prepares the
 final set of fragments and the input driver can be agnostic to how the
 fragments were formed other than that they may overlap
-(consideration <span class="xref std std-ref">gf_overlap</span>).</p>
+(consideration <a class="reference internal" href="#gf-overlap"><span class="std std-ref">Overlap</span></a>).</p>
 </dd>
 </dl>
 <dl class="simple" id="gf-inclusion-exclusion-principle">
-<dt>Inclusion exclusion principle</dt><dd><p>Somewhat of a corallary of <span class="xref std std-ref">gf_opaque_fragmentation</span>, we assume that
+<dt>Inclusion exclusion principle</dt><dd><p>Somewhat of a corallary of <a class="reference internal" href="#gf-opaque-fragmentation"><span class="std std-ref">Opaque fragmentation</span></a>, we assume that
 the inclusion-exclusion principle can be used to determine the coefficients
 of the fragments.</p>
 <ul class="simple">
@@ -158,22 +165,24 @@ equation.</p></li>
 </ul>
 </dd>
 </dl>
-</div>
-<div class="section" id="input-driver-design">
-<h2>Input Driver Design<a class="headerlink" href="#input-driver-design" title="Permalink to this headline"></a></h2>
-<div class="figure align-center" id="id1">
+</section>
+<section id="input-driver-design">
+<h2>Input Driver Design<a class="headerlink" href="#input-driver-design" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id1">
 <span id="fig-gf-input-driver"></span><img alt="../../_images/input_driver.png" src="../../_images/input_driver.png" />
-<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">The architecture of the input driver component.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">The architecture of the input driver component.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <p><a class="reference internal" href="#fig-gf-input-driver"><span class="std std-numref">Fig. 4</span></a> shows the high-level design of the input driver.
-Following from consideration <span class="xref std std-ref">gf_input_driver_pt</span> the inputs to the driver
+Following from consideration <a class="reference internal" href="#gf-input-driver-pt"><span class="std std-ref">Supersystem property type</span></a> the inputs to the driver
 match those of the module it’s meant to be approximating (here it’s assumed to
 be <code class="docutils literal notranslate"><span class="pre">AOEnergy</span></code>, but a similar idea holds for gradients or frequencies). Inside
 the input driver we decompose the process of preparing the sub-calculation
 inputs into several steps.</p>
 <p>The first step is the creation of the fragments, which is handled by the
 <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> driver. It is worth noting, that here we use the term
-fragment loosely since the outputs could be actual fragments or <span class="math notranslate nohighlight">\(n\)</span>-mers. A
+fragment loosely since the outputs could be actual fragments or <span class="math notranslate nohighlight">\(n`\)</span>-mers. A
 more detailed discussion of the <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> driver is deferred to
 <a class="reference internal" href="fragmented_nuclei_driver.html#gf-fragmented-nuclei-driver-design"><span class="std std-ref">Designing GhostFragment’s FragmentedNuclei Driver</span></a>.</p>
 <p>Once we have the fragments, we need to find the overlaps, and in the process
@@ -187,19 +196,19 @@ corresponding basis set, creating the final set of inputs.</p>
 System Driver is responsible for taking an input set of <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code>
 and a <code class="docutils literal notranslate"><span class="pre">ChemicalSystem</span></code> and creating the final set of sub-systems to use. These
 sub-systems are returned as a <code class="docutils literal notranslate"><span class="pre">FragmentedMoleculeSystem</span></code> object and do NOT
-include the overlaps (as dictated by consideration <span class="xref std std-ref">gf_overlap</span>). Forming
-of <span class="math notranslate nohighlight">\(n\)</span>-mers will happen in the fragmented system driver and thus satisfying
-consideration <span class="xref std std-ref">gf_input_driver_accuracy</span> will be partially addressed here.</p>
+include the overlaps (as dictated by consideration <a class="reference internal" href="#gf-overlap"><span class="std std-ref">Overlap</span></a>). Forming
+of <span class="math notranslate nohighlight">\(n`\)</span>-mers will happen in the fragmented system driver and thus satisfying
+consideration <a class="reference internal" href="#gf-input-driver-accuracy"><span class="std std-ref">Accuracy</span></a> will be partially addressed here.</p>
 <p>The exact contents of the “Interaction Driver” will depend on the approximation
 being used. If the user wants the traditional (G)MBE, the input will be the
 set of n-mers which survived the screening process and the module will be
 responsible for working out the overlaps (including their weights), capping the
-overlaps, and assigning AOs to each <span class="math notranslate nohighlight">\(n\)</span>-mer and overlap. If the user instead
+overlaps, and assigning AOs to each <span class="math notranslate nohighlight">\(n`\)</span>-mer and overlap. If the user instead
 wants a BSSE-corrected interaction, then assigning the AOs becomes more
 complicated. A full discussion of the Interaction driver is beyond our current
 scope.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

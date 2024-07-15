@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generalized Energy Based Fragmentation (GEBF) &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>Generalized Energy Based Fragmentation (GEBF) &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -49,7 +55,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Theoretical Background</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../fragment_based_methods.html">Fragment Based Methods</a></li>
@@ -82,7 +88,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer/index.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -112,11 +118,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="generalized-energy-based-fragmentation-gebf">
-<h1>Generalized Energy Based Fragmentation (GEBF)<a class="headerlink" href="#generalized-energy-based-fragmentation-gebf" title="Permalink to this headline"></a></h1>
+  <section id="generalized-energy-based-fragmentation-gebf">
+<h1>Generalized Energy Based Fragmentation (GEBF)<a class="headerlink" href="#generalized-energy-based-fragmentation-gebf" title="Link to this heading"></a></h1>
 <p>GEBF is the culmanation of the <a class="reference internal" href="dclc.html#dclc"><span class="std std-ref">Divide and Conquer Local Correlation (DCLC)</span></a> methods.</p>
 <p>Development of GEBF was motivated by a need to treat large
-macromolecules/clusters that are charged or highly polar <span id="id1"><sup><a class="reference internal" href="../../references.html#id57" title="Wei Li, Shuhua Li, and Yuansheng Jiang. Generalized energy-based fragmentation approach for computing the ground-state energies and properties of large molecules. The Journal of Physical Chemistry A, 111(11):2193–2199, 2007.">43</a></sup></span>. The
+macromolecules/clusters that are charged or highly polar <span id="id1"><sup><a class="reference internal" href="../../bibliography/index.html#id67" title="Wei Li, Shuhua Li, and Yuansheng Jiang. Generalized energy-based fragmentation approach for computing the ground-state energies and properties of large molecules. The Journal of Physical Chemistry A, 111(11):2193–2199, 2007.">59</a></sup></span>. The
 original GEBF method, which we term the GEBF07 method, consists of the <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf07-fragmentation-method"><span class="std std-ref">GEBF07 Fragmentation Method</span></a>,
 with <a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a> capping, a slight variation of <a class="reference internal" href="../algorithms/screening_methods/distance.html#smf06-screening"><span class="std std-ref">SMF06 Screening</span></a>, and an <a class="reference internal" href="../algorithms/embed_methods/point_charge.html#iterative-point-charge-embedding"><span class="std std-ref">Iterative Point Charge Embedding</span></a>. GEBF’s
 original presentation also includes an energy equation which is simply a one-
@@ -127,16 +133,67 @@ charges, but also the interactions among the point charges). Initial
 applications of GEBF focused on peptides and water clusters with the HF and MP2
 methods. In addition to absolute energies this study also considered dipole
 moments and static polarizabilities.</p>
-<div class="section" id="gebf-summary">
-<h2>GEBF Summary<a class="headerlink" href="#gebf-summary" title="Permalink to this headline"></a></h2>
+<p><span id="id2">Hua <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id68" title="Weijie Hua, Tao Fang, Wei Li, Jian-Guo Yu, and Shuhua Li. Geometry optimizations and vibrational spectra of large molecules from a generalized energy-based fragmentation approach. The Journal of Physical Chemistry A, 112(43):10864–10872, 2008.">33</a></sup></span> introduced the GEBF08 method which differs from the GEBF07
+method in nearly all regards. In particular GEBF08 uses the <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf08-fragmentation-method"><span class="std std-ref">GEBF08 Fragmentation Method</span></a>
+fragmentation method, <a class="reference internal" href="../algorithms/embed_methods/point_charge.html#iterative-point-charge-embedding"><span class="std std-ref">Iterative Point Charge Embedding</span></a> (I assume since the GEBF07 method is cited, but
+the article is not clear on this point), <a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a> capping, and no (?) screening.
+GEBF08 was applied to geometry optimizations and
+vibrational frequency calculations. The GEBF08 energies, optimized geometries,
+and vibrational frequencies were compared to the conventional results. Small
+basis SCF (both HF and DFT) results, for several types of systems (clusters,
+peptides, and hydrogelators) are presented.</p>
+<p>The next methodologic development came when <span id="id3">Hua <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id72" title="Shugui Hua, Weijie Hua, and Shuhua Li. An efficient implementation of the generalized energy-based fragmentation approach for general large molecules. The Journal of Physical Chemistry A, 114(31):8126–8134, July 2010. doi:10.1021/jp103074f.">30</a></sup></span> updated the
+fragmentation method of the GEBF08 method. The resulting GEBF10 method uses the
+<a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf10-fragmentation-method"><span class="std std-ref">GEBF10 Fragmentation Method</span></a> fragmentation method which is similar to the original <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf07-fragmentation-method"><span class="std std-ref">GEBF07 Fragmentation Method</span></a> method
+with a series of “extension rules”. GEBF10 was applied to a series of large
+organic molecules. Computed properties included absolute energies, relative
+energies, and optimized geometries all with small basis HF or DFT. Compared to
+the supersystem results GEB10 did well for geometries, but the errors in the
+energetics were often off by more than 1 kcal/mol.</p>
+<p><span id="id4">Hua <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id77" title="Shugui Hua, Wei Li, and Shuhua Li. The generalized energy-based fragmentation approach with an improved fragmentation scheme: benchmark results and illustrative applications. ChemPhysChem, 14(1):108–115, December 2012. doi:10.1002/cphc.201200867.">31</a></sup></span> noted that the GEBF10 method performed poorly for systems
+containing important non-covalent interactions. To combat this,
+<span id="id5">Hua <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id77" title="Shugui Hua, Wei Li, and Shuhua Li. The generalized energy-based fragmentation approach with an improved fragmentation scheme: benchmark results and illustrative applications. ChemPhysChem, 14(1):108–115, December 2012. doi:10.1002/cphc.201200867.">31</a></sup></span> introduced a new fragmentation method <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf12-fragmentation-method"><span class="std std-ref">GEBF12 Fragmentation Method</span></a>. <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf12-fragmentation-method"><span class="std std-ref">GEBF12 Fragmentation Method</span></a>
+extends <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf10-fragmentation-method"><span class="std std-ref">GEBF10 Fragmentation Method</span></a> by augmenting the original set of fragments with additional
+fragments formed from pairs of pseudoatoms (plus the pseudoatoms near that
+pair). The resulting GEBF12 method was then applied to several peptides and
+large molecules. GEBF12 performed better than GEBF10 (for example for binding
+energies of the large molecules GEBF10 erred from supersystem results by about
+3.8 kcal/mol whereas GEBF10 only erred by about 0.5 kcal/mol). Of note the role
+of BSSE corrections (as computed using the <a class="reference internal" href="../bsse/distance.html#distance-based-cp"><span class="std std-ref">Distance-Based CP</span></a> correction)
+was also considered.</p>
+<p>In looking at explicitly correlated CCSD(T) energies of water clusters,
+<span id="id6">Wang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id80" title="Kedong Wang, Wei Li, and Shuhua Li. Generalized energy-based fragmentation CCSD(t)-f12a method and application to the relative energies of water clusters (h2o)20. Journal of Chemical Theory and Computation, 10(4):1546–1553, March 2014. doi:10.1021/ct401060m.">89</a></sup></span> introduced the GEBF14 method. GEBF14 differs from GEBF10 in
+the fragmentation method, more specifically GEBF14 uses <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf14-fragmenation-method"><span class="std std-ref">GEBF14 Fragmentation Method</span></a> which is
+essentially <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf08-fragmentation-method"><span class="std std-ref">GEBF08 Fragmentation Method</span></a> combined with <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf10-fragmentation-method"><span class="std std-ref">GEBF10 Fragmentation Method</span></a>. By only applying GEBF to the
+correlation energy, <span id="id7">Wang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id80" title="Kedong Wang, Wei Li, and Shuhua Li. Generalized energy-based fragmentation CCSD(t)-f12a method and application to the relative energies of water clusters (h2o)20. Journal of Chemical Theory and Computation, 10(4):1546–1553, March 2014. doi:10.1021/ct401060m.">89</a></sup></span> were able to replicate supersystem
+explicitly correlated MP2/CBS results to within about 0.3 kcal/mol (errors
+when GEBF was also applied to the SCF component of the energy were about
+1 kcal/mol). The authors attributed the better performance of only applying
+GEBF to the correlation energy to a better treatment of BSSE.</p>
+<p>In looking at host/guest complexes, <span id="id8">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id98" title="Wei Li, Mingzhou Duan, Kang Liao, Benkun Hong, Zhigang Ni, Jing Ma, and Shuhua Li. Improved generalized energy-based fragmentation approach and its applications to the binding energies of supramolecular complexes. Electronic Structure, 1(4):044003, November 2019. doi:10.1088/2516-1075/ab5049.">56</a></sup></span> realized that GEBF14
+often resulted in one fragment which contained all of, or most of, the
+pseudoatoms (presumably because of ties in pseudoatom distances?). Regardless,
+to avoid this, <span id="id9">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id98" title="Wei Li, Mingzhou Duan, Kang Liao, Benkun Hong, Zhigang Ni, Jing Ma, and Shuhua Li. Improved generalized energy-based fragmentation approach and its applications to the binding energies of supramolecular complexes. Electronic Structure, 1(4):044003, November 2019. doi:10.1088/2516-1075/ab5049.">56</a></sup></span> introduced <a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf19-fragmentation-method"><span class="std std-ref">GEBF19 Fragmentation Method</span></a>. GEBF19 was applied to 10
+systems from the S30L database (TODO: cite). At the M06-2X/def2-TZVP level of
+theory, GEBF19 was able to reproduce supersystem binding energies to better than
+1 kcal/mol; however, more careful analysis showed that this was a result of
+error cancellation.</p>
+<p><span id="id10">Cheng <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id100" title="Zheng Cheng, Dongbo Zhao, Jing Ma, Wei Li, and Shuhua Li. An on-the-fly approach to construct generalized energy-based fragmentation machine learning force fields of complex systems. The Journal of Physical Chemistry A, 124(24):5007–5014, May 2020. doi:10.1021/acs.jpca.0c04526.">5</a></sup></span> wanted to combine GEBF with machine-learning. To that
+end they introduced an approximation to the GEBF14 method by not embedding the
+fragments. The resulting GEBF20 method was then used to combine the energies,
+gradients, and dipole moments computed by a machine-learning model. GEBF20 was
+then used to perform MD runs  for a series of alkanes.</p>
+<section id="gebf-summary">
+<h2>GEBF Summary<a class="headerlink" href="#gebf-summary" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We need to verify that all of the embedding methods are truly the same. In
+particular I think some of the methods only do one iteration where others
+iterate to consistency every time. Another variation is in how the charges
+are computed, namely are they taken from a specific fragment, supersystem
+calculation, or some other way.</p>
+</div>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 22%" />
-<col style="width: 22%" />
-<col style="width: 16%" />
-<col style="width: 22%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
 <th class="head"><p>Fragments</p></th>
@@ -152,26 +209,271 @@ moments and static polarizabilities.</p>
 <td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
 <td><p><a class="reference internal" href="../algorithms/screening_methods/distance.html#smf06-screening"><span class="std std-ref">SMF06 Screening</span></a></p></td>
 </tr>
+<tr class="row-odd"><td><p>GEBF08</p></td>
+<td><p><a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf08-fragmentation-method"><span class="std std-ref">GEBF08 Fragmentation Method</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/embed_methods/point_charge.html#iterative-point-charge-embedding"><span class="std std-ref">Iterative Point Charge Embedding</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>GEBF10</p></td>
+<td><p><a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf10-fragmentation-method"><span class="std std-ref">GEBF10 Fragmentation Method</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/embed_methods/point_charge.html#iterative-point-charge-embedding"><span class="std std-ref">Iterative Point Charge Embedding</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>GEBF11</p></td>
+<td><p>Manual</p></td>
+<td><p><a class="reference internal" href="../algorithms/embed_methods/point_charge.html#iterative-point-charge-embedding"><span class="std std-ref">Iterative Point Charge Embedding</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>GEBF12</p></td>
+<td><p><a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf12-fragmentation-method"><span class="std std-ref">GEBF12 Fragmentation Method</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/embed_methods/point_charge.html#iterative-point-charge-embedding"><span class="std std-ref">Iterative Point Charge Embedding</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>GEBF14</p></td>
+<td><p><a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf14-fragmenation-method"><span class="std std-ref">GEBF14 Fragmentation Method</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/embed_methods/point_charge.html#iterative-point-charge-embedding"><span class="std std-ref">Iterative Point Charge Embedding</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>GEBF19</p></td>
+<td><p><a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf19-fragmentation-method"><span class="std std-ref">GEBF19 Fragmentation Method</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/embed_methods/point_charge.html#iterative-point-charge-embedding"><span class="std std-ref">Iterative Point Charge Embedding</span></a></p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>GEBF20</p></td>
+<td><p><a class="reference internal" href="../algorithms/frag_methods/gebf.html#gebf14-fragmenation-method"><span class="std std-ref">GEBF14 Fragmentation Method</span></a></p></td>
+<td><p>N/A</p></td>
+<td><p><a class="reference internal" href="../algorithms/cap_methods/h_capping.html#standard-distance-capping"><span class="std std-ref">Standard Distance</span></a></p></td>
+<td><p>N/A</p></td>
+</tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="other-gebf-results">
-<h2>Other GEBF Results<a class="headerlink" href="#other-gebf-results" title="Permalink to this headline"></a></h2>
-<p><span id="id2">Li <em>et al.</em><sup><a class="reference internal" href="../../references.html#id59" title="Hui Li, Wei Li, Shuhua Li, and Jing Ma. Fragmentation-based QM/MM simulations: length dependence of chain dynamics and hydrogen bonding of polyethylene oxide and polyethylene in aqueous solutions. The Journal of Physical Chemistry B, 112(23):7061–7070, 2008.">38</a></sup></span> used GEBF07 (with manually specified fragments)
-as the QM part of a QM/MM calcualtion. This method was applied to
-solvated polyethylene.</p>
-<p><span id="id3">Hua <em>et al.</em><sup><a class="reference internal" href="../../references.html#id58" title="Weijie Hua, Tao Fang, Wei Li, Jian-Guo Yu, and Shuhua Li. Geometry optimizations and vibrational spectra of large molecules from a generalized energy-based fragmentation approach. The Journal of Physical Chemistry A, 112(43):10864–10872, 2008.">23</a></sup></span> extended the GEBF07 method to geometry optimizations and
-vibrational frequency calculations. The GEBF07 energies, optimized geometries,
-and vibrational frequencies were compared to the conventional results. Small
-basis SCF (both HF and DFT) results, for several types of systems (clusters,
-peptides, and hydrogelators) are presented.</p>
-</div>
-<div class="section" id="gebf-reviews">
-<h2>GEBF Reviews<a class="headerlink" href="#gebf-reviews" title="Permalink to this headline"></a></h2>
-<p><span id="id4">Li and Li<sup><a class="reference internal" href="../../references.html#id60" title="Shuhua Li and Wei Li. Fragment energy approach to hartree–fock calculations of macromolecules. Annual Reports Section &quot;C&quot; (Physical Chemistry), 104:256, 2008.">39</a></sup></span> provides a brief introduction to fragment-based methods
+<p>As the above table shows, there are a number of different methods which have
+been termed “GEBF”. We suspect that the authors of the GEBF method originally
+felt that it was the energy equations which defined GEBF. This is supported by
+the follow up studies which changed the fragmentation method still calling the
+method GEBF.  However, the GEBF energy equation is nothing more than the
+inclusion-exclusion principle (accounting for the self-interaction of the point
+charges), so such a definition would mean CG-MTA, or any other overlapping
+fragment-based method, should also be labeled as GEBF. The GEBF authors
+eventually realized:cite:<cite>Yuan_2016,Li_2019</cite> the IEP equivelence. At this point,
+it is reasonable to assume that it is the closed form which results from the
+IEP that determines whether a method is GEBF or not, particularly whether there
+is a self-energy correction.  However, this hypothesis is also disproved when
+<span id="id11">Cheng <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id100" title="Zheng Cheng, Dongbo Zhao, Jing Ma, Wei Li, and Shuhua Li. An on-the-fly approach to construct generalized energy-based fragmentation machine learning force fields of complex systems. The Journal of Physical Chemistry A, 124(24):5007–5014, May 2020. doi:10.1021/acs.jpca.0c04526.">5</a></sup></span> debuts the GEBF20 method, which does not include any
+electronic embedding. Ultimately, it appears that it is simply the authors of
+the study which determine whether or not the method is GEBF or not.</p>
+</section>
+<section id="other-gebf-results">
+<h2>Other GEBF Results<a class="headerlink" href="#other-gebf-results" title="Link to this heading"></a></h2>
+<p><span id="id12">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id69" title="Hui Li, Wei Li, Shuhua Li, and Jing Ma. Fragmentation-based QM/MM simulations: length dependence of chain dynamics and hydrogen bonding of polyethylene oxide and polyethylene in aqueous solutions. The Journal of Physical Chemistry B, 112(23):7061–7070, 2008.">49</a></sup></span> used GEBF07 with manually specified fragments (it’s not
+immediately clear if the embedding was iterative) as the QM part of a QM/MM
+calcualtion. This method was applied to solvated polyethylene.</p>
+<p><span id="id13">Dong <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id71" title="Hao Dong, Shugui Hua, and Shuhua Li. Understanding the role of intra- and intermolecular interactions in the formation of single- and double-helical structures of aromatic oligoamides: a computational study. The Journal of Physical Chemistry A, 113(7):1335–1342, January 2009. doi:10.1021/jp8071525.">12</a></sup></span> uses a GEBF08 approximation to B3LYP (with van der Waals
+correctiosn) to model aromatic oglioamides. Of note this study included the
+<a class="reference internal" href="../bsse/distance.html#distance-based-cp"><span class="std std-ref">Distance-Based CP</span></a> BSSE corrections which were found to be a good
+approximation to full counterpoise corrections.</p>
+<p><span id="id14">Yang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id73" title="Zhen Yang, Shugui Hua, Weijie Hua, and Shuhua Li. Low-lying structures and stabilities of large water clusters: investigation based on the combination of the AMOEBA potential and generalized energy-based fragmentation approach. The Journal of Physical Chemistry A, 114(34):9253–9261, July 2010. doi:10.1021/jp1038267.">90</a></sup></span> applied GEBF08 to water clusters containing 20 to 30 water
+molecules in order to search for low energy geometries. Results using B3LYP
+and MP2 were optimized and corrected for ZPVE. Some comparison with supersystem
+results was presented (errors were around 1 kcal/mol), but the majority of
+conclusions relied on fragment-based methods alone.</p>
+<p><span id="id15">Jiang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id74" title="Nan Jiang, Ren Xiang Tan, and Jing Ma. Simulations of solid-state vibrational circular dichroism spectroscopy of (s)-alternarlactam by using fragmentation quantum chemical calculations. The Journal of Physical Chemistry B, 115(12):2801–2813, March 2011. doi:10.1021/jp110152q.">38</a></sup></span> applied GEBF11 (GEBF10 with user-defined fragments) to
+computing
+vibrational circular dichromism spectra at the DFT level of theory. The authors
+report that the VCD spectra were in good agreement with supersystem spectra as
+well as experimental.</p>
+<p><span id="id16">Hua <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id75" title="Shugui Hua, Lina Xu, Wei Li, and Shuhua Li. Cooperativity in long $\upalpha $- and 3$\less $sub$\greater $10$\less $/sub$\greater $-helical polyalanines: both electrostatic and van der waals interactions are essential. The Journal of Physical Chemistry B, 115(39):11462–11469, September 2011. doi:10.1021/jp203423w.">32</a></sup></span> applied GEB07 (presumably; the paper is not clear on the
+exact details and instead presents references) to poly-alanine systems
+containing up to 40 residues. Optimized structures, energies, and enthalpies
+were computed using DFT (B3LYP and M06-2X). Errors in GEBF approximated
+energies, relative to supersystem results, were about 2 kcal/mol; errors were
+only computed for systems with 10 alanines.</p>
+<p><span id="id17">Yang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id76" title="Zhen Yang, Shugui Hua, Weijie Hua, and Shuhua Li. Structures of neutral and protonated water clusters confined in predesigned hosts: a quantum mechanical/molecular mechanical study. The Journal of Physical Chemistry B, 115(25):8249–8256, June 2011. doi:10.1021/jp2030736.">91</a></sup></span> looked at water clusters trapped in MOF pores using QM/MM.
+Two types of clusters were considered: neutral and protonated. The QM region of
+the neutral cluster was too big for a conentional B3LYP calculation so the
+authors relied on GEBF (presumably either GEBF07 or GEBF10). The geometries
+were optimized using QM/MM and the cluster geometries agreed well with
+experiment. No comparison of GEBF to supersystem calculations was presented.</p>
+<p><span id="id18">Li<sup><a class="reference internal" href="../../bibliography/index.html#id78" title="Wei Li. Linear scaling explicitly correlated MP2-f12 and ONIOM methods for the long-range interactions of the nanoscale clusters in methanol aqueous solutions. The Journal of Chemical Physics, 138(1):014106, January 2013. doi:10.1063/1.4773011.">53</a></sup></span> applied GEBF10 to methanol disolved in water. Methanol
+dissolved in clusters containing up to 1115 water molecules were considered. To
+reach the large cluster size an ONIOM was utilized where the highest level of
+theory was GEBF approximated MP2-F12/aDZ, the middle layer was GEBF approximated
+MP2/aDZ, and the lowest level was DFTB (presumably with no GEBF approximation).
+As part of the calibration supersystem MP2-F12/aDZ results for a cluster with
+12 water molecules were computed and compared to the GEBF approximated results;
+errors were less than 1 kcal/mol. Of note this study also used the
+<a class="reference internal" href="../bsse/distance.html#distance-based-cp"><span class="std std-ref">Distance-Based CP</span></a> method.</p>
+<p><span id="id19">Fang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id82" title="Tao Fang, Wei Li, Fangwei Gu, and Shuhua Li. Accurate prediction of lattice energies and structures of molecular crystals with molecular quantum chemistry methods. Journal of Chemical Theory and Computation, 11(1):91–98, December 2014. doi:10.1021/ct500833k.">15</a></sup></span> applied GEBF14 to periodic systems. In their approach, the
+lattice energy of the unit cell is estimated by performing GEBF on all fragments
+in a super cell that have at least one pseudoatom within the unit cell. the
+supercell is then embedded in an infinite field of point charges which gives
+rise to an Ewald term. There is then discussion of a compensation field to
+correct for truncating the infinite field into a finite field; I admittedly am
+unclear if this is in addition to the Ewald term or a replacement for it. Either
+way the resulting method is calibrated for phase II ice against periodic
+BL3LYp/6-31G*. With the compensation field, and 5 waters per fragment, GEBF
+matches the supersystem result to within 1 mH. <span id="id20">Fang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id82" title="Tao Fang, Wei Li, Fangwei Gu, and Shuhua Li. Accurate prediction of lattice energies and structures of molecular crystals with molecular quantum chemistry methods. Journal of Chemical Theory and Computation, 11(1):91–98, December 2014. doi:10.1021/ct500833k.">15</a></sup></span> then go on
+to compute the lattice constants for 10 molecular crystals using either
+CCSD(T)-F12/aTZ or MP2-F12/aTZ plus a CCSD(T)/aDZ correction (depending on the
+size of the molecules). The GEBF-approximated lattice energies agree with
+experiment to within 6 kJ/mol.</p>
+<p><span id="id21">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id83" title="Wei Li, Chihong Chen, Dongbo Zhao, and Shuhua Li. LSQC: low scaling quantum chemistry program. International Journal of Quantum Chemistry, 115(10):641–646, November 2014. doi:10.1002/qua.24831.">54</a></sup></span> describes the Linear Scaling Quantum Chemistry (LSQC) program.
+LSQC is a program capable of running GEBF calculations and CIM calculations by
+leveraging existing quantum chemistry packages. For GEBF calculations, LSQC can
+leverage Gaussian and Molpro. For CIM, LSQC relies on a locally modified version
+of GAMESS. Also presented were GEBF-M06-2X/6-31G* optimized structures and IR
+spectra, GEBF-MP2/6-31G* optimized structures, and a scaling plot of
+GEBF-MP2/6-31G*.</p>
+<p><span id="id22">Liu <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id79" title="Pingying Liu, Wei Li, Li Liu, Leyong Wang, and Jing Ma. Theoretical study on conformation dynamics of three-station molecular shuttle in different environments and its influence on nmr chemical shifts and binding interactions. The Journal of Physical Chemistry A, 118(39):9032–9044, July 2014. doi:10.1021/jp5020516.">66</a></sup></span> modeled the conformation dynamics of three-station molecular
+shuttles with DFT. To determine which DFT was most suitable, reference MP2
+binding energies were computed using the GEBF method.</p>
+<p><span id="id23">Fang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id84" title="Tao Fang, Junteng Jia, and Shuhua Li. Vibrational spectra of molecular crystals with the generalized energy-based fragmentation approach. The Journal of Physical Chemistry A, 120(17):2700–2711, April 2016. doi:10.1021/acs.jpca.5b10927.">14</a></sup></span> extended periodic GEBF14 calculations to include IR and
+Raman spectra. Comparisons to conventional periodic DFT (PBE0-D2/6-311G(d,p))
+on imidazole and CO2 demonstrated that PBC-GEBF could faithfully approximate
+conventional supersystem calculations. For urea and ammonia borane crystals,
+PBC-GEBF calculations at the MP2/6-311++G(d,p) level of theory were compared to
+experiment. Discrepency between PBC-GEBF and experiment was worse, but the
+results still overall match well.</p>
+<p><span id="id24">Zhang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id85" title="Lei Zhang, Wei Li, Tao Fang, and Shuhua Li. Ab initio molecular dynamics with intramolecular noncovalent interactions for unsolvated polypeptides. Theoretical Chemistry Accounts, January 2016. doi:10.1007/s00214-015-1799-z.">100</a></sup></span> presented AIMD simulations of polypetides using GEBF11.
+Simulations were performed at several levels of theory. Initial Comparisons
+of energy differences for the polypetides showed a fairly large descrepancy
+across the methods considered, notably GEBF-M06-2X/6-31G differed from
+conventional M06-2X by about 10 kcal/mol. DFTB differed by almost 100 kcal/mol.
+It was noted that GEBF approximated SCF/STO-3G and M06-2X/STO-3G simulations had
+large energy drift (presumably because the gradients were too inaccurate
+from neglegting response terms).</p>
+<p><span id="id25">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id86" title="Wei Li, Yunzhi Li, Ruochen Lin, and Shuhua Li. Generalized energy-based fragmentation approach for localized excited states of large systems. The Journal of Physical Chemistry A, 120(48):9667–9677, November 2016. doi:10.1021/acs.jpca.6b11193.">60</a></sup></span> extended GEBF to excited states (specifically the GEBF14
+flavor). In these calculations, the excitations were assumed localized to a set
+of pseudoatoms. Fragments containing the active pseudoatoms were treated with
+an excited state method. Fragments without active pseudoatoms are treated with
+the ground state method. For a conjugated aldehyde, comparison of
+GEBF-<span class="math notranslate nohighlight">\(\omega\)</span>B97XD to conventional TD-DFT results (for the 6-31G,
+6-311G(d,p), 6-311++G(d,p), and cc-pVTZ bases) showed errors less than 0.1 eV.
+Solvatochromatic shifts of acetone in solvent (solvents of water, methanol,
+acetonitrile, and carbon tetrachloride) computed with GEBF-<span class="math notranslate nohighlight">\(\omega\)</span>B97XD
+match experiment to about 0.1 eV. A similar analysis of pyridine and uracil in
+water again showed GEBF-<span class="math notranslate nohighlight">\(\omega\)</span>B97XD could match supersystem results
+well.</p>
+<p><span id="id26">Yuan <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id89" title="Dandan Yuan, Xiaoling Shen, Wei Li, and Shuhua Li. Are fragment-based quantum chemistry methods applicable to medium-sized water clusters? Physical Chemistry Chemical Physics, 18(24):16491–16500, 2016. doi:10.1039/C6CP01931E.">96</a></sup></span> compares GEBF14 to the EE-MB method. The discussion focuses
+on absolute energies of water clusters using M06-2X, HF, and MP2 (and several
+basis sets). Consistent with Bettens (TODO: cite Bettens BSSE), the study finds
+that the EE-MB method converges poorly (likely because of BSSE). One notable
+example is M06-2X/6-311++G** for clusters with 20 waters; here the maximum
+unsigned error exceeds 11 mH and does not seem to have converged by an 8-body
+MBE. EE-MB is also shown to have a fairly large sensitivity to the level of
+theory. Interestingly, using loose n-mer screening rectifies these problems
+somewhat.The study goes on to demonstrate that GEBF14 does not suffer from these
+problems, and that using supersystem basis sets with GEBF14 does not appreciably
+change the result. The authors attribute this to a BSSE cancellation effect
+stemming from the IEP nature of GEBF.</p>
+<p><span id="id27">Tao <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id87" title="Yunwen Tao, Wenli Zou, Junteng Jia, Wei Li, and Dieter Cremer. Different ways of hydrogen bonding in water - why does warm water freeze faster than cold water? Journal of Chemical Theory and Computation, 13(1):55–76, December 2016. doi:10.1021/acs.jctc.6b00735.">84</a></sup></span> used the GEBF14 approximated
+<span class="math notranslate nohighlight">\(\omega\)</span>B97XD/6-311++G(d,p) model to analyze the properties of water
+clusters containing 50 molecules. The study was primarily interested in
+characterizing the different types of hydrogen bonds which are present and
+explaining how the types of hydrogen bonds affect the freezing of water.</p>
+<p><span id="id28">Liu <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id88" title="Pingying Liu, Wei Li, Zigui Kan, Hui Sun, and Jing Ma. Factor analysis of conformations and nmr signals of rotaxanes: aimd and polarizable md simulations. The Journal of Physical Chemistry A, 120(4):490–502, January 2016. doi:10.1021/acs.jpca.5b10085.">65</a></sup></span> uses GEBF approximated M06-2X/6-31G(d) for computing the
+energies and gradients needed for AIMD. The study looked at pseudorotaxane and
+compared AIMD results to classical MD results.</p>
+<p><span id="id29">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id90" title="Yunzhi Li, Guoqiang Wang, Wei Li, Yue Wang, and Shuhua Li. Understanding the polymorphism-dependent emission properties of molecular crystals using a refined qm/mm approach. Physical Chemistry Chemical Physics, 19(27):17516–17520, 2017. doi:10.1039/C7CP03584E.">62</a></sup></span> used PBC-GEBF to optimize molecular crystal geometries for a
+QM/MM calculation. Once the geometries were optimized QM/MM calculations were
+run to compute excited states. The QM region contained dimers or trimers of
+and MM charges were taken from the PBC-GEBF calculation.</p>
+<p><span id="id30">Wang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id92" title="Fang Wang, Dongbo Zhao, Hao Dong, Ling Jiang, Yunfei Liu, and Shuhua Li. Terahertz spectra of DNA nucleobase crystals: a joint experimental and computational study. Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy, 179:255–260, May 2017. doi:10.1016/j.saa.2017.02.037.">88</a></sup></span> undertook a joint experimental/theory study on crystals
+of DNA bases. PBC-GEBF-PBE(D3B3)/6-311+G(d,p) was used to optimized the crystal
+structures and to compute the IR vibrational spectra. Geometries and spectra
+were compared to experiment and matched well.</p>
+<p><span id="id31">Zhang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id95" title="Lei Zhang, Wei Li, Tao Fang, and Shuhua Li. Accurate relative energies and binding energies of large ice–liquid water clusters and periodic structures. The Journal of Physical Chemistry A, 121(20):4030–4038, May 2017. doi:10.1021/acs.jpca.7b03376.">101</a></sup></span> used GEBF14 and PBC-GBEF14 to establish benchmark
+energetics for water clusters containing 144 and 64 waters, respectively.
+Benchmarks relied on the CCSD(T)-F12b/cc-pVDZ-F12 model. Relative energies and
+binding energies are computed. The remainder of the study compares the
+performance of several flavors of DFT against the benchmarks.</p>
+<p><span id="id32">Yuan <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id94" title="Dandan Yuan, Yunzhi Li, Zhigang Ni, Peter Pulay, Wei Li, and Shuhua Li. Benchmark relative energies for large water clusters with the generalized energy-based fragmentation method. Journal of Chemical Theory and Computation, 13(6):2696–2704, May 2017. doi:10.1021/acs.jctc.7b00284.">95</a></sup></span> used GEBF14 to compute benchmark energetics for water
+clusters involving 32 and 64 water molecules. The benchmarks presente are
+relative energies of different isomers, computed with the GEBF-CCSD(T)/CBS model.
+Calibration was done by comparing to supersystem MP2/cc-pVTZ results. For water
+32, restricting fragments to at most 6 waters resulted in unsigned errors of
+1.2 kcal/mol; this decreases to 0.2 kcal/mol if fragments may contain 8 waters.
+For water 64, restricting to 8 waters resulted in mean unsigned errors of 1.4
+kcal/mol; this reduces to 0.4 kcal/mol if the maximum is raised to 10 waters.
+The remainder of the study considered how various density functional theory
+approaches performed compared to the GEBF-CCSD(T)/CBS results.</p>
+<p><span id="id33">Zhao <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id93" title="Dongbo Zhao, Ruiheng Song, Wei Li, Jing Ma, Hao Dong, and Shuhua Li. Accurate prediction of NMR chemical shifts in macromolecular and condensed-phase systems with the generalized energy-based fragmentation method. Journal of Chemical Theory and Computation, 13(11):5231–5239, October 2017. doi:10.1021/acs.jctc.7b00380.">103</a></sup></span> applied GEBF14 to NMR shifts. Considered a number of systems
+including a Trp-cage mini protein, CH3CN solvated in CHCl3, a oligoamide beta
+sheet, and a supramolecular aggregate. The GEBF approximated NMR shifts are
+compared with both supersystem results and experiment. Overall, the predicted
+NMR shifts match well, with errors typically less than 1 ppm.</p>
+<p><span id="id34">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id96" title="Yunzhi Li, Dandan Yuan, Qingchun Wang, Wei Li, and Shuhua Li. Accurate prediction of the structure and vibrational spectra of ionic liquid clusters with the generalized energy-based fragmentation approach: critical role of ion-pair-based fragmentation. Physical Chemistry Chemical Physics, 20(19):13547–13557, 2018. doi:10.1039/C8CP00513C.">63</a></sup></span> applied GEBF14 to ionic liquids. Of particular note the
+authors found that choosing neutral pseudoatoms (one cation and one anion
+per pseudoatom) led to better results than simply letting each cation/anion be
+a pseudoatom. GEBF based on one ion per pseudoatom fragments sometimes erred by
+more than 20 kcal/mol! Also computed relative energies, optimized geometries,
+IR spectra, and thermodynamic values. The authors considered the effect of
+ensuring the same fragments throughout the optimization (as opposed to picking
+the closest ion pairs in each step) and somewhat surprisingly found that this
+had little affect on the geometry and spectra, but could lead to large errors
+in the thermodynamic values.</p>
+<p><span id="id35">Yuan <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id97" title="Dandan Yuan, Yunzhi Li, Wei Li, and Shuhua Li. Structures and properties of large supramolecular coordination complexes predicted with the generalized energy-based fragmentation method. Physical Chemistry Chemical Physics, 20(45):28894–28902, 2018. doi:10.1039/C8CP05548C.">94</a></sup></span> applied GEBF14 to supramolecular coordination complexes. In
+doing so they stipulated that pseudoatom creation should avoid breaking metal-
+ligand bonds. GEBF approximated DFT energies, relative energies, optimized
+geometries, IR spectra, and NMR chermical shifts are compared to supersystem
+calculations and found to match well. On this basis, GEBF approximated IR and
+NMR spectra are then used to help assign experimental peaks.</p>
+<p><span id="id36">Fu <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id99" title="Fangjia Fu, Kang Liao, Jing Ma, Zheng Cheng, Dong Zheng, Liuzhou Gao, Chungen Liu, Shuhua Li, and Wei Li. How intermolecular interactions influence electronic absorption spectra: insights from the molecular packing of uracil in condensed phases. Physical Chemistry Chemical Physics, 21(7):4072–4081, 2019. doi:10.1039/C8CP06152A.">20</a></sup></span> applied GEBF14 and PBC-GEBF14 to studying the excited state
+spectra of uracil. To this end GEBF14 was combined with QM/MM. The study looked
+aqueous, amorphous, and crystalline uracil. GEBF approximated excited state
+energies were computed using TD-<span class="math notranslate nohighlight">\(\omega\)</span>B97X-D/6-311++G(d,p) and
+compared to experiment. For aqueous and crystalline uracil peak maximums were
+off by 10 nm.</p>
+<p><span id="id37">Zhao <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id101" title="Dongbo Zhao, Xiaoling Shen, Zheng Cheng, Wei Li, Hao Dong, and Shuhua Li. Accurate and efficient prediction of NMR parameters of condensed-phase systems with the generalized energy-based fragmentation method. Journal of Chemical Theory and Computation, 16(5):2995–3005, April 2020. doi:10.1021/acs.jctc.9b01298.">102</a></sup></span> introduced a variant of the PBC-GEBF method. More
+specifically, up to this point PBC-GEBF had been done on crystals formed from
+small molecules. As such pseudoatoms were taken to be entire molecules. The
+new “fragment-based” variant allowed the molecules in the crystal to be broken
+into multiple pseudoatoms. The new method was applied to a series of systems
+and with various flavors of DFT. Compared to experimental NMR parameters, both
+flavors performed well.</p>
+<p><span id="id38">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id103" title="Yunzhi Li, Dong Wang, Fangjia Fu, Qiying Xia, Wei Li, and Shuhua Li. Structures and properties of ionic crystals and condensed phase ionic liquids predicted with the generalized energy-based fragmentation method. Journal of Computational Chemistry, 43(10):704–716, February 2022. doi:10.1002/jcc.26828.">61</a></sup></span> applied PBC-GEBF14 to ionic crystals. The study proposed two
+mechanisms for forming pseudoatoms: one ion per pseudoatom or pairs of ions (one
+cation and one anion). The results establish that defining pseudoatoms using
+pairs of ions leads to much better resutls. The resulting methodology is then
+used to predict optimized geometries, IR spectra, Raman spectra, and NMR
+shifts. PBC-GEBF results are compared to experiment and conventional periodic
+DFT. Generally speaking good agreement between PBC-GEBF and the benchmarks is
+seen.</p>
+<p><span id="id39">Hong <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id104" title="Benkun Hong, Tao Fang, Wei Li, and Shuhua Li. Predicting the structures and vibrational spectra of molecular crystals containing large molecules with the generalized energy-based fragmentation approach. The Journal of Chemical Physics, January 2023. doi:10.1063/5.0137072.">28</a></sup></span> updated the equations used for the gradients of PBC-GEBF to
+use fractional coordinates instead of combinatorial coordinates. The revamped
+gradients are compared directly to analytic gradients from conventional periodic
+DFT calculations. The gradients are then used for geometry optimization (results
+are compared to both conventional calculations and experiment). Finally IR
+spectra are computed.</p>
+</section>
+<section id="gebf-reviews">
+<h2>GEBF Reviews<a class="headerlink" href="#gebf-reviews" title="Link to this heading"></a></h2>
+<p><span id="id40">Li and Li<sup><a class="reference internal" href="../../bibliography/index.html#id70" title="Shuhua Li and Wei Li. Fragment energy approach to hartree–fock calculations of macromolecules. Annual Reports Section &quot;C&quot; (Physical Chemistry), 104:256, 2008.">50</a></sup></span> provides a brief introduction to fragment-based methods
 primarily focusing on GEBF (including its earlier incarnations).</p>
-</div>
-</div>
+<p><span id="id41">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id81" title="Shuhua Li, Wei Li, and Jing Ma. Generalized energy-based fragmentation approach and its applications to macromolecules and molecular aggregates. Accounts of Chemical Research, 47(9):2712–2720, May 2014. doi:10.1021/ar500038z.">52</a></sup></span> reviewed the progress of GEBF to date. New results presented
+here included an analysis of the gradients for a hydrogelator with and without
+neglect of the response terms (results were at the HF/6-31G* level of theory)
+and ab initio molecular dynamic simulations of alanine peptides (using the
+M06-2X/STO-3G level of theory).</p>
+<p><span id="id42">Fang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id91" title="Tao Fang, Yunzhi Li, and Shuhua Li. Generalized energy-based fragmentation approach for modeling condensed phase systems. WIREs Computational Molecular Science, January 2017. doi:10.1002/wcms.1297.">16</a></sup></span> reviewed the progress of PBC-GEBF and presented new
+comparisons to both periodic supersystem calculations as well as experiment.
+Results provided included optimized geometries, lattice energies, vibrational
+frequency shifts, and Raman spectra. Most results were obtained with the M06-2X
+functional and/or MP2. Generally speaking agreement between PBC-GEBF and the
+supersystem or experiment were good.</p>
+<p><span id="id43">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id102" title="Wei Li, Hao Dong, Jing Ma, and Shuhua Li. Structures and spectroscopic properties of large molecules and condensed-phase systems predicted by generalized energy-based fragmentation approach. Accounts of Chemical Research, 54(1):169–181, December 2020. doi:10.1021/acs.accounts.0c00580.">55</a></sup></span> was a follow up review to <span id="id44">Li <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id81" title="Shuhua Li, Wei Li, and Jing Ma. Generalized energy-based fragmentation approach and its applications to macromolecules and molecular aggregates. Accounts of Chemical Research, 47(9):2712–2720, May 2014. doi:10.1021/ar500038z.">52</a></sup></span>. In this review
+advancements since the 2014 review were summarized. In particular, the
+PBC variant of GEBF and properties thereof. The majority of the review focuses
+on select calculations from various types of systems including: ionic liquids,
+molecular crystals, coordination compounds, and host-guest systems.</p>
+</section>
+</section>
 
 
            </div>

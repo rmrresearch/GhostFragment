@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Designing the FragmentedMolecule Driver &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>Designing the FragmentedMolecule Driver &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -49,7 +55,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../background/index.html">Theoretical Background</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Documentation</a><ul class="current">
@@ -65,12 +71,13 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="fragmented_nuclei_driver.html">Designing GhostFragment’s FragmentedNuclei Driver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmers.html">Designing the NMer Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gmbe_coefficients.html">GMBE Coefficients</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../development/index.html">GhostFragment Development Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -100,20 +107,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="designing-the-fragmentedmolecule-driver">
-<span id="gf-designing-fragmented-molecule-driver"></span><h1>Designing the FragmentedMolecule Driver<a class="headerlink" href="#designing-the-fragmentedmolecule-driver" title="Permalink to this headline"></a></h1>
+  <section id="designing-the-fragmentedmolecule-driver">
+<span id="gf-designing-fragmented-molecule-driver"></span><h1>Designing the FragmentedMolecule Driver<a class="headerlink" href="#designing-the-fragmentedmolecule-driver" title="Link to this heading"></a></h1>
 <p>This page captures the design process of the <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> driver
 component of GhostFragment.</p>
-<div class="section" id="what-is-the-fragmentedmolecule-driver">
-<h2>What is the FragmentedMolecule Driver?<a class="headerlink" href="#what-is-the-fragmentedmolecule-driver" title="Permalink to this headline"></a></h2>
+<section id="what-is-the-fragmentedmolecule-driver">
+<h2>What is the FragmentedMolecule Driver?<a class="headerlink" href="#what-is-the-fragmentedmolecule-driver" title="Link to this heading"></a></h2>
 <p>The first step of the <a class="reference internal" href="fragmented_system_driver.html#gf-fragmented-system-driver-design"><span class="std std-ref">Designing GhostFragment’s FragmentedSystem Driver</span></a> required
 creating a <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> object. The responsibility for creating that
 object was punted to the <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> driver. The
 <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> driver is responsible for taking a <code class="docutils literal notranslate"><span class="pre">ChemicalSystem</span></code> as
 input and returning a <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> object.</p>
-</div>
-<div class="section" id="fragmentedmolecule-driver-considerations">
-<h2>FragmentedMolecule Driver Considerations<a class="headerlink" href="#fragmentedmolecule-driver-considerations" title="Permalink to this headline"></a></h2>
+</section>
+<section id="fragmentedmolecule-driver-considerations">
+<h2>FragmentedMolecule Driver Considerations<a class="headerlink" href="#fragmentedmolecule-driver-considerations" title="Link to this heading"></a></h2>
 <dl class="simple">
 <dt>Accuracy</dt><dd><p><a class="reference internal" href="fragmented_system_driver.html#gf-fragmented-system-driver-design"><span class="std std-ref">Designing GhostFragment’s FragmentedSystem Driver</span></a> punted most of the responsibility
 for ensuring the set of fragments captures all important interactions to
@@ -157,24 +164,26 @@ designed so that the the <code class="docutils literal notranslate"><span class=
 either fragments or <span class="math notranslate nohighlight">\(n\)</span>-mers.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="fragmentedmolecule-driver-design">
-<h2>FragmentedMolecule Driver Design<a class="headerlink" href="#fragmentedmolecule-driver-design" title="Permalink to this headline"></a></h2>
-<div class="figure align-center" id="id1">
+</section>
+<section id="fragmentedmolecule-driver-design">
+<h2>FragmentedMolecule Driver Design<a class="headerlink" href="#fragmentedmolecule-driver-design" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id1">
 <span id="fig-gf-fragmented-molecule-driver"></span><img alt="../../_images/fragmented_molecule_driver.png" src="../../_images/fragmented_molecule_driver.png" />
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">The architecture of the <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> Driver.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The architecture of the <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> Driver.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <p><a class="reference internal" href="#fig-gf-fragmented-molecule-driver"><span class="std std-ref">The architecture of the FragmentedMolecule Driver.</span></a> shows the architecture of the
 <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> driver. Following from consideration
-<span class="xref std std-ref">fmd_hierarchical</span>, the inputs to the driver is a <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code>
+<a class="reference internal" href="#fmd-hierarchical"><span class="std std-ref">Hierarchical</span></a>, the inputs to the driver is a <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code>
 object. The input fragments will in general
-contain broken bonds. As stated in consideration <span class="xref std std-ref">fmd_capping</span> we need
+contain broken bonds. As stated in consideration <a class="reference internal" href="#fmd-capping"><span class="std std-ref">Capping</span></a> we need
 to address the broken bonds before we can accurately assign charges and
 multiplicities to the fragments. Once we have capped fragments, the final
 step in creating a <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> object is to assign the charges and
-multiplicities to the fragments, satisfying <span class="xref std std-ref">fmd_charge_mult</span>.</p>
-</div>
-</div>
+multiplicities to the fragments, satisfying <a class="reference internal" href="#fmd-charge-mult"><span class="std std-ref">Charge and multiplicity</span></a>.</p>
+</section>
+</section>
 
 
            </div>

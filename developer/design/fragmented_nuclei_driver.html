@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Designing GhostFragment’s FragmentedNuclei Driver &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>Designing GhostFragment’s FragmentedNuclei Driver &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -49,7 +54,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../background/index.html">Theoretical Background</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Documentation</a><ul class="current">
@@ -65,12 +70,13 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="nmers.html">Designing the NMer Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gmbe_coefficients.html">GMBE Coefficients</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../development/index.html">GhostFragment Development Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -100,16 +106,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="designing-ghostfragment-s-fragmentednuclei-driver">
-<span id="gf-fragmented-nuclei-driver-design"></span><h1>Designing GhostFragment’s FragmentedNuclei Driver<a class="headerlink" href="#designing-ghostfragment-s-fragmentednuclei-driver" title="Permalink to this headline"></a></h1>
-<div class="section" id="what-is-the-fragmentednuclei-driver">
-<h2>What is the FragmentedNuclei Driver?<a class="headerlink" href="#what-is-the-fragmentednuclei-driver" title="Permalink to this headline"></a></h2>
+  <section id="designing-ghostfragment-s-fragmentednuclei-driver">
+<span id="gf-fragmented-nuclei-driver-design"></span><h1>Designing GhostFragment’s FragmentedNuclei Driver<a class="headerlink" href="#designing-ghostfragment-s-fragmentednuclei-driver" title="Link to this heading"></a></h1>
+<section id="what-is-the-fragmentednuclei-driver">
+<h2>What is the FragmentedNuclei Driver?<a class="headerlink" href="#what-is-the-fragmentednuclei-driver" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> driver is responsible for dividing the nuclei of a
 molecular system into fragments. The resulting fragments will then be further
 processed by the <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code> driver.</p>
-</div>
-<div class="section" id="fragmentednuclei-driver-considerations">
-<h2>FragmentedNuclei Driver Considerations<a class="headerlink" href="#fragmentednuclei-driver-considerations" title="Permalink to this headline"></a></h2>
+</section>
+<section id="fragmentednuclei-driver-considerations">
+<h2>FragmentedNuclei Driver Considerations<a class="headerlink" href="#fragmentednuclei-driver-considerations" title="Link to this heading"></a></h2>
 <dl class="simple" id="fnd-hierarchy-base">
 <dt>Hierarchy base</dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> driver is assumed to be the base driver of
 the <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code>, <code class="docutils literal notranslate"><span class="pre">FragmentedMolecule</span></code>, and <code class="docutils literal notranslate"><span class="pre">FragmentedSystem</span></code>
@@ -118,7 +124,7 @@ hierarchy.</p>
 </dl>
 <dl class="simple" id="fnd-psudoatoms">
 <dt>Pseudoatoms</dt><dd><p>As the base of the hierarchy, the <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> driver’s first task
-is to determine the set of <span class="xref std std-ref">pseudoatom</span> s which will be used to form
+is to determine the set of <a class="reference internal" href="../../background/terminology.html#pseudoatom"><span class="std std-ref">pseudoatom(s)</span></a> s which will be used to form
 fragments.</p>
 </dd>
 </dl>
@@ -156,15 +162,17 @@ whether GhostFragment is dealing with n-mers vs. fragments we want the
 <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> driver to have the same API as the n-mer driver.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="fragmentednuclei-driver-design">
-<h2>FragmentedNuclei Driver Design<a class="headerlink" href="#fragmentednuclei-driver-design" title="Permalink to this headline"></a></h2>
-<div class="figure align-center" id="id1">
+</section>
+<section id="fragmentednuclei-driver-design">
+<h2>FragmentedNuclei Driver Design<a class="headerlink" href="#fragmentednuclei-driver-design" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id1">
 <span id="fig-gf-fragmented-nuclei-driver"></span><img alt="../../_images/fragmented_nuclei_driver.png" src="../../_images/fragmented_nuclei_driver.png" />
-<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">The architecture of the <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> Driver.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">The architecture of the <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> Driver.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <p><a class="reference internal" href="#fig-gf-fragmented-nuclei-driver"><span class="std std-numref">Fig. 7</span></a> shows the main pieces of the
-<code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> driver. Following from consideration <span class="xref std std-ref">fnd_psudoatoms</span>,
+<code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code> driver. Following from consideration <a class="reference internal" href="#fnd-psudoatoms"><span class="std std-ref">Pseudoatoms</span></a>,
 the first step is the creation of “pseudoatoms” by the <code class="docutils literal notranslate"><span class="pre">Atomizer</span></code> component.
 As suggested by <a class="reference internal" href="#fig-gf-fragmented-nuclei-driver"><span class="std std-numref">Fig. 7</span></a>, the <code class="docutils literal notranslate"><span class="pre">Atomizer</span></code>
 actually satisfies the same property type as the driver, which in turn allows
@@ -172,14 +180,14 @@ the pseudoatoms to be used as bona fide fragments. Regardless of exactly how
 the pseudoatoms are chosen, the <code class="docutils literal notranslate"><span class="pre">Atomizer</span></code> ultimately defines the smallest
 units for the fragmentation algorithm.</p>
 <p>With the pseduoatoms established, the next consideration is
-<span class="xref std std-ref">fnd_connectivity</span>, <em>i.e.</em>, determining which pseudoatoms are bonded to
+<a class="reference internal" href="#fnd-connectivity"><span class="std std-ref">Connectivity</span></a>, <em>i.e.</em>, determining which pseudoatoms are bonded to
 eachother. The pseudoatoms plus the connectivity establishes a molecular graph.
 It is this moleculer graph which is ultimately decomposed by the <code class="docutils literal notranslate"><span class="pre">Fragmenter</span></code>
 module. The <code class="docutils literal notranslate"><span class="pre">Fragmenter</span></code> module is responsible for addressing the
-<span class="xref std std-ref">fnd_generality</span> consideration; in particular it is the <code class="docutils literal notranslate"><span class="pre">Fragmenter</span></code>
+<a class="reference internal" href="#fnd-generality"><span class="std std-ref">Generality</span></a> consideration; in particular it is the <code class="docutils literal notranslate"><span class="pre">Fragmenter</span></code>
 module which will usually be substituted out to change how fragments are formed.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

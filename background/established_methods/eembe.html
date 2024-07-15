@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Electorstatically-Embedded Many-Body Expansion (EE-MB) &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>Electorstatically-Embedded Many-Body Expansion (EE-MB) &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -49,7 +54,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Theoretical Background</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../fragment_based_methods.html">Fragment Based Methods</a></li>
@@ -82,7 +87,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../developer/index.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -112,9 +117,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="electorstatically-embedded-many-body-expansion-ee-mb">
-<h1>Electorstatically-Embedded Many-Body Expansion (EE-MB)<a class="headerlink" href="#electorstatically-embedded-many-body-expansion-ee-mb" title="Permalink to this headline"></a></h1>
-<p>The EE-MB method was proposed by <span id="id1">Dahlke and Truhlar<sup><a class="reference internal" href="../../references.html#id28" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body expansion for large systems, with applications to water clusters. Journal of Chemical Theory and Computation, 3(1):46–53, 2007.">8</a></sup></span>. Its initial formulation
+  <section id="electorstatically-embedded-many-body-expansion-ee-mb">
+<h1>Electorstatically-Embedded Many-Body Expansion (EE-MB)<a class="headerlink" href="#electorstatically-embedded-many-body-expansion-ee-mb" title="Link to this heading"></a></h1>
+<p>The EE-MB method was proposed by <span id="id1">Dahlke and Truhlar<sup><a class="reference internal" href="../../bibliography/index.html#id28" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body expansion for large systems, with applications to water clusters. Journal of Chemical Theory and Computation, 3(1):46–53, 2007.">9</a></sup></span>. Its initial formulation
 amounted to applying a MBE to molecular culsters and using one of two embedding
 methods, <a class="reference internal" href="../algorithms/embed_methods/point_charge.html#ee-mb-a"><span class="std std-ref">EE-MB-A</span></a> and <a class="reference internal" href="../algorithms/embed_methods/point_charge.html#ee-mb-b"><span class="std std-ref">EE-MB-B</span></a>. The resulting fragment-based methods were termed
 EE-MB-A and EE-MB-B. This initial study was largely dedicated to
@@ -123,19 +128,19 @@ to a pentamer). Notably errors in the absolute energy only weakly depended on
 the charge scheme used (Mulliken, TIP3P, and CM4 were considered), and whether
 <a class="reference internal" href="../algorithms/embed_methods/point_charge.html#ee-mb-a"><span class="std std-ref">EE-MB-A</span></a> or <a class="reference internal" href="../algorithms/embed_methods/point_charge.html#ee-mb-b"><span class="std std-ref">EE-MB-B</span></a> was used.</p>
 <p>The next development in the EE-MB method was the development of a multi-level
-formulation <span id="id2"><sup><a class="reference internal" href="../../references.html#id29" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body correlation energy, with applications to the calculation of accurate second-order møller-plesset perturbation theory energies for large water clusters. Journal of Chemical Theory and Computation, 3(4):1342–1348, 2007.">7</a></sup></span>. Dubbed EE-MB-CE, this new method separately
+formulation <span id="id2"><sup><a class="reference internal" href="../../bibliography/index.html#id29" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body correlation energy, with applications to the calculation of accurate second-order møller-plesset perturbation theory energies for large water clusters. Journal of Chemical Theory and Computation, 3(4):1342–1348, 2007.">8</a></sup></span>. Dubbed EE-MB-CE, this new method separately
 applies a MBE to the SCF and correlation energies. In practice, however EE-MB-CE
 was always run with the full SCF energy, thus it was only the correlation energy
 which is truncated. Also proposed was <a class="reference internal" href="../algorithms/screening_methods/distance.html#com-screening"><span class="std std-ref">EE-MB-CE Screening</span></a>. Calculations looked at reproducing
 superystem MP2 energies.</p>
-<p>In 2011, <span id="id3">Tempkin <em>et al.</em><sup><a class="reference internal" href="../../references.html#id36" title="Jeremy O. B. Tempkin, Hannah R. Leverentz, Bo Wang, and Donald G. Truhlar. Screened electrostatically embedded many-body method. The Journal of Physical Chemistry Letters, 2(17):2141–2144, 2011.">62</a></sup></span> introduced the next version of EE-MB, sEE-MB (s
+<p>In 2011, <span id="id3">Tempkin <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id36" title="Jeremy O. B. Tempkin, Hannah R. Leverentz, Bo Wang, and Donald G. Truhlar. Screened electrostatically embedded many-body method. The Journal of Physical Chemistry Letters, 2(17):2141–2144, 2011.">85</a></sup></span> introduced the next version of EE-MB, sEE-MB (s
 stands for screened). Instead of traditional point charges, sEE-MB uses charges
 defined by the <a class="reference internal" href="../algorithms/embed_methods/point_charge.html#screened-charge-model"><span class="std std-ref">Screened Charge Model</span></a> embedding scheme. <a class="reference internal" href="../algorithms/embed_methods/point_charge.html#screened-charge-model"><span class="std std-ref">Screened Charge Model</span></a> accounts for charge penetration
 (when atoms are close the charge densities overlap and the electrons actually
 see more of the nuclear charge). The sEE-MB method was applied to water clusters
 where for a given MBE truncation order sEE-MB better replicated the supersystem
 energy than EE-MB-B.</p>
-<p><span id="id4">Qi <em>et al.</em><sup><a class="reference internal" href="../../references.html#id39" title="Helena W. Qi, Hannah R. Leverentz, and Donald G. Truhlar. Water 16-mers and hexamers: assessment of the three-body and electrostatically embedded many-body approximations of the correlation energy or the nonlocal energy as ways to include cooperative effects. The Journal of Physical Chemistry A, 117(21):4486–4499, 2013.">50</a></sup></span> presented the next incarnations of EE-MB termed EE-MB-NE and
+<p><span id="id4">Qi <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id39" title="Helena W. Qi, Hannah R. Leverentz, and Donald G. Truhlar. Water 16-mers and hexamers: assessment of the three-body and electrostatically embedded many-body approximations of the correlation energy or the nonlocal energy as ways to include cooperative effects. The Journal of Physical Chemistry A, 117(21):4486–4499, 2013.">72</a></sup></span> presented the next incarnations of EE-MB termed EE-MB-NE and
 EE-MB-HE, where NE means nonlocal energy and HE means higher-level energy.
 Conceptually EE-MB-NE is the same as EE-MB-CE except that instead of performing
 a supersystem SCF calculation, one instead runs a local DFT calculation.
@@ -143,21 +148,13 @@ EE-MB-HE is the name they give to the concept of running a multi-level
 calculation such that the lowest level is a supersystem calculation. Hence
 EE-MB-CE and EE-MB-NE are two specific cases of EE-MB-HE (specifically when the
 lowest level is SCF or a local DFT respectively).</p>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"></a></h2>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
 <p>It seems fair to say that the unifying theme of the various flavors of EE-MB is
 the use of non-iterative point charges. Unlike many of the other fragment based
 methods EE-MB has almost always been used to refer to a single flavor
 (EE-MB-B) and care has been taken to distinguish among the other flavors.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 12%" />
-<col style="width: 18%" />
-<col style="width: 21%" />
-<col style="width: 16%" />
-<col style="width: 19%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="2"><p>Name</p></th>
 <th class="head"><p>Fragments</p></th>
@@ -217,32 +214,32 @@ methods EE-MB has almost always been used to refer to a single flavor
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="other-ee-mb-results">
-<h2>Other EE-MB Results<a class="headerlink" href="#other-ee-mb-results" title="Permalink to this headline"></a></h2>
-<p><span id="id5">Dahlke and Truhlar<sup><a class="reference internal" href="../../references.html#id30" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body expansion for simulations. Journal of Chemical Theory and Computation, 4(1):1–6, 2008.">9</a></sup></span> considered the applicability of (presumably) EE-MB-B for
+</section>
+<section id="other-ee-mb-results">
+<h2>Other EE-MB Results<a class="headerlink" href="#other-ee-mb-results" title="Link to this heading"></a></h2>
+<p><span id="id5">Dahlke and Truhlar<sup><a class="reference internal" href="../../bibliography/index.html#id30" title="Erin E. Dahlke and Donald G. Truhlar. Electrostatically embedded many-body expansion for simulations. Journal of Chemical Theory and Computation, 4(1):1–6, 2008.">10</a></sup></span> considered the applicability of (presumably) EE-MB-B for
 performing molecular dynamics calculations on water clusters. The specific study
 focused on how accurately EE-MB-B replicated the supersystem gradients for a
 water cluster containing 64 water molecules. All calculations were done with
 DFT.</p>
-<p><span id="id6">Dahlke <em>et al.</em><sup><a class="reference internal" href="../../references.html#id31" title="Erin E. Dahlke, Hannah R. Leverentz, and Donald G. Truhlar. Evaluation of the electrostatically embedded many-body expansion and the electrostatically embedded many-body expansion of the correlation energy by application to low-lying water hexamers. Journal of Chemical Theory and Computation, 4(1):33–41, 2008.">6</a></sup></span> considered how well EE-MB-CE could be used to reproduce
+<p><span id="id6">Dahlke <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id31" title="Erin E. Dahlke, Hannah R. Leverentz, and Donald G. Truhlar. Evaluation of the electrostatically embedded many-body expansion and the electrostatically embedded many-body expansion of the correlation energy by application to low-lying water hexamers. Journal of Chemical Theory and Computation, 4(1):33–41, 2008.">7</a></sup></span> considered how well EE-MB-CE could be used to reproduce
 supersystem energies computed with CCSD, CCSD(T), and higher-order Moller-
 Plesset perturbation theory. The study focused on water hexamer isomers.</p>
-<p><span id="id7">Sorkin <em>et al.</em><sup><a class="reference internal" href="../../references.html#id32" title="Anastassia Sorkin, Erin E. Dahlke, and Donald G. Truhlar. Application of the electrostatically embedded many-body expansion to microsolvation of ammonia in water clusters. Journal of Chemical Theory and Computation, 4(5):683–688, 2008.">60</a></sup></span> applies (presumably) EE-MB-B to water clusters containing a
+<p><span id="id7">Sorkin <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id32" title="Anastassia Sorkin, Erin E. Dahlke, and Donald G. Truhlar. Application of the electrostatically embedded many-body expansion to microsolvation of ammonia in water clusters. Journal of Chemical Theory and Computation, 4(5):683–688, 2008.">82</a></sup></span> applies (presumably) EE-MB-B to water clusters containing a
 NH3 molecule. The main point was to study how well EE-MB can replicate the
 absolute and relative energetics of the corresponding supersystem calculations.
 Also considered were several methods for computing the point charges.</p>
-<p><span id="id8">Leverentz and Truhlar<sup><a class="reference internal" href="../../references.html#id33" title="Hannah R. Leverentz and Donald G. Truhlar. Electrostatically embedded many-body approximation for systems of water, ammonia, and sulfuric acid and the dependence of its performance on embedding charges. Journal of Chemical Theory and Computation, 5(6):1573–1584, 2009.">37</a></sup></span> revisits the discussion of EE-MB-A vs. EE-MB-B for mixed
+<p><span id="id8">Leverentz and Truhlar<sup><a class="reference internal" href="../../bibliography/index.html#id33" title="Hannah R. Leverentz and Donald G. Truhlar. Electrostatically embedded many-body approximation for systems of water, ammonia, and sulfuric acid and the dependence of its performance on embedding charges. Journal of Chemical Theory and Computation, 5(6):1573–1584, 2009.">48</a></sup></span> revisits the discussion of EE-MB-A vs. EE-MB-B for mixed
 water, sulfuric acid, and ammonia clusters using DFT. The study notably
 considers a lot of different ways to compute the charges, but ultimately
 concludes the final results are pretty insensitive to the charge details.</p>
-<p><span id="id9">Hua <em>et al.</em><sup><a class="reference internal" href="../../references.html#id35" title="Duy Hua, Hannah R. Leverentz, Elizabeth A. Amin, and Donald G. Truhlar. Assessment and validation of the electrostatically embedded many-body expansion for metal-ligand bonding. Journal of Chemical Theory and Computation, 7(2):251–255, 2011.">22</a></sup></span> applied EE-MB-B to Zn coordination compounds. The study
+<p><span id="id9">Hua <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id35" title="Duy Hua, Hannah R. Leverentz, Elizabeth A. Amin, and Donald G. Truhlar. Assessment and validation of the electrostatically embedded many-body expansion for metal-ligand bonding. Journal of Chemical Theory and Computation, 7(2):251–255, 2011.">29</a></sup></span> applied EE-MB-B to Zn coordination compounds. The study
 specifically notes that having each ligand be one fragment, and the Zn be
 another led to unacceptale errors. Instead one fragment is Zn and the two
 closest ligands, and the remaining ligands are their own fragments. With such a
 fragmentation scheme EE-MB-B was able to accurately reproduce supersystem
 ligand disassociation energies.</p>
-<p><span id="id10">Kurbanov <em>et al.</em><sup><a class="reference internal" href="../../references.html#id37" title="Elbek K. Kurbanov, Hannah R. Leverentz, Donald G. Truhlar, and Elizabeth A. Amin. Electrostatically embedded many-body expansion for neutral and charged metalloenzyme model systems. Journal of Chemical Theory and Computation, 8(1):1–5, 2012.">34</a></sup></span> again considered EE-MB-B applications to Zn coordination
+<p><span id="id10">Kurbanov <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id37" title="Elbek K. Kurbanov, Hannah R. Leverentz, Donald G. Truhlar, and Elizabeth A. Amin. Electrostatically embedded many-body expansion for neutral and charged metalloenzyme model systems. Journal of Chemical Theory and Computation, 8(1):1–5, 2012.">45</a></sup></span> again considered EE-MB-B applications to Zn coordination
 compounds. This study considers how to fragment the compleexes in a more
 systematic manner. The main finding of this study is a series of guidelines for
 fragmenting coordination compounds. These guidelines are not a fragmentation
@@ -250,11 +247,11 @@ method, since they don’t tell you how to fragment the system; rather the
 guidelines tell you how you can’t fragment the system. By adhereing to the
 aforementioned guidelines, EE-MB-B was again demonstrated to be able to predict
 ligand dissassociation energies.</p>
-<p><span id="id11">Leverentz <em>et al.</em><sup><a class="reference internal" href="../../references.html#id38" title="Hannah R. Leverentz, Katie A. Maerzke, Samuel J. Keasler, J. Ilja Siepmann, and Donald G. Truhlar. Electrostatically embedded many-body method for dipole moments, partial atomic charges, and charge transfer. Physical Chemistry Chemical Physics, 14(21):7669, 2012.">36</a></sup></span> uses EE-MB-B to reproduce supersystem partial charges,
+<p><span id="id11">Leverentz <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id38" title="Hannah R. Leverentz, Katie A. Maerzke, Samuel J. Keasler, J. Ilja Siepmann, and Donald G. Truhlar. Electrostatically embedded many-body method for dipole moments, partial atomic charges, and charge transfer. Physical Chemistry Chemical Physics, 14(21):7669, 2012.">47</a></sup></span> uses EE-MB-B to reproduce supersystem partial charges,
 intermolecular charge transfer, and dipole moments of molecular clusters. Of
 note they were only able to obtain qualitative agreement with supersystem
 results for intermolecular charge transfer.</p>
-<p><span id="id12">Kurbanov <em>et al.</em><sup><a class="reference internal" href="../../references.html#id40" title="Elbek K. Kurbanov, Hannah R. Leverentz, Donald G. Truhlar, and Elizabeth A. Amin. Analysis of the errors in the electrostatically embedded many-body expansion of the energy and the correlation energy for zn and cd coordination complexes with five and six ligands and use of the analysis to develop a generally successful fragmentation strategy. Journal of Chemical Theory and Computation, 9(6):2617–2628, 2013.">35</a></sup></span> applied EE-MB-B and EE-MB-CE to Zn and Cd coordination
+<p><span id="id12">Kurbanov <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id40" title="Elbek K. Kurbanov, Hannah R. Leverentz, Donald G. Truhlar, and Elizabeth A. Amin. Analysis of the errors in the electrostatically embedded many-body expansion of the energy and the correlation energy for zn and cd coordination complexes with five and six ligands and use of the analysis to develop a generally successful fragmentation strategy. Journal of Chemical Theory and Computation, 9(6):2617–2628, 2013.">46</a></sup></span> applied EE-MB-B and EE-MB-CE to Zn and Cd coordination
 compounds. The study proposes a fragmentation method for Zn and Cd compounds
 that amounts to pairing the metal with the two ligands with the strongest
 Coulomb interaction (as deterimined by the maximum absolute point-charge-point-
@@ -262,21 +259,21 @@ charge interaction). Also of interest is a discussion pertaining to how to
 classify the various EE-MB methods. Of particular note is the claim that there
 is an ambiguity in trying to distinguish between intersecting and disjoint
 methods.</p>
-<p><span id="id13">Friedrich <em>et al.</em><sup><a class="reference internal" href="../../references.html#id42" title="Joachim Friedrich, Haoyu Yu, Hannah R. Leverentz, Peng Bai, J. Ilja Siepmann, and Donald G. Truhlar. Water 26-mers drawn from bulk simulations: benchmark binding energies for unprecedentedly large water clusters and assessment of the electrostatically embedded three-body and pairwise additive approximations. The Journal of Physical Chemistry Letters, 5(4):666–670, 2014. doi:10.1021/jz500079e.">14</a></sup></span> applied EE-MB-B to water clusters with 26 monomers. The
+<p><span id="id13">Friedrich <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id42" title="Joachim Friedrich, Haoyu Yu, Hannah R. Leverentz, Peng Bai, J. Ilja Siepmann, and Donald G. Truhlar. Water 26-mers drawn from bulk simulations: benchmark binding energies for unprecedentedly large water clusters and assessment of the electrostatically embedded three-body and pairwise additive approximations. The Journal of Physical Chemistry Letters, 5(4):666–670, 2014. doi:10.1021/jz500079e.">19</a></sup></span> applied EE-MB-B to water clusters with 26 monomers. The
 goal of the study was to replicate CCSD(T)/CBS results computed using the
 incremental method. Overall the EE-MB-B results match the incremental method
 results quite well.</p>
-</div>
-<div class="section" id="ee-mb-reviews">
-<h2>EE-MB Reviews<a class="headerlink" href="#ee-mb-reviews" title="Permalink to this headline"></a></h2>
-<p><span id="id14">Wang <em>et al.</em><sup><a class="reference internal" href="../../references.html#id43" title="Bo Wang, Ke R. Yang, Xuefei Xu, Miho Isegawa, Hannah R. Leverentz, and Donald G. Truhlar. Quantum mechanical fragment methods based on partitioning atoms or partitioning coordinates. Accounts of Chemical Research, 47(9):2731–2738, 2014. doi:10.1021/ar500068a.">64</a></sup></span> reviewed the various flavors of EE-MB as well as the EE-MTA
+</section>
+<section id="ee-mb-reviews">
+<h2>EE-MB Reviews<a class="headerlink" href="#ee-mb-reviews" title="Link to this heading"></a></h2>
+<p><span id="id14">Wang <em>et al.</em><sup><a class="reference internal" href="../../bibliography/index.html#id43" title="Bo Wang, Ke R. Yang, Xuefei Xu, Miho Isegawa, Hannah R. Leverentz, and Donald G. Truhlar. Quantum mechanical fragment methods based on partitioning atoms or partitioning coordinates. Accounts of Chemical Research, 47(9):2731–2738, 2014. doi:10.1021/ar500068a.">87</a></sup></span> reviewed the various flavors of EE-MB as well as the EE-MTA
 method. This review also introduces the anchor points reactive potential method
 which generates a semi-analytical potential energy surface by partitioning the
 internal coordinates of the system. They then suggest that such a method should
 also be considered a fragment-based method because it fragments the
 internal coordinates.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

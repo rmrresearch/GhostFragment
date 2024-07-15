@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Designing the NMer Driver &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <title>Designing the NMer Driver &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="GhostFragment Development Topics" href="../development/index.html" />
+    <link rel="next" title="GMBE Coefficients" href="gmbe_coefficients.html" />
     <link rel="prev" title="Designing GhostFragment’s FragmentedNuclei Driver" href="fragmented_nuclei_driver.html" /> 
 </head>
 
@@ -49,7 +55,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../background/index.html">Theoretical Background</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Documentation</a><ul class="current">
@@ -66,12 +72,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#nmerdriver-design">NMerDriver Design</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="gmbe_coefficients.html">GMBE Coefficients</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../development/index.html">GhostFragment Development Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -101,17 +108,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="designing-the-nmer-driver">
-<span id="gf-nmer-driver-design"></span><h1>Designing the NMer Driver<a class="headerlink" href="#designing-the-nmer-driver" title="Permalink to this headline"></a></h1>
-<div class="section" id="what-is-an-n-mer">
-<h2>What is an <span class="math notranslate nohighlight">\(n\)</span>-mer?<a class="headerlink" href="#what-is-an-n-mer" title="Permalink to this headline"></a></h2>
+  <section id="designing-the-nmer-driver">
+<span id="gf-nmer-driver-design"></span><h1>Designing the NMer Driver<a class="headerlink" href="#designing-the-nmer-driver" title="Link to this heading"></a></h1>
+<section id="what-is-an-n-mer">
+<h2>What is an <span class="math notranslate nohighlight">\(n\)</span>-mer?<a class="headerlink" href="#what-is-an-n-mer" title="Link to this heading"></a></h2>
 <p>If we think of each fragment as a set of atoms, then an <span class="math notranslate nohighlight">\(n\)</span>-mer, simply put
 is the set of atoms which results from taking the union of <span class="math notranslate nohighlight">\(n\)</span> fragments. The
 driver is responsible for wrapping the process of going from an input
 <code class="docutils literal notranslate"><span class="pre">ChemicalSystem</span></code> to the final set of <code class="docutils literal notranslate"><span class="pre">FragmentedNuclei</span></code>.</p>
-</div>
-<div class="section" id="why-do-we-need-n-mers">
-<h2>Why do we need <span class="math notranslate nohighlight">\(n\)</span>-mers?<a class="headerlink" href="#why-do-we-need-n-mers" title="Permalink to this headline"></a></h2>
+</section>
+<section id="why-do-we-need-n-mers">
+<h2>Why do we need <span class="math notranslate nohighlight">\(n\)</span>-mers?<a class="headerlink" href="#why-do-we-need-n-mers" title="Link to this heading"></a></h2>
 <p>Fragments usually consist of spatially local atoms. Simply summing the energies
 of the fragments would neglect the many-body interactions and would be a poor
 approximation. To better approximate the energy we need to account for the
@@ -122,9 +129,9 @@ then subtracts out the energies of the fragments, the two-body interactions,
 the three-body interactions, …, and the <span class="math notranslate nohighlight">\((n-1)\)</span>-body interactions.
 Thus we need <span class="math notranslate nohighlight">\(n\)</span>-mers to compute <span class="math notranslate nohighlight">\(n\)</span>-body interactions via the supermolecular
 method.</p>
-</div>
-<div class="section" id="nmerdriver-considerations">
-<h2>NMerDriver Considerations<a class="headerlink" href="#nmerdriver-considerations" title="Permalink to this headline"></a></h2>
+</section>
+<section id="nmerdriver-considerations">
+<h2>NMerDriver Considerations<a class="headerlink" href="#nmerdriver-considerations" title="Link to this heading"></a></h2>
 <dl class="simple" id="nd-frags">
 <dt>Fragments.</dt><dd><p>The entire concept of an <span class="math notranslate nohighlight">\(n\)</span>-mer is predicated on the existence of the
 fragments. Depending on the application of the <span class="math notranslate nohighlight">\(n\)</span>-mers, we may need to
@@ -166,22 +173,24 @@ for the fragments.</p></li>
 </ul>
 </dd>
 </dl>
-</div>
-<div class="section" id="nmerdriver-design">
-<h2>NMerDriver Design<a class="headerlink" href="#nmerdriver-design" title="Permalink to this headline"></a></h2>
-<div class="figure align-center" id="id1">
+</section>
+<section id="nmerdriver-design">
+<h2>NMerDriver Design<a class="headerlink" href="#nmerdriver-design" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id1">
 <span id="fig-gf-nmer-driver"></span><img alt="../../_images/nmer_driver.png" src="../../_images/nmer_driver.png" />
-<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">The architecture of the nmer driver component.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
-</div>
-</div>
-</div>
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">The architecture of the nmer driver component.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="fragmented_nuclei_driver.html" class="btn btn-neutral float-left" title="Designing GhostFragment’s FragmentedNuclei Driver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../development/index.html" class="btn btn-neutral float-right" title="GhostFragment Development Topics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="gmbe_coefficients.html" class="btn btn-neutral float-right" title="GMBE Coefficients" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

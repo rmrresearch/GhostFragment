@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fragment Based Methods &mdash; GhostFragment 0.0.1 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <title>Fragment Based Methods &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
-        <script >let toggleHintShow = 'Click to show';</script>
-        <script >let toggleHintHide = 'Click to hide';</script>
-        <script >let toggleOpenOnPrint = 'true';</script>
-        <script src="../_static/togglebutton.js"></script>
-        <script >var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +55,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Theoretical Background</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Fragment Based Methods</a><ul>
@@ -67,7 +73,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography/index.html">References</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
 </ul>
 
@@ -96,25 +102,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="fragment-based-methods">
-<h1>Fragment Based Methods<a class="headerlink" href="#fragment-based-methods" title="Permalink to this headline"></a></h1>
+  <section id="fragment-based-methods">
+<h1>Fragment Based Methods<a class="headerlink" href="#fragment-based-methods" title="Link to this heading"></a></h1>
 <p>Fragment-based methods are a series of reduced-scaling quantum chemistry
 approximations which rely on the near-sighted nature of electronic matter to
 circumvent the highly non-linear scaling of traditional electronic structure
 methods. This page is meant as a non-rigorous introduction to the concept.
 Other sections in this documentation present the methods in a more rigorous
 manner.</p>
-<div class="section" id="the-problem">
-<h2>The Problem<a class="headerlink" href="#the-problem" title="Permalink to this headline"></a></h2>
-<div class="figure align-center" id="id1">
+<section id="the-problem">
+<h2>The Problem<a class="headerlink" href="#the-problem" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id1">
 <span id="fig-hexamer-1b"></span><img alt="../_images/water_hexamer_1b.png" src="../_images/water_hexamer_1b.png" />
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Left. If <span class="math notranslate nohighlight">\(t_1\)</span> is the time it takes to compute the energy of a single water
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Left. If <span class="math notranslate nohighlight">\(t_1\)</span> is the time it takes to compute the energy of a single water
 molecule, then <span class="math notranslate nohighlight">\(t_6\)</span> is the time required to compute the energy of water
 hexamer. Middle. In a 1-body many-body expansion (MBE), we approximate the
 energy of water hexamer as the sum of the energies of each water molecule.
 Right. The 1-body MBE approximation is dramatically cheaper to compute than
-the energy of the water hexamer.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
-</div>
+the energy of the water hexamer.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <p>The goal of quantum chemistry is to be able to predict and explain
 computational phenomenona using rigorous physical models that contain little
 to no emperical parameters. Unfortunately quantum chemistry methods exhibit
@@ -135,9 +143,9 @@ an SCF calculation on water hexamer will take 216 times longer than an SCF
 calculation on a single water molecule. The situation is markedly worse for
 CCSD(T) where we expect computing the energy of water hexamer to be 279,936
 times longer than computing the energy of a single water molecule.</p>
-</div>
-<div class="section" id="a-solution">
-<h2>A solution?<a class="headerlink" href="#a-solution" title="Permalink to this headline"></a></h2>
+</section>
+<section id="a-solution">
+<h2>A solution?<a class="headerlink" href="#a-solution" title="Link to this heading"></a></h2>
 <p>While the exact electronic Hamiltonian is a pair-wise operator, for a given
 basis set the exact electron wavefunction has contributions arising from all
 possible excitations out of a reference state. In practice, excitations tend
@@ -166,16 +174,18 @@ interactions among the various fragments. Unfortunately, for most use cases, a
 reduction in computational cost is only useful if the corresponding
 approximation is sufficiently accurate, and one-body fragment-based methods
 are rarely of interest.</p>
-</div>
-<div class="section" id="the-many-body-expansion-mbe">
-<h2>The many-body expansion (MBE)<a class="headerlink" href="#the-many-body-expansion-mbe" title="Permalink to this headline"></a></h2>
-<div class="figure align-center" id="id2">
+</section>
+<section id="the-many-body-expansion-mbe">
+<h2>The many-body expansion (MBE)<a class="headerlink" href="#the-many-body-expansion-mbe" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id2">
 <span id="fig-hexamer-2b"></span><img alt="../_images/water_hexamer_2b.png" src="../_images/water_hexamer_2b.png" />
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Left. Time to solution <span class="math notranslate nohighlight">\(t_6\)</span> for water hexamer as a multiple of the time to
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Left. Time to solution <span class="math notranslate nohighlight">\(t_6\)</span> for water hexamer as a multiple of the time to
 solution for a single water molecule at the same level of theory <span class="math notranslate nohighlight">\(t_1\)</span>.
 Middle. Three of the 15 possible dimers. Right. The time to solution for
-the two-body approximation.</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
-</div>
+the two-body approximation.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 <p>As discussed at the end of the previous section, a one-body approximation is
 an insufficiently accurate approximation to energy of the target system on
 account of neglecting many-body interactions. Of the neglected interactions,
@@ -213,8 +223,8 @@ extended to computing four-, five-, and six-body interactions. The resulting
 equation represents a formally exact energy expansion of the hexamer’s energy
 known as the many-body expansion (MBE). The MBE (and the closely related
 generalized MBE) is at the heart of all fragment-based methods.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
