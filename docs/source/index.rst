@@ -26,4 +26,5 @@ pertaining to fragment-based methods and basis-set superposition error.
    background/index
    developer/index
    bibliography/index
+   module_api/index
    C++ API <https://rmrresearch.github.io/GhostFragment/cxx_api/index.html>
