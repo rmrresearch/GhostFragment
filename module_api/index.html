@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modules API &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="All nmers" href="All_nmers.html" />
+    <link rel="prev" title="References" href="../bibliography/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            GhostFragment
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../background/index.html">Theoretical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography/index.html">References</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Modules API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="All_nmers.html">All nmers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Atomic_Capping.html">Atomic Capping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Atomic_Capping.html#single-atom-capper">Single Atom Capper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Bond-Based_Fragmenter.html">Bond-Based Fragmenter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Broken_Bonds.html">Broken Bonds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cluster_Partition.html">Cluster Partition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Covalent_Radius.html">Covalent Radius</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DCLC_Capping.html">DCLC Capping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DCLC_Capping.html#dclc-capper">DCLC Capper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fragment_Based_Method.html">Fragment Based Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fragment_Driver.html">Fragment Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FragmentedChemicalSystem_Driver.html">FragmentedChemicalSystem Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GMBE_Weights.html">GMBE Weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Heavy_Atom_Partition.html">Heavy Atom Partition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Intersections.html">Intersections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Nuclear_Graph.html">Nuclear Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Weighted_Distance.html">Weighted Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Weighted_Distance.html#weighted-distance-capper">Weighted Distance Capper</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Modules API</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/rmrresearch/ghostfragment/edit/master/docs/source/module_api/index.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="modules-api">
+<h1>Modules API<a class="headerlink" href="#modules-api" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="All_nmers.html">All nmers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Atomic_Capping.html">Atomic Capping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Atomic_Capping.html#single-atom-capper">Single Atom Capper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Bond-Based_Fragmenter.html">Bond-Based Fragmenter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Broken_Bonds.html">Broken Bonds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cluster_Partition.html">Cluster Partition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Covalent_Radius.html">Covalent Radius</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DCLC_Capping.html">DCLC Capping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DCLC_Capping.html#dclc-capper">DCLC Capper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fragment_Based_Method.html">Fragment Based Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fragment_Driver.html">Fragment Driver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FragmentedChemicalSystem_Driver.html">FragmentedChemicalSystem Driver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GMBE_Weights.html">GMBE Weights</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Heavy_Atom_Partition.html">Heavy Atom Partition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Intersections.html">Intersections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Nuclear_Graph.html">Nuclear Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Weighted_Distance.html">Weighted Distance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Weighted_Distance.html#weighted-distance-capper">Weighted Distance Capper</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../bibliography/index.html" class="btn btn-neutral float-left" title="References" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="All_nmers.html" class="btn btn-neutral float-right" title="All nmers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
