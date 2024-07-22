@@ -45,7 +45,7 @@ void compute_intersection(const index_set& curr_frag, std::size_t starting_frag,
         // Add the intersection
         ints_so_far.insert(intersection);
 
-        compute_intersection(intersection, starting_frag + 1, frag_indices,
+        compute_intersection(intersection, starting_frag, frag_indices,
                              ints_so_far);
     }
 }
