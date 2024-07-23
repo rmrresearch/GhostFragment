@@ -211,3 +211,42 @@ TEST_CASE("Intersection Finder") {
         }
     }
 }
+
+TEST_CASE("Bug associated with #62") {
+    // It was found that this module didn't work correctly when the MBE is
+    // truncated at order (n-1) for a system with n monomers, e.g., a three-body
+    // expansion on water tetramer would exhibit this bug. This regression test
+    // ensures that the module works for a three-body truncation of water 4
+    // (n.b. we just use hydrogens for each atom as the module only cares about
+    // nuclear indices).
+
+    nuclei_type nuclei;
+
+    for(auto i = 0; i < 12; ++i) {
+        nuclei.push_back(nucleus_type("H", 1ul, 1.0, i, 0.0, 0.0));
+    }
+
+    fragments_type fragmented_nuclei(nuclei);
+    fragmented_nuclei.insert({0, 1, 2, 3, 4, 5, 6, 7, 8});
+    fragmented_nuclei.insert({0, 1, 2, 3, 4, 5, 9, 10, 11});
+    fragmented_nuclei.insert({0, 1, 2, 6, 7, 8, 9, 10, 11});
+    fragmented_nuclei.insert({3, 4, 5, 6, 7, 8, 9, 10, 11});
+
+    fragments_type corr(fragmented_nuclei);
+    corr.insert({0, 1, 2});
+    corr.insert({0, 1, 2, 3, 4, 5});
+    corr.insert({0, 1, 2, 6, 7, 8});
+    corr.insert({0, 1, 2, 9, 10, 11});
+    corr.insert({3, 4, 5});
+    corr.insert({3, 4, 5, 6, 7, 8});
+    corr.insert({3, 4, 5, 9, 10, 11});
+    corr.insert({6, 7, 8});
+    corr.insert({6, 7, 8, 9, 10, 11});
+    corr.insert({9, 10, 11});
+
+    auto mm   = testing::initialize();
+    auto& mod = mm.at("Intersections");
+
+    auto intersects = mod.run_as<property_type>(fragmented_nuclei);
+    REQUIRE(intersects == corr);
+}
