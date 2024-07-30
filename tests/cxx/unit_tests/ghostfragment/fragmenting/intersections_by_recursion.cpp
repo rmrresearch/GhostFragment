@@ -217,7 +217,7 @@ TEST_CASE("Bug associated with #62") {
     // truncated at order (n-1) for a system with n monomers, e.g., a three-body
     // expansion on water tetramer would exhibit this bug. This regression test
     // ensures that the module works for a three-body truncation of water 4
-    // (n.b. we just use hydrogens for each atom as the module only cares about
+    // (n.b. we just use hydrogen atoms as the module only cares about
     // nuclear indices).
 
     nuclei_type nuclei;
