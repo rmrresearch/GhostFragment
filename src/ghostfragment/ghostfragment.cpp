@@ -20,6 +20,7 @@
 #include "screening/screening.hpp"
 #include "topology/topology.hpp"
 #include <ghostfragment/load_modules.hpp>
+#include "hydrocarbon/hydrocaron.hpp"
 
 namespace ghostfragment {
 
@@ -29,6 +30,7 @@ void load_modules(pluginplay::ModuleManager& mm) {
     drivers::load_modules(mm);
     fragmenting::load_modules(mm);
     // screening::load_modules(mm);
+    hydrocarbon::load_modules(mm);
 
     capping::set_defaults(mm);
     topology::set_defaults(mm);
