@@ -56,4 +56,6 @@ toolchain.cmake
 
 install/
 .DS_Store
+.kdev4/
+GhostFragment.kdev4
 

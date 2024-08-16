@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include "hydrocarbon.hpp"
 #include "position.hpp"
+#include <simde/simde.hpp>
 
 #define C_C_BOND 2.89
 #define H_C_BOND 2.06
@@ -26,8 +26,8 @@
 #define C_NPROTON 6
 #define H_NPROTON 1
 
-namespace testing {
-
+namespace ghostfragment::hydrocarbon {
+namespace {
 chemist::Molecule hydrocarbon(int num_carbon) {
     chemist::Molecule m;
 
@@ -90,5 +90,26 @@ chemist::Molecule hydrocarbon(int num_carbon) {
 
     return m;
 }
+}
 
-} // namespace testing
+const auto mod_desc = R"(
+Hydrocarbon Chain Generator
+---------------------------
+)";
+
+MODULE_CTOR(MakeHydrocarbon) {
+    description(mod_desc);
+    satisfies_property_type<simde::MoleculeFromString>();
+}
+
+MODULE_RUN(MakeHydrocarbon) {
+    auto num_carbon = simde::MoleculeFromString::unwrap_inputs(inputs);
+
+    auto hc = hydrocarbon(std::stoi(num_carbon));
+
+    auto rv = results();
+
+    return simde::MoleculeFromString::wrap_results(rv, hc);
+}
+
+}

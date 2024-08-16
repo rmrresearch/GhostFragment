@@ -19,12 +19,11 @@
 #include <chemist/chemical_system/molecule/molecule.hpp>
 #include <chemist/fragmenting/fragmented_nuclei.hpp>
 #include <chemist/topology/connectivity_table.hpp>
+#include <ghostfragment/hydrocarbon/hydrocarbon.hpp>
 #include <cstdlib>
 #include <string>
 
 namespace testing {
-
-chemist::Molecule hydrocarbon(int num_carbon);
 
 inline auto hydrocarbon_connectivity(std::size_t N) {
     // Probably a better way, but this works

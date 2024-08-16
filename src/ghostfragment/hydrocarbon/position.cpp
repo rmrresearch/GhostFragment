@@ -15,8 +15,9 @@
  */
 
 #include "position.hpp"
+#include <cmath>
 
-namespace testing {
+namespace ghostfragment::hydrocarbon {
 
 std::array<float, 3> position_carbon(const std::vector<float>& source_coords,
                                      float carbon_bond, int num,
@@ -112,4 +113,4 @@ std::array<float, 3> position_hydrogen(const std::vector<float>& source_coords,
     return coords;
 }
 
-} // namespace testing
+} // namespace ghostfragment::hydrocarbon
