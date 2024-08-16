@@ -15,7 +15,9 @@
  */
 
 #include "position.hpp"
+#include "hydrocarbon.hpp"
 #include <simde/simde.hpp>
+#include <string>
 
 #define C_C_BOND 2.89
 #define H_C_BOND 2.06
@@ -103,9 +105,9 @@ MODULE_CTOR(MakeHydrocarbon) {
 }
 
 MODULE_RUN(MakeHydrocarbon) {
-    auto num_carbon = simde::MoleculeFromString::unwrap_inputs(inputs);
+    const std::string& num_carbon_string = std::get<0>(simde::MoleculeFromString::unwrap_inputs(inputs));
 
-    auto hc = hydrocarbon(std::stoi(num_carbon));
+    auto hc = hydrocarbon(std::stoi(num_carbon_string));
 
     auto rv = results();
 

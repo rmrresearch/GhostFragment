@@ -20,7 +20,7 @@
 #include "screening/screening.hpp"
 #include "topology/topology.hpp"
 #include <ghostfragment/load_modules.hpp>
-#include "hydrocarbon/hc.hpp"
+#include "hydrocarbon/hydrocarbon.hpp"
 
 namespace ghostfragment {
 

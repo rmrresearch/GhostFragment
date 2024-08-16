@@ -3,7 +3,7 @@
 
 namespace ghostfragment::hydrocarbon {
 
-chemist::Molecule hydrocarbon(int num_carbon);
+// chemist::Molecule hydrocarbon(int num_carbon);
 
 DECLARE_MODULE(MakeHydrocarbon);
 
