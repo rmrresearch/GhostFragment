@@ -26,6 +26,23 @@ using subset_type = typename result_type::nucleus_index_set;
 using input_type  = pt::NuclearGraphToFragmentsTraits::graph_type;
 using nuclei_type = typename input_type::nuclei_type;
 
+std::ostream& operator<<(std::ostream& os, const std::vector<long unsigned int, std::allocator<long unsigned int> >& value) {
+    os << value << std::endl;
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const std::vector<subset_type>& mol) {
+    for (subset_type value : mol) {
+        os << value << std::endl;
+    }
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const chemist::fragmenting::FragmentedNuclei<chemist::Nuclei>& mol) {
+    os << mol << std::endl;
+    return os;
+}
+
 // This function takes a NuclearGraph, a node and a parameter nbonds and returns
 // all nuclei that are within nbonds bonds of the given node. Uses a stack
 // node_stack to perform a depth-first search, where the elements of node_stack
@@ -123,7 +140,10 @@ std::vector<subset_type> graph_to_frags(const NuclearGraph& graph,
 
         supersets = 0;
         subsets   = 0;
+        //std::cout << "Output of indices: \n" << std::endl;
+        //std::cout << indices << std::endl;
     }
+
     return indices;
 }
 
@@ -152,11 +172,12 @@ MODULE_RUN(BondBased) {
     const auto& [graph] = my_pt::unwrap_inputs(inputs);
     const auto& nbonds  = inputs.at("nbonds").value<std::size_t>();
 
-    std::cout << "Output of nbonds: \n" + nbonds + "\n" << std::endl;
+    std::cout << "Output of nbonds: " << std::endl;
+    std::cout << nbonds << std::endl;
 
     if(graph.nodes_size() == 0) { // Handles trivial mol edge-case
         auto rv = results();
-        std::cout << "Output of rv for trivial mol edge-case: \n" + rv + "\n" << std::endl;
+        //std::cout << "Output of rv for trivial mol edge-case: \n" << rv << "\n" << std::endl;
         return my_pt::wrap_results(rv, result_type{nuclei_type{}});
     }
 
@@ -164,13 +185,15 @@ MODULE_RUN(BondBased) {
 
     const auto indices = graph_to_frags(graph, nbonds);
 
-    std::cout << "Output of indicies: \n" + indicies + "\n" << std::endl;
+    std::cout << "Output of indices: " << std::endl;
+    //std::cout << indices << std::endl;
 
     for(std::size_t i = 0; i < indices.size(); ++i) {
         frags.insert(indices[i].begin(), indices[i].end());
     }
 
-    std::cout << "Output of frags: \n" + nbonds + "\n" << std::endl;
+    std::cout << "Output of frags:" << std::endl;
+    std::cout << frags << std::endl;
 
     auto rv = results();
     return my_pt::wrap_results(rv, frags);
