@@ -14,11 +14,40 @@
  * limitations under the License.
  */
 
+#include "ghostfragment/property_types/fragmenting/capped_fragments.hpp"
+#include "ghostfragment/property_types/fragmenting/fragment_weights.hpp"
+#include "ghostfragment/property_types/fragmenting/fragmented_chemical_system.hpp"
+#include "ghostfragment/property_types/fragmenting/fragmented_nuclei.hpp"
+#include "ghostfragment/property_types/fragmenting/intersections.hpp"
+#include "ghostfragment/property_types/fragmenting/nuclear_graph_to_fragments.hpp"
+#include "ghostfragment/property_types/topology/broken_bonds.hpp"
+#include "ghostfragment/property_types/topology/connectivity_table.hpp"
+#include "ghostfragment/property_types/topology/nuclear_graph.hpp"
+#include "property_type/macros.hpp"
 #include <ghostfragment/ghostfragment.hpp>
 #include <pluginplay/pluginplay.hpp>
 
 namespace ghostfragment {
 
-EXPORT_PLUGIN(ghostfragment, m) {}
+EXPORT_PLUGIN(ghostfragment, m) {
+    EXPORT_PROPERTY_TYPE(pt::CappedFragments, m);
+    EXPORT_PROPERTY_TYPE(pt::CappedFragmentsTraits, m);
+    EXPORT_PROPERTY_TYPE(pt::NuclearGraphToFragments, m);
+    EXPORT_PROPERTY_TYPE(pt::NuclearGraphToFragmentsTraits, m);
+    EXPORT_PROPERTY_TYPE(pt::NuclearGraph, m);
+    EXPORT_PROPERTY_TYPE(pt::NuclearGraphTraits, m);
+    EXPORT_PROPERTY_TYPE(pt::FragmentedNuclei, m);
+    EXPORT_PROPERTY_TYPE(pt::FragmentedNucleiTraits, m);
+    EXPORT_PROPERTY_TYPE(pt::FragmentedChemicalSystem, m);
+    EXPORT_PROPERTY_TYPE(pt::FragmentedChemicalSystemTraits, m);
+    EXPORT_PROPERTY_TYPE(pt::FragmentWeights, m);
+    EXPORT_PROPERTY_TYPE(pt::FragmentWeightsTraits, m);
+    EXPORT_PROPERTY_TYPE(pt::ConnectivityTable, m);
+    EXPORT_PROPERTY_TYPE(pt::ConnectivityTableTraits, m);
+    EXPORT_PROPERTY_TYPE(pt::BrokenBonds, m);
+    EXPORT_PROPERTY_TYPE(pt::BrokenBondsTraits, m);
+    EXPORT_PROPERTY_TYPE(pt::Intersections, m);
+    EXPORT_PROPERTY_TYPE(pt::IntersectionTraits, m);
+}
 
 } // namespace ghostfragment
