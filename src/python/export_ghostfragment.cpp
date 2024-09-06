@@ -31,23 +31,23 @@ namespace ghostfragment {
 
 EXPORT_PLUGIN(ghostfragment, m) {
     EXPORT_PROPERTY_TYPE(pt::CappedFragments, m);
-    EXPORT_PROPERTY_TYPE(pt::CappedFragmentsTraits, m);
+//    EXPORT_PROPERTY_TYPE(pt::CappedFragmentsTraits, m);
     EXPORT_PROPERTY_TYPE(pt::NuclearGraphToFragments, m);
-    EXPORT_PROPERTY_TYPE(pt::NuclearGraphToFragmentsTraits, m);
+//    EXPORT_PROPERTY_TYPE(pt::NuclearGraphToFragmentsTraits, m);
     EXPORT_PROPERTY_TYPE(pt::NuclearGraph, m);
-    EXPORT_PROPERTY_TYPE(pt::NuclearGraphTraits, m);
+//    EXPORT_PROPERTY_TYPE(pt::NuclearGraphTraits, m);
     EXPORT_PROPERTY_TYPE(pt::FragmentedNuclei, m);
-    EXPORT_PROPERTY_TYPE(pt::FragmentedNucleiTraits, m);
+//    EXPORT_PROPERTY_TYPE(pt::FragmentedNucleiTraits, m);
     EXPORT_PROPERTY_TYPE(pt::FragmentedChemicalSystem, m);
-    EXPORT_PROPERTY_TYPE(pt::FragmentedChemicalSystemTraits, m);
+//    EXPORT_PROPERTY_TYPE(pt::FragmentedChemicalSystemTraits, m);
     EXPORT_PROPERTY_TYPE(pt::FragmentWeights, m);
-    EXPORT_PROPERTY_TYPE(pt::FragmentWeightsTraits, m);
+//    EXPORT_PROPERTY_TYPE(pt::FragmentWeightsTraits, m);
     EXPORT_PROPERTY_TYPE(pt::ConnectivityTable, m);
-    EXPORT_PROPERTY_TYPE(pt::ConnectivityTableTraits, m);
+//    EXPORT_PROPERTY_TYPE(pt::ConnectivityTableTraits, m);
     EXPORT_PROPERTY_TYPE(pt::BrokenBonds, m);
-    EXPORT_PROPERTY_TYPE(pt::BrokenBondsTraits, m);
+//    EXPORT_PROPERTY_TYPE(pt::BrokenBondsTraits, m);
     EXPORT_PROPERTY_TYPE(pt::Intersections, m);
-    EXPORT_PROPERTY_TYPE(pt::IntersectionTraits, m);
+//   EXPORT_PROPERTY_TYPE(pt::IntersectionTraits, m);
 }
 
 } // namespace ghostfragment
