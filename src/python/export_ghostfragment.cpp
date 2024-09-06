@@ -27,26 +27,26 @@
 #include <ghostfragment/ghostfragment.hpp>
 #include <pluginplay/pluginplay.hpp>
 
-namespace ghostfragment {
+namespace ghostfragment::pt {
 
 EXPORT_PLUGIN(ghostfragment, m) {
-    EXPORT_PROPERTY_TYPE(pt::CappedFragments, m);
+    EXPORT_PROPERTY_TYPE(CappedFragments, m);
 //    EXPORT_PROPERTY_TYPE(pt::CappedFragmentsTraits, m);
-    EXPORT_PROPERTY_TYPE(pt::NuclearGraphToFragments, m);
+    EXPORT_PROPERTY_TYPE(NuclearGraphToFragments, m);
 //    EXPORT_PROPERTY_TYPE(pt::NuclearGraphToFragmentsTraits, m);
-    EXPORT_PROPERTY_TYPE(pt::NuclearGraph, m);
+    EXPORT_PROPERTY_TYPE(NuclearGraph, m);
 //    EXPORT_PROPERTY_TYPE(pt::NuclearGraphTraits, m);
-    EXPORT_PROPERTY_TYPE(pt::FragmentedNuclei, m);
+    EXPORT_PROPERTY_TYPE(FragmentedNuclei, m);
 //    EXPORT_PROPERTY_TYPE(pt::FragmentedNucleiTraits, m);
-    EXPORT_PROPERTY_TYPE(pt::FragmentedChemicalSystem, m);
+    EXPORT_PROPERTY_TYPE(FragmentedChemicalSystem, m);
 //    EXPORT_PROPERTY_TYPE(pt::FragmentedChemicalSystemTraits, m);
-    EXPORT_PROPERTY_TYPE(pt::FragmentWeights, m);
+    EXPORT_PROPERTY_TYPE(FragmentWeights, m);
 //    EXPORT_PROPERTY_TYPE(pt::FragmentWeightsTraits, m);
-    EXPORT_PROPERTY_TYPE(pt::ConnectivityTable, m);
+    EXPORT_PROPERTY_TYPE(ConnectivityTable, m);
 //    EXPORT_PROPERTY_TYPE(pt::ConnectivityTableTraits, m);
-    EXPORT_PROPERTY_TYPE(pt::BrokenBonds, m);
+    EXPORT_PROPERTY_TYPE(BrokenBonds, m);
 //    EXPORT_PROPERTY_TYPE(pt::BrokenBondsTraits, m);
-    EXPORT_PROPERTY_TYPE(pt::Intersections, m);
+    EXPORT_PROPERTY_TYPE(Intersections, m);
 //   EXPORT_PROPERTY_TYPE(pt::IntersectionTraits, m);
 }
 
