@@ -32,7 +32,7 @@ __pycache__
 # These are directories used by IDEs for storing settings
 .idea/
 .vscode/
-
+.cache/
 # These are common Python virtual enviornment directory names
 venv/
 docs/venv/
