@@ -51,9 +51,13 @@ MODULE_RUN(NuclearGraphFromConnectivity) {
     const auto& [chem_sys] = my_pt::unwrap_inputs(inputs);
 
     auto& pseudo_atom_mod = submods.at("Nodes");
-    const auto& frags     = pseudo_atom_mod.run_as<pa_pt>(chem_sys);
-    const auto n_atoms    = chem_sys.molecule().size();
-    const auto n_pas      = frags.size();
+
+    // XXX: Fix me! Avoid the copy
+    const auto& frags = pseudo_atom_mod.run_as<pa_pt>(
+      chemist::ChemicalSystem(chem_sys.molecule().as_molecule()));
+
+    const auto n_atoms = chem_sys.molecule().size();
+    const auto n_pas   = frags.size();
     logger.debug("The " + std::to_string(n_atoms) +
                  " atoms of the system were converted into " +
                  std::to_string(n_pas) + " pseudoatoms.");

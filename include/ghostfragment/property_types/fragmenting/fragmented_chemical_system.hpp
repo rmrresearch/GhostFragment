@@ -37,8 +37,7 @@ struct FragmentedChemicalSystemTraits {
 DECLARE_PROPERTY_TYPE(FragmentedChemicalSystem);
 
 PROPERTY_TYPE_INPUTS(FragmentedChemicalSystem) {
-    using system_type = typename FragmentedChemicalSystemTraits::system_type;
-    using input0_type = chemist::ChemicalSystemView<const system_type>;
+    using input0_type = const chemist::ChemicalSystem&;
 
     return pluginplay::declare_input().add_field<input0_type>(
       "System to fragment");
