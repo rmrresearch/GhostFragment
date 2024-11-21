@@ -39,6 +39,8 @@ EXPORT_PLUGIN(ghostfragment, m) {
     EXPORT_PROPERTY_TYPE(ConnectivityTable, m);
     EXPORT_PROPERTY_TYPE(BrokenBonds, m);
     EXPORT_PROPERTY_TYPE(Intersections, m);
+    EXPORT_PROPERTY_TYPE(NuclearGraph, m);
+
 }
 
 } // namespace ghostfragment
