@@ -62,8 +62,11 @@ MODULE_RUN(FragmentedChemicalSystem) {
         throw std::runtime_error("Charged systems are NYI.");
 
     // Step 1: Form fragments
-    auto& fragmenter         = submods.at("Fragmenter");
-    const auto& nuclei_frags = fragmenter.run_as<frags_pt>(sys);
+    auto& fragmenter = submods.at("Fragmenter");
+
+    // XXX: Fix me! Avoid the copy
+    const auto& nuclei_frags = fragmenter.run_as<frags_pt>(
+      chemist::ChemicalSystem(sys.molecule().as_molecule()));
 
     // Step 2: Assign charge/multiplicity
     auto charge = sys.molecule().charge();
