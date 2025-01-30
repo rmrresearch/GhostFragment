@@ -15,8 +15,8 @@
  */
 
 #pragma once
-#include <chemist/chemical_system/molecule/atom.hpp>
-#include <chemist/chemical_system/molecule/molecule.hpp>
+#include <chemist/molecule/atom.hpp>
+#include <chemist/molecule/molecule.hpp>
 #include <chemist/fragmenting/fragmented_nuclei.hpp>
 #include <chemist/topology/connectivity_table.hpp>
 #include <cstdlib>
@@ -55,7 +55,7 @@ inline auto hydrocarbon_connectivity(std::size_t N) {
 inline auto hydrocarbon_fragmented_nuclei(std::size_t N, std::size_t M) {
     auto hydrocarbon_n = hydrocarbon(N);
     using return_type = chemist::fragmenting::FragmentedNuclei<chemist::Nuclei>;
-    return_type frags(hydrocarbon_n.nuclei());
+    return_type frags(hydrocarbon_n.nuclei().as_nuclei());
 
     // Define fragment to add to fragmented nuclei
     std::vector<std::size_t> frag{};

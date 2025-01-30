@@ -147,7 +147,7 @@ TEST_CASE("Fragment Driver") {
     SECTION("Empty Molecule") {
         molecule_type mol;
         system_type system(mol);
-        frags_type corr(mol.nuclei());
+        frags_type corr(mol.nuclei().as_nuclei());
         graph_type graph(corr, {});
         broken_bonds_type bonds;
 
@@ -166,7 +166,7 @@ TEST_CASE("Fragment Driver") {
         molecule_type mol;
         mol.push_back(chemist::Atom("H", 1, 1837.289, 0, 0, 0));
         system_type system(mol);
-        frags_type corr(mol.nuclei());
+        frags_type corr(mol.nuclei().as_nuclei());
         corr.insert({0});
         graph_type graph(corr, {});
         broken_bonds_type bonds;
@@ -185,7 +185,7 @@ TEST_CASE("Fragment Driver") {
     SECTION("Methane") {
         auto methane = hydrocarbon(1);
         system_type system(methane);
-        frags_type corr(methane.nuclei());
+        frags_type corr(methane.nuclei().as_nuclei());
         corr.insert({0, 1, 2, 3, 4});
         graph_type graph(corr, {});
         broken_bonds_type bonds;
@@ -204,7 +204,7 @@ TEST_CASE("Fragment Driver") {
     SECTION("Ethane") {
         auto ethane = hydrocarbon(2);
         system_type system(ethane);
-        frags_type corr(ethane.nuclei());
+        frags_type corr(ethane.nuclei().as_nuclei());
         corr.insert({0, 2, 3, 4});
         corr.insert({1, 5, 6, 7});
         conns_type c(2);
@@ -226,7 +226,7 @@ TEST_CASE("Fragment Driver") {
     SECTION("Dispatches to N-mer builder when n > 1") {
         auto ethane = hydrocarbon(2);
         system_type system(ethane);
-        frags_type corr(ethane.nuclei());
+        frags_type corr(ethane.nuclei().as_nuclei());
         corr.insert({0, 2, 3, 4});
         corr.insert({1, 5, 6, 7});
         conns_type c(2);

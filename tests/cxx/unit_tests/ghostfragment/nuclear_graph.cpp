@@ -179,7 +179,7 @@ TEST_CASE("NuclearGraph") {
             REQUIRE(tetramer == NuclearGraph(water4, water4_conns));
             REQUIRE_FALSE(tetramer != NuclearGraph(water4, water4_conns));
 
-            frags_t w2(testing::water(2).nuclei());
+            frags_t w2(testing::water(2).nuclei().as_nuclei());
             w2.insert({0, 1, 2, 3, 4, 5});
             REQUIRE(monomer != NuclearGraph(w2, water1_conns));
             REQUIRE_FALSE(monomer == NuclearGraph(w2, water1_conns));

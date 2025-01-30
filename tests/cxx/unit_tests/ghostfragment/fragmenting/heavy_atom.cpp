@@ -55,7 +55,7 @@ TEST_CASE("HeavyAtom") {
 
         const auto& test = mod.run_as<my_pt>(sys);
 
-        result_type corr(sys.molecule().nuclei());
+        result_type corr(sys.molecule().nuclei().as_nuclei());
         REQUIRE(corr == test);
     }
 
@@ -111,7 +111,7 @@ TEST_CASE("HeavyAtom") {
 
         mod.change_submod("Connectivity", make_lambda(mol, c));
         const auto& test = mod.run_as<my_pt>(system);
-        result_type corr(mol.nuclei());
+        result_type corr(mol.nuclei().as_nuclei());
         corr.insert({0, 1});
         corr.insert({3, 2, 4}); // Finds the Oxygen first
         REQUIRE(corr == test);
@@ -135,7 +135,7 @@ TEST_CASE("HeavyAtom") {
 
         mod.change_submod("Connectivity", make_lambda(mol, c));
         const auto& test = mod.run_as<my_pt>(system);
-        result_type corr(mol.nuclei());
+        result_type corr(mol.nuclei().as_nuclei());
         corr.insert({0});
         corr.insert({2, 1, 3}); // Finds the Oxygen first
         REQUIRE(corr == test);
@@ -165,7 +165,7 @@ TEST_CASE("HeavyAtom") {
         mod.change_submod("Connectivity", make_lambda(mol, c));
         const auto& test = mod.run_as<my_pt>(system);
 
-        result_type corr(mol.nuclei());
+        result_type corr(mol.nuclei().as_nuclei());
         corr.insert({0});
         corr.insert({1});
         corr.insert({2});

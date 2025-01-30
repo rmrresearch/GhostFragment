@@ -109,7 +109,7 @@ TEST_CASE("Broken Bonds") {
         auto corr = bonds_pentane();
 
         auto hc = hydrocarbon(5);
-        input_type frags(hc.nuclei());
+        input_type frags(hc.nuclei().as_nuclei());
         frags.insert({0, 1, 2, 3, 4, 5, 10, 11, 12});
         frags.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
         frags.insert({0, 1, 2, 10, 11, 12, 13, 14, 15, 16});

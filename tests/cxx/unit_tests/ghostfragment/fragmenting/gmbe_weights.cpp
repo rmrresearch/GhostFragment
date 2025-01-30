@@ -57,7 +57,7 @@ TEST_CASE("GMBE Weights") {
     auto& mod = mm.at("GMBE Weights");
 
     auto nuclei_mol = testing::water(4);
-    fragmented_nuclei_type frags(nuclei_mol.nuclei());
+    fragmented_nuclei_type frags(nuclei_mol.nuclei().as_nuclei());
 
     SECTION("No Fragments") {
         weight_container corr;

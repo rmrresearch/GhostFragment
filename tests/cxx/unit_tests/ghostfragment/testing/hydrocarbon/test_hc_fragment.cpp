@@ -25,14 +25,14 @@ namespace {
 // Methane Molecule with fragment size 1
 inline auto frag_methane_one() {
     auto hc = hydrocarbon(1);
-    frags_type frags(hc.nuclei());
+    frags_type frags(hc.nuclei().as_nuclei());
     frags.insert({0, 1, 2, 3, 4});
     return frags;
 }
 // Ethane Molecule with fragments size 1
 inline auto frag_ethane_one() {
     auto hc = hydrocarbon(2);
-    frags_type frags(hc.nuclei());
+    frags_type frags(hc.nuclei().as_nuclei());
     frags.insert({0, 2, 3, 4});
     frags.insert({1, 5, 6, 7});
     return frags;
@@ -40,7 +40,7 @@ inline auto frag_ethane_one() {
 
 inline auto frag_propane_one() {
     auto hc = hydrocarbon(3);
-    frags_type frags(hc.nuclei());
+    frags_type frags(hc.nuclei().as_nuclei());
     frags.insert({0, 3, 4, 5});
     frags.insert({1, 6, 7});
     frags.insert({2, 8, 9, 10});
@@ -49,7 +49,7 @@ inline auto frag_propane_one() {
 
 inline auto frag_propane_two() {
     auto hc = hydrocarbon(3);
-    frags_type frags(hc.nuclei());
+    frags_type frags(hc.nuclei().as_nuclei());
     frags.insert({0, 3, 4, 5, 1, 6, 7});
     frags.insert({1, 6, 7, 2, 8, 9, 10});
     return frags;

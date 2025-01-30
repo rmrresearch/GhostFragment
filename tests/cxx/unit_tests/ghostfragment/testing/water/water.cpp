@@ -92,25 +92,25 @@ TEST_CASE("water_fragmented_nuclei") {
     using corr_type = decltype(water_fragmented_nuclei(0));
 
     SECTION("Zero Waters") {
-        corr_type corr(water(0).nuclei());
+        corr_type corr(water(0).nuclei().as_nuclei());
         REQUIRE(water_fragmented_nuclei(0) == corr);
     }
 
     SECTION("One Water") {
-        corr_type corr(water(1).nuclei());
+        corr_type corr(water(1).nuclei().as_nuclei());
         corr.insert({0, 1, 2});
         REQUIRE(water_fragmented_nuclei(1) == corr);
     }
 
     SECTION("Two Waters") {
-        corr_type corr(water(2).nuclei());
+        corr_type corr(water(2).nuclei().as_nuclei());
         corr.insert({0, 1, 2});
         corr.insert({3, 4, 5});
         REQUIRE(water_fragmented_nuclei(2) == corr);
     }
 
     SECTION("Three Waters") {
-        corr_type corr(water(3).nuclei());
+        corr_type corr(water(3).nuclei().as_nuclei());
         corr.insert({0, 1, 2});
         corr.insert({3, 4, 5});
         corr.insert({6, 7, 8});
