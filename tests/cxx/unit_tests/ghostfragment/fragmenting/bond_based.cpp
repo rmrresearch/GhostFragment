@@ -39,7 +39,7 @@ TEST_CASE("Bond-Based Fragmenter") {
     SECTION("Single Atom") {
         chemist::Molecule single_hydrogen;
         single_hydrogen.push_back(chemist::Atom());
-        return_t frag(single_hydrogen.nuclei());
+        return_t frag(single_hydrogen.nuclei().as_nuclei());
         frag.insert({0});
 
         nodes_t nodes(frag);
@@ -54,7 +54,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         // all nodes within 0 bonds of the fragment's central node. I.e. one
         // frag for each atom in the system.
         auto methane = testing::hydrocarbon(1);
-        return_t frag(methane.nuclei());
+        return_t frag(methane.nuclei().as_nuclei());
         frag.insert({0});
         frag.insert({1});
         frag.insert({2});
@@ -80,7 +80,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         // contains the whole molecule, and four others contain the central
         // carbon and one hydrogen.
         auto methane = testing::hydrocarbon(1);
-        return_t frag(methane.nuclei());
+        return_t frag(methane.nuclei().as_nuclei());
         frag.insert({0, 1, 2, 3, 4});
 
         connect_t bonds(5);
@@ -89,7 +89,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         bonds.add_bond(0, 3);
         bonds.add_bond(0, 4);
 
-        return_t fragment_nodes(methane.nuclei());
+        return_t fragment_nodes(methane.nuclei().as_nuclei());
         for(std::size_t i = 0; i < 5; ++i) { fragment_nodes.insert({i}); }
 
         nodes_t nodes(fragment_nodes);
@@ -105,7 +105,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         // all nodes within 2 bonds of the fragment's central node. Should just
         // be a single frag.
         auto methane = testing::hydrocarbon(1);
-        return_t frag(methane.nuclei());
+        return_t frag(methane.nuclei().as_nuclei());
         frag.insert({0, 1, 2, 3, 4});
 
         connect_t bonds(5);
@@ -114,7 +114,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         bonds.add_bond(0, 3);
         bonds.add_bond(0, 4);
 
-        return_t fragment_nodes(methane.nuclei());
+        return_t fragment_nodes(methane.nuclei().as_nuclei());
         for(std::size_t i = 0; i < 5; ++i) { fragment_nodes.insert({i}); }
 
         nodes_t nodes(fragment_nodes);
@@ -129,7 +129,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         // Tests ethane (two carbon hydrocarbon) with fragments containing all
         // nodes within 1 bond of the fragment's central node.
         auto ethane = testing::hydrocarbon(2);
-        return_t frag(ethane.nuclei());
+        return_t frag(ethane.nuclei().as_nuclei());
         frag.insert({0, 1, 2, 3, 4});
         frag.insert({0, 1, 5, 6, 7});
 
@@ -142,7 +142,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         bonds.add_bond(1, 6);
         bonds.add_bond(1, 7);
 
-        return_t fragment_nodes(ethane.nuclei());
+        return_t fragment_nodes(ethane.nuclei().as_nuclei());
         for(std::size_t i = 0; i < 8; ++i) { fragment_nodes.insert({i}); }
 
         nodes_t nodes(fragment_nodes);
@@ -157,7 +157,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         // Tests ethane (two carbon hydrocarbon) with fragments containing all
         // nodes within 2 bonds of the fragment's central node.
         auto ethane = testing::hydrocarbon(2);
-        return_t frag(ethane.nuclei());
+        return_t frag(ethane.nuclei().as_nuclei());
         frag.insert({0, 1, 2, 3, 4, 5, 6, 7});
 
         connect_t bonds(8);
@@ -169,7 +169,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         bonds.add_bond(1, 6);
         bonds.add_bond(1, 7);
 
-        return_t fragment_nodes(ethane.nuclei());
+        return_t fragment_nodes(ethane.nuclei().as_nuclei());
         for(std::size_t i = 0; i < 8; ++i) { fragment_nodes.insert({i}); }
 
         nodes_t nodes(fragment_nodes);
@@ -184,7 +184,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         // Tests propane (three carbon hydrocarbon) with fragments containing
         // all nodes within 2 bonds of the fragment's central node.
         auto propane = testing::hydrocarbon(3);
-        return_t frag(propane.nuclei());
+        return_t frag(propane.nuclei().as_nuclei());
         frag.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 
         connect_t bonds(11);
@@ -199,7 +199,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         bonds.add_bond(2, 9);
         bonds.add_bond(2, 10);
 
-        return_t fragment_nodes(propane.nuclei());
+        return_t fragment_nodes(propane.nuclei().as_nuclei());
         for(std::size_t i = 0; i < 11; ++i) { fragment_nodes.insert({i}); }
 
         nodes_t nodes(fragment_nodes);
@@ -215,7 +215,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         // Tests butane (four carbon hydrocarbon) with fragments containing all
         // nodes within 1 bond of the fragment's central node.
         auto butane = testing::hydrocarbon(4);
-        return_t frag(butane.nuclei());
+        return_t frag(butane.nuclei().as_nuclei());
         frag.insert({0, 1, 2, 4, 5, 6, 7, 8, 9, 10});
         frag.insert({1, 2, 3, 7, 8, 9, 10, 11, 12, 13});
 
@@ -224,7 +224,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         bonds.add_bond(1, 2);
         bonds.add_bond(2, 3);
 
-        return_t fragment_nodes(butane.nuclei());
+        return_t fragment_nodes(butane.nuclei().as_nuclei());
         fragment_nodes.insert({0, 4, 5, 6});
         fragment_nodes.insert({1, 7, 8});
         fragment_nodes.insert({2, 9, 10});
@@ -251,7 +251,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         for(std::size_t i = 0; i < 10; ++i) {
             anthracene.push_back(chemist::Atom("H", 1, 1837.289, 0, i, 0));
         }
-        return_t frag(anthracene.nuclei());
+        return_t frag(anthracene.nuclei().as_nuclei());
         frag.insert({0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11,
                      12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23});
 
@@ -271,7 +271,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         bonds.add_bond(3, 12);
         bonds.add_bond(5, 10);
 
-        return_t fragment_nodes(anthracene.nuclei());
+        return_t fragment_nodes(anthracene.nuclei().as_nuclei());
         for(std::size_t i = 0; i < 24; ++i) { fragment_nodes.insert({i}); }
 
         nodes_t nodes(fragment_nodes);
@@ -293,7 +293,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         for(std::size_t i = 0; i < 11; ++i) {
             triangle.push_back(chemist::Atom("C", 6, 21874.662, i, 0, 0));
         }
-        return_t frag(triangle.nuclei());
+        return_t frag(triangle.nuclei().as_nuclei());
         frag.insert({0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
         frag.insert({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 
@@ -301,7 +301,7 @@ TEST_CASE("Bond-Based Fragmenter") {
         for(std::size_t i = 0; i < 10; ++i) { bonds.add_bond(i, i + 1); }
         bonds.add_bond(4, 6);
 
-        return_t fragment_nodes(triangle.nuclei());
+        return_t fragment_nodes(triangle.nuclei().as_nuclei());
         for(std::size_t i = 0; i < 11; ++i) { fragment_nodes.insert({i}); }
 
         nodes_t nodes(fragment_nodes);

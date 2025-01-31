@@ -74,7 +74,7 @@ TEST_CASE("Cluster Partitioner") {
 
     SECTION("Two molecules - nicely partitioned") {
         auto water2 = testing::water(2);
-        nodes_t nodes(water2.nuclei(), {{0}, {1}, {2}, {3}, {4}, {5}});
+        nodes_t nodes(water2.nuclei().as_nuclei(), {{0}, {1}, {2}, {3}, {4}, {5}});
         connect_t edges(6);
         edges.add_bond(0, 2);
         edges.add_bond(1, 2);
@@ -83,13 +83,13 @@ TEST_CASE("Cluster Partitioner") {
         graph_type input(nodes, edges);
 
         const auto& rv = mod.run_as<my_pt>(input);
-        frags_type corr(water2.nuclei(), {{0, 1, 2}, {3, 4, 5}});
+        frags_type corr(water2.nuclei().as_nuclei(), {{0, 1, 2}, {3, 4, 5}});
         REQUIRE(corr == rv);
     }
 
     SECTION("Two molecules - mixed up") {
         auto water2 = testing::water(2);
-        nodes_t nodes(water2.nuclei(), {{0}, {1}, {2}, {3}, {4}, {5}});
+        nodes_t nodes(water2.nuclei().as_nuclei(), {{0}, {1}, {2}, {3}, {4}, {5}});
         connect_t edges(6);
         edges.add_bond(1, 3);
         edges.add_bond(0, 2);
@@ -97,30 +97,30 @@ TEST_CASE("Cluster Partitioner") {
         graph_type input(nodes, edges);
 
         const auto& rv = mod.run_as<my_pt>(input);
-        frags_type corr(water2.nuclei(), {{0, 2, 4}, {1, 3}, {5}});
+        frags_type corr(water2.nuclei().as_nuclei(), {{0, 2, 4}, {1, 3}, {5}});
         REQUIRE(corr == rv);
     }
 
     SECTION("Two pseudoatoms - no bond") {
         auto water2 = testing::water(2);
-        nodes_t nodes(water2.nuclei(), {{0, 1, 2}, {3, 4, 5}});
+        nodes_t nodes(water2.nuclei().as_nuclei(), {{0, 1, 2}, {3, 4, 5}});
         connect_t edges(2);
         graph_type input(nodes, edges);
 
         const auto& rv = mod.run_as<my_pt>(input);
-        frags_type corr(water2.nuclei(), {{0, 1, 2}, {3, 4, 5}});
+        frags_type corr(water2.nuclei().as_nuclei(), {{0, 1, 2}, {3, 4, 5}});
         REQUIRE(corr == rv);
     }
 
     SECTION("Two pseudoatoms - bonded") {
         auto water2 = testing::water(2);
-        nodes_t nodes(water2.nuclei(), {{0, 1, 2}, {3, 4, 5}});
+        nodes_t nodes(water2.nuclei().as_nuclei(), {{0, 1, 2}, {3, 4, 5}});
         connect_t edges(2);
         edges.add_bond(0, 1);
         graph_type input(nodes, edges);
 
         const auto& rv = mod.run_as<my_pt>(input);
-        frags_type corr(water2.nuclei(), {{0, 1, 2, 3, 4, 5}});
+        frags_type corr(water2.nuclei().as_nuclei(), {{0, 1, 2, 3, 4, 5}});
         REQUIRE(corr == rv);
     }
 }
