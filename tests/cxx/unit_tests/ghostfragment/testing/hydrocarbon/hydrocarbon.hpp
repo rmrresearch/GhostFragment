@@ -15,10 +15,7 @@
  */
 
 #pragma once
-#include <chemist/chemical_system/molecule/atom.hpp>
-#include <chemist/chemical_system/molecule/molecule.hpp>
-#include <chemist/fragmenting/fragmented_nuclei.hpp>
-#include <chemist/topology/connectivity_table.hpp>
+#include <chemist/chemist.hpp>
 #include <cstdlib>
 #include <string>
 

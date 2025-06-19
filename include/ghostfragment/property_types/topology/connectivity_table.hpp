@@ -15,8 +15,7 @@
  */
 
 #pragma once
-#include <chemist/chemical_system/molecule/molecule.hpp>
-#include <chemist/topology/connectivity_table.hpp>
+#include <chemist/chemist.hpp>
 #include <pluginplay/pluginplay.hpp>
 
 namespace ghostfragment::pt {

@@ -77,6 +77,8 @@ auto energy_mod(const chemical_system_type& sys) {
     });
 }
 
+using tensorwrapper::operations::approximately_equal;
+
 TEST_CASE("FragmentBasedMethod") {
     auto mm   = initialize();
     auto& mod = mm.at("Fragment Based Method");
@@ -90,6 +92,7 @@ TEST_CASE("FragmentBasedMethod") {
     mod.change_submod("Energy method", energy_mod(water));
 
     auto energy = mod.run_as<my_pt>(water);
-    auto corr   = 2.0 * -75.123456;
-    REQUIRE_THAT(energy, Catch::Matchers::WithinRel(corr, 0.000001));
+    simde::type::tensor corr(2.0 * -75.123456);
+
+    REQUIRE(approximately_equal(energy, corr, 0.000001));
 }

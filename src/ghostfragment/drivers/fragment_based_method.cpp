@@ -63,13 +63,15 @@ MODULE_RUN(FragmentBasedMethod) {
 
     auto& energy_mod = submods.at("Energy method");
 
-    double energy = 0.0;
+    simde::type::tensor energy{0.0};
 
     auto n_subsystems              = subsystems.size();
     decltype(n_subsystems) counter = 0;
     auto msg = [](auto counter, auto n_subsystems, auto egy) {
+        std::stringstream ss;
+        ss << egy;
         return "Energy of subsystem " + std::to_string(counter) + " of " +
-               std::to_string(n_subsystems) + " : " + std::to_string(egy);
+               std::to_string(n_subsystems) + " : " + ss.str();
     };
     for(auto&& [c_i, sys_i] : iter::zip(weights, subsystems)) {
         auto mol_i = sys_i.molecule().as_molecule();
@@ -78,7 +80,9 @@ MODULE_RUN(FragmentBasedMethod) {
         chemical_system_type sys_i_copy(mol_i);
 
         const auto e_i = energy_mod.run_as<my_pt>(sys_i_copy);
-        energy += c_i * e_i;
+        simde::type::tensor temp;
+        temp("") = e_i("") * c_i;
+        energy("") = energy("") + temp("");
         logger.debug("Weight of subsystem " + std::to_string(counter) + " is " +
                      std::to_string(c_i) + ".");
         logger.info(msg(counter++, n_subsystems, e_i));
