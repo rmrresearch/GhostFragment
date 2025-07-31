@@ -16,61 +16,84 @@
 VMFC
 ####
 
-.. |IJ| replace:: :math:`I,J`
-.. |IJK| replace:: :math:`I,J,K`
-
-Let :math:`E_{X}\left(Y\right)` denote the energy of system :math:`X` computed 
-using basis set :math:`Y`. So the energy of dimer |IJ| computed with the 
-trimer basis set |IJK| would be denoted  :math:`E_{I,J}\left(I,J,K\right)`.
-
-************
-Monomer Case
-************
-
+.. |X| replace:: :math:`X`
+.. |Y| replace:: :math:`Y`
 .. |I| replace:: :math:`I`
-.. |EI_I| replace:: :math:`E_{I}\left(I\right)`
-
-
-The monomer case is trivial. We label the fragment |I| and it has total energy
-|EI_I|. There is no many-body interaction for the monomer.
-
-**********
-Dimer Case
-**********
-
 .. |J| replace:: :math:`J`
-.. |EIJ_IJ| replace:: :math:`E_{I,J}\left(I,J\right)`
-.. |EI_IJ| replace:: :math:`E_{I}\left(I,J\right)`
-.. |EJ_IJ| replace:: :math:`E_{J}\left(I,J\right)`
-.. |deIJ_IJ| replace:: :math:`\Delta E_{I,J}\left(I,J\right)`
-.. |deIJ| replace:: :math:`\Delta E_{I,J}`
+.. |K| replace:: :math:`K`
+.. |A| replace:: :math:`\mathcal{A}`
+.. |S| replace:: :math:`\mathcal{S}`
+.. |S2| replace:: :math:`\mathcal{S}^2`
+.. |PS| replace:: :math:`\mathcal{P}\left(\mathcal{S}^1\right)`
+.. |PkS| replace:: :math:`\mathcal{P}^k\left(\mathcal{S}^1\right)`
+.. |m| replace:: :math:`m`
+.. |k| replace:: :math:`k`
+
+The starting point for VMFC is the assumption that we have a set of atoms, |A|,
+which has been partitioned in to |m| non-empty, disjoint sets. The partitions
+are called "fragments" and we define |S| to be the set of fragments. 
+Traditionally, the |m| fragments are labeled :math:`I,J,K,\cdots,m`. We define 
+:math:`E_{X}\left(Y\right)` as the energy of system |X| computed using the 
+molecular basis set for system |Y| where |X| and |Y| will be subsets of the
+power set of |S|.
+
+********************
+Single Fragment Case
+********************
+
+If there is a single fragment the total energy of the system is simply the
+energy of the fragment. Labeling the fragment |I|, the total energy of the
+system is :math:`E_I\left(I\right)` and the BSSE-free energy of the system is
+given by:
+
+.. math::
+   \newcommand{\egy}[2]{E_{#1}\left(#2\right)}
+   \newcommand{\begy}[1]{\epsilon_{#1}}
+
+   \begy{I} = \egy{I}{I}
+
+*****************
+Two Fragment Case
+*****************
+
+.. |EIJ_IJ| replace:: :math:`E_{IJ}\left(IJ\right)`
+.. |EI_IJ| replace:: :math:`E_{I}\left(IJ\right)`
+.. |EJ_IJ| replace:: :math:`E_{J}\left(IJ\right)`
+.. |deIJ_IJ| replace:: :math:`\Delta E_{IJ}\left(IJ\right)`
+.. |deIJ| replace:: :math:`\Delta E_{IJ}`
 
 The dimer |IJ| has total energy |EIJ_IJ|. In the dimer basis set, monomer |I|
 has energy |EI_IJ| and monomer |J| has energy |EJ_IJ|. The BSSE-free two-body
-interaction of dimer |IJ| is given by:
+interaction energy of dimer |IJ|, computed using the dimer basis set is 
+then given by:
 
 .. math::
 
-   \newcommand{\egy}[2]{E_{#1}\left(#2\right)}
-   \newcommand{\degy}[2]{\Delta\egy{#1}{#2}}
+   \newcommand{\dbegy}[1]{\Delta\begy{#1}}
 
-   \degy{I,J}{I,J} = \egy{I,J}{I,J} -\egy{I}{I,J} - \egy{J}{I,J}
+   \dbegy{IJ} = \egy{IJ}{IJ} - \egy{I}{IJ} - \egy{J}{IJ}
 
-The BSSE-contaminated two-body interaction, |deIJ|, is given by:
-
-.. math::
-
-   \newcommand{\dbsseEgy}[1]{\Delta E_{#1}}
-
-   \dbsseEgy{I,J} = \egy{I,J}{I,J} - \egy{I}{I} -\egy{J}{J}
-
-Allowing us to define the BSSE as:
+Computing the interaction energy such that the energy of |I| is computed in
+the basis set of |I|, and similarly for |J|, yields:
 
 .. math::
 
-   \dbsseEgy{I,J} - \degy{I,J}{I,J} =  
-                                    &= \egy{I}{I,J} - \egy{I}{I}\\
-                                    &= \egy{J}{I,J} - \egy{J}{I,J}
+   \newcommand{\degy}[1]{\Delta E_{#1}}
+
+   \degy{IJ} = \egy{IJ}{IJ} - \begy{I} -\begy{J}
+
+
+The difference in energy yields the BSSE,
+
+.. math::
+   
+   \newcommand{\bsse}[2]{\theta_{#1}\left(#2\right)}
+   \newcommand{\dbsse}[2]{\Delta\bsse{#1}{#2}}
+
+   \dbsse{IJ}{IJ} \equiv
+   \degy{IJ} - \dbegy{IJ} &=  \bsse{I}{IJ} + \bsse{J}{IJ}\\
+                     \bsse{I}{IJ}   &\equiv \egy{I}{IJ} - \begy{I}\\
+                     \bsse{J}{IJ}   &\equiv \egy{J}{IJ} - \begy{J}
 
 ***********
 Trimer Case

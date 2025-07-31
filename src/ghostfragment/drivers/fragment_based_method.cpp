@@ -28,6 +28,7 @@ using fragmenting_traits   = pt::FragmentedChemicalSystemTraits;
 using chemical_system_type = typename fragmenting_traits::system_type;
 using basis_set_pt         = simde::MolecularBasisSet;
 using weight_pt            = pt::FragmentWeights;
+using egy_type             = simde::type::tensor;
 
 namespace {
 const auto mod_desc = R"(
@@ -63,7 +64,7 @@ MODULE_RUN(FragmentBasedMethod) {
 
     auto& energy_mod = submods.at("Energy method");
 
-    simde::type::tensor energy{0.0};
+    egy_type energy(0.0);
 
     auto n_subsystems              = subsystems.size();
     decltype(n_subsystems) counter = 0;

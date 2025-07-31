@@ -42,7 +42,7 @@ extensions = [
     'sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx',
     'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.mathjax',
     'sphinx.ext.githubpages', 'sphinx_togglebutton', 'sphinxcontrib.bibtex',
-    'sphinx_rtd_theme'
+    'sphinx_rtd_theme', 'sphinxcontrib.mermaid'
 ]
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
