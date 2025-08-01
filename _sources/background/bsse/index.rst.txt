@@ -24,4 +24,5 @@ results using different basis sets.
    :caption: Contents:
     
    history
+   vmfc
    distance

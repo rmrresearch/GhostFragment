@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VMFC &mdash; GhostFragment 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Distance-Based CP" href="distance.html" />
+    <link rel="prev" title="History" href="history.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GhostFragment
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Theoretical Background</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../fragment_based_methods.html">Fragment Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mbe/index.html">The Many-Body Expansion</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Basis Set Superposition Error</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">VMFC</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#single-fragment-case">Single Fragment Case</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-fragment-case">Two Fragment Case</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trimer-case">Trimer Case</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="distance.html">Distance-Based CP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../established_methods/index.html">Established Fragment Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../algorithms/index.html">Algorithms for Fragment-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../frag_v_nmer.html">Difference between fragments and n-mers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../terminology.html">Terminology Used Throughout GhostFragment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/index.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/index.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_api/index.html">Modules API</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://rmrresearch.github.io/GhostFragment/ghostfragment_cxx_api/index.html">C++ API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GhostFragment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Theoretical Background</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Basis Set Superposition Error</a></li>
+      <li class="breadcrumb-item active">VMFC</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/rmrresearch/ghostfragment/edit/master/docs/source/background/bsse/vmfc.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vmfc">
+<h1>VMFC<a class="headerlink" href="#vmfc" title="Link to this heading"></a></h1>
+<p>The starting point for VMFC is the assumption that we have a set of atoms, <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>,
+which has been partitioned in to <span class="math notranslate nohighlight">\(m\)</span> non-empty, disjoint sets. The partitions
+are called “fragments” and we define <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> to be the set of fragments.
+Traditionally, the <span class="math notranslate nohighlight">\(m\)</span> fragments are labeled <span class="math notranslate nohighlight">\(I,J,K,\cdots,m\)</span>. We define
+<span class="math notranslate nohighlight">\(E_{X}\left(Y\right)\)</span> as the energy of system <span class="math notranslate nohighlight">\(X\)</span> computed using the
+molecular basis set for system <span class="math notranslate nohighlight">\(Y\)</span> where <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> will be subsets of the
+power set of <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>.</p>
+<section id="single-fragment-case">
+<h2>Single Fragment Case<a class="headerlink" href="#single-fragment-case" title="Link to this heading"></a></h2>
+<p>If there is a single fragment the total energy of the system is simply the
+energy of the fragment. Labeling the fragment <span class="math notranslate nohighlight">\(I\)</span>, the total energy of the
+system is <span class="math notranslate nohighlight">\(E_I\left(I\right)\)</span> and the BSSE-free energy of the system is
+given by:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\egy}[2]{E_{#1}\left(#2\right)}
+\newcommand{\begy}[1]{\epsilon_{#1}}\\\begy{I} = \egy{I}{I}\end{aligned}\end{align} \]</div>
+</section>
+<section id="two-fragment-case">
+<h2>Two Fragment Case<a class="headerlink" href="#two-fragment-case" title="Link to this heading"></a></h2>
+<p>The dimer <span class="math notranslate nohighlight">\(IJ\)</span> has total energy <span class="math notranslate nohighlight">\(E_{IJ}\left(IJ\right)\)</span>. In the dimer basis set, monomer <span class="math notranslate nohighlight">\(I\)</span>
+has energy <span class="math notranslate nohighlight">\(E_{I}\left(IJ\right)\)</span> and monomer <span class="math notranslate nohighlight">\(J\)</span> has energy <span class="math notranslate nohighlight">\(E_{J}\left(IJ\right)\)</span>. The BSSE-free two-body
+interaction energy of dimer <span class="math notranslate nohighlight">\(IJ\)</span>, computed using the dimer basis set is
+then given by:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\dbegy}[1]{\Delta\begy{#1}}\\\dbegy{IJ} = \egy{IJ}{IJ} - \egy{I}{IJ} - \egy{J}{IJ}\end{aligned}\end{align} \]</div>
+<p>Computing the interaction energy such that the energy of <span class="math notranslate nohighlight">\(I\)</span> is computed in
+the basis set of <span class="math notranslate nohighlight">\(I\)</span>, and similarly for <span class="math notranslate nohighlight">\(J\)</span>, yields:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\degy}[1]{\Delta E_{#1}}\\\degy{IJ} = \egy{IJ}{IJ} - \begy{I} -\begy{J}\end{aligned}\end{align} \]</div>
+<p>The difference in energy yields the BSSE,</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\newcommand{\bsse}[2]{\theta_{#1}\left(#2\right)}
+\newcommand{\dbsse}[2]{\Delta\bsse{#1}{#2}}\\\begin{split}\dbsse{IJ}{IJ} \equiv
+\degy{IJ} - \dbegy{IJ} &amp;=  \bsse{I}{IJ} + \bsse{J}{IJ}\\
+                  \bsse{I}{IJ}   &amp;\equiv \egy{I}{IJ} - \begy{I}\\
+                  \bsse{J}{IJ}   &amp;\equiv \egy{J}{IJ} - \begy{J}\end{split}\end{aligned}\end{align} \]</div>
+</section>
+<section id="trimer-case">
+<h2>Trimer Case<a class="headerlink" href="#trimer-case" title="Link to this heading"></a></h2>
+<p>The trimer <span class="math notranslate nohighlight">\(IJK\)</span> has total energy <span class="math notranslate nohighlight">\(E_{I,J,K}\left(I,J,K\right)\)</span>. The BSSE-free three-body
+interaction, <span class="math notranslate nohighlight">\(\Delta E_{I,J,K}\left(I,J,K\right)\)</span>, is obtained by:</p>
+<div class="math notranslate nohighlight">
+\[\degy{I,J,K}{I,J,K} = \egy{I,J,K}{I,J,K} - \degy{I,J}{I,J,K} -
+                      \degy{I,K}{I,J,K} - \degy{J,K}{I,J,K} -
+                      \egy{I}{I,J,K} - \egy{J}{I,J,K} -\egy{K}{I,J,K}\]</div>
+<p>That is, using the trimer basis set for all terms, we removed from the energy of
+the trimer, the three two-body interactions, and the energies of the three
+monomers. The BSSE-free two-body interactions are obtained using the dimer
+formula, i.e.:</p>
+<p>Thus the total interaction energy, <span class="math notranslate nohighlight">\(E^{\text{int}}_{I,J,K}\left(I,J,K\right)\)</span>, is:</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="history.html" class="btn btn-neutral float-left" title="History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="distance.html" class="btn btn-neutral float-right" title="Distance-Based CP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Ryan M Richard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
