@@ -56,6 +56,7 @@ given by:
 Two Fragment Case
 *****************
 
+.. |IJ| replace:: :math:`IJ`
 .. |EIJ_IJ| replace:: :math:`E_{IJ}\left(IJ\right)`
 .. |EI_IJ| replace:: :math:`E_{I}\left(IJ\right)`
 .. |EJ_IJ| replace:: :math:`E_{J}\left(IJ\right)`
@@ -99,6 +100,7 @@ The difference in energy yields the BSSE,
 Trimer Case
 ***********
 
+.. |IJK| replace:: :math:`IJK`
 .. |EIJK_IJK| replace:: :math:`E_{I,J,K}\left(I,J,K\right)`
 .. |EI_IJK| replace:: :math:`E_{I}\left(I,J,K\right)`
 .. |EJ_IJK| replace:: :math:`E_{J}\left(I,J,K\right)`
