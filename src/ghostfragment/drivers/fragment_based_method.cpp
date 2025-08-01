@@ -82,7 +82,7 @@ MODULE_RUN(FragmentBasedMethod) {
 
         const auto e_i = energy_mod.run_as<my_pt>(sys_i_copy);
         simde::type::tensor temp;
-        temp("") = e_i("") * c_i;
+        temp("")   = e_i("") * c_i;
         energy("") = energy("") + temp("");
         logger.debug("Weight of subsystem " + std::to_string(counter) + " is " +
                      std::to_string(c_i) + ".");
