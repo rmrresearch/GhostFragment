@@ -42,7 +42,7 @@ dimer(s)
 
 .. _fragment:
 
-fragment(x)
+fragment(s)
    The inputs to the MBE and GMBE. Fragments are sets of pseudoatoms.
 
 .. _monomer:

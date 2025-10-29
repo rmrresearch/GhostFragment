@@ -22,12 +22,14 @@ namespace ghostfragment::drivers {
 DECLARE_MODULE(Fragment);
 DECLARE_MODULE(FragmentBasedMethod);
 DECLARE_MODULE(FragmentedChemicalSystem);
+DECLARE_MODULE(VMFC);
 
 /// Loads all the modules in the Drivers library into the provided ModuleManager
 inline void load_modules(pluginplay::ModuleManager& mm) {
     mm.add_module<Fragment>("Fragment Driver");
     mm.add_module<FragmentedChemicalSystem>("FragmentedChemicalSystem Driver");
     mm.add_module<FragmentBasedMethod>("Fragment Based Method");
+    mm.add_module<VMFC>("VMFC Driver");
 }
 
 /// Sets the defaults for submodules in the Drivers library, when a suitable
@@ -51,6 +53,9 @@ inline void set_defaults(pluginplay::ModuleManager& mm) {
     mm.change_submod("Fragment Based Method", "Subsystem former",
                      "FragmentedChemicalSystem Driver");
     mm.change_submod("Fragment Based Method", "Weighter", "GMBE Weights");
+
+    mm.change_submod("VMFC Driver", "Fragment Driver",
+                     "FragmentedChemicalSystem Driver");
 }
 
 } // namespace ghostfragment::drivers
