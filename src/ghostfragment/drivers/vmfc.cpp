@@ -15,10 +15,12 @@
  */
 
 #include "drivers.hpp"
+#include "helpers.hpp"
+
 #include <ghostfragment/property_types/fragmenting/fragmented_chemical_system.hpp>
 namespace ghostfragment::drivers {
 
-using my_pt = simde::AOEnergy;
+using my_pt       = simde::AOEnergy;
 using fragment_pt = pt::FragmentedChemicalSystem;
 
 namespace {
@@ -36,33 +38,38 @@ MODULE_CTOR(VMFC) {
     add_submodule<my_pt>("Energy method");
     add_submodule<fragment_pt>("Fragment Driver");
 
-    add_input<int>("Truncation order");
+    add_input<std::size_t>("Truncation order");
 }
 
-MODULE_RUN(VMFC){
+MODULE_RUN(VMFC) {
     const auto& [basis_set, sys] = my_pt::unwrap_inputs(inputs);
-    const auto n = inputs.at("Truncation order").value<int>();
+    const auto n                 = inputs.at("Truncation order").value<int>();
 
     // Step 1: Fragment system
-    auto& fragment_mod = submods.at("Fragment Driver");
+    auto& fragment_mod    = submods.at("Fragment Driver");
     const auto& fragments = fragment_mod.run_as<fragment_pt>(sys);
+    // TODO: Assert disjoint fragments
+    // TODO: Assert no caps
+    // TODO: Assert fragments.size() >= n
 
     // Step 2: Map basis functions to atoms
+    auto bf_map = drivers::map_atomic_bases_to_atoms(sys, basis_set);
 
     // Step 3: Build inputs
-    // Loop over m = 1 to n
-    // Loop over m-mers
-    // Make m-mer basis set
-    // Loop over powerset of k-mers (k <= m) in m-mer basis set
-    // Push pairs back
+    auto calcs = build_vmfc_ao_energy_inputs(n, basis_set, fragments, bf_map);
 
     // Step 4: Run calculations
-
-    // Step 5: Combine results
+    auto energy_mod = submods.at("Energy method");
     simde::type::tensor energy(0.0);
+    for(const auto& [coefficient, sub_basis, sub_sys] : calcs) {
+        auto sub_energy = energy_mod.run_as<my_pt>(sub_basis, sub_sys);
+        simde::type::tensor buffer;
+        buffer("") = sub_energy("") * coefficient;
+        energy("") = energy("") + buffer("");
+    }
 
     auto rv = results();
     return my_pt::wrap_results(rv, energy);
 }
 
-}
+} // namespace ghostfragment::drivers
