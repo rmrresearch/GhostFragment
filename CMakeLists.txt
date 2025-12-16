@@ -99,11 +99,11 @@ if("${BUILD_TESTING}")
             CMAKE_ARGS BUILD_TESTING=OFF
         )
 
-        nwx_pybind11_tests(
-            py_ghostfragment
-            ${python_tests_dir}/integration_tests/test_ghostfragment.py
-            DEPENDS nwchemex
-            SUBMODULES simde chemist pluginplay parallelzone friendzone chemcache nwchemex
+        cmaize_add_tests(
+            "integration_test_${PROJECT_NAME}"
+            SOURCE_DIR "${cxx_tests_dir}/integration_tests"
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/src/${PROJECT_NAME}"
+            DEPENDS Catch2 nwchemex ghostfragment
         )
 
     endif()

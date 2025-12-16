@@ -26,7 +26,7 @@ section record the process of designing GhostFragment.
 
     overview
     architecture
-    input_driver
+    fragment_based_method_driver
     fragmented_system_driver
     fragmented_molecule_driver
     fragmented_nuclei_driver

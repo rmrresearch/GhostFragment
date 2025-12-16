@@ -28,7 +28,7 @@ simde::type::ao_basis_set make_sub_basis_set(
   const std::vector<std::size_t>& bf_indices);
 
 using ao_energy_input_t =
-  std::tuple<double, simde::type::ao_basis_set,
+  std::tuple<std::string, double, simde::type::ao_basis_set,
              chemist::ChemicalSystemView<const simde::type::chemical_system>>;
 
 std::vector<ao_energy_input_t> build_vmfc_ao_energy_inputs(

@@ -29,7 +29,8 @@ The current architecture of GhostFragment is shown in :numref:`fig_gf_arch`.
 
    GhostFragment is designed as a series of nested drivers.
 
-Briefly, the top-level driver is the :ref:`gf_fragmented_method_driver`, which
+Briefly, the top-level driver is the :ref:`gf_fragment_based_method_driver`, 
+which
 is designed to be a drop-in replacement for the supersystem calculation it is
 approximating. The Fragmented Method Driver does not define how the system is
 fragmented, instead it relies on a :ref:`gf_fragmented_chemical_system_driver`
@@ -38,14 +39,14 @@ to create the fragments. The Fragmented Chemical System Driver, focuses on the
 :ref:`gf_fragmented_nuclei_driver` to handle the fragmentation of the
 ``Nuclei`` object.
 
-************************
-Fragmented Method Driver
-************************
+****************************
+Fragment Based Method Driver
+****************************
 
-Full design details are at: :ref:`gf_fragmented_method_driver_design`.
+Full design details are at: :ref:`gf_fragment_based_method_driver_design`.
 
-The Fragmented Method Driver wraps the process of computing a property of the
-input ``ChemicalSystem`` by fragmenting the system and "stitching" together
+The Fragment Based Method Driver wraps the process of computing a property of 
+the input ``ChemicalSystem`` by fragmenting the system and "stitching" together
 the properties of the fragments. Given a chemical system, and any additional 
 inputs needed for computing the target property, the Fragmented Method Driver 
 will:

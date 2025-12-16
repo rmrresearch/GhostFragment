@@ -22,6 +22,16 @@ There are a lot of existing fragment-based methods. Many of these methods have
 coined their own terms for similar concepts. In order to provide a unified
 description of these methods we have settled on the following terminology.
 
+.. _bsse:
+
+BSSE
+  Stands for Basis Set Superposition Error. Quantum chemistry inevitably relies
+  on the use of incomplete basis sets. The value of a property will depend on
+  the basis set used and its completeness. If we compare properties computed
+  with basis sets of different completeness, the comparison will be biased by
+  the differences in basis set completeness. Failing to account for this bias
+  leads to BSSE.
+
 .. _capping:
 
 capping

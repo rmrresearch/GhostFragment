@@ -43,7 +43,7 @@ MODULE_CTOR(VMFC) {
 
 MODULE_RUN(VMFC) {
     const auto& [basis_set, sys] = my_pt::unwrap_inputs(inputs);
-    const auto n                 = inputs.at("Truncation order").value<int>();
+    const auto n = inputs.at("Truncation order").value<std::size_t>();
 
     // Step 1: Fragment system
     auto& fragment_mod    = submods.at("Fragment Driver");
@@ -60,9 +60,11 @@ MODULE_RUN(VMFC) {
 
     // Step 4: Run calculations
     auto energy_mod = submods.at("Energy method");
+    // TODO: Set Logger for energy_mod to not print anything
     simde::type::tensor energy(0.0);
-    for(const auto& [coefficient, sub_basis, sub_sys] : calcs) {
-        auto sub_energy = energy_mod.run_as<my_pt>(sub_basis, sub_sys);
+    for(const auto& [desc, coefficient, sub_basis, sub_sys] : calcs) {
+        simde::type::chemical_system temp_sys(sub_sys.molecule().as_molecule());
+        auto sub_energy = energy_mod.run_as<my_pt>(sub_basis, temp_sys);
         simde::type::tensor buffer;
         buffer("") = sub_energy("") * coefficient;
         energy("") = energy("") + buffer("");

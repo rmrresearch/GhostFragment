@@ -40,6 +40,17 @@ simde::type::ao_basis_set make_sub_basis_set(
     return sub_basis;
 }
 
+template<typename T>
+std::string set_to_string(T&& set) {
+    std::vector temp(set.begin(), set.end());
+    std::string rv = "";
+    for(std::size_t i = 0; i < temp.size(); ++i) {
+        rv += std::to_string(temp[i]);
+        if(i != temp.size() - 1) rv += "_";
+    }
+    return rv;
+}
+
 std::vector<ao_energy_input_t> build_vmfc_ao_energy_inputs(
   std::size_t n, const simde::type::ao_basis_set& full_basis,
   const type::fragmented_chemical_system& fragments,
@@ -62,6 +73,7 @@ std::vector<ao_energy_input_t> build_vmfc_ao_energy_inputs(
     // (m+1)-mer inputs by adding one fragment at a time
     for(std::size_t m = 1; m <= n; ++m) {
         for(auto&& mmer : iter::combinations(fragment_indices, m)) {
+            auto bs = set_to_string(mmer);
             // Get bs functions for mmer
             std::vector<std::size_t> mmer_bf_indices;
             for(auto frag_i : mmer) {
@@ -75,10 +87,12 @@ std::vector<ao_energy_input_t> build_vmfc_ao_energy_inputs(
             auto mmber_bs = make_sub_basis_set(full_basis, mmer_bf_indices);
             for(auto&& kmer : iter::powerset(mmer)) {
                 if(kmer.empty()) continue;
+                auto real = set_to_string(kmer);
                 std::vector<std::size_t> kmer_nuclei(kmer.begin(), kmer.end());
                 auto kmer_system = fragments.concatenate(kmer_nuclei);
                 double c         = (kmer.size() % 2 == m % 2) ? 1.0 : -1.0;
-                inputs.emplace_back(std::make_tuple(c, mmber_bs, kmer_system));
+                inputs.emplace_back(
+                  std::make_tuple(real + "-" + bs, c, mmber_bs, kmer_system));
             }
         }
     }
