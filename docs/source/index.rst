@@ -16,8 +16,9 @@
 GhostFragment
 #############
 
-GhostFragment is a software package focused on electronic structure calculations
-pertaining to fragment-based methods and basis-set superposition error.
+GhostFragment is a software package focused on approximating electronic 
+structure calculations with fragment-based methods and optionally correcting
+for basis-set superposition error.
 
 .. toctree::
    :maxdepth: 2

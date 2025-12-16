@@ -26,17 +26,47 @@ may find more details.
 What is GhostFragment?
 **********************
 
-GhostFragment is a software package designed to facilitate developing and
-running fragment-based methods.
+Fragment-based methods offer a promising mechanism for extending electronic
+structure calculations to larger systems. The "trick" behind fragment-based
+methods is that they break the large, intractable, calculation into a series of 
+smaller, more tractable, calculations. Furthermore, these smaller calculations
+are independent and can easily be run in parallel.
+
+GhostFragment will provide:
+
+- Algorithms for fragmenting chemical systems.
+- Algorithms for capping fragments (i.e., treating broken bonds).
+- Algorithms for embedding fragments in an approximate representation of the
+  rest of the system (e.g., point charges, frozen densities, etc.).
+- Algorithms for screening/approximating calculations with small contributions.
+- Drivers for creating the calculations needed for a variety of fragment-based
+  methods.
+- Drivers for running the calculations.
+- Drivers for assembling the results.  
+
+Unlike other options GhostFragment will:
+
+- Be modular, algorithms can be swapped out easily (even at runtime).
+- Decoupled from any specific electronic structure package.
+  - Admittedly the reusable infrastructure GhostFragment is built on is the
+    same software stack as NWChemEx, but GhostFragment is not tied to NWChemEx.
+- Be extensible, new algorithms and methods can be rapidly prototyped.
 
 *****************************
 Why do we need GhostFragment?
 *****************************
 
-There is no one-stop shop for fragment-based methods. Various electronic
-structure packages have implementations of one or a few methods, but no
-package readily provides acccess to a large number of methods. GhostFragment
-seeks to change this while also facilitating rapid-prototyping of new methods.
+Since fragment-based methods are naturally implemented by scripting over
+existing electronic structure packages, many developers maintain bespoke 
+software solutions for their methods. Unfortunately, many of these solutions
+do not integrate well into other software systems. Similarly, various electronic
+structure packages provide implementations of some fragment-based methods, but 
+do so by coupling the method to the rest of the electronic structure package.
+Again, this makes it difficult to integrate the fragment-based method into other
+software systems.
+
+At present, the space of open-source, modular fragment-based libraries is quite
+limited. GhostFragment aims to fill this gap.
 
 .. _gf_considerations:
 
@@ -44,114 +74,123 @@ seeks to change this while also facilitating rapid-prototyping of new methods.
 GhostFragment Considerations
 ****************************
 
-.. _gf_perfomance:
+The software design of GhostFragment is driven by a few key considerations:
 
-Performance
-   Fragment-based methods are meant to be an approximation to traditional
-   electronic structure methods. Most traditional methods have highly-performant
-   implementations. To be useful, fragment-based methods should improve the
-   applicability of traditional methods. This can only be done if the 
-   implementations of the fragment-based methods are accurate and also
-   performant.
+.. _gf_modularity:
 
-.. _gf_accuracy:
+Modularity
+==========
 
-Accuracy
-   Brought up in the performance consideration, general applicability of
-   fragment-based methods requires the resulting approximation to be accurate.
-   We are specifically referring to having the fragment-based method faithfully
-   replicate the traditional method it is approximating. The accuracy of the
-   traditional method (compared to say experiment or the time-independent
-   Schrodinger equation) is beyond our scope.
+**Consideration**: Fragment-based methods are made up of a variety of 
+algorithms. For example, one algorithm is responsible for fragmenting the 
+system, another for capping broken bonds, another for embedding the fragments, 
+and so on. Different fragment-based methods differ in which algorithms they use 
+for each step. To facilitate rapid prototyping of new fragment-based methods, 
+GhostFragment should be modular such that different algorithms can be swapped 
+out easily.
 
-   - As a corrollary we note that it is now known that basis-set superposition
-     error plays a role in the convergence of most fragment-based methods. Thus
-     to implement accurate fragment-based methods we need to be able to correct
-     for BSSE. 
+**Solution**: The "Modularity" consideration has led us to implement 
+GhostFragment as an plugin compatible with the 
+`PluginPlay framework <https://nwchemex.github.io/PluginPlay/>`__. PluginPlay 
+is designed to facilitate writing modular scientific software. In particular,
+PluginPlay makes it easy to modify the control flow of the program, even at
+runtime, thereby allowing the caller to inject additional functionality. The
+core components of a fragment-based method are implemented as PluginPlay
+modules and assembled at runtime via the usual PluginPlay mechanisms.
 
 .. _gf_generality:
 
 Generality
-   We want GhostFragment to be able to house as many fragment-based methods as
-   possible. This requires having an overall architecture which is as applicable
-   as possible.
+==========
 
-   - A corollary is that we want to be able to interface with other electronic
-     structure packages as well.
-   - Most methods can be seen as differing in only a couple key algorithmic
-     choices.
+**Consideration**: Fragment-based methods are often thought of as "going over
+top of" traditional electronic structure methods. In other words, the fragment-
+based method drives calls to the traditional method. Given that traditional
+electronic structure methods are implemented in a variety of software packages,
+we want to avoid coupling GhostFragment to any specific electronic structure
+package. This will make GhostFragment easier to adopt by other potential users.
 
-.. _gf_multi_layer:
+**Solution**: The "Generality" consideration is also partially addressed by
+PluginPlay. Plugins in PluginPlay do not explicitly couple to module 
+implementations. Instead they rely on calls to interfaces (called property types
+in PluginPlay). Any module that satisfies the interface can be used at such
+callback points. In other words, software already compatible with PluginPlay
+will interoperate with GhostFragment. Other software, may require wrappers to
+satisfy the PluginPlay interfaces, but these wrappers should be relatively
+easy to write.
 
-Multi-layer
-   A promising variation on a traditional fragment-based method is to treat
-   part of the chemical system with one level of theory, and the rest with
-   another (in theory this can easily be extended to more than two levels,
-   but in practice is often limited to two). GhostFragment should be designed
-   in a nestable fashion to support recursive invocations such as those
-   necessary for a multi-layer approach.
+.. _gf_perfomance:
+
+Performance
+===========
+
+**Consideration**: Fragment-based methods are meant to be an approximation to 
+traditional electronic structure methods. To be useful, fragment-based methods 
+should improve the applicability of traditional methods, e.g., enable 
+quicker simulations and/or larger simulations. This means that the fragment-
+based method should be as performant (or ideally more performant) than the 
+traditional method. For fragment-based methods, this requires worrying about:
+
+- Minimizing data transformations.
+- Parallelization of independent fragment calculations.
+- Avoiding unnecessary calculations (such as those describing negligible
+  interactions).
+- Reuse of common intermediates when possible.
+
+**Solution**: The "Performance" consideration is partially addressed by relying 
+on C++ and its accompanying ecosystem of high-performance software. C++ is also
+the language of choice for many electronic structure packages, thereby making
+data transformations (potentially) easier. The remaining performance
+considerations must be addressed at an algorithmic level. However, the
+decision to use PluginPlay again helps here. For example, it is straightforward
+to "wrap" a module which determines fragments with one that removes fragments
+leading to negligible interactions. Additional notes:
+
+- Chemist is used for modeling the chemical system (and will eventually be
+  used to model partitioning operators).
+
+.. _gf_accuracy:
+
+Accuracy
+========
+
+**Consideration**: Speeding up electronic structure calculations via fragment-
+based methods is only useful if the results faithfully replicate the supersystem
+results. The accuracy of the supersystem method (compared to say experiment or
+full solution of the time-independent Schrodinger equation) is beyond our scope.
+Here we note a few general results:
+
+- It is now known that basis-set superposition error plays a role in the 
+  convergence :cite:t:`Ouyang2014` of most fragment-based methods. Thus to 
+  implement accurate fragment-based methods we need to be able to correct for 
+  BSSE.
+- Overlapping fragments (whether by intention, or by taking unions of fragments)
+  tend to improve accuracy. 
+- Multi-level methods (where different fragments are treated at different levels
+  of theory) can improve accuracy while reducing cost by allowing the more
+  expensive method to only be applied to the fragments that need it.
+
+**Solution**: The "Accuracy" consideration is primarily addressed by the
+architecture of GhostFragment. In particular, our driver is designed to itself
+be modular. This makes it easy to quickly write different drivers, e.g., write
+one driver that implements a BSSE-corrected method, one that implements a
+multi-level method, and so on. The architecture of GhostFragment also assumes
+overlapping fragments from the beginning. The architecture of GhostFragment is
+discussed in more detail at :ref:`gf_architecture`.
 
 .. _gf_supersystem_pt:
 
-Supersystem property type
-   The user actually cares about some property of the supersystem. The 
-   fragment-based method should be a module which can be used as a drop-in
-   replacement for the traditional calculation. For example, if we want to
-   approximate calling a module satisfying the ``Energy`` property type with
-   a fragment-based method, the module implementing the fragment-based method 
-   should also satisfy the ``Energy`` property type.
+Supersystem-Based Interface
+===========================
 
-***********************
-Design of GhostFragment
-***********************
+**Consideration**: In most cases the fragments are simply a means to an end, 
+i.e., the goal is to compute the properties of the supersystem. GhostFragment 
+will integrate more seamlessly into existing software if its interface conforms 
+to this convention. In other words, high-level interfaces should be designed to
+take/return supersystem properties, not fragment properties. Having a unified,
+supersystem-based interface also makes it easier to nest calls to GhostFragment,
+such as is needed for multi-layer fragment-based methods.
 
-The :ref:`gf_perfomance` and :ref:`gf_generality` considerations have led us to
-implement GhostFragment as an NWChemEx plugin. More specifically, NWChemEx's
-PluginPlay framework is designed to faciliate writing software which can easily
-be customized and extended. This in turn makes it easier to modularize the
-pieces of GhostFragment which are responsible for the major algorithms like:
-fragmenting, capping, embedding, and screening. 
-
-Generally speaking, we expect the algorithms which live in GhostFragment to be 
-substantially cheaper than the electronic structure methods we will run on
-each sub-calculation. Thus, our main performance consideration is expected to
-be effeciently parallelizing the sub-computations, while also maximizing the
-re-use of common information among sub-compuations (*e.g.*, common guesses
-for the SCF). We assume that the electronic structure method we are calling is
-peformant already.
-
-The remaining considerations from :ref:`gf_considerations` fall under the
-architecture of GhostFragment.
-
-.. _fig_gf_arch:
-
-.. figure:: assets/overview.png
-   :align: center
-   
-   GhostFragment is comprised of two components: an input driver, and an
-   engine.
-
-:numref:`fig_gf_arch` shows the high-level architecture of GhostFragment. The
-unifying theme of all fragment-methods is that they strive to approximate one
-large computation via a series of smaller computations. How one maps the 
-target system to sub-computations is handled by the "input driver"
-component. Once we know the inputs for the smaller computations the "Engine"
-is used to run the smaller computations. Given the results of the smaller
-computations, GhostFragment can then approximate the property of interest for 
-the larger system. While not shown explicitly the input to GhostFragment being
-a chemical system and the result being an energy, is consistent with a module
-satisfying the ``Energy`` property type, consistent with 
-:ref:`gf_supersystem_pt`. Similar top-level designs could be made for any
-property type taking a chemical system.
-
-The "input driver" is discussed in more detail at :ref:`gf_input_driver_design`.
-The "input driver" controls the creation of the inputs to the engine. The 
-accuracy of a fragment-based method (relative to the method it is approximating)
-is determined primarily by those inputs. Hence addressing the 
-:ref:`gf_accuracy` consideration falls to the input driver. The final high-level
-consideration, :ref:`gf_multi_layer`, can easily be addressed by nesting calls
-to GhostFragment. In terms of architecture, the :ref:`gf_multi_layer`
-consideration means GhostFragment needs to be written in a manner which is
-ammenable to being nested. This is somewhat trivially satisfiable by making
-GhostFragment's top-level a PluginPlay module, and by then relying on the fact
-that PluginPlay modules can be nested.
+**Solution**: The "Supersystem-Based Interface" consideration is addressed by
+using Chemist's "Fragment" sub-library internally and exposing interfaces that
+rely on ``ChemicalSystem`` and ``AOBasisSet`` objects.

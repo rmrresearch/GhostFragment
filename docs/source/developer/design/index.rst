@@ -25,7 +25,8 @@ section record the process of designing GhostFragment.
     :caption: Contents:
 
     overview
-    input_driver
+    architecture
+    fragment_based_method_driver
     fragmented_system_driver
     fragmented_molecule_driver
     fragmented_nuclei_driver
